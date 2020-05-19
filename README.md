@@ -10,8 +10,8 @@ in SQL database. This App can work offline and will update data daily.
 This project is a starting point for a Flutter application.
 
 
-<img src="https://gitlab.com/Darshpreet2000/curative-care-app/-/blob/master/screenshots/home_screen.png" width="300" height="300">
+<img src="https://gitlab.com/Darshpreet2000/curative-care-app/screenshots/home_screen.png" width="300" height="300">
 
 
-<img src="https://gitlab.com/Darshpreet2000/curative-care-app/-/blob/master/screenshots/search_screen.png" width="300" height="300">
+<img src="https://gitlab.com/Darshpreet2000/curative-care-app/screenshots/search_screen.png" width="300" height="300">
 
