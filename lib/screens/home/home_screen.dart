@@ -6,10 +6,12 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
+        fit: StackFit.expand,
         children: <Widget>[
 
           CustomAppBarHome(),
         ],
+        overflow: Overflow.visible,
       ),
     );
   }
