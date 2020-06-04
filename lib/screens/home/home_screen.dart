@@ -1,18 +1,38 @@
 import 'package:flutter/material.dart';
-import 'components/custom_app_bar_home.dart';
+import 'components/app_bar_home.dart';
+import 'components/body.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
+   Home(this.drawerKey);
+
+  GlobalKey<ScaffoldState>  drawerKey ;
+
+  @override
+  _HomeState createState() => _HomeState();
+
+
+}
+
+class _HomeState extends State<Home> {
+
+  static const Color appBackgroundColor = Color(0xFFFFF7EC);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        fit: StackFit.expand,
+      backgroundColor: Colors.grey[100],
+      body: Column(
         children: <Widget>[
 
-          CustomAppBarHome(),
+          AppBarHome(widget.drawerKey),
+
+          SizedBox(height: 5,),
+          Expanded(
+            child:Body()
+          ),
         ],
-        overflow: Overflow.visible,
       ),
+
     );
   }
+
 }
