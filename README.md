@@ -1,4 +1,4 @@
-# Curative Care
+# Cost of Care
 
 An app which can display costs of medical procedures of US hospitals.
 This app will display nearby hospitals and the user can filter the prices accordingly. App
@@ -10,9 +10,20 @@ in SQL database. This App can work offline and will update data daily.
 This project is a starting point for a Flutter application.
 
 
-<img src="https://gitlab.com/Darshpreet2000/curative-care-app/-/raw/master/screenshots/home_screen.png">
+<img src="https://gitlab.com/Darshpreet2000/lh-toolkit-cost-of-care-app/-/raw/master/screenshots/home.png" width="200" height="450" >
 
 
-<img src="https://gitlab.com/Darshpreet2000/curative-care-app/-/raw/master/screenshots/search_screen.png">
+<img src="https://gitlab.com/Darshpreet2000/lh-toolkit-cost-of-care-app/-/raw/master/screenshots/search.png" width="200" height="450" >
+
+
+<img src="https://gitlab.com/Darshpreet2000/lh-toolkit-cost-of-care-app/-/raw/master/screenshots/settings.png"  width="200" height="450">
+
+
+<img src="https://gitlab.com/Darshpreet2000/lh-toolkit-cost-of-care-app/-/raw/master/screenshots/drawer.png" width="200" height="450">
+
+
+<img src="https://gitlab.com/Darshpreet2000/lh-toolkit-cost-of-care-app/-/raw/master/screenshots/saved.png" width="200" height="450">
+
+
 
 
