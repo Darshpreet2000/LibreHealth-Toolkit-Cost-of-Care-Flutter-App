@@ -1,3 +1,4 @@
+import 'package:curativecare/screens/view_cdm/view_cdm.dart';
 import 'package:flutter/material.dart';
 
 List<String> saved_list = [
@@ -39,7 +40,13 @@ class _SavedListState extends State<SavedList> {
      
       trailing: RaisedButton(
         color: Colors.indigo,
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => ViewCDM(saved_list[index])),
+          );
+
+        },
         child: Text(
           'View',  maxLines: 2,
 
