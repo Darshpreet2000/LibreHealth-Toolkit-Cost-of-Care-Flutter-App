@@ -7,7 +7,6 @@ class FloatingAction extends StatefulWidget {
 }
 
 class _FloatingActionState extends State<FloatingAction> {
-  // Declare this variable
 
 
   @override

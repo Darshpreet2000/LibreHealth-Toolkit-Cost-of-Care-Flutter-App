@@ -1,7 +1,9 @@
+import 'dart:io';
 import 'package:curativecare/widgets/dash.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BottomSheetSwitch extends StatefulWidget {
   @override
@@ -18,13 +20,20 @@ class _BottomSheetSwitch extends State<BottomSheetSwitch> {
 // Declare this variable
   int selectedRadioTile;
   int priceRadioTile;
-
+  SharedPreferences prefs;
   @override
   void initState() {
     super.initState();
-    priceRadioTile = 0;
-    selectedRadioTile = 0;
+    opensavedValues();
   }
+ Future<void> opensavedValues() async {
+   prefs = await SharedPreferences.getInstance();
+
+        selectedRadioTile=(prefs.getInt('category') ?? 0);
+        priceRadioTile= (prefs.getInt('price') ?? 0);
+
+
+ }
 
   setSelectedRadioTile(int val) {
     setState(() {
@@ -52,17 +61,29 @@ class _BottomSheetSwitch extends State<BottomSheetSwitch> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(top: 16.0, left: 12, bottom: 8),
-                child: Text(
-                  'Sort by',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontFamily: 'Source',
-                      fontWeight: FontWeight.w600,
-                      fontSize: 22),
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16.0, left: 12, bottom: 8),
+                    child: Text(
+                      'Sort by',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'Source',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 22),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top:8.0),
+                    child: IconButton(icon: Icon(Icons.cancel,size: 30,),
+                      onPressed: ()=>{ Navigator.pop(context)},
+                    ),
+                  )
+                ],
               ),
+
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Dash(
@@ -169,33 +190,19 @@ class _BottomSheetSwitch extends State<BottomSheetSwitch> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
 
-                Material(
-
-                  color: Colors.white,
-                  child:
-                  InkWell(
-
-                    onTap: ()=>{},
-                    child: Text('Cancel',
-
-                      style: TextStyle(
-                          color: Colors.indigo,
-                          fontFamily: 'Source',
-                          fontWeight: FontWeight.w600,
-                          fontSize: 22),
-                    ),
-                  ),
-                ),
                     Material(
                       color: Colors.white,
                       child:
                       InkWell(
 
-                        onTap: ()=>{},
-                        child: Text('Done',
+                        onTap: () {
+                          save_Values();
+                        Navigator.pop(context);
+                        },
+                        child: Text('Apply',
 
                           style: TextStyle(
                               color: Colors.indigo,
@@ -213,4 +220,10 @@ class _BottomSheetSwitch extends State<BottomSheetSwitch> {
           )),
     );
   }
+
+Future<void> save_Values() async {
+  prefs.setInt('category',  selectedRadioTile);
+
+  prefs.setInt('price',  priceRadioTile);
+}
 }
