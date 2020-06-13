@@ -1,13 +1,19 @@
 class SearchModel{
   String description,charge,category,name;
 
-  SearchModel(this.description, this.charge, this.category, this.name);
+  SearchModel(this.description, this.charge, this.category, [this.name]);
 
   Map<String, dynamic> toMap() {
     return {
-      'price': charge,
+      'charge': charge,
       'description': description,
-      'charge_type': category,
+      'category': category,
     };
+  }
+  SearchModel fromMap(Map<String, dynamic> map){
+     map['charge']=charge;
+     map['description']=description;
+     map['category']=category;
+    return SearchModel(description,charge,category);
   }
 }

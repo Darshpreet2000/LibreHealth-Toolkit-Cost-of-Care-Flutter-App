@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:curativecare/models/search_model.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
@@ -23,16 +25,25 @@ class HospitalDatabase{
   }
 
    Future<void> InsertData(List<SearchModel> CDM_List) async {
+     await database.transaction((txn) async {
+       Batch batch =  txn.batch();
+       CDM_List.forEach((val) {
+         //assuming you have 'Cities' class defined
+         SearchModel cdm=val;
+         batch.insert("data", cdm.toMap());
 
-     Batch batch = database.batch();
-     CDM_List.forEach((val) {
-       //assuming you have 'Cities' class defined
-       SearchModel cdm=val;
-       batch.insert("data", cdm.toMap());
-
+       });
+       await batch.commit();
+       //checking
+       print(await database.rawQuery('SELECT * FROM a limit 100'));
      });
-     await batch.commit();
-     //checking
-     print(await database.rawQuery('SELECT * FROM a limit 100'));
    }
+  Future<List<SearchModel>> ReadData(String name) async {
+    //Table name is given
+    List<Map<String, dynamic>> maps = await database.query(name);
+    return List.generate(maps.length, (i) {
+        SearchModel cdm;
+       return cdm.fromMap(maps[i]);
+    });
+  }
 }
