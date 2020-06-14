@@ -21,19 +21,18 @@ class _BottomSheetSwitch extends State<BottomSheetSwitch> {
   int selectedRadioTile;
   int priceRadioTile;
   SharedPreferences prefs;
+
   @override
   void initState() {
     super.initState();
     opensavedValues();
   }
- Future<void> opensavedValues() async {
-   prefs = await SharedPreferences.getInstance();
 
-        selectedRadioTile=(prefs.getInt('category') ?? 0);
-        priceRadioTile= (prefs.getInt('price') ?? 0);
-
-
- }
+  Future<void> opensavedValues() async {
+    prefs = await SharedPreferences.getInstance();
+    selectedRadioTile = (prefs.getInt('category') ?? 0);
+    priceRadioTile = (prefs.getInt('price') ?? 0);
+  }
 
   setSelectedRadioTile(int val) {
     setState(() {
@@ -54,8 +53,9 @@ class _BottomSheetSwitch extends State<BottomSheetSwitch> {
           height: 500,
           decoration: new BoxDecoration(
               color: Colors.white,
-              borderRadius: new BorderRadius.all(
-                Radius.circular(25.0),
+              borderRadius: new BorderRadius.only(
+                topLeft: Radius.circular(25.0),
+                topRight: Radius.circular(25.0),
               )),
           padding: EdgeInsets.all(8),
           child: Column(
@@ -65,7 +65,8 @@ class _BottomSheetSwitch extends State<BottomSheetSwitch> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.only(top: 16.0, left: 12, bottom: 8),
+                    padding:
+                        const EdgeInsets.only(top: 16.0, left: 12, bottom: 8),
                     child: Text(
                       'Sort by',
                       style: TextStyle(
@@ -76,14 +77,17 @@ class _BottomSheetSwitch extends State<BottomSheetSwitch> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top:8.0),
-                    child: IconButton(icon: Icon(Icons.cancel,size: 30,),
-                      onPressed: ()=>{ Navigator.pop(context)},
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.cancel,
+                        size: 30,
+                      ),
+                      onPressed: () => {Navigator.pop(context)},
                     ),
                   )
                 ],
               ),
-
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Dash(
@@ -187,43 +191,36 @@ class _BottomSheetSwitch extends State<BottomSheetSwitch> {
                 activeColor: Colors.indigo,
                 selected: false,
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-
-                    Material(
-                      color: Colors.white,
-                      child:
-                      InkWell(
-
-                        onTap: () {
-                          save_Values();
-                        Navigator.pop(context);
-                        },
-                        child: Text('Apply',
-
-                          style: TextStyle(
-                              color: Colors.indigo,
-                              fontFamily: 'Source',
-                              fontWeight: FontWeight.w600,
-                              fontSize: 22),
-                        ),
-                      ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  RaisedButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(8.0))),
+                    color: Colors.indigo,
+                    onPressed: () {
+                      save_Values();
+                      Navigator.pop(context);
+                    },
+                    padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
+                    child: Text(
+                      'Apply',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Source',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 20),
                     ),
-
-      ],
-                ),
+                  )
+                ],
               )
             ],
           )),
     );
   }
 
-Future<void> save_Values() async {
-  prefs.setInt('category',  selectedRadioTile);
-
-  prefs.setInt('price',  priceRadioTile);
-}
+  Future<void> save_Values() async {
+    prefs.setInt('category', selectedRadioTile);
+    prefs.setInt('price', priceRadioTile);
+  }
 }
