@@ -1,6 +1,5 @@
 import 'package:curativecare/screens/home/home_screen.dart';
 import 'package:curativecare/screens/saved/saved_screen.dart';
-import 'package:curativecare/screens/home/components/app_bar_home.dart';
 import 'package:flutter/material.dart';
 
 class BaseClass extends StatefulWidget {
@@ -17,7 +16,13 @@ class _BaseClassState extends State<BaseClass> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _drawerKey,
-      body: selectedIndex == 0 ? Home(_drawerKey) : Saved(),
+      body:  IndexedStack(
+        index:selectedIndex,
+        children: <Widget>[
+          Home(_drawerKey),
+          Saved(),
+        ],
+      ),
       drawer: AppDrawer(),
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
