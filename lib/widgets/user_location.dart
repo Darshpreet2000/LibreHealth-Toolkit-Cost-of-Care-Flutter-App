@@ -16,7 +16,10 @@ class UserLocation extends StatefulWidget {
 
 class _UserLocationState extends State<UserLocation> {
   final snackBar = SnackBar(
-    content: Text('Refreshing',style: TextStyle(color: Colors.white),),
+    content: Text(
+      'Refreshing',
+      style: TextStyle(color: Colors.white),
+    ),
     backgroundColor: Colors.deepOrangeAccent,
   );
   bool isLoading;
@@ -82,7 +85,6 @@ class _UserLocationState extends State<UserLocation> {
     } on PlatformException catch (e) {
       return 'Location Not Found';
     }
-
   }
 
   @override
@@ -120,7 +122,7 @@ class _UserLocationState extends State<UserLocation> {
                       width: MediaQuery.of(context).size.width - 20,
                       child: isLoading == false
                           ? Row(
-                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 Text(
                                   address,
