@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:location/location.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
 
 class UserLocation extends StatefulWidget {
@@ -15,6 +16,7 @@ class UserLocation extends StatefulWidget {
 }
 
 class _UserLocationState extends State<UserLocation> {
+  SharedPreferences prefs;
   final snackBar = SnackBar(
     content: Text(
       'Refreshing',
@@ -22,7 +24,7 @@ class _UserLocationState extends State<UserLocation> {
     ),
     backgroundColor: Colors.deepOrangeAccent,
   );
-  bool isLoading;
+  bool isLoading = true;
   Location location = new Location();
   bool _serviceEnabled;
   PermissionStatus _permissionGranted;
@@ -31,15 +33,33 @@ class _UserLocationState extends State<UserLocation> {
   Future<String> future;
 
   @override
-  void initState() {
-    isLoading = true;
-    getcurrentlocation().then((value) => setState(() {
-          address = value;
-          isLoading = false;
-        }));
+  Future<void> initState() {
+    check_saved();
+  }
+
+  Future check_saved() async {
+    //Check if data already present in shared preference
+    //If yes the use it & don't use location
+    prefs = await SharedPreferences.getInstance();
+    if (prefs.containsKey('latitude') &&
+        prefs.containsKey('longitude') &&
+        prefs.containsKey('address')) {
+      setState(() {
+        address = prefs.getString('address');
+        isLoading = false;
+      });
+    }
+//If data is not present then ask for location & then store it in shared preference
+    if (isLoading) {
+      getcurrentlocation().then((value) => setState(() {
+            address = value;
+            isLoading = false;
+          }));
+    }
   }
 
   void refresh() {
+    //Use it for refreshing data
     Scaffold.of(context).showSnackBar(snackBar);
     setState(() {
       isLoading = true;
@@ -51,6 +71,7 @@ class _UserLocationState extends State<UserLocation> {
   }
 
   Future<String> getcurrentlocation() async {
+    //Ask for Location permissions & Location Services
     _serviceEnabled = await location.serviceEnabled();
     if (!_serviceEnabled) {
       _serviceEnabled = await location.requestService();
@@ -66,11 +87,16 @@ class _UserLocationState extends State<UserLocation> {
         return 'Location Not Found';
       }
     }
-    return getcoordiantes();
+    return getcoordinates();
   }
 
-  Future<String> getcoordiantes() async {
+  Future<String> getcoordinates() async {
+    prefs = await SharedPreferences.getInstance();
     position = await location.getLocation();
+    //Save coordinate in shared preference
+    //To use it in Overpass API
+    prefs.setString('latitude', position.latitude.toString());
+    prefs.setString('longitude', position.longitude.toString());
     try {
       List<Placemark> placemark = await Geolocator()
           .placemarkFromCoordinates(position.latitude, position.longitude);
@@ -81,6 +107,8 @@ class _UserLocationState extends State<UserLocation> {
           placemark[0].locality +
           ", " +
           placemark[0].country;
+      //Save address
+      prefs.setString('address', address);
       return address;
     } on PlatformException catch (e) {
       return 'Location Not Found';
