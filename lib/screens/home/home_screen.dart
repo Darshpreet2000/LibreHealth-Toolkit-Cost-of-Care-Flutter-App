@@ -1,4 +1,8 @@
+import 'package:curativecare/bloc/location_bloc.dart';
+import 'package:curativecare/bloc/user_location_state.dart';
+import 'package:curativecare/repository/location_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'components/app_bar_home.dart';
 import 'components/body.dart';
 
@@ -18,7 +22,10 @@ class _HomeState extends State<Home> {
   static const Color appBackgroundColor = Color(0xFFFFF7EC);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BlocProvider(
+        create: (_) => LocationBloc(Location_Repository()),
+    child: BlocBuilder<LocationBloc, LocationState>(builder: (_, theme) {
+    return  Scaffold(
       backgroundColor: Colors.grey[100],
 
       body: Column(
@@ -32,7 +39,9 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
-
+    );
+    }
+    )
     );
   }
 

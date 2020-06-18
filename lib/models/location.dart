@@ -2,10 +2,10 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 
 @immutable
-class Location extends Equatable{
+class UserLocation extends Equatable{
   String latitude,longitude,address;
 
-  Location(this.latitude, this.longitude, this.address);
+  UserLocation(this.latitude, this.longitude, this.address);
 
 
   @override

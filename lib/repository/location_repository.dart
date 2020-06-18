@@ -1,13 +1,15 @@
-import 'dart:html';
-import 'package:curativecare/models/location.dart';
+import 'dart:async';
+
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class LocationRepository {
-  Future<Location> getLocationPermission();// To get Location Permission
-  Future<Location> getLocation(); //Get address & coordinates of user location
+  Future<String> getLocationPermission(); // To get Location Permission
+  Future<String> getLocation(); //Get address & coordinates of user location
+  Future<bool> checkSaved();
+  Future<String> getSaved();
 }
 
 class Location_Repository implements LocationRepository {
@@ -18,7 +20,7 @@ class Location_Repository implements LocationRepository {
   LocationData position;
 
   @override
-  Future<Location> getLocationPermission() async {
+  Future<String> getLocationPermission() async {
     //Ask for Location permissions & Location Services
     _serviceEnabled = await location.serviceEnabled();
     if (!_serviceEnabled) {
@@ -39,9 +41,15 @@ class Location_Repository implements LocationRepository {
   }
 
   @override
-  Future<Location> getLocation() async {
+  Future<String> getLocation() async {
     prefs = await SharedPreferences.getInstance();
-    position = await location.getLocation();
+    try {
+      position =
+      await location.getLocation().timeout(const Duration(seconds: 10));
+
+    }on TimeoutException catch (e) {
+      return 'Network Problem';
+    }
     //Save coordinate in shared preference
     //To use it in Overpass API
     await prefs.setString('latitude', position.latitude.toString());
@@ -57,10 +65,29 @@ class Location_Repository implements LocationRepository {
           ", " +
           placemark[0].country;
       //Save address
-      prefs.setString('address', address);
-      return Location(position.latitude.toString(),position.longitude,address);
-    } on PlatformException catch (e) {
+      await prefs.setString('address', address);
+      return address;
+    } on PlatformException {
       return 'Location Not Found';
     }
+  }
+
+  @override
+  Future<bool> checkSaved() async {
+    prefs = await SharedPreferences.getInstance();
+    if (prefs.containsKey('latitude') &&
+        prefs.containsKey('longitude') &&
+        prefs.containsKey('address')) {
+      return true;
+    }
+//If data is not present then ask for location & then store it in shared preference
+    return false;
+  }
+
+  @override
+  Future<String> getSaved() async {
+    prefs = await SharedPreferences.getInstance();
+    String addr = await prefs.getString('address');
+    return addr;
   }
 }

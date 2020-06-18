@@ -13,10 +13,10 @@ class LocationLoading extends LocationState {
 }
 
 class LocationLoaded extends LocationState {
-  final Location current;
-  const LocationLoaded(this.current);
+  final String address;
+  const LocationLoaded(this.address);
   @override
-  List<Object> get props => [current];
+  List<Object> get props => [address];
 }
 
 class LocationError extends LocationState {

@@ -6,15 +6,17 @@ class NearbyHospitalList extends StatefulWidget {
   _NearbyHospitalListState createState() => _NearbyHospitalListState();
 }
 List<NearbyHospital> hospitals=new List();
+Future get(){
+  print('No');
+}
 class _NearbyHospitalListState extends State<NearbyHospitalList> {
   String output="";
-  var bloc=Counter();
 
    @override
   Widget build(BuildContext context) {
     return Container(
-        child: StreamBuilder(
-          stream: bloc.ListStream,
+        child: FutureBuilder(
+          future: get(),
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
              if(snapshot.hasData){
              hospitals=snapshot.data;
