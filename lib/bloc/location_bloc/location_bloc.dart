@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:curativecare/bloc/user_location_events.dart';
-import 'package:curativecare/bloc/user_location_state.dart';
+import 'package:curativecare/bloc/location_bloc/user_location_events.dart';
+import 'package:curativecare/bloc/location_bloc/user_location_state.dart';
 import 'package:curativecare/repository/location_repository.dart';
 
 class LocationBloc extends Bloc<LocationEvent, LocationState> {

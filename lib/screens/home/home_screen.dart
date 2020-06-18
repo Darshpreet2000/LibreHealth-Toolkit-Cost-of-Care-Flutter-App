@@ -1,5 +1,5 @@
-import 'package:curativecare/bloc/location_bloc.dart';
-import 'package:curativecare/bloc/user_location_state.dart';
+import 'package:curativecare/bloc/location_bloc/location_bloc.dart';
+import 'package:curativecare/bloc/location_bloc/user_location_state.dart';
 import 'package:curativecare/repository/location_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
