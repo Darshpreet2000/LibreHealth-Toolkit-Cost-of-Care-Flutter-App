@@ -1,36 +1,38 @@
 import 'package:curativecare/models/nearby_hospital.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:html/parser.dart';
-import 'package:http/http.dart' as http;
-
 class NearbyHospitalList extends StatefulWidget {
   @override
   _NearbyHospitalListState createState() => _NearbyHospitalListState();
 }
-List<NearbyHospital> hospitals=[ NearbyHospital('Providence Alaska Medical Center', 'assets/show.jpg', '5384.8 mi','40'),
-  NearbyHospital('North Star Behavorial Hospital', 'assets/download.jpg', '7984.8 mi','250'),
-  NearbyHospital('UCLA Medical Center', 'assets/ucla.jpg', '9384.8 mi','120'),
-  NearbyHospital('University of Michigan', 'assets/show.jpg', '3384.8 mi','400'),];
-
-
+List<NearbyHospital> hospitals=new List();
 class _NearbyHospitalListState extends State<NearbyHospitalList> {
-   String output="";
-  @override
+  String output="";
+  var bloc=Counter();
+
+   @override
   Widget build(BuildContext context) {
     return Container(
-
-
-        child: ListView.builder(
-          primary: false,
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-
-          itemCount: hospitals.length,
-          itemBuilder: (BuildContext context, int index) {
-            return makeCard(index);
+        child: StreamBuilder(
+          stream: bloc.ListStream,
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+             if(snapshot.hasData){
+             hospitals=snapshot.data;
+               return ListView.builder(
+                 primary: false,
+                 scrollDirection: Axis.vertical,
+                 shrinkWrap: true,
+                 itemCount: hospitals.length,
+                 itemBuilder: (BuildContext context, int index) {
+                   return makeCard(index);
+                 },
+               );
+             }
+             // By default, show a loading spinner.
+             return CircularProgressIndicator();
           },
-        ),
+
+        )
 
     );
   }
@@ -38,7 +40,9 @@ class _NearbyHospitalListState extends State<NearbyHospitalList> {
 }
 
  Card makeCard(int index){
-    return Card(
+
+
+   return Card(
       elevation: 4.0,
 
       margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
@@ -74,7 +78,7 @@ Container makeListTile(int index) {
           width: 100,
           decoration: BoxDecoration(
               image: new DecorationImage(
-                image: new AssetImage(hospitals[index].path),
+                image: new AssetImage('assets/show.jpg'),
                 fit: BoxFit.cover,
               ),
             border:  Border.all(color: Colors.black),
