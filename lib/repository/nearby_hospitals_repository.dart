@@ -16,7 +16,7 @@ abstract class NearbyHospitalsRepository {
 class NearbyHospitals_Repository implements NearbyHospitalsRepository {
   SharedPreferences prefs;
   String latitude;
-  String radius = '10000';
+  String radius = '3000';
   String longitude;
   String API_DOMAIN = "https://lz4.overpass-api.de/api/interpreter?data=";
 

@@ -24,11 +24,7 @@ class _BodyState extends State<Body> {
           child:Column(
            children: <Widget>[
              UserLocation(appBackgroundColor),
-
-
             NearbyHospitalList()
-
-
          //List of Nearby
         ],
       )
