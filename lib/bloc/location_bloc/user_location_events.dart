@@ -8,13 +8,11 @@ const LocationEvent();
 
 
 class FetchLocation extends LocationEvent {
-
   FetchLocation();
   @override
   String toString() => 'LoadTodos';
 
   @override
-  // TODO: implement props
   List<Object> get props => [];
 }
 

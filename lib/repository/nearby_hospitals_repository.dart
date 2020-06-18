@@ -8,12 +8,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // To find Nearby Hospitals using coordinates
 abstract class NearbyHospitalsRepository {
-  Future<List<NearbyHospital>> fetch_hospitals(); // To get Data of Nearby Hospitals  using Overpass API
+  Future fetch_hospitals(); // To get Data of Nearby Hospitals  using Overpass API
   Future<List<NearbyHospital>> parse_json(String responseBody); //To Parse Json Data & convert it to List
 
 }
 
-class _NearbyHospitalsRepository implements NearbyHospitalsRepository {
+class NearbyHospitals_Repository implements NearbyHospitalsRepository {
   SharedPreferences prefs;
   String latitude;
   String radius = '10000';
@@ -21,7 +21,7 @@ class _NearbyHospitalsRepository implements NearbyHospitalsRepository {
   String API_DOMAIN = "https://lz4.overpass-api.de/api/interpreter?data=";
 
   @override
-  Future<List<NearbyHospital>> fetch_hospitals() async {
+  Future fetch_hospitals() async {
     prefs = await SharedPreferences.getInstance();
     if (prefs.containsKey('latitude') && prefs.containsKey('longitude')) {
       latitude = prefs.getString('latitude');
@@ -32,7 +32,7 @@ class _NearbyHospitalsRepository implements NearbyHospitalsRepository {
       print(API_DOMAIN + Nearby_Hospitals);
       final response = await http.get(API_DOMAIN + Nearby_Hospitals);
       print(response);
-      return parse_json(response.body);
+      return response;
     }
   }
 
@@ -75,4 +75,5 @@ class _NearbyHospitalsRepository implements NearbyHospitalsRepository {
     }
     return hospital_list;
   }
+
 }

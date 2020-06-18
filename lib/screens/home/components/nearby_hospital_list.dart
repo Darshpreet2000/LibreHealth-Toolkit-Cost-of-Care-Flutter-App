@@ -1,39 +1,42 @@
+import 'package:curativecare/bloc/location_bloc/location_bloc.dart';
+import 'package:curativecare/bloc/location_bloc/user_location_state.dart';
+import 'package:curativecare/bloc/nearby_hospital_bloc/bloc.dart';
 import 'package:curativecare/models/nearby_hospital.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 class NearbyHospitalList extends StatefulWidget {
   @override
   _NearbyHospitalListState createState() => _NearbyHospitalListState();
 }
 List<NearbyHospital> hospitals=new List();
-Future get(){
-  print('No');
-}
+
 class _NearbyHospitalListState extends State<NearbyHospitalList> {
   String output="";
 
    @override
   Widget build(BuildContext context) {
     return Container(
-        child: FutureBuilder(
-          future: get(),
-          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-             if(snapshot.hasData){
-             hospitals=snapshot.data;
-               return ListView.builder(
-                 primary: false,
-                 scrollDirection: Axis.vertical,
-                 shrinkWrap: true,
-                 itemCount: hospitals.length,
-                 itemBuilder: (BuildContext context, int index) {
-                   return makeCard(index);
-                 },
-               );
-             }
-             // By default, show a loading spinner.
-             return CircularProgressIndicator();
+        child: BlocListener<LocationBloc, LocationState>(
+          listener: (BuildContext context, state) {
+            if(state is LocationLoaded){
+              context.bloc<NearbyHospitalBloc>().add(FetchHospitals());
+            }
           },
-
+          child: BlocBuilder<NearbyHospitalBloc, NearbyHospitalState>(
+            builder: (BuildContext context, NearbyHospitalState state) {
+                if(state is  LoadingState){
+                  return CircularProgressIndicator();
+                }
+                else if (state is LoadedState){
+                  hospitals=state.nearby_hospital;
+                  return ListBuilder(state.nearby_hospital);
+                }
+                else if (state is ErrorState){
+                  return Text(state.message);
+                }
+            },
+          ),
         )
 
     );
@@ -41,9 +44,18 @@ class _NearbyHospitalListState extends State<NearbyHospitalList> {
 
 }
 
+Widget ListBuilder(List<NearbyHospital> hospitals){
+  return ListView.builder(
+    primary: false,
+    scrollDirection: Axis.vertical,
+    shrinkWrap: true,
+    itemCount: hospitals.length,
+    itemBuilder: (BuildContext context, int index) {
+      return makeCard(index);
+    },
+  );
+}
  Card makeCard(int index){
-
-
    return Card(
       elevation: 4.0,
 
