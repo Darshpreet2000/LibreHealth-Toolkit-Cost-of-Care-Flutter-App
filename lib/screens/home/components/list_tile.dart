@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:curativecare/models/nearby_hospital.dart';
 import 'package:flutter/material.dart';
@@ -8,11 +9,18 @@ import 'package:http/http.dart' as http;
 Future<String> fetchImages(String name) async {
   String url = 'https://www.google.com/search?tbm=isch&q=';
   url = url + "${name} Hospital";
-  var response = await http.get(url);
-  String document = response.body;
-  var doc = parse(document);
-  var img = doc.getElementsByTagName('img')[1].attributes['src'];
-  return img;
+
+    var response = await http.get(url);
+
+  if (response.statusCode == 200) {
+    String document = response.body;
+    var doc = parse(document);
+    var img = doc.getElementsByTagName('img')[1].attributes['src'];
+    return img;
+  }
+  else{
+    throw Exception('Failed to load');
+  }
 }
 
 Card makeCard(NearbyHospital hospital) {
@@ -46,8 +54,26 @@ Container makeListTile(NearbyHospital hospital) {
           FutureBuilder(
             future: fetchImages(hospital.name),
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+              if (snapshot.hasError) {
+                return Container(
+                    margin: EdgeInsets.only(
+                        left: 10, top: 16, bottom: 16, right: 10),
+                    width: 100,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                    child: Expanded(
+                      child: new FittedBox(
+                          fit: BoxFit.fill,
+                          child: Icon(
+                            Icons.local_hospital,
+                            color: Colors.red,
+                          )),
+                    ));
+              }
               if (snapshot.hasData) {
                 return CachedNetworkImage(
+
                   imageUrl: snapshot.data,
                   imageBuilder: (context, imageProvider) => Container(
                     margin: EdgeInsets.only(
@@ -58,7 +84,7 @@ Container makeListTile(NearbyHospital hospital) {
                       borderRadius: BorderRadius.all(Radius.circular(10)),
                       image: DecorationImage(
                         image: imageProvider,
-                        fit: BoxFit.cover,
+                        fit: BoxFit.fill,
                       ),
                     ),
                   ),

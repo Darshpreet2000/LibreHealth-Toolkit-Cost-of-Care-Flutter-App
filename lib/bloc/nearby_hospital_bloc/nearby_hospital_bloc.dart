@@ -25,7 +25,7 @@ class NearbyHospitalBloc extends Bloc<NearbyHospitalEvent, NearbyHospitalState> 
        } else {
          // If the server did not return a 200 OK response,
          // then throw an exception.
-         yield ErrorState('Unable to Fetch Data');
+         yield ErrorState('Network Error Unable to Fetch Data');
        }
      }
 

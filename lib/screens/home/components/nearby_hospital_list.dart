@@ -24,7 +24,7 @@ class NearbyHospitalList extends StatelessWidget {
           } else if (state is LoadedState) {
             return ListBuilder(state.nearby_hospital);
           } else if (state is ErrorState) {
-            return Text(state.message);
+            return Center(child: Text(state.message,style: TextStyle(fontSize: 18),));
           }
         },
       ),

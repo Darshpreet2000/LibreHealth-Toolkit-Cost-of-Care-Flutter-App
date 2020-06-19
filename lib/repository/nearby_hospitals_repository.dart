@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:curativecare/models/nearby_hospital.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:geolocator/geolocator.dart';
@@ -21,8 +22,6 @@ class NearbyHospitals_Repository implements NearbyHospitalsRepository {
   String radius = '3000';
   String longitude;
   String API_DOMAIN = "https://lz4.overpass-api.de/api/interpreter?data=";
-  String url='https://www.google.com/search?tbm=isch&q=';
-
   @override
   Future fetch_hospitals() async {
     prefs = await SharedPreferences.getInstance();
@@ -33,9 +32,15 @@ class NearbyHospitals_Repository implements NearbyHospitalsRepository {
       String Nearby_Hospitals =
           """[out:json];(node["amenity"="hospital"](around:$radius,$latitude,$longitude);way["amenity"="hospital"](around:$radius,$latitude,$longitude);relation["amenity"="hospital"](around:$radius,$latitude,$longitude););out center;""";
       print(API_DOMAIN + Nearby_Hospitals);
-      final response = await http.get(API_DOMAIN + Nearby_Hospitals);
-      print(response);
-      return response;
+      try {
+        final response = await http.get(API_DOMAIN + Nearby_Hospitals);
+        print(response);
+        return response;
+      } on SocketException{
+         http.Response response=new http.Response(" ", 400);
+
+         return response;
+      }
     }
   }
 
