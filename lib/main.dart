@@ -18,27 +18,25 @@ class MyApp extends StatelessWidget {
   //Base Class Contains Navigation Drawer & Bottom Navigation
   @override
   Widget build(BuildContext context) {
-
-      return MaterialApp(
-        theme: ThemeData(
-          fontFamily: 'Source',
-          textTheme: TextTheme(
-            caption: TextStyle(fontSize: 16.0),
-            bodyText1: TextStyle(fontSize: 16.0),
-          ),
+    return MaterialApp(
+      theme: ThemeData(
+        fontFamily: 'Source',
+        textTheme: TextTheme(
+          caption: TextStyle(fontSize: 16.0),
+          bodyText1: TextStyle(fontSize: 16.0),
         ),
-        routes: {
-          '/': (context) => BaseClass(),
-          '/SearchProcedure': (context) => SearchProcedure(),
-          '/SettingsHome': (context) => SettingsHome(),
-          '/ViewCDMStatewise': (context) => ViewCDMStatewise(),
-          '/CompareHospitals': (context) => CompareHospitals(),
-          '/Share': (context) => ShareApp(),
-          '/About': (context) => About(),
-          '/ReportIssue': (context) => ReportIssue(),
-        },
-        initialRoute: '/',
-      );
-
+      ),
+      routes: {
+        '/': (context) => BaseClass(),
+        '/SearchProcedure': (context) => SearchProcedure(),
+        '/SettingsHome': (context) => SettingsHome(),
+        '/ViewCDMStatewise': (context) => ViewCDMStatewise(),
+        '/CompareHospitals': (context) => CompareHospitals(),
+        '/Share': (context) => ShareApp(),
+        '/About': (context) => About(),
+        '/ReportIssue': (context) => ReportIssue(),
+      },
+      initialRoute: '/',
+    );
   }
 }

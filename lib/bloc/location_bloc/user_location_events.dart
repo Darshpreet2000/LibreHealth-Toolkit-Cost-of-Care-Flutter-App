@@ -3,12 +3,12 @@ import 'package:flutter/foundation.dart';
 
 @immutable
 abstract class LocationEvent extends Equatable {
-const LocationEvent();
+  const LocationEvent();
 }
-
 
 class FetchLocation extends LocationEvent {
   FetchLocation();
+
   @override
   String toString() => 'LoadTodos';
 
@@ -16,10 +16,7 @@ class FetchLocation extends LocationEvent {
   List<Object> get props => [];
 }
 
-
 class RefreshLocation extends LocationEvent {
-
-
   RefreshLocation();
 
   @override

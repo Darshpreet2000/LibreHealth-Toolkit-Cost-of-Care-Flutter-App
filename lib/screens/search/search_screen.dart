@@ -9,8 +9,8 @@ class SearchProcedure extends StatefulWidget {
 }
 
 class _SearchProcedureState extends State<SearchProcedure> {
-
   final TextEditingController _searchQuery = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,20 +25,15 @@ class _SearchProcedureState extends State<SearchProcedure> {
           decoration: InputDecoration(
               focusedBorder: InputBorder.none,
               border: InputBorder.none,
-
-              prefixIcon:
-                 Icon(
-                    Icons.search,
-                    color: Colors.grey,
-                  ),
+              prefixIcon: Icon(
+                Icons.search,
+                color: Colors.grey,
+              ),
               hintText: "Search Procedures...",
               hintStyle: TextStyle(color: Colors.grey)),
-        ) ,
+        ),
       ),
       body: Body(),
     );
   }
 }
-
-
-

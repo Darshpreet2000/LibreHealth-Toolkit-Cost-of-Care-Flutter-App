@@ -1,20 +1,21 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:curativecare/models/nearby_hospital.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 // To find Nearby Hospitals using coordinates
 abstract class NearbyHospitalsRepository {
-  Future fetch_hospitals(); // To get Data of Nearby Hospitals  using Overpass API
-  Future<List<NearbyHospital>> parse_json(String responseBody); //To Parse Json Data & convert it to List
-  //Future<String> fetchImages(String name);
+  Future
+      fetch_hospitals(); // To get Data of Nearby Hospitals  using Overpass API
+  Future<List<NearbyHospital>> parse_json(
+      String responseBody); //To Parse Json Data & convert it to List
+//Future<String> fetchImages(String name);
 
-  }
+}
 
 class NearbyHospitals_Repository implements NearbyHospitalsRepository {
   SharedPreferences prefs;
@@ -22,6 +23,7 @@ class NearbyHospitals_Repository implements NearbyHospitalsRepository {
   String radius = '3000';
   String longitude;
   String API_DOMAIN = "https://lz4.overpass-api.de/api/interpreter?data=";
+
   @override
   Future fetch_hospitals() async {
     prefs = await SharedPreferences.getInstance();
@@ -36,10 +38,10 @@ class NearbyHospitals_Repository implements NearbyHospitalsRepository {
         final response = await http.get(API_DOMAIN + Nearby_Hospitals);
         print(response);
         return response;
-      } on SocketException{
-         http.Response response=new http.Response(" ", 400);
+      } on SocketException {
+        http.Response response = new http.Response(" ", 400);
 
-         return response;
+        return response;
       }
     }
   }
@@ -84,5 +86,4 @@ class NearbyHospitals_Repository implements NearbyHospitalsRepository {
     }
     return hospital_list;
   }
-
 }

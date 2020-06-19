@@ -1,27 +1,8 @@
-import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:curativecare/models/nearby_hospital.dart';
+import 'package:curativecare/screens/home/components/fetch_images.dart';
 import 'package:flutter/material.dart';
-import 'package:html/parser.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:http/http.dart' as http;
-
-Future<String> fetchImages(String name) async {
-  String url = 'https://www.google.com/search?tbm=isch&q=';
-  url = url + "${name} Hospital";
-
-    var response = await http.get(url);
-
-  if (response.statusCode == 200) {
-    String document = response.body;
-    var doc = parse(document);
-    var img = doc.getElementsByTagName('img')[1].attributes['src'];
-    return img;
-  }
-  else{
-    throw Exception('Failed to load');
-  }
-}
 
 Card makeCard(NearbyHospital hospital) {
   return Card(
@@ -73,7 +54,6 @@ Container makeListTile(NearbyHospital hospital) {
               }
               if (snapshot.hasData) {
                 return CachedNetworkImage(
-
                   imageUrl: snapshot.data,
                   imageBuilder: (context, imageProvider) => Container(
                     margin: EdgeInsets.only(
