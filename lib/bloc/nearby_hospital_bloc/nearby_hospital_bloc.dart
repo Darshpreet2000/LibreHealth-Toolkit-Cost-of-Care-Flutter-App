@@ -2,13 +2,13 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:curativecare/models/nearby_hospital.dart';
-import 'package:curativecare/repository/nearby_hospitals_repository.dart';
+import 'package:curativecare/services/nearby_hospital_list_services.dart';
 
 import './bloc.dart';
 
 class NearbyHospitalBloc
     extends Bloc<NearbyHospitalEvent, NearbyHospitalState> {
-  final NearbyHospitals_Repository nearbyHospitalsRepository;
+  final NearbyHospitalsServices nearbyHospitalsRepository;
 
   NearbyHospitalBloc(this.nearbyHospitalsRepository);
 

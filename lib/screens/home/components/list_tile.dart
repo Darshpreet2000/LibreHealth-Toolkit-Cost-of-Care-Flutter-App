@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:curativecare/models/nearby_hospital.dart';
-import 'package:curativecare/repository/nearby_hospitals_repository.dart';
+import 'package:curativecare/services/nearby_hospital_list_services.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -16,7 +16,8 @@ Card makeCard(NearbyHospital hospital) {
 }
 
 Container makeListTile(NearbyHospital hospital) {
-  NearbyHospitals_Repository nearbyHospitals_Repository=new NearbyHospitals_Repository();
+  NearbyHospitalsServices nearbyHospitals_Repository =
+      new NearbyHospitalsServices();
   return Container(
       height: 130,
       decoration: BoxDecoration(

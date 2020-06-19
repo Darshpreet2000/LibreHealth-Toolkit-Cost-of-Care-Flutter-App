@@ -1,7 +1,5 @@
 import 'package:curativecare/bloc/location_bloc/location_bloc.dart';
 import 'package:curativecare/bloc/nearby_hospital_bloc/bloc.dart';
-import 'package:curativecare/repository/location_repository.dart';
-import 'package:curativecare/repository/nearby_hospitals_repository.dart';
 import 'package:curativecare/screens/about/about.dart';
 import 'package:curativecare/screens/compare_hospitals/compare_hospital.dart';
 import 'package:curativecare/screens/report_an_issue/report_an_issue.dart';
@@ -9,6 +7,8 @@ import 'package:curativecare/screens/search/search_screen.dart';
 import 'package:curativecare/screens/settings_home/settings_home.dart';
 import 'package:curativecare/screens/share_app/share_app.dart';
 import 'package:curativecare/screens/view_cdm_statewise/view_cdm_statewise.dart';
+import 'package:curativecare/services/location_services.dart';
+import 'package:curativecare/services/nearby_hospital_list_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,11 +26,11 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<LocationBloc>(
-          create: (BuildContext context) => LocationBloc(Location_Repository()),
+          create: (BuildContext context) => LocationBloc(LocationServices()),
         ),
         BlocProvider<NearbyHospitalBloc>(
           create: (BuildContext context) =>
-              NearbyHospitalBloc(NearbyHospitals_Repository()),
+              NearbyHospitalBloc(NearbyHospitalsServices()),
         ),
       ],
       child: MaterialApp(
