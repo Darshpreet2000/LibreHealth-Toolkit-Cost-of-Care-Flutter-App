@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:curativecare/models/nearby_hospital.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -10,8 +11,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 abstract class NearbyHospitalsRepository {
   Future fetch_hospitals(); // To get Data of Nearby Hospitals  using Overpass API
   Future<List<NearbyHospital>> parse_json(String responseBody); //To Parse Json Data & convert it to List
+  //Future<String> fetchImages(String name);
 
-}
+  }
 
 class NearbyHospitals_Repository implements NearbyHospitalsRepository {
   SharedPreferences prefs;
@@ -19,6 +21,7 @@ class NearbyHospitals_Repository implements NearbyHospitalsRepository {
   String radius = '3000';
   String longitude;
   String API_DOMAIN = "https://lz4.overpass-api.de/api/interpreter?data=";
+  String url='https://www.google.com/search?tbm=isch&q=';
 
   @override
   Future fetch_hospitals() async {
@@ -42,7 +45,8 @@ class NearbyHospitals_Repository implements NearbyHospitalsRepository {
     Map<String, dynamic> parsedJson = json.decode(responseBody);
     var elements = parsedJson['elements'] as List;
     for (int i = 0; i < elements.length; i++) {
-      String name, operator, beds, lat, lon, path;
+      String name, operator, beds, lat, lon;
+      Future<String> path;
       double distance;
       Map<String, dynamic> current_hospital = elements[i];
       if (current_hospital.containsKey('center')) {

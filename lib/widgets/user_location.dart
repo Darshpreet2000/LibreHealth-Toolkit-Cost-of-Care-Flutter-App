@@ -29,7 +29,7 @@ class _UserLocationState extends State<UserLocation> {
   Widget build(BuildContext context) {
     return Container(
         color: Colors.grey[100],
-        padding: EdgeInsets.only(top: 10.0, left: 10, right: 10),
+        padding: EdgeInsets.only(top: 8.0, left: 10, right: 10),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -41,7 +41,7 @@ class _UserLocationState extends State<UserLocation> {
                   size: 24,
                 ),
                 SizedBox(
-                  width: 10.0,
+                  width: 8.0,
                 ),
                 Text(
                   'YOUR LOCATION',
@@ -54,41 +54,39 @@ class _UserLocationState extends State<UserLocation> {
             ),
             Row(
               children: <Widget>[
-                Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: Container(
-                        width: MediaQuery.of(context).size.width - 20,
-                        child: BlocListener<LocationBloc, LocationState>(
+                Container(
+                    width: MediaQuery.of(context).size.width - 20,
+                    child: BlocListener<LocationBloc, LocationState>(
 
-                          listener: (BuildContext context, state) {
-                            if(state is LocationError){
-                            Scaffold.of(context).showSnackBar(SnackBar(
-                              content: Text(
-                                'Location Not Found',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                              backgroundColor: Colors.deepOrangeAccent,
-                            )
-                            );
-                            }
-                          },
-                          child: BlocBuilder<LocationBloc, LocationState>(
-                            builder: (BuildContext context, state) {
-                              if (state is LocationLoading) {
-                                return buildLoading(context);
-                              } else if (state is LocationLoaded) {
-                                return buildData(context,state.address);
-                              } else if (state is LocationError) {
-                                return buildData(context,state.message);
-                              }
-                             return buildLoading(context);
-                              },
+                      listener: (BuildContext context, state) {
+                        if(state is LocationError){
+                        Scaffold.of(context).showSnackBar(SnackBar(
+                          content: Text(
+                            'Location Not Found',
+                            style: TextStyle(color: Colors.white),
                           ),
-                        ))),
+                          backgroundColor: Colors.deepOrangeAccent,
+                        )
+                        );
+                        }
+                      },
+                      child: BlocBuilder<LocationBloc, LocationState>(
+                        builder: (BuildContext context, state) {
+                          if (state is LocationLoading) {
+                            return buildLoading(context);
+                          } else if (state is LocationLoaded) {
+                            return buildData(context,state.address);
+                          } else if (state is LocationError) {
+                            return buildData(context,state.message);
+                          }
+                         return buildLoading(context);
+                          },
+                      ),
+                    )),
               ],
             ),
             Padding(
-                padding: const EdgeInsets.only(top: 8.0),
+                padding: const EdgeInsets.only(top: 4.0),
                 child: Dash(
                   length: MediaQuery.of(context).size.width - 20,
                   dashColor: Colors.blue,

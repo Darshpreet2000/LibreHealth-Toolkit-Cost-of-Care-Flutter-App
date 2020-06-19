@@ -5,9 +5,9 @@ import 'package:curativecare/repository/nearby_hospitals_repository.dart';
 import './bloc.dart';
 
 class NearbyHospitalBloc extends Bloc<NearbyHospitalEvent, NearbyHospitalState> {
-  final NearbyHospitals_Repository _NearbyHospitalsRepository;
+  final NearbyHospitals_Repository nearbyHospitalsRepository;
 
-  NearbyHospitalBloc(this._NearbyHospitalsRepository);
+  NearbyHospitalBloc(this.nearbyHospitalsRepository);
 
   @override
   NearbyHospitalState get initialState => LoadingState();
@@ -16,11 +16,11 @@ class NearbyHospitalBloc extends Bloc<NearbyHospitalEvent, NearbyHospitalState> 
   Stream<NearbyHospitalState> mapEventToState(NearbyHospitalEvent event,) async* {
       yield LoadingState();
      if(event is FetchHospitals){
-        final response = await _NearbyHospitalsRepository.fetch_hospitals();
+        final response = await nearbyHospitalsRepository.fetch_hospitals();
        if (response.statusCode == 200) {
          // If the server did return a 200 OK response,
          // then parse the JSON.
-       List<NearbyHospital> nearby_hospital=await _NearbyHospitalsRepository.parse_json(response.body);
+       List<NearbyHospital> nearby_hospital=await nearbyHospitalsRepository.parse_json(response.body);
        yield LoadedState(nearby_hospital);
        } else {
          // If the server did not return a 200 OK response,
@@ -28,9 +28,6 @@ class NearbyHospitalBloc extends Bloc<NearbyHospitalEvent, NearbyHospitalState> 
          yield ErrorState('Unable to Fetch Data');
        }
      }
-      else if(event is SaveHospitals){
-
-      }
 
   }
 }

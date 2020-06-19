@@ -34,9 +34,7 @@ class NearbyHospitalList extends StatelessWidget {
 
 Widget ShimmerLoading() {
   return ListView.builder(
-    primary: false,
     scrollDirection: Axis.vertical,
-    shrinkWrap: true,
     itemCount: 6,
     itemBuilder: (BuildContext context, int index) {
       return Card(
@@ -71,7 +69,6 @@ class _ListBuilderState extends State<ListBuilder> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      primary: false,
       itemCount: items.length,
       shrinkWrap: true,
       itemBuilder: (BuildContext context, int index) {
