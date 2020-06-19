@@ -19,26 +19,24 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
       // Emit either Loaded or Error
       yield LocationLoading();
       final bool isSaved = await _LocationRepository.checkSaved();
-      if(isSaved) {
+      if (isSaved) {
         final String address = await _LocationRepository.getSaved();
         yield LocationLoaded(address);
-      }else {
-        final String address = await _LocationRepository.getLocationPermission();
-        if(address=="Location Not Found"||address=="Network Problem")
-        yield LocationError(address);
+      } else {
+        final String address =
+            await _LocationRepository.getLocationPermission();
+        if (address == "Location Not Found" || address == "Network Problem")
+          yield LocationError(address);
         else
-         yield LocationLoaded(address);
-
+          yield LocationLoaded(address);
       }
-    }
-    else if (event is RefreshLocation) {
+    } else if (event is RefreshLocation) {
       yield LocationLoading();
-        final String address = await _LocationRepository.getLocationPermission();
-      if(address=="Location Not Found"||address=="Network Problem")
+      final String address = await _LocationRepository.getLocationPermission();
+      if (address == "Location Not Found" || address == "Network Problem")
         yield LocationError(address);
       else
         yield LocationLoaded(address);
-
     }
-    }
+  }
 }

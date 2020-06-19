@@ -10,9 +10,7 @@ class LoadingState extends NearbyHospitalState {
   List<Object> get props => [];
 }
 
-
 class LoadedState extends NearbyHospitalState {
-
   List<NearbyHospital> nearby_hospital;
 
   LoadedState(this.nearby_hospital);

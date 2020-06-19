@@ -9,6 +9,7 @@ abstract class LocationRepository {
   Future<String> getLocationPermission(); // To get Location Permission
   Future<String> getLocation(); //Get address & coordinates of user location
   Future<bool> checkSaved();
+
   Future<String> getSaved();
 }
 
@@ -45,9 +46,8 @@ class Location_Repository implements LocationRepository {
     prefs = await SharedPreferences.getInstance();
     try {
       position =
-      await location.getLocation().timeout(const Duration(seconds: 10));
-
-    }on TimeoutException catch (e) {
+          await location.getLocation().timeout(const Duration(seconds: 10));
+    } on TimeoutException catch (e) {
       return 'Network Problem';
     }
     //Save coordinate in shared preference

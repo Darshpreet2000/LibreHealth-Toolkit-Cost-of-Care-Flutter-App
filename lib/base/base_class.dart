@@ -16,8 +16,8 @@ class _BaseClassState extends State<BaseClass> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _drawerKey,
-      body:  IndexedStack(
-        index:selectedIndex,
+      body: IndexedStack(
+        index: selectedIndex,
         children: <Widget>[
           Home(_drawerKey),
           Saved(),
@@ -56,41 +56,41 @@ class AppDrawer extends StatelessWidget {
               icon: Icons.album,
               text: 'View CDM Statewise',
               onTap: () => {
-                Navigator.pop(context),
-                Navigator.pushNamed(context, '/ViewCDMStatewise')
-            }),
+                    Navigator.pop(context),
+                    Navigator.pushNamed(context, '/ViewCDMStatewise')
+                  }),
           Divider(),
           _createDrawerItem(
               icon: Icons.local_hospital,
               text: 'Compare Hospitals',
               onTap: () => {
-
-                Navigator.pop(context),
-                Navigator.pushNamed(context, '/CompareHospitals')}),
+                    Navigator.pop(context),
+                    Navigator.pushNamed(context, '/CompareHospitals')
+                  }),
           Divider(),
           _createDrawerItem(
               icon: Icons.share,
               text: 'Share App',
               onTap: () => {
-
-                Navigator.pop(context),
-                Navigator.pushNamed(context, '/Share')}),
+                    Navigator.pop(context),
+                    Navigator.pushNamed(context, '/Share')
+                  }),
           Divider(),
           _createDrawerItem(
               icon: Icons.book,
               text: 'About',
               onTap: () => {
-
-                Navigator.pop(context),
-                Navigator.pushNamed(context, '/About')}),
+                    Navigator.pop(context),
+                    Navigator.pushNamed(context, '/About')
+                  }),
           Divider(),
           _createDrawerItem(
               icon: Icons.bug_report,
               text: 'Report a bug',
               onTap: () => {
-
-                Navigator.pop(context),
-                Navigator.pushNamed(context, '/ReportIssue')}),
+                    Navigator.pop(context),
+                    Navigator.pushNamed(context, '/ReportIssue')
+                  }),
           ListTile(
             title: Text('0.0.1'),
             onTap: () {},
@@ -124,10 +124,17 @@ class AppDrawer extends StatelessWidget {
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
-       mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Image.asset('assets/logowhite.png',height: 50,width: 50,),
-         Text('LibreHealth',style: TextStyle(color: Colors.white,fontSize: 25),)
+          Image.asset(
+            'assets/logowhite.png',
+            height: 50,
+            width: 50,
+          ),
+          Text(
+            'LibreHealth',
+            style: TextStyle(color: Colors.white, fontSize: 25),
+          )
         ],
       ),
     );
