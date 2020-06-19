@@ -8,9 +8,9 @@ import './bloc.dart';
 
 class NearbyHospitalBloc
     extends Bloc<NearbyHospitalEvent, NearbyHospitalState> {
-  final NearbyHospitalsServices nearbyHospitalsRepository;
+  final NearbyHospitalsServices nearbyHospitalsServices;
 
-  NearbyHospitalBloc(this.nearbyHospitalsRepository);
+  NearbyHospitalBloc(this.nearbyHospitalsServices);
 
   @override
   NearbyHospitalState get initialState => LoadingState();
@@ -21,12 +21,12 @@ class NearbyHospitalBloc
   ) async* {
     yield LoadingState();
     if (event is FetchHospitals) {
-      final response = await nearbyHospitalsRepository.fetch_hospitals();
+      final response = await nearbyHospitalsServices.fetch_hospitals();
       if (response.statusCode == 200) {
         // If the server did return a 200 OK response,
         // then parse the JSON.
         List<NearbyHospital> nearby_hospital =
-            await nearbyHospitalsRepository.parse_json(response.body);
+            await nearbyHospitalsServices.parse_json(response.body);
         yield LoadedState(nearby_hospital);
       } else {
         // If the server did not return a 200 OK response,
