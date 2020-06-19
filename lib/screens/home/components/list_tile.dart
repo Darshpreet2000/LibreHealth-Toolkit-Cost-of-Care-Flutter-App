@@ -16,7 +16,7 @@ Card makeCard(NearbyHospital hospital) {
 }
 
 Container makeListTile(NearbyHospital hospital) {
-  NearbyHospitals_Repository nearbyHospitals_Repository;
+  NearbyHospitals_Repository nearbyHospitals_Repository=new NearbyHospitals_Repository();
   return Container(
       height: 130,
       decoration: BoxDecoration(

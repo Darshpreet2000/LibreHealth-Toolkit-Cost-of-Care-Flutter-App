@@ -55,6 +55,7 @@ Widget ShimmerLoading() {
 
 class ListBuilder extends StatelessWidget {
   List<NearbyHospital> items = new List();
+
   ListBuilder(this.items);
 
   @override

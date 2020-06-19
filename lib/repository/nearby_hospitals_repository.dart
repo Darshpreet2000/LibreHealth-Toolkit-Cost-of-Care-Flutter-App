@@ -104,5 +104,4 @@ class NearbyHospitals_Repository implements NearbyHospitalsRepository {
       throw Exception('Failed to load');
     }
   }
-
 }
