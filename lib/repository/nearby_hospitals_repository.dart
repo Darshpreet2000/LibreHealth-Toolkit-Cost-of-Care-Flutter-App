@@ -28,6 +28,8 @@ class NearbyHospitals_Repository implements NearbyHospitalsRepository {
   @override
   Future fetch_hospitals() async {
     prefs = await SharedPreferences.getInstance();
+    if(prefs.containsKey('radius'))
+      radius=prefs.getString('radius');
     if (prefs.containsKey('latitude') && prefs.containsKey('longitude')) {
       latitude = prefs.getString('latitude');
       longitude = prefs.getString('longitude');
