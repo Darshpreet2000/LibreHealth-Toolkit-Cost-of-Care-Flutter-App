@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:curativecare/models/nearby_hospital.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -14,7 +15,7 @@ abstract class NearbyHospitalsRepository {
   Future<List<NearbyHospital>> parse_json(
       String responseBody); //To Parse Json Data & convert it to List
 //Future<String> fetchImages(String name);
-
+  Future<String> fetchImages(String name);
 }
 
 class NearbyHospitals_Repository implements NearbyHospitalsRepository {
@@ -86,4 +87,22 @@ class NearbyHospitals_Repository implements NearbyHospitalsRepository {
     }
     return hospital_list;
   }
+
+  @override
+  Future<String> fetchImages(String name) async {
+    String url = 'https://www.google.com/search?tbm=isch&q=';
+    url = url + "${name} Hospital";
+
+    var response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      String document = response.body;
+      var doc = parse(document);
+      var img = doc.getElementsByTagName('img')[1].attributes['src'];
+      return img;
+    } else {
+      throw Exception('Failed to load');
+    }
+  }
+
 }

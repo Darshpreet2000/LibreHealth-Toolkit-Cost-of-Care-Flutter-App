@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:curativecare/models/nearby_hospital.dart';
-import 'package:curativecare/screens/home/components/fetch_images.dart';
+import 'package:curativecare/repository/nearby_hospitals_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -16,6 +16,7 @@ Card makeCard(NearbyHospital hospital) {
 }
 
 Container makeListTile(NearbyHospital hospital) {
+  NearbyHospitals_Repository nearbyHospitals_Repository;
   return Container(
       height: 130,
       decoration: BoxDecoration(
@@ -33,7 +34,7 @@ Container makeListTile(NearbyHospital hospital) {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           FutureBuilder(
-            future: fetchImages(hospital.name),
+            future: nearbyHospitals_Repository.fetchImages(hospital.name),
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
               if (snapshot.hasError) {
                 return Container(

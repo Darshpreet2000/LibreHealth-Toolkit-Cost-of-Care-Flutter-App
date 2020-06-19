@@ -53,31 +53,20 @@ Widget ShimmerLoading() {
   );
 }
 
-class ListBuilder extends StatefulWidget {
-  List<NearbyHospital> original;
-
-  ListBuilder(this.original);
-
-  @override
-  _ListBuilderState createState() => _ListBuilderState();
-}
-
-class _ListBuilderState extends State<ListBuilder> {
+class ListBuilder extends StatelessWidget {
   List<NearbyHospital> items = new List();
-
-  @override
-  void initState() {
-    items = widget.original;
-  }
+  ListBuilder(this.items);
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: items.length,
-      shrinkWrap: true,
-      itemBuilder: (BuildContext context, int index) {
-        return makeCard(items[index]);
-      },
+    return Scrollbar(
+      child: ListView.builder(
+        itemCount: items.length,
+        shrinkWrap: true,
+        itemBuilder: (BuildContext context, int index) {
+          return makeCard(items[index]);
+        },
+      ),
     );
   }
 }
