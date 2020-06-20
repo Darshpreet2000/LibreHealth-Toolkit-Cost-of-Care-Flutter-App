@@ -9,7 +9,6 @@ class LoadedState extends HomeSettingsState {
   List<Object> get props => [];
 }
 
-
 class LoadingState extends HomeSettingsState {
   @override
   List<Object> get props => [];

@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:curativecare/bloc/location_bloc/user_location_events.dart';
 import 'package:curativecare/bloc/location_bloc/user_location_state.dart';
-import 'package:curativecare/repository/location_repository.dart';
 import 'package:curativecare/services/location_services.dart';
 
 class LocationBloc extends Bloc<LocationEvent, LocationState> {
@@ -24,8 +23,7 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
         final String address = await locationervices.getSaved();
         yield LocationLoaded(address);
       } else {
-        final String address =
-            await locationervices.getLocationPermission();
+        final String address = await locationervices.getLocationPermission();
         if (address == "Location Not Found" || address == "Network Problem")
           yield LocationError(address);
         else

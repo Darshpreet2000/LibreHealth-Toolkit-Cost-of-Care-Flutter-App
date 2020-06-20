@@ -19,24 +19,23 @@ class _SettingsHomeState extends State<SettingsHome> {
     return Scaffold(
         backgroundColor: appBackgroundColor,
         appBar: AppBar(
-
-          title: Text(
-            'Settings',
-            style: TextStyle(color: Colors.white),
-          ),
-          centerTitle: true,
-          backgroundColor: Colors.indigo,
+            title: Text(
+              'Settings',
+              style: TextStyle(color: Colors.white),
+            ),
+            centerTitle: true,
+            backgroundColor: Colors.indigo,
             actions: <Widget>[
-        // action button
-        IconButton(
-        icon: Icon(Icons.save,color: Colors.white,size: 30,),
-      onPressed: () {
-
-      },
-
-    ),
-    ]
-        ),
+              // action button
+              IconButton(
+                icon: Icon(
+                  Icons.save,
+                  color: Colors.white,
+                  size: 30,
+                ),
+                onPressed: () {},
+              ),
+            ]),
         body: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,

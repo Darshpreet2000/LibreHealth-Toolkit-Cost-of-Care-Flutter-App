@@ -5,12 +5,13 @@ import 'dart:io';
 import 'package:curativecare/models/nearby_hospital.dart';
 import 'package:curativecare/repository/nearby_hospitals_repository.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:hive/hive.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
+
+import '../main.dart';
 
 class NearbyHospitalsServices implements NearbyHospitalsRepository {
-  SharedPreferences prefs;
   String latitude;
   String radius = '3000';
   String longitude;
@@ -18,10 +19,10 @@ class NearbyHospitalsServices implements NearbyHospitalsRepository {
 
   @override
   Future fetch_hospitals() async {
-    prefs = await SharedPreferences.getInstance();
-    if (prefs.containsKey('latitude') && prefs.containsKey('longitude')) {
-      latitude = prefs.getString('latitude');
-      longitude = prefs.getString('longitude');
+
+    if (box.containsKey('latitude') && box.containsKey('longitude')) {
+      latitude = box.get('latitude');
+      longitude = box.get('longitude');
 
       String Nearby_Hospitals =
           """[out:json];(node["amenity"="hospital"](around:$radius,$latitude,$longitude);way["amenity"="hospital"](around:$radius,$latitude,$longitude);relation["amenity"="hospital"](around:$radius,$latitude,$longitude););out center;""";

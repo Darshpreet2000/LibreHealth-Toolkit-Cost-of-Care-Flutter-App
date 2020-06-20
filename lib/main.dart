@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:curativecare/bloc/location_bloc/location_bloc.dart';
 import 'package:curativecare/bloc/nearby_hospital_bloc/bloc.dart';
 import 'package:curativecare/screens/about/about.dart';
@@ -11,15 +13,27 @@ import 'package:curativecare/services/location_services.dart';
 import 'package:curativecare/services/nearby_hospital_list_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'base/base_class.dart';
 
-void main() {
+var box;
+Future _openBox() async {
+  var dir = await getApplicationDocumentsDirectory();
+  Hive.init(dir.path);
+  box = await Hive.openBox("myBox");
+}
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+ await _openBox();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+
   //Base Class Contains Navigation Drawer & Bottom Navigation
   @override
   Widget build(BuildContext context) {

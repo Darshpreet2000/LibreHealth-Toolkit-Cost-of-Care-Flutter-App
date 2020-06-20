@@ -3,11 +3,12 @@ import 'dart:async';
 import 'package:curativecare/repository/location_repository.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:hive/hive.dart';
 import 'package:location/location.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+import '../main.dart';
 
 class LocationServices implements LocationRepository {
-  SharedPreferences prefs;
   Location location = new Location();
   bool _serviceEnabled;
   PermissionStatus _permissionGranted;
@@ -36,7 +37,6 @@ class LocationServices implements LocationRepository {
 
   @override
   Future<String> getLocation() async {
-    prefs = await SharedPreferences.getInstance();
     try {
       position =
           await location.getLocation().timeout(const Duration(seconds: 10));
@@ -45,8 +45,8 @@ class LocationServices implements LocationRepository {
     }
     //Save coordinate in shared preference
     //To use it in Overpass API
-    await prefs.setString('latitude', position.latitude.toString());
-    await prefs.setString('longitude', position.longitude.toString());
+    box.put('latitude', position.latitude.toString());
+    box.put('longitude', position.longitude.toString());
     try {
       List<Placemark> placemark = await Geolocator()
           .placemarkFromCoordinates(position.latitude, position.longitude);
@@ -58,7 +58,7 @@ class LocationServices implements LocationRepository {
           ", " +
           placemark[0].country;
       //Save address
-      await prefs.setString('address', address);
+      await box.put('address', address);
       return address;
     } on PlatformException {
       return 'Location Not Found';
@@ -67,10 +67,10 @@ class LocationServices implements LocationRepository {
 
   @override
   Future<bool> checkSaved() async {
-    prefs = await SharedPreferences.getInstance();
-    if (prefs.containsKey('latitude') &&
-        prefs.containsKey('longitude') &&
-        prefs.containsKey('address')) {
+
+    if (box.containsKey('latitude') &&
+        box.containsKey('longitude') &&
+        box.containsKey('address')) {
       return true;
     }
 //If data is not present then ask for location & then store it in shared preference
@@ -79,8 +79,7 @@ class LocationServices implements LocationRepository {
 
   @override
   Future<String> getSaved() async {
-    prefs = await SharedPreferences.getInstance();
-    String addr = await prefs.getString('address');
+    String addr = await box.get('address');
     return addr;
   }
 }
