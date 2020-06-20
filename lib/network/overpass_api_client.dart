@@ -3,23 +3,18 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:curativecare/models/nearby_hospital.dart';
-import 'package:curativecare/repository/nearby_hospitals_repository.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:hive/hive.dart';
-import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
 
 import '../main.dart';
 
-class NearbyHospitalsServices implements NearbyHospitalsRepository {
+class OverpassAPIClient {
   String latitude;
   String radius = '3000';
   String longitude;
   String API_DOMAIN = "https://lz4.overpass-api.de/api/interpreter?data=";
 
-  @override
-  Future fetch_hospitals() async {
-
+  Future fetch_nearby_hospitals() async {
     if (box.containsKey('latitude') && box.containsKey('longitude')) {
       latitude = box.get('latitude');
       longitude = box.get('longitude');
@@ -39,9 +34,11 @@ class NearbyHospitalsServices implements NearbyHospitalsRepository {
     }
   }
 
-  @override
-  Future<List<NearbyHospital>> parse_json(String responseBody) async {
+  Future<List<NearbyHospital>> parse_hospital_json_data(
+      String responseBody) async {
     List<NearbyHospital> hospital_list = new List();
+    latitude = box.get('latitude');
+    longitude = box.get('longitude');
     Map<String, dynamic> parsedJson = json.decode(responseBody);
     var elements = parsedJson['elements'] as List;
     for (int i = 0; i < elements.length; i++) {
@@ -78,22 +75,5 @@ class NearbyHospitalsServices implements NearbyHospitalsRepository {
       hospital_list.add(nearbyHospital);
     }
     return hospital_list;
-  }
-
-  @override
-  Future<String> fetchImages(String name) async {
-    String url = 'https://www.google.com/search?tbm=isch&q=';
-    url = url + "${name} Hospital";
-
-    var response = await http.get(url);
-
-    if (response.statusCode == 200) {
-      String document = response.body;
-      var doc = parse(document);
-      var img = doc.getElementsByTagName('img')[1].attributes['src'];
-      return img;
-    } else {
-      throw Exception('Failed to load');
-    }
   }
 }

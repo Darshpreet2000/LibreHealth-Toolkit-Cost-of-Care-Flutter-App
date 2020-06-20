@@ -1,8 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:curativecare/models/nearby_hospital.dart';
-import 'package:curativecare/services/nearby_hospital_list_services.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
+
+import 'file:///C:/Users/Darshpreet/AndroidStudioProjects/lh-toolkit-cost-of-care-app/lib/repository/nearby_hospital_repository_impl.dart';
 
 Card makeCard(NearbyHospital hospital) {
   return Card(
@@ -16,8 +17,8 @@ Card makeCard(NearbyHospital hospital) {
 }
 
 Container makeListTile(NearbyHospital hospital) {
-  NearbyHospitalsServices nearbyHospitals_Repository =
-      new NearbyHospitalsServices();
+  NearbyHospitalsRepoImpl nearbyHospitals_Repository =
+      new NearbyHospitalsRepoImpl();
   return Container(
       height: 130,
       decoration: BoxDecoration(

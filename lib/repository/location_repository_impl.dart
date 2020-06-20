@@ -1,14 +1,12 @@
 import 'dart:async';
 
-import 'package:curativecare/repository/location_repository.dart';
-import 'package:flutter/services.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:hive/hive.dart';
+import 'package:curativecare/network/location_client.dart';
+import 'package:curativecare/repository/abstract/location_repository.dart';
 import 'package:location/location.dart';
 
 import '../main.dart';
 
-class LocationServices implements LocationRepository {
+class LocationRepoImpl implements LocationRepository {
   Location location = new Location();
   bool _serviceEnabled;
   PermissionStatus _permissionGranted;
@@ -37,37 +35,13 @@ class LocationServices implements LocationRepository {
 
   @override
   Future<String> getLocation() async {
-    try {
-      position =
-          await location.getLocation().timeout(const Duration(seconds: 10));
-    } on TimeoutException catch (e) {
-      return 'Network Problem';
-    }
-    //Save coordinate in shared preference
-    //To use it in Overpass API
-    box.put('latitude', position.latitude.toString());
-    box.put('longitude', position.longitude.toString());
-    try {
-      List<Placemark> placemark = await Geolocator()
-          .placemarkFromCoordinates(position.latitude, position.longitude);
-      String address = placemark[0].name +
-          ", " +
-          placemark[0].subLocality +
-          ", " +
-          placemark[0].locality +
-          ", " +
-          placemark[0].country;
-      //Save address
-      await box.put('address', address);
-      return address;
-    } on PlatformException {
-      return 'Location Not Found';
-    }
+    LocationClient locationClient = new LocationClient();
+    Future<String> address = locationClient.getCurrentLocation();
+    return address;
   }
 
   @override
   Future<bool> checkSaved() async {
-
     if (box.containsKey('latitude') &&
         box.containsKey('longitude') &&
         box.containsKey('address')) {
