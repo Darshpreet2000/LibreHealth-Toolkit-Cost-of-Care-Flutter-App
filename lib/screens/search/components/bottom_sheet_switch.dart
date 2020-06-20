@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'package:curativecare/widgets/dash.dart';
+import 'package:curativecare/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class BottomSheetSwitch extends StatefulWidget {
   @override
@@ -20,7 +20,7 @@ class _BottomSheetSwitch extends State<BottomSheetSwitch> {
 // Declare this variable
   int selectedRadioTile;
   int priceRadioTile;
-  SharedPreferences prefs;
+
 
   @override
   void initState() {
@@ -29,9 +29,8 @@ class _BottomSheetSwitch extends State<BottomSheetSwitch> {
   }
 
   Future<void> opensavedValues() async {
-    prefs = await SharedPreferences.getInstance();
-    selectedRadioTile = (prefs.getInt('category') ?? 0);
-    priceRadioTile = (prefs.getInt('price') ?? 0);
+    selectedRadioTile = (box.get('category') ?? 0);
+    priceRadioTile = (box.get('price') ?? 0);
   }
 
   setSelectedRadioTile(int val) {
@@ -220,7 +219,7 @@ class _BottomSheetSwitch extends State<BottomSheetSwitch> {
   }
 
   Future<void> save_Values() async {
-    prefs.setInt('category', selectedRadioTile);
-    prefs.setInt('price', priceRadioTile);
+    box.put('category', selectedRadioTile);
+    box.put('price', priceRadioTile);
   }
 }

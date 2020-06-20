@@ -7,11 +7,24 @@ import 'package:curativecare/screens/settings_home/settings_home.dart';
 import 'package:curativecare/screens/share_app/share_app.dart';
 import 'package:curativecare/screens/view_cdm_statewise/view_cdm_statewise.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'base/base_class.dart';
 
-void main() => runApp(MyApp());
 
+var box;
+Future _openBox() async {
+  var dir = await getApplicationDocumentsDirectory();
+  Hive.init(dir.path);
+  box = await Hive.openBox("myBox");
+}
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await _openBox();
+  runApp(MyApp());
+}
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   //Base Class Contains Navigation Drawer & Bottom Navigation
