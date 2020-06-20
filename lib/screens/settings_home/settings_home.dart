@@ -9,7 +9,7 @@ class SettingsHome extends StatefulWidget {
 }
 
 class _SettingsHomeState extends State<SettingsHome> {
-  int _value = 15;
+  int _value = 5;
   String sort = 'Ascending';
   bool isSelected = false;
   static const Color appBackgroundColor = Color(0xFFf5f5f5);
@@ -19,12 +19,23 @@ class _SettingsHomeState extends State<SettingsHome> {
     return Scaffold(
         backgroundColor: appBackgroundColor,
         appBar: AppBar(
+
           title: Text(
             'Settings',
             style: TextStyle(color: Colors.white),
           ),
           centerTitle: true,
           backgroundColor: Colors.indigo,
+            actions: <Widget>[
+        // action button
+        IconButton(
+        icon: Icon(Icons.save,color: Colors.white,size: 30,),
+      onPressed: () {
+
+      },
+
+    ),
+    ]
         ),
         body: SingleChildScrollView(
           child: Column(
