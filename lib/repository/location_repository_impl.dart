@@ -1,7 +1,9 @@
 import 'dart:async';
+
 import 'package:curativecare/network/location_client.dart';
 import 'package:curativecare/repository/abstract/location_repository.dart';
 import 'package:location/location.dart';
+
 import '../main.dart';
 
 class LocationRepoImpl implements LocationRepository {

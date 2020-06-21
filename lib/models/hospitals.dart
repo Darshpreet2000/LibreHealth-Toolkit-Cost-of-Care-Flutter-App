@@ -15,6 +15,5 @@ class Hospitals {
   @HiveField(4)
   Future<String> path;
 
-  Hospitals(this.name, this.path, this.distance, this.beds,
-      [this.operator]);
+  Hospitals(this.name, this.path, this.distance, this.beds, [this.operator]);
 }

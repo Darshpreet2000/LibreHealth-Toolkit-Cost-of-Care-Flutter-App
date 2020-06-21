@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:curativecare/models/hospitals.dart';
 import 'package:curativecare/network/overpass_api_client.dart';
 import 'package:curativecare/repository/abstract/nearby_hospitals_repository.dart';
@@ -8,17 +9,18 @@ import 'package:http/http.dart' as http;
 import '../main.dart';
 
 class NearbyHospitalsRepoImpl implements NearbyHospitalsRepository {
-
-  List<Hospitals> getSavedList(){
+  List<Hospitals> getSavedList() {
     return listbox.get('nearbyHospitalList').cast<Hospitals>();
   }
-  void saveList(List<Hospitals> nearbyHospitals){
+
+  void saveList(List<Hospitals> nearbyHospitals) {
     listbox.put('nearbyHospitalList', nearbyHospitals);
     String address = box.get('address');
     String radius = box.get('radius');
     box.put('settings', "$address" + "$radius");
   }
-  bool checkSaved(){
+
+  bool checkSaved() {
     String address = box.get('address');
     String radius = box.get('radius');
     String currentSettings = "$address" + "$radius";
@@ -29,8 +31,8 @@ class NearbyHospitalsRepoImpl implements NearbyHospitalsRepository {
     }
     return false;
   }
-  Future fetchHospitals() async {
 
+  Future fetchHospitals() async {
     OverpassAPIClient overpassAPIClient = new OverpassAPIClient();
     return overpassAPIClient.fetch_nearby_hospitals();
   }

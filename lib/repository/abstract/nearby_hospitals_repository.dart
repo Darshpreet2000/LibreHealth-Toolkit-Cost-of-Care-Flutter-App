@@ -1,5 +1,3 @@
-
-
 import 'package:curativecare/models/hospitals.dart';
 
 // To find Nearby Hospitals using coordinates

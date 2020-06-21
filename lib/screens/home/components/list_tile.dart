@@ -1,9 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:curativecare/models/hospitals.dart';
+import 'package:curativecare/repository/nearby_hospital_repository_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-
-import 'file:///C:/Users/Darshpreet/AndroidStudioProjects/lh-toolkit-cost-of-care-app/lib/repository/nearby_hospital_repository_impl.dart';
 
 Card makeCard(Hospitals hospital) {
   return Card(

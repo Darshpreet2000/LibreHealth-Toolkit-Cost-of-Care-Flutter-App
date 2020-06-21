@@ -19,12 +19,13 @@ import 'models/hospitals.dart';
 
 var box;
 var listbox;
+
 Future _openBox() async {
   var dir = await getApplicationDocumentsDirectory();
   Hive.init(dir.path);
   Hive.registerAdapter(HospitalsAdapter());
   box = await Hive.openBox("myBox");
-  listbox= await Hive.openBox<List>("listBox");
+  listbox = await Hive.openBox<List>("listBox");
 }
 
 void main() async {

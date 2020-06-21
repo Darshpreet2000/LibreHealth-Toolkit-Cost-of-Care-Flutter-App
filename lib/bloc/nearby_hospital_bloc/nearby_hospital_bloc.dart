@@ -21,19 +21,18 @@ class NearbyHospitalBloc
   ) async* {
     yield LoadingState();
     if (event is FetchHospitals) {
-      bool checkSaved=await nearbyHospitalsServices.checkSaved();
-      if(checkSaved){
+      bool checkSaved = await nearbyHospitalsServices.checkSaved();
+      if (checkSaved) {
         List<Hospitals> nearby_hospital =
-        await nearbyHospitalsServices.getSavedList();
+            await nearbyHospitalsServices.getSavedList();
         yield LoadedState(nearby_hospital);
-      }
-      else {
+      } else {
         final response = await nearbyHospitalsServices.fetchHospitals();
         if (response.statusCode == 200) {
           // If the server did return a 200 OK response,
           // then parse the JSON.
           List<Hospitals> nearby_hospital =
-          await nearbyHospitalsServices.parseJson(response.body);
+              await nearbyHospitalsServices.parseJson(response.body);
           await nearbyHospitalsServices.saveList(nearby_hospital);
           yield LoadedState(nearby_hospital);
         } else {

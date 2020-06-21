@@ -1,12 +1,15 @@
 import 'dart:convert';
 import 'dart:typed_data';
+
 import 'package:flutter/cupertino.dart';
+
 import '../main.dart';
 
-class ImageToString{
-  static Future<bool> saveImageToPreferences(String key,Uint8List value) async {
-      String string=base64String(value);
-      box.put(key,string);
+class ImageToString {
+  static Future<bool> saveImageToPreferences(
+      String key, Uint8List value) async {
+    String string = base64String(value);
+    box.put(key, string);
   }
 
   static Image imageFromBase64String(String base64String) {
