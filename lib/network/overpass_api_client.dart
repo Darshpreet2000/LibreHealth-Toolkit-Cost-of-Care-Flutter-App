@@ -1,8 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-
-import 'package:curativecare/models/nearby_hospital.dart';
+import 'package:curativecare/models/hospitals.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 
@@ -34,9 +33,9 @@ class OverpassAPIClient {
     }
   }
 
-  Future<List<NearbyHospital>> parse_hospital_json_data(
+  Future<List<Hospitals>> parse_hospital_json_data(
       String responseBody) async {
-    List<NearbyHospital> hospital_list = new List();
+    List<Hospitals> hospital_list = new List();
     latitude = box.get('latitude');
     longitude = box.get('longitude');
     Map<String, dynamic> parsedJson = json.decode(responseBody);
@@ -70,8 +69,8 @@ class OverpassAPIClient {
         beds = 'N/A';
       }
 
-      NearbyHospital nearbyHospital =
-          new NearbyHospital(name, path, distance.toString(), beds);
+      Hospitals nearbyHospital =
+          new Hospitals(name, path, distance.toString(), beds);
       hospital_list.add(nearbyHospital);
     }
     return hospital_list;

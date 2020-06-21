@@ -1,4 +1,4 @@
-import 'package:curativecare/models/nearby_hospital.dart';
+import 'package:curativecare/models/hospitals.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -13,7 +13,7 @@ class FetchHospitals extends NearbyHospitalEvent {
 }
 
 class FetchImages extends NearbyHospitalEvent {
-  List<NearbyHospital> list;
+  List<Hospitals> list;
 
   FetchImages(this.list);
 

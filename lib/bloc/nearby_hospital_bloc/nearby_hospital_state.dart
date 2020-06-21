@@ -1,4 +1,4 @@
-import 'package:curativecare/models/nearby_hospital.dart';
+import 'package:curativecare/models/hospitals.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class NearbyHospitalState extends Equatable {
@@ -11,7 +11,7 @@ class LoadingState extends NearbyHospitalState {
 }
 
 class LoadedState extends NearbyHospitalState {
-  List<NearbyHospital> nearby_hospital;
+  List<Hospitals> nearby_hospital;
 
   LoadedState(this.nearby_hospital);
 

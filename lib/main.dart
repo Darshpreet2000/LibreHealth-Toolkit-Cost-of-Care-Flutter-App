@@ -15,12 +15,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 
-var box;
+import 'models/hospitals.dart';
 
+var box;
+var listbox;
 Future _openBox() async {
   var dir = await getApplicationDocumentsDirectory();
   Hive.init(dir.path);
+  Hive.registerAdapter(HospitalsAdapter());
   box = await Hive.openBox("myBox");
+  listbox= await Hive.openBox<List>("listBox");
 }
 
 void main() async {

@@ -1,7 +1,7 @@
 import 'package:curativecare/bloc/location_bloc/location_bloc.dart';
 import 'package:curativecare/bloc/location_bloc/user_location_state.dart';
 import 'package:curativecare/bloc/nearby_hospital_bloc/bloc.dart';
-import 'package:curativecare/models/nearby_hospital.dart';
+import 'package:curativecare/models/hospitals.dart';
 import 'package:curativecare/screens/home/components/list_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -54,7 +54,7 @@ Widget ShimmerLoading() {
 }
 
 class ListBuilder extends StatelessWidget {
-  List<NearbyHospital> items = new List();
+  List<Hospitals> items = new List();
 
   ListBuilder(this.items);
 

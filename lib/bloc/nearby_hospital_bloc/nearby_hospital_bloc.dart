@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:curativecare/models/nearby_hospital.dart';
+import 'package:curativecare/models/hospitals.dart';
 import 'package:curativecare/repository/nearby_hospital_repository_impl.dart';
 
 import './bloc.dart';
@@ -21,17 +21,26 @@ class NearbyHospitalBloc
   ) async* {
     yield LoadingState();
     if (event is FetchHospitals) {
-      final response = await nearbyHospitalsServices.fetch_hospitals();
-      if (response.statusCode == 200) {
-        // If the server did return a 200 OK response,
-        // then parse the JSON.
-        List<NearbyHospital> nearby_hospital =
-            await nearbyHospitalsServices.parse_json(response.body);
+      bool checkSaved=await nearbyHospitalsServices.checkSaved();
+      if(checkSaved){
+        List<Hospitals> nearby_hospital =
+        await nearbyHospitalsServices.getSavedList();
         yield LoadedState(nearby_hospital);
-      } else {
-        // If the server did not return a 200 OK response,
-        // then throw an exception.
-        yield ErrorState('Network Error Unable to Fetch Data');
+      }
+      else {
+        final response = await nearbyHospitalsServices.fetchHospitals();
+        if (response.statusCode == 200) {
+          // If the server did return a 200 OK response,
+          // then parse the JSON.
+          List<Hospitals> nearby_hospital =
+          await nearbyHospitalsServices.parseJson(response.body);
+          await nearbyHospitalsServices.saveList(nearby_hospital);
+          yield LoadedState(nearby_hospital);
+        } else {
+          // If the server did not return a 200 OK response,
+          // then throw an exception.
+          yield ErrorState('Network Error Unable to Fetch Data');
+        }
       }
     }
   }

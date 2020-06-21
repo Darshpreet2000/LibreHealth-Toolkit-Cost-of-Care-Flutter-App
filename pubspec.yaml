@@ -37,14 +37,19 @@ dependencies:
   flutter_bloc: ^4.0.1
   equatable: ^1.2.0
   cached_network_image: ^2.2.0+1
-  hive: ^1.4.1+1
-  hive_flutter: ^0.3.0+2
+  hive:
+  hive_flutter:
+    # For OS-specific directory paths
   path_provider: ^1.6.5
 
-
+dependency_overrides:
+  dartx: ^0.3.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  hive_generator:
+  build_runner:
 
 
 # For information on the generic Dart part of this file, see the
