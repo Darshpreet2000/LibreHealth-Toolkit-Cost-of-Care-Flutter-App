@@ -48,10 +48,7 @@ Container makeListTile(Hospitals hospital) {
                     child: Expanded(
                       child: new FittedBox(
                           fit: BoxFit.fill,
-                          child: Icon(
-                            Icons.local_hospital,
-                            color: Colors.red,
-                          )),
+                          child: Image.asset('assets/placeholder.png')),
                     ));
               }
               if (snapshot.hasData) {
