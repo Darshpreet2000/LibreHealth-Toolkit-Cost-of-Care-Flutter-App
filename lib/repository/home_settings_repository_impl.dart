@@ -21,13 +21,13 @@ class HomeSettingsRepository implements HomeSettingsRepo {
   HomeSettingsModel getInitialSettings() {
    int radius=5;
    String order='Ascending';
-   bool isSelected=false;
+   bool isSelected=true;
     if(box.containsKey('radius'))
       radius= int.parse(box.get('radius'));
     if (box.containsKey('order')) {
      order= box.get('order');
-      if(order=='Descending')
-        isSelected=true;
+      if(order=='Ascending')
+        isSelected=false;
     }
     if(box.containsKey('isSelected'))
       isSelected= box.get('isSelected');

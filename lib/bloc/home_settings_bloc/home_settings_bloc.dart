@@ -10,20 +10,19 @@ class HomeSettingsBloc extends Bloc<HomeSettingsEvent, HomeSettingsState> {
   HomeSettingsBloc(this.homeSettingsRepository);
 
   @override
-  HomeSettingsState get initialState => LoadingState(HomeSettingsModel(5,'Ascending',false));
+  HomeSettingsState get initialState => LoadingState(HomeSettingsModel(5,'Ascending',true));
 
   @override
   Stream<HomeSettingsState> mapEventToState(
     HomeSettingsEvent event,
   ) async* {
     if (event is GetInitialSettings) {
-      yield(LoadingState(HomeSettingsModel(5,'Ascending',false)));
       HomeSettingsModel homeSettingsModel=homeSettingsRepository.getInitialSettings();
       yield LoadedState(homeSettingsModel);
     }
     if (event is SaveSettings) {
       yield LoadingState(event.homeSettingsModel);
-     await homeSettingsRepository.changeSettings(event.homeSettingsModel);
+      await homeSettingsRepository.changeSettings(event.homeSettingsModel);
       yield LoadedState(event.homeSettingsModel);
     }
     else if (event is ToggleOrder ){

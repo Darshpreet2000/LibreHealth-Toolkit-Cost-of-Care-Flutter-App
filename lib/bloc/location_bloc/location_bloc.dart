@@ -25,7 +25,7 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
       } else {
         final String address = await locationservices.getLocationPermission();
         if (address == "Location Not Found" || address == "Network Problem")
-          yield LocationError(address);
+          yield LocationError("Network Problem Location Not Found");
         else
           yield LocationLoaded(address);
       }
@@ -33,7 +33,7 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
       yield LocationLoading();
       final String address = await locationservices.getLocationPermission();
       if (address == "Location Not Found" || address == "Network Problem")
-        yield LocationError(address);
+        yield LocationError("Network Problem Location Not Found");
       else
         yield LocationLoaded(address);
     }

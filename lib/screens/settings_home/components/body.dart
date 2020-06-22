@@ -93,7 +93,7 @@ class Body extends StatelessWidget {
 }
 
 class RadiusSlider extends StatelessWidget {
-   LoadedState state;
+   HomeSettingsState state;
   RadiusSlider(this.state);
   @override
   Widget build(BuildContext context) {

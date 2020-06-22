@@ -1,5 +1,6 @@
 import 'package:curativecare/bloc/home_settings_bloc/bloc.dart';
-import 'package:curativecare/widgets/loading_widget.dart';
+import 'package:curativecare/bloc/location_bloc/location_bloc.dart';
+import 'package:curativecare/bloc/location_bloc/user_location_events.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,18 +26,13 @@ class _SettingsHomeState extends State<SettingsHome> {
     return BlocListener<HomeSettingsBloc, HomeSettingsState>(
     listener: (BuildContext context, HomeSettingsState state) {
            if(state is LoadingState){
-           LoadingWidget(context);
-           }
-          else if(state is LoadedState){
-             Future.delayed(const Duration(seconds: 3), () {
-               Navigator.of(context).pop();
-             });
 
            }
     },
     child:BlocBuilder<HomeSettingsBloc, HomeSettingsState>(
         builder: (BuildContext context, HomeSettingsState state) {
-            return Scaffold(
+
+          return Scaffold(
                 backgroundColor: appBackgroundColor,
                 appBar: settingsAppBar(context, state),
                 body: Body(state));

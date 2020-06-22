@@ -25,6 +25,7 @@ class NearbyHospitalBloc
       if (checkSaved) {
         List<Hospitals> nearby_hospital =
             await nearbyHospitalsServices.getSavedList();
+        nearby_hospital=nearbyHospitalsServices.sortList(nearby_hospital);
         yield LoadedState(nearby_hospital);
       } else {
         final response = await nearbyHospitalsServices.fetchHospitals();
@@ -33,7 +34,8 @@ class NearbyHospitalBloc
           // then parse the JSON.
           List<Hospitals> nearby_hospital =
               await nearbyHospitalsServices.parseJson(response.body);
-          await nearbyHospitalsServices.saveList(nearby_hospital);
+          nearbyHospitalsServices.saveList(nearby_hospital);
+          nearby_hospital=nearbyHospitalsServices.sortList(nearby_hospital);
           yield LoadedState(nearby_hospital);
         } else {
           // If the server did not return a 200 OK response,

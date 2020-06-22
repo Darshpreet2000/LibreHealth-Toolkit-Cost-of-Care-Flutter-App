@@ -18,7 +18,11 @@ class OverpassAPIClient {
     if (box.containsKey('latitude') && box.containsKey('longitude')) {
       latitude = box.get('latitude');
       longitude = box.get('longitude');
-
+    if(box.containsKey('radius')) {
+      radius = box.get('radius');
+      int radiusInt=int.parse(radius)*1000;
+      radius=radiusInt.toString(); //converting to metres
+    }
       String Nearby_Hospitals =
           """[out:json];(node["amenity"="hospital"](around:$radius,$latitude,$longitude);way["amenity"="hospital"](around:$radius,$latitude,$longitude);relation["amenity"="hospital"](around:$radius,$latitude,$longitude););out center;""";
       print(API_DOMAIN + Nearby_Hospitals);
