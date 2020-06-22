@@ -1,5 +1,7 @@
+import 'package:curativecare/bloc/home_settings_bloc/bloc.dart';
 import 'package:curativecare/bloc/location_bloc/location_bloc.dart';
 import 'package:curativecare/bloc/nearby_hospital_bloc/bloc.dart';
+import 'package:curativecare/repository/home_settings_repository_impl.dart';
 import 'package:curativecare/repository/location_repository_impl.dart';
 import 'package:curativecare/repository/nearby_hospital_repository_impl.dart';
 import 'package:curativecare/screens/about/about.dart';
@@ -48,6 +50,10 @@ class MyApp extends StatelessWidget {
         BlocProvider<NearbyHospitalBloc>(
           create: (BuildContext context) =>
               NearbyHospitalBloc(NearbyHospitalsRepoImpl()),
+        ),
+        BlocProvider<HomeSettingsBloc>(
+          create: (BuildContext context) =>
+              HomeSettingsBloc( HomeSettingsRepository()),
         ),
       ],
       child: MaterialApp(
