@@ -26,7 +26,7 @@ class NearbyHospitalsRepoImpl implements NearbyHospitalsRepository {
     }
     else
       hospitals.sort((a, b) =>
-          double.parse(b.distance).compareTo(double.parse(a.distance)));
+          double.parse(a.distance).compareTo(double.parse(b.distance)));
     return hospitals;
   }
   void saveList(List<Hospitals> nearbyHospitals) {
