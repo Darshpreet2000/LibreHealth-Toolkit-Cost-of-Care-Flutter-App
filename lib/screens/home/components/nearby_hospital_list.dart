@@ -19,11 +19,11 @@ class NearbyHospitalList extends StatelessWidget {
       },
       child: BlocBuilder<NearbyHospitalBloc, NearbyHospitalState>(
         builder: (BuildContext context, NearbyHospitalState state) {
-          if (state is LoadingState) {
+          if (state is NearbyHospitalsLoadingState) {
             return ShimmerLoading();
-          } else if (state is LoadedState) {
+          } else if (state is NearbyHospitalsLoadedState) {
             return ListBuilder(state.nearby_hospital);
-          } else if (state is ErrorState) {
+          } else if (state is NearbyHospitalsErrorState) {
             return Center(
                 child: Text(
               state.message,

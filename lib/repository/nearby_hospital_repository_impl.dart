@@ -10,25 +10,26 @@ import '../main.dart';
 
 class NearbyHospitalsRepoImpl implements NearbyHospitalsRepository {
   List<Hospitals> getSavedList() {
-    List<Hospitals> hospitals= listbox.get('nearbyHospitalList').cast<Hospitals>();
+    List<Hospitals> hospitals =
+        listbox.get('nearbyHospitalList').cast<Hospitals>();
     return hospitals;
   }
 
-  List<Hospitals> sortList(List<Hospitals> hospitals){
-    if(box.containsKey('order')) {
-     String  order=box.get('order');
-      if(order=='Ascending')
-      hospitals.sort((a, b) =>
-          double.parse(a.distance).compareTo(double.parse(b.distance)));
-      else if(order=='Descending')
+  List<Hospitals> sortList(List<Hospitals> hospitals) {
+    if (box.containsKey('order')) {
+      String order = box.get('order');
+      if (order == 'Ascending')
+        hospitals.sort((a, b) =>
+            double.parse(a.distance).compareTo(double.parse(b.distance)));
+      else if (order == 'Descending')
         hospitals.sort((a, b) =>
             double.parse(b.distance).compareTo(double.parse(a.distance)));
-    }
-    else
+    } else
       hospitals.sort((a, b) =>
           double.parse(a.distance).compareTo(double.parse(b.distance)));
     return hospitals;
   }
+
   void saveList(List<Hospitals> nearbyHospitals) {
     listbox.put('nearbyHospitalList', nearbyHospitals);
     String address = box.get('address');
@@ -58,7 +59,6 @@ class NearbyHospitalsRepoImpl implements NearbyHospitalsRepository {
     OverpassAPIClient overpassAPIClient = new OverpassAPIClient();
     //Store List in Hive
     return overpassAPIClient.parse_hospital_json_data(responseBody);
-
   }
 
   @override

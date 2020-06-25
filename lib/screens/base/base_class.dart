@@ -1,3 +1,4 @@
+import 'package:curativecare/screens/download_cdm/download_cdm_screen.dart';
 import 'package:curativecare/screens/home/home_screen.dart';
 import 'package:curativecare/screens/saved/saved_screen.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ class _BaseClassState extends State<BaseClass> {
         index: selectedIndex,
         children: <Widget>[
           Home(_drawerKey),
+          DownloadCDMScreen(),
           Saved(),
         ],
       ),
@@ -27,6 +29,12 @@ class _BaseClassState extends State<BaseClass> {
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Home')),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.cloud_download,
+                size: 25,
+              ),
+              title: Text('Download CDM')),
           BottomNavigationBarItem(
               icon: Icon(Icons.bookmark), title: Text('Saved')),
         ],

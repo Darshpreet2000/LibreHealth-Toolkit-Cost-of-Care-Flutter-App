@@ -7,7 +7,6 @@ abstract class NearbyHospitalEvent extends Equatable {
   const NearbyHospitalEvent();
 }
 
-
 class FetchHospitals extends NearbyHospitalEvent {
   @override
   List<Object> get props => [];

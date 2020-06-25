@@ -1,6 +1,8 @@
+import 'package:curativecare/bloc/download_cdm_bloc/bloc.dart';
 import 'package:curativecare/bloc/home_settings_bloc/bloc.dart';
 import 'package:curativecare/bloc/location_bloc/location_bloc.dart';
 import 'package:curativecare/bloc/nearby_hospital_bloc/bloc.dart';
+import 'package:curativecare/repository/download_cdm_repository_impl.dart';
 import 'package:curativecare/repository/home_settings_repository_impl.dart';
 import 'package:curativecare/repository/location_repository_impl.dart';
 import 'package:curativecare/repository/nearby_hospital_repository_impl.dart';
@@ -53,7 +55,10 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<HomeSettingsBloc>(
           create: (BuildContext context) =>
-              HomeSettingsBloc( HomeSettingsRepository()),
+              HomeSettingsBloc(HomeSettingsRepository()),
+        ),
+        BlocProvider<DownloadCdmBloc>(
+          create: (BuildContext context) => DownloadCdmBloc(DownloadCDMRepositoryImpl()),
         ),
       ],
       child: MaterialApp(

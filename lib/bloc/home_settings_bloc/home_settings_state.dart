@@ -10,7 +10,6 @@ abstract class HomeSettingsState extends Equatable {
 class LoadedState extends HomeSettingsState {
   HomeSettingsModel homeSettingsModel;
 
-
   LoadedState(this.homeSettingsModel) : super(homeSettingsModel);
 
   @override
@@ -20,8 +19,8 @@ class LoadedState extends HomeSettingsState {
 class LoadingState extends HomeSettingsState {
   HomeSettingsModel homeSettingsModel;
 
-
   LoadingState(this.homeSettingsModel) : super(homeSettingsModel);
+
   @override
   List<Object> get props => [homeSettingsModel];
 }

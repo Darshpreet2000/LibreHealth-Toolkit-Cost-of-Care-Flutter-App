@@ -41,6 +41,7 @@ dependencies:
   hive_flutter:
     # For OS-specific directory paths
   path_provider: ^1.6.5
+  dio: ^3.0.9
 
 dependency_overrides:
   dartx: ^0.3.0

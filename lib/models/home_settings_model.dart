@@ -1,4 +1,4 @@
-class HomeSettingsModel{
+class HomeSettingsModel {
   int radius;
   String order;
   bool isSelected;

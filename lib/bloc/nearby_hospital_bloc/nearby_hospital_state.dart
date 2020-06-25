@@ -5,24 +5,24 @@ abstract class NearbyHospitalState extends Equatable {
   const NearbyHospitalState();
 }
 
-class LoadingState extends NearbyHospitalState {
+class NearbyHospitalsLoadingState extends NearbyHospitalState {
   @override
   List<Object> get props => [];
 }
 
-class LoadedState extends NearbyHospitalState {
+class NearbyHospitalsLoadedState extends NearbyHospitalState {
   List<Hospitals> nearby_hospital;
 
-  LoadedState(this.nearby_hospital);
+  NearbyHospitalsLoadedState(this.nearby_hospital);
 
   @override
   List<Object> get props => [];
 }
 
-class ErrorState extends NearbyHospitalState {
+class NearbyHospitalsErrorState extends NearbyHospitalState {
   String message;
 
-  ErrorState(this.message);
+  NearbyHospitalsErrorState(this.message);
 
   @override
   List<Object> get props => [];
