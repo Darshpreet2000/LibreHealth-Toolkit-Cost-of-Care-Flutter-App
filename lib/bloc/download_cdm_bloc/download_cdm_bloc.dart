@@ -23,6 +23,9 @@ class DownloadCdmBloc extends Bloc<DownloadCdmEvent, DownloadCdmState> {
       yield LoadedState(hospitalsName);
       downloadCDMRepositoryImpl.saveData(hospitalsName);
     }
+    else if (event is DownloadCDMGetCSV ){
+      downloadCDMRepositoryImpl.getCSVFile(event.hospitalName,event.stateName);
+    }
     else if (event is DownloadCDMError){
       yield ErrorState();
     }

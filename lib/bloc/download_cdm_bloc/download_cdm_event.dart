@@ -12,6 +12,16 @@ class DownloadCDMFetchData extends DownloadCdmEvent {
   @override
   List<Object> get props => [stateName];
 }
+
+class DownloadCDMGetCSV extends DownloadCdmEvent{
+  String stateName,hospitalName;
+
+  DownloadCDMGetCSV(this.stateName, this.hospitalName);
+
+  @override
+  List<Object> get props => [hospitalName,stateName];
+
+}
 class DownloadCDMError extends DownloadCdmEvent{
   @override
   List<Object> get props => [];

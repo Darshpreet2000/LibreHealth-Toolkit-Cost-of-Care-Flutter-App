@@ -1,5 +1,11 @@
+import 'package:curativecare/bloc/download_cdm_bloc/download_cdm_bloc.dart';
+import 'package:curativecare/bloc/download_cdm_bloc/download_cdm_event.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:curativecare/bloc/download_cdm_bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'list_tile.dart';
 
 ListTile makeShimmerListTile() {
   return ListTile(
@@ -16,7 +22,7 @@ ListTile makeShimmerListTile() {
   );
 }
 
-ListTile makeListTile(String hospital) {
+ListTile makeListTile(BuildContext context,String hospital) {
   return ListTile(
     title: Text(
       hospital,
@@ -34,7 +40,9 @@ ListTile makeListTile(String hospital) {
         child: InkWell(
           splashColor: Colors.blue,
           borderRadius: BorderRadius.circular(20.0),
-          onTap: () => {},
+          onTap: () => {
+          context.bloc<DownloadCdmBloc>().add(DownloadCDMGetCSV('Indiana',hospital))
+          },
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Icon(

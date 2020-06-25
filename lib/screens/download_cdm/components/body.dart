@@ -67,7 +67,7 @@ Widget ShowList(List<String> hospitalsName) {
           margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
           child: Container(
             decoration: BoxDecoration(color: Colors.grey[50]),
-            child: makeListTile(hospitalsName[index]),
+            child: makeListTile(context,hospitalsName[index]),
           ),
         );
       },

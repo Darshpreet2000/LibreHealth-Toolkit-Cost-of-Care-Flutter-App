@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 
 class GitLabApiClient {
@@ -38,5 +39,12 @@ class GitLabApiClient {
       name.add(hospitalName);
     }
     return name;
+  }
+
+  Future getCSVFile(String hospitalName,String stateName) async {
+      String baseURL="https://gitlab.com/Darshpreet2000/lh-toolkit-cost-of-care-app-data-scraper/-/raw/scrap-cdm-of-Indiana/CDM";
+      String url=baseURL+"/$stateName/$hospitalName"+".csv";
+      var response = await http.get(url);
+      print(response.body);
   }
 }

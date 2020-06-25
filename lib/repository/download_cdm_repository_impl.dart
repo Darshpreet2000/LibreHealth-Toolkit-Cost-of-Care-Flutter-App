@@ -17,4 +17,8 @@ class DownloadCDMRepositoryImpl extends DownloadCDMRepository {
   void saveData(List<String> hospitalsName) {
     listbox.put('downloadCDMList', hospitalsName);
   }
+  void  getCSVFile(String hospitalName,String stateName){
+    GitLabApiClient gitLabApiClient = new GitLabApiClient();
+    gitLabApiClient.getCSVFile(hospitalName, stateName);
+  }
 }
