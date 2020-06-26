@@ -1,6 +1,7 @@
 import 'dart:convert';
+import 'dart:io';
 
-import 'package:dio/dio.dart';
+import 'package:curativecare/models/download_cdm_model.dart';
 import 'package:http/http.dart' as http;
 
 class GitLabApiClient {
@@ -28,23 +29,33 @@ class GitLabApiClient {
     return "[" + responseBody + "]";
   }
 
-  Future<List<String>> parseAvailableCdm(Future responseBody) async {
+  Future<List<DownloadCdmModel>> parseAvailableCdm(Future responseBody) async {
     var res = await responseBody;
     var elements = json.decode(res) as List;
-    List<String> name = new List();
+    List<DownloadCdmModel> name = new List();
     for (int i = 0; i < elements.length; i++) {
       Map<String, dynamic> current_hospital = elements[i];
       String hospitalName = current_hospital['name'];
       hospitalName = hospitalName.substring(0, hospitalName.length - 4);
-      name.add(hospitalName);
+      name.add(DownloadCdmModel(hospitalName, 0));
     }
     return name;
   }
 
-  Future getCSVFile(String hospitalName,String stateName) async {
-      String baseURL="https://gitlab.com/Darshpreet2000/lh-toolkit-cost-of-care-app-data-scraper/-/raw/scrap-cdm-of-Indiana/CDM";
-      String url=baseURL+"/$stateName/$hospitalName"+".csv";
+  Future getCSVFile(DownloadCdmModel hospital, String stateName) async {
+    String baseURL =
+        "https://gitlab.com/Darshpreet2000/lh-toolkit-cost-of-care-app-data-scraper/-/raw/scrap-cdm-of-Indiana/CDM";
+    String url = baseURL + "/$stateName/${hospital.hospitalName}" + ".csv";
+    try {
       var response = await http.get(url);
-      print(response.body);
+      if (response.statusCode == 200) {
+        hospital.isDownload = 2;
+        return hospital;
+      }
+    }
+    on SocketException {
+      hospital.isDownload = 0;
+      return hospital;
+    }
   }
 }

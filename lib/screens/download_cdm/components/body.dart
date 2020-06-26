@@ -1,5 +1,6 @@
 import 'package:curativecare/bloc/download_cdm_bloc/bloc.dart';
 import 'package:curativecare/bloc/nearby_hospital_bloc/bloc.dart';
+import 'package:curativecare/models/download_cdm_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -9,14 +10,25 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: BlocListener<NearbyHospitalBloc, NearbyHospitalState>(
-        listener: (BuildContext context, NearbyHospitalState state) {
-          if (state is NearbyHospitalsLoadedState) {
-            context.bloc<DownloadCdmBloc>().add(DownloadCDMFetchData('Indiana'));
-          }
-          else if(state is NearbyHospitalsErrorState){
-            context.bloc<DownloadCdmBloc>().add(DownloadCDMError());
-          }
+        child: BlocListener<NearbyHospitalBloc, NearbyHospitalState>(
+      listener: (BuildContext context, NearbyHospitalState state) {
+        if (state is NearbyHospitalsLoadedState) {
+          context.bloc<DownloadCdmBloc>().add(DownloadCDMFetchData('Indiana'));
+        } else if (state is NearbyHospitalsErrorState) {
+          context.bloc<DownloadCdmBloc>().add(DownloadCDMError());
+        }
+      },
+      child: BlocListener<DownloadCdmBloc, DownloadCdmState>(
+        listener: (BuildContext context, DownloadCdmState state) {
+           if(state is ErrorStateSnackbar){
+             Scaffold.of(context).showSnackBar(SnackBar(
+               content: Text(
+                 'Network Error',
+                 style: TextStyle(color: Colors.white),
+               ),
+               backgroundColor: Colors.deepOrangeAccent,
+             ));
+           }
         },
         child: BlocBuilder<DownloadCdmBloc, DownloadCdmState>(
           builder: (BuildContext context, DownloadCdmState state) {
@@ -24,8 +36,9 @@ class Body extends StatelessWidget {
               return ShimmerLoading();
             else if (state is LoadedState) {
               return ShowList(state.hospitalsName);
-            }
-            else if (state is ErrorState ){
+            } else if (state is RefreshedState) {
+              return ShowList(state.hospitalsName);
+            } else if (state is ErrorState) {
               return Center(
                 child: Container(
                   child: Text('Network Error Unable to Load'),
@@ -35,7 +48,7 @@ class Body extends StatelessWidget {
           },
         ),
       ),
-    );
+    ));
   }
 }
 
@@ -56,7 +69,7 @@ Widget ShimmerLoading() {
   );
 }
 
-Widget ShowList(List<String> hospitalsName) {
+Widget ShowList(List<DownloadCdmModel> hospitalsName) {
   return Scrollbar(
     child: ListView.builder(
       itemCount: hospitalsName.length,
@@ -67,7 +80,7 @@ Widget ShowList(List<String> hospitalsName) {
           margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
           child: Container(
             decoration: BoxDecoration(color: Colors.grey[50]),
-            child: makeListTile(context,hospitalsName[index]),
+            child: makeListTile(context, hospitalsName[index], index),
           ),
         );
       },

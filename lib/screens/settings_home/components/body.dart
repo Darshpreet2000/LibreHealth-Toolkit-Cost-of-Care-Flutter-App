@@ -1,4 +1,4 @@
-import'package:curativecare/bloc/home_settings_bloc/bloc.dart';
+import 'package:curativecare/bloc/home_settings_bloc/bloc.dart';
 import 'package:curativecare/models/home_settings_model.dart';
 import 'package:curativecare/widgets/user_location.dart';
 import 'package:flutter/cupertino.dart';

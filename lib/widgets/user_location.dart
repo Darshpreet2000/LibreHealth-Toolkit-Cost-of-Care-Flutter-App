@@ -57,11 +57,11 @@ class _UserLocationState extends State<UserLocation> {
                       if (state is LocationError) {
                         Scaffold.of(context).showSnackBar(SnackBar(
                           content: Text(
-                            'Location Not Found',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          backgroundColor: Colors.deepOrangeAccent,
-                        ));
+                          'Location Not Found',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      backgroundColor: Colors.deepOrangeAccent,
+                      ));
                       }
                     },
                     child: BlocBuilder<LocationBloc, LocationState>(

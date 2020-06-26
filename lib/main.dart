@@ -19,6 +19,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 
+import 'models/download_cdm_model.dart';
 import 'models/hospitals.dart';
 
 var box;
@@ -28,6 +29,7 @@ Future _openBox() async {
   var dir = await getApplicationDocumentsDirectory();
   Hive.init(dir.path);
   Hive.registerAdapter(HospitalsAdapter());
+//  Hive.registerAdapter(DownloadCdmModelAdapter());
   box = await Hive.openBox("myBox");
   listbox = await Hive.openBox<List>("listBox");
 }
@@ -58,7 +60,8 @@ class MyApp extends StatelessWidget {
               HomeSettingsBloc(HomeSettingsRepository()),
         ),
         BlocProvider<DownloadCdmBloc>(
-          create: (BuildContext context) => DownloadCdmBloc(DownloadCDMRepositoryImpl()),
+          create: (BuildContext context) =>
+              DownloadCdmBloc(DownloadCDMRepositoryImpl()),
         ),
       ],
       child: MaterialApp(
