@@ -37,11 +37,13 @@ dependencies:
   flutter_bloc: ^4.0.1
   equatable: ^1.2.0
   cached_network_image: ^2.2.0+1
+  file_utils: ^0.1.4
   hive:
   hive_flutter:
     # For OS-specific directory paths
   path_provider: ^1.6.5
   dio: ^3.0.9
+  permission_handler: ^5.0.0+hotfix.5
 
 dependency_overrides:
   dartx: ^0.3.0

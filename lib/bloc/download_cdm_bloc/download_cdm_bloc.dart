@@ -23,7 +23,7 @@ class DownloadCdmBloc extends Bloc<DownloadCdmEvent, DownloadCdmState> {
       yield LoadingState();
       hospitals = await downloadCDMRepositoryImpl.fetchData(event.stateName);
       yield LoadedState(hospitals);
-      downloadCDMRepositoryImpl.saveData(hospitals);
+  //  downloadCDMRepositoryImpl.saveData(hospitals);
     } else if (event is DownloadCDMGetCSV) {
       hospitals[event.index].isDownload = 1;
       yield RefreshedState(hospitals);

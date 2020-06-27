@@ -1,8 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:curativecare/models/download_cdm_model.dart';
+import 'package:curativecare/models/search_model.dart';
+import 'package:curativecare/repository/database_repository_impl.dart';
+import 'package:dio/dio.dart';
+import 'package:file_utils/file_utils.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class GitLabApiClient {
   String base_url =
@@ -46,16 +52,63 @@ class GitLabApiClient {
     String baseURL =
         "https://gitlab.com/Darshpreet2000/lh-toolkit-cost-of-care-app-data-scraper/-/raw/scrap-cdm-of-Indiana/CDM";
     String url = baseURL + "/$stateName/${hospital.hospitalName}" + ".csv";
-    try {
-      var response = await http.get(url);
-      if (response.statusCode == 200) {
-        hospital.isDownload = 2;
+    Dio dio = Dio();
+    bool checkPermission=false;
+    var status = await Permission.storage.status;
+    if(status.isDenied){
+      status = await Permission.storage.request();
+      if(status.isGranted)
+        checkPermission=true;
+    }
+
+    if (checkPermission == true) {
+      String dirloc = "";
+      if (Platform.isAndroid) {
+        dirloc = "/sdcard/download/";
+      } else {
+          Directory appDocDir = await getApplicationDocumentsDirectory();
+         dirloc = appDocDir.path;
+      }
+
+      try {
+        FileUtils.mkdir([dirloc]);
+        var response = await dio.download(
+            url, dirloc + "${hospital.hospitalName}" + ".csv");
+        if (response.statusCode == 200) {
+          DatabaseRepositoryImpl databaseRepositoryImpl = new DatabaseRepositoryImpl();
+          Stream<List> inputStream = new File(
+              '/sdcard/download/${hospital.hospitalName}.csv').openRead();
+          bool isFirstLine=true;
+          List<SearchModel>myList = new List();
+           inputStream.transform(utf8.decoder)
+              .transform(new LineSplitter())
+              .listen(
+                  (String line) {
+                List row = line.split(",");
+                String description= row[0];
+               String  price= row[1];
+                String category = row[2];
+                if(isFirstLine==false)
+                myList.add(new SearchModel( description,price, category));
+               isFirstLine=false;
+                },
+              onDone: () async {
+                await databaseRepositoryImpl.insertCDM(hospital.hospitalName, myList);
+                hospital.isDownload = 2;
+                return hospital;
+              },
+              onError: (e) {
+                hospital.isDownload = 0;
+                return hospital;
+              });
+        }
+      }
+      on SocketException {
+        hospital.isDownload = 0;
         return hospital;
       }
     }
-    on SocketException {
-      hospital.isDownload = 0;
-      return hospital;
-    }
+    hospital.isDownload = 0;
+    return hospital;
   }
 }

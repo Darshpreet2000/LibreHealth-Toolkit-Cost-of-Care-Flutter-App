@@ -47,7 +47,7 @@ Card makeCard(int index) {
 ListTile makeListTile(int index) {
   return ListTile(
     title: Text(
-      procedures_list[index].desciption,
+      procedures_list[index].description,
       style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
     ),
     subtitle: Text(

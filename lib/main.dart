@@ -29,7 +29,7 @@ Future _openBox() async {
   var dir = await getApplicationDocumentsDirectory();
   Hive.init(dir.path);
   Hive.registerAdapter(HospitalsAdapter());
-//  Hive.registerAdapter(DownloadCdmModelAdapter());
+ // Hive.registerAdapter(DownloadCdmModelAdapter());
   box = await Hive.openBox("myBox");
   listbox = await Hive.openBox<List>("listBox");
 }
