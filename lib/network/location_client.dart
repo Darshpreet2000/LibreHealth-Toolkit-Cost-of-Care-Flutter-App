@@ -28,10 +28,13 @@ class LocationClient {
           ", " +
           placemark[0].subLocality +
           ", " +
-          placemark[0].locality +
+          placemark[0].administrativeArea +
           ", " +
           placemark[0].country;
       //Save address
+      //HardCoding for now State
+      //box.put('state',placemark[0].administrativeArea);
+      box.put('state','Alaska');
       await box.put('address', address);
       return address;
     } on PlatformException {

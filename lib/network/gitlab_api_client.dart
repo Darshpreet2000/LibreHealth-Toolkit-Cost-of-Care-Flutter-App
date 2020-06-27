@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:csv/csv.dart';
 import 'package:curativecare/models/download_cdm_model.dart';
 import 'package:curativecare/models/search_model.dart';
 import 'package:curativecare/repository/database_repository_impl.dart';
@@ -55,12 +56,11 @@ class GitLabApiClient {
     Dio dio = Dio();
     bool checkPermission=false;
     var status = await Permission.storage.status;
-    if(status.isDenied){
+    if(status.isDenied|| status.isUndetermined){
       status = await Permission.storage.request();
-      if(status.isGranted)
-        checkPermission=true;
     }
-
+    if(status.isGranted)
+      checkPermission=true;
     if (checkPermission == true) {
       String dirloc = "";
       if (Platform.isAndroid) {
@@ -78,29 +78,41 @@ class GitLabApiClient {
           DatabaseRepositoryImpl databaseRepositoryImpl = new DatabaseRepositoryImpl();
           Stream<List> inputStream = new File(
               '/sdcard/download/${hospital.hospitalName}.csv').openRead();
+          List<String> lines = new File(dirloc + "${hospital.hospitalName}" + ".csv").readAsLinesSync();
           bool isFirstLine=true;
           List<SearchModel>myList = new List();
-           inputStream.transform(utf8.decoder)
-              .transform(new LineSplitter())
-              .listen(
-                  (String line) {
-                List row = line.split(",");
-                String description= row[0];
-               String  price= row[1];
-                String category = row[2];
-                if(isFirstLine==false)
-                myList.add(new SearchModel( description,price, category));
-               isFirstLine=false;
-                },
-              onDone: () async {
-                await databaseRepositoryImpl.insertCDM(hospital.hospitalName, myList);
-                hospital.isDownload = 2;
-                return hospital;
-              },
-              onError: (e) {
-                hospital.isDownload = 0;
-                return hospital;
-              });
+          for (var line in lines) {
+            bool first=false,second=false,third=false;
+            String description,price,category;
+            int lastindex=line.length;
+            for(int i=line.length-1;i>=0;i--){
+              if (second == true&&third==true) {
+                description = line.substring(0, lastindex);
+                first=true;
+                lastindex = i;
+                break;
+              }
+              else if(line[i]==',') {
+                if (line[i] == ',' && third == false) {
+                  category = line.substring(i + 1, lastindex);
+                  third=true;
+                  lastindex = i;
+                }
+                else if (line[i] == ',' && second == false) {
+                  price = line.substring(i + 1, lastindex);
+                  second=true;
+                  lastindex = i;
+                }
+              }
+
+            }
+            if(isFirstLine==false)
+              myList.add(new SearchModel( description,price, category));
+            isFirstLine=false;
+          }
+          await databaseRepositoryImpl.insertCDM(hospital.hospitalName, myList);
+          hospital.isDownload = 2;
+          return hospital;
         }
       }
       on SocketException {
@@ -108,7 +120,9 @@ class GitLabApiClient {
         return hospital;
       }
     }
-    hospital.isDownload = 0;
-    return hospital;
+    else {
+      hospital.isDownload = 0;
+      return hospital;
+    }
   }
 }

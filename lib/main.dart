@@ -2,10 +2,12 @@ import 'package:curativecare/bloc/download_cdm_bloc/bloc.dart';
 import 'package:curativecare/bloc/home_settings_bloc/bloc.dart';
 import 'package:curativecare/bloc/location_bloc/location_bloc.dart';
 import 'package:curativecare/bloc/nearby_hospital_bloc/bloc.dart';
+import 'package:curativecare/bloc/view_cdm_screen_bloc/bloc.dart';
 import 'package:curativecare/repository/download_cdm_repository_impl.dart';
 import 'package:curativecare/repository/home_settings_repository_impl.dart';
 import 'package:curativecare/repository/location_repository_impl.dart';
 import 'package:curativecare/repository/nearby_hospital_repository_impl.dart';
+import 'package:curativecare/repository/view_cdm_screen_repository_impl.dart';
 import 'package:curativecare/screens/about/about.dart';
 import 'package:curativecare/screens/base/base_class.dart';
 import 'package:curativecare/screens/compare_hospitals/compare_hospital.dart';
@@ -29,7 +31,7 @@ Future _openBox() async {
   var dir = await getApplicationDocumentsDirectory();
   Hive.init(dir.path);
   Hive.registerAdapter(HospitalsAdapter());
- // Hive.registerAdapter(DownloadCdmModelAdapter());
+  Hive.registerAdapter(DownloadCdmModelAdapter());
   box = await Hive.openBox("myBox");
   listbox = await Hive.openBox<List>("listBox");
 }
@@ -63,6 +65,11 @@ class MyApp extends StatelessWidget {
           create: (BuildContext context) =>
               DownloadCdmBloc(DownloadCDMRepositoryImpl()),
         ),
+        BlocProvider<ViewCdmScreenBloc>(
+          create: (BuildContext context) =>
+             ViewCdmScreenBloc(ViewViewCDMScreenRepositoryImpl()),
+        ),
+
       ],
       child: MaterialApp(
         theme: ThemeData(

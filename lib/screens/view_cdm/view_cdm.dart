@@ -13,7 +13,7 @@ class ViewCDM extends StatelessWidget {
         centerTitle: true,
         title: Text(name,style: TextStyle(color: Colors.white,),),
       ),
-      body: Body(),
+      body: Body(name),
     );
   }
 }

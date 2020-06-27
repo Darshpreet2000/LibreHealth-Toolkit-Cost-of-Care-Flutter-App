@@ -3,7 +3,7 @@ import 'package:curativecare/bloc/nearby_hospital_bloc/bloc.dart';
 import 'package:curativecare/models/download_cdm_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import '../../../main.dart';
 import 'list_tile.dart';
 
 class Body extends StatelessWidget {
@@ -13,7 +13,8 @@ class Body extends StatelessWidget {
         child: BlocListener<NearbyHospitalBloc, NearbyHospitalState>(
       listener: (BuildContext context, NearbyHospitalState state) {
         if (state is NearbyHospitalsLoadedState) {
-          context.bloc<DownloadCdmBloc>().add(DownloadCDMFetchData('Indiana'));
+          String state=box.get('state');
+          context.bloc<DownloadCdmBloc>().add(DownloadCDMFetchData(state));
         } else if (state is NearbyHospitalsErrorState) {
           context.bloc<DownloadCdmBloc>().add(DownloadCDMError());
         }

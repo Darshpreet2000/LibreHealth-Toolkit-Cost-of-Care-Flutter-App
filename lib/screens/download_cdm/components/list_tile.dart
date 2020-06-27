@@ -2,6 +2,7 @@ import 'package:curativecare/bloc/download_cdm_bloc/bloc.dart';
 import 'package:curativecare/bloc/download_cdm_bloc/download_cdm_bloc.dart';
 import 'package:curativecare/bloc/download_cdm_bloc/download_cdm_event.dart';
 import 'package:curativecare/models/download_cdm_model.dart';
+import 'package:curativecare/screens/view_cdm/view_cdm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
@@ -67,7 +68,12 @@ Widget conditionalWidget(
   } else if (condition == 2) {
     return RaisedButton(
       color: Colors.indigo,
-      onPressed: () {},
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ViewCDM(hospital.hospitalName)),
+        );
+      },
       child: Text(
         'View',
         maxLines: 2,

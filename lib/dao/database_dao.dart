@@ -10,7 +10,7 @@ class DatabaseDao{
     name = name.replaceAll(' ', '_');
     final db = await dbProvider.database;
     await db.rawQuery('DROP TABLE IF EXISTS ${name} ');
-    await db.rawQuery('CREATE TABLE ${name} ( Description varchar ,  Charge varchar, Category varchar )') ;
+    await db.rawQuery('CREATE TABLE ${name} ( description varchar ,  charge varchar, category varchar )') ;
     return ;
   }
 
@@ -33,11 +33,13 @@ class DatabaseDao{
   }
 
   Future<List<SearchModel>> readData(String name) async {
+    name = name.replaceAll(' ', '_');
+
     final database = await dbProvider.database;
     //Table name is given
     List<Map<String, dynamic>> maps = await database.query(name);
     return List.generate(maps.length, (i) {
-      SearchModel cdm;
+      SearchModel cdm= new SearchModel.empty();
       return cdm.fromMap(maps[i]);
     });
   }

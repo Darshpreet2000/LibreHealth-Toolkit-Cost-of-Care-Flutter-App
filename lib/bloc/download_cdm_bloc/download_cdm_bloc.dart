@@ -21,9 +21,15 @@ class DownloadCdmBloc extends Bloc<DownloadCdmEvent, DownloadCdmState> {
   ) async* {
     if (event is DownloadCDMFetchData) {
       yield LoadingState();
-      hospitals = await downloadCDMRepositoryImpl.fetchData(event.stateName);
-      yield LoadedState(hospitals);
-  //  downloadCDMRepositoryImpl.saveData(hospitals);
+      if(downloadCDMRepositoryImpl.checkDataSaved()){
+        hospitals = await downloadCDMRepositoryImpl.getSavedData();
+        yield LoadedState(hospitals);
+      }
+      else {
+        hospitals = await downloadCDMRepositoryImpl.fetchData(event.stateName);
+        yield LoadedState(hospitals);
+        downloadCDMRepositoryImpl.saveData(hospitals);
+      }
     } else if (event is DownloadCDMGetCSV) {
       hospitals[event.index].isDownload = 1;
       yield RefreshedState(hospitals);
@@ -34,6 +40,7 @@ class DownloadCdmBloc extends Bloc<DownloadCdmEvent, DownloadCdmState> {
       if (hospitals[event.index].isDownload == 0)
         yield ErrorStateSnackbar();
       yield LoadedState(hospitals);
+      downloadCDMRepositoryImpl.saveData(hospitals);
     } else if (event is DownloadCDMError) {
       yield ErrorState();
     }
