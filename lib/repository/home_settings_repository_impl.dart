@@ -19,7 +19,7 @@ class HomeSettingsRepository implements HomeSettingsRepo {
 
   @override
   HomeSettingsModel getInitialSettings() {
-    int radius = 10;
+    int radius = 15;
     String order = 'Ascending';
     bool isSelected = true;
     if (box.containsKey('radius')) radius = int.parse(box.get('radius'));
