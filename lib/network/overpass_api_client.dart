@@ -10,7 +10,7 @@ import '../main.dart';
 
 class OverpassAPIClient {
   String latitude;
-  String radius = '3000';
+  String radius = '15000';
   String longitude;
   String API_DOMAIN = "https://lz4.overpass-api.de/api/interpreter?data=";
 

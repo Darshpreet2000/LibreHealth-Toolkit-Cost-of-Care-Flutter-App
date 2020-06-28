@@ -16,7 +16,7 @@ class NearbyHospitalsLoadedState extends NearbyHospitalState {
   NearbyHospitalsLoadedState(this.nearby_hospital);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [nearby_hospital];
 }
 
 class NearbyHospitalsErrorState extends NearbyHospitalState {
