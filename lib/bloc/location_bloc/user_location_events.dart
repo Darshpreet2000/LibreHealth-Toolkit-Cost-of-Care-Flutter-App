@@ -27,10 +27,12 @@ class RefreshLocation extends LocationEvent {
   // TODO: implement props
   List<Object> get props => [];
 }
-class ChangeLocation extends LocationEvent{
- String latitude,longitude,address,state;
-  @override
-  List<Object> get props => [latitude,longitude,address,state];
 
- ChangeLocation(this.latitude, this.longitude, this.address, this.state);
+class ChangeLocation extends LocationEvent {
+  String latitude, longitude, address, state;
+
+  @override
+  List<Object> get props => [latitude, longitude, address, state];
+
+  ChangeLocation(this.latitude, this.longitude, this.address, this.state);
 }

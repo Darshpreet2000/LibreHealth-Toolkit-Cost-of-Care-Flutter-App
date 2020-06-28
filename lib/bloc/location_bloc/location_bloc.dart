@@ -38,12 +38,12 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
         yield LocationError("Network Problem Location Not Found");
       else
         yield LocationLoaded(address);
-    }
-    else if (event is ChangeLocation){   //For Testing - I will remove later
+    } else if (event is ChangeLocation) {
+      //For Testing - I will remove later
       yield LocationLoading();
       box.put('latitude', event.latitude);
       box.put('longitude', event.longitude);
-      box.put('state',event.state);
+      box.put('state', event.state);
       await box.put('address', event.address);
       yield LocationLoaded(event.address);
     }

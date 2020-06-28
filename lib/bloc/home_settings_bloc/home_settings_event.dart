@@ -4,6 +4,7 @@ import 'package:equatable/equatable.dart';
 abstract class HomeSettingsEvent extends Equatable {
   const HomeSettingsEvent();
 }
+
 class GetInitialSettings extends HomeSettingsEvent {
   @override
   List<Object> get props => [];
