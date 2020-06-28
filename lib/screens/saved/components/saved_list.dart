@@ -43,7 +43,6 @@ class _SavedListState extends State<SavedList> {
             context,
             MaterialPageRoute(builder: (context) => ViewCDM(saved_list[index])),
           );
-
         },
         child: Text(
           'View',

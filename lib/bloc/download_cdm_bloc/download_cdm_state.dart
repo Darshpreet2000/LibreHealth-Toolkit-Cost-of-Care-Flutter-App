@@ -16,13 +16,13 @@ class LoadedState extends DownloadCdmState {
   final List<DownloadCdmModel> hospitalsName;
 
   LoadedState(this.hospitalsName);
+
   @override
   List<Object> get props => [hospitalsName];
 }
 
 class RefreshedState extends DownloadCdmState {
   final List<DownloadCdmModel> hospitalsName;
-
 
   RefreshedState(this.hospitalsName);
 
@@ -35,8 +35,11 @@ class ErrorStateSnackbar extends DownloadCdmState {
   List<Object> get props => [];
 }
 
-
 class ErrorState extends DownloadCdmState {
+  String message;
+
+  ErrorState(this.message);
+
   @override
-  List<Object> get props => [];
+  List<Object> get props => [message];
 }

@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+
 part 'download_cdm_model.g.dart';
 
 @HiveType(typeId: 1)
@@ -6,7 +7,7 @@ class DownloadCdmModel {
   @HiveField(0)
   String hospitalName;
   @HiveField(1)
-   int isDownload = 0;
+  int isDownload = 0;
 
 //0 means not downloaded
   //1 means loading

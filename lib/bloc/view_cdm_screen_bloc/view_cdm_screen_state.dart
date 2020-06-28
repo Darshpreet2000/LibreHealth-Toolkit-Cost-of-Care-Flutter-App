@@ -14,9 +14,7 @@ class LoadedViewCdmScreenState extends ViewCdmScreenState {
   List<Object> get props => [cdmList];
 }
 
-
 class LoadingViewCdmScreenState extends ViewCdmScreenState {
-
   @override
   List<Object> get props => [];
 }

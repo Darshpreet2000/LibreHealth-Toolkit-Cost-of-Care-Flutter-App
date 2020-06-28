@@ -3,6 +3,8 @@ import 'package:curativecare/bloc/location_bloc/user_location_events.dart';
 import 'package:curativecare/bloc/location_bloc/user_location_state.dart';
 import 'package:curativecare/repository/location_repository_impl.dart';
 
+import '../../main.dart';
+
 class LocationBloc extends Bloc<LocationEvent, LocationState> {
   final LocationRepoImpl locationservices;
 
@@ -36,6 +38,14 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
         yield LocationError("Network Problem Location Not Found");
       else
         yield LocationLoaded(address);
+    }
+    else if (event is ChangeLocation){   //For Testing - I will remove later
+      yield LocationLoading();
+      box.put('latitude', event.latitude);
+      box.put('longitude', event.longitude);
+      box.put('state',event.state);
+      await box.put('address', event.address);
+      yield LocationLoaded(event.address);
     }
   }
 }

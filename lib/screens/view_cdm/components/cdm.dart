@@ -2,8 +2,8 @@ import 'package:curativecare/bloc/view_cdm_screen_bloc/bloc.dart';
 import 'package:curativecare/models/search_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'list_tile.dart';
 
+import 'list_tile.dart';
 
 class CDM extends StatefulWidget {
   String name;
@@ -15,7 +15,6 @@ class CDM extends StatefulWidget {
 }
 
 class _CDMState extends State<CDM> {
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ViewCdmScreenBloc, ViewCdmScreenState>(
@@ -41,5 +40,4 @@ class _CDMState extends State<CDM> {
           return makeCard(cdmList[index]);
         });
   }
-
 }

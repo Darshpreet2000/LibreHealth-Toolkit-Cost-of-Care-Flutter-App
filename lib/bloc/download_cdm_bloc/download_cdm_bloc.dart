@@ -21,14 +21,20 @@ class DownloadCdmBloc extends Bloc<DownloadCdmEvent, DownloadCdmState> {
   ) async* {
     if (event is DownloadCDMFetchData) {
       yield LoadingState();
-      if(downloadCDMRepositoryImpl.checkDataSaved()){
+      if (downloadCDMRepositoryImpl.checkDataSaved()) {
         hospitals = await downloadCDMRepositoryImpl.getSavedData();
         yield LoadedState(hospitals);
-      }
-      else {
-        hospitals = await downloadCDMRepositoryImpl.fetchData(event.stateName);
-        yield LoadedState(hospitals);
-        downloadCDMRepositoryImpl.saveData(hospitals);
+      } else {
+        String response =
+            await downloadCDMRepositoryImpl.fetchData(event.stateName);
+        if (response == "Network Problem" ||
+            response == "CDMs Not Avaialable For Your Location") {
+          yield ErrorState(response);
+        } else {
+          hospitals = await downloadCDMRepositoryImpl.parseData(response);
+          yield LoadedState(hospitals);
+          downloadCDMRepositoryImpl.saveData(hospitals);
+        }
       }
     } else if (event is DownloadCDMGetCSV) {
       hospitals[event.index].isDownload = 1;
@@ -37,12 +43,11 @@ class DownloadCdmBloc extends Bloc<DownloadCdmEvent, DownloadCdmState> {
       downloadCdmModel = await downloadCDMRepositoryImpl.getCSVFile(
           event.hospital, event.stateName, event.index, hospitals);
       hospitals[event.index] = downloadCdmModel;
-      if (hospitals[event.index].isDownload == 0)
-        yield ErrorStateSnackbar();
+      if (hospitals[event.index].isDownload == 0) yield ErrorStateSnackbar();
       yield LoadedState(hospitals);
       downloadCDMRepositoryImpl.saveData(hospitals);
     } else if (event is DownloadCDMError) {
-      yield ErrorState();
+      yield ErrorState("Network Problem! Try Again");
     }
   }
 }

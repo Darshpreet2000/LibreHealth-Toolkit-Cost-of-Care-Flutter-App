@@ -34,7 +34,7 @@ class LocationClient {
       //Save address
       //HardCoding for now State
       //box.put('state',placemark[0].administrativeArea);
-      box.put('state','Alaska');
+      box.put('state', placemark[0].administrativeArea);
       await box.put('address', address);
       return address;
     } on PlatformException {

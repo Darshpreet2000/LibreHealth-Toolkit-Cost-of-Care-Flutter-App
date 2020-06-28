@@ -67,9 +67,8 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<ViewCdmScreenBloc>(
           create: (BuildContext context) =>
-             ViewCdmScreenBloc(ViewViewCDMScreenRepositoryImpl()),
+              ViewCdmScreenBloc(ViewViewCDMScreenRepositoryImpl()),
         ),
-
       ],
       child: MaterialApp(
         theme: ThemeData(

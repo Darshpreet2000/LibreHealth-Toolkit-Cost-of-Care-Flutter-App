@@ -57,11 +57,11 @@ class _UserLocationState extends State<UserLocation> {
                       if (state is LocationError) {
                         Scaffold.of(context).showSnackBar(SnackBar(
                           content: Text(
-                          'Location Not Found',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      backgroundColor: Colors.deepOrangeAccent,
-                      ));
+                            'Location Not Found',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          backgroundColor: Colors.deepOrangeAccent,
+                        ));
                       }
                     },
                     child: BlocBuilder<LocationBloc, LocationState>(
@@ -114,13 +114,15 @@ Widget buildData(BuildContext context, String address) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: <Widget>[
-      Text(
-        address,
-        style: TextStyle(
-            color: Colors.black, fontSize: 16.0, fontWeight: FontWeight.bold),
-        overflow: TextOverflow.ellipsis,
-        maxLines: 1,
-        softWrap: false,
+      Flexible(
+        child: Text(
+          address,
+          style: TextStyle(
+              color: Colors.black, fontSize: 16.0, fontWeight: FontWeight.bold),
+          overflow: TextOverflow.ellipsis,
+          maxLines: 1,
+          softWrap: false,
+        ),
       ),
       IconButton(
         icon: Icon(Icons.refresh),

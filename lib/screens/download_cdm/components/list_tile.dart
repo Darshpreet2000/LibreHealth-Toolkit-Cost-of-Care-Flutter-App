@@ -1,6 +1,7 @@
 import 'package:curativecare/bloc/download_cdm_bloc/bloc.dart';
 import 'package:curativecare/bloc/download_cdm_bloc/download_cdm_bloc.dart';
 import 'package:curativecare/bloc/download_cdm_bloc/download_cdm_event.dart';
+import 'package:curativecare/main.dart';
 import 'package:curativecare/models/download_cdm_model.dart';
 import 'package:curativecare/screens/view_cdm/view_cdm.dart';
 import 'package:flutter/material.dart';
@@ -36,8 +37,7 @@ ListTile makeListTile(
         fontSize: 18,
       ),
     ),
-    trailing:
-        conditionalWidget(hospital.isDownload, context, hospital, index),
+    trailing: conditionalWidget(hospital.isDownload, context, hospital, index),
   );
 }
 
@@ -49,10 +49,11 @@ Widget conditionalWidget(
         child: InkWell(
           splashColor: Colors.blue,
           borderRadius: BorderRadius.circular(20.0),
-          onTap: () => {
+          onTap: () async {
+            String state = await box.get('state');
             context
                 .bloc<DownloadCdmBloc>()
-                .add(DownloadCDMGetCSV('Indiana', hospital, index))
+                .add(DownloadCDMGetCSV(state, hospital, index));
           },
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -71,7 +72,8 @@ Widget conditionalWidget(
       onPressed: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => ViewCDM(hospital.hospitalName)),
+          MaterialPageRoute(
+              builder: (context) => ViewCDM(hospital.hospitalName)),
         );
       },
       child: Text(
