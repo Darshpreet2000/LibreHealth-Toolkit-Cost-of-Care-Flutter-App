@@ -7,7 +7,6 @@ import 'list_tile.dart';
 
 class CDM extends StatefulWidget {
   String name;
-
   CDM(this.name);
 
   @override
@@ -15,12 +14,20 @@ class CDM extends StatefulWidget {
 }
 
 class _CDMState extends State<CDM> {
+
+  @override
+  void initState() {
+    context.bloc<ViewCdmScreenBloc>().add(LoadCdm(widget.name));
+  }
+  @override
+  void dispose() {
+    context.bloc<ViewCdmScreenBloc>().close();
+  }
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ViewCdmScreenBloc, ViewCdmScreenState>(
       builder: (BuildContext context, ViewCdmScreenState state) {
         if (state is LoadingViewCdmScreenState) {
-          context.bloc<ViewCdmScreenBloc>().add(LoadCdm(widget.name));
           return Container(
             child: Center(
               child: CircularProgressIndicator(),
@@ -40,4 +47,6 @@ class _CDMState extends State<CDM> {
           return makeCard(cdmList[index]);
         });
   }
+
+
 }

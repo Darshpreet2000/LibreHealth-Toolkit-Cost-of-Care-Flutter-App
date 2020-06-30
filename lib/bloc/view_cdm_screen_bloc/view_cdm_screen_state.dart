@@ -6,7 +6,7 @@ abstract class ViewCdmScreenState extends Equatable {
 }
 
 class LoadedViewCdmScreenState extends ViewCdmScreenState {
-  List<SearchModel> cdmList;
+  final List<SearchModel> cdmList;
 
   LoadedViewCdmScreenState(this.cdmList);
 

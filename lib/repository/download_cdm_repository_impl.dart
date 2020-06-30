@@ -1,7 +1,6 @@
 import 'package:curativecare/models/download_cdm_model.dart';
 import 'package:curativecare/network/gitlab_api_client.dart';
 import 'package:curativecare/repository/abstract/download_cdm_repository.dart';
-
 import '../main.dart';
 
 class DownloadCDMRepositoryImpl extends DownloadCDMRepository {

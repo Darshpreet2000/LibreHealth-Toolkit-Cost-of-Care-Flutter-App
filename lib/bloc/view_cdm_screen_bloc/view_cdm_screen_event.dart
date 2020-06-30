@@ -10,5 +10,5 @@ class LoadCdm extends ViewCdmScreenEvent {
   LoadCdm(this.tableName);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [tableName];
 }
