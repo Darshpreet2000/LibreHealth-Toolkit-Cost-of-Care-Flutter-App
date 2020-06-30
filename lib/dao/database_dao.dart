@@ -42,4 +42,15 @@ class DatabaseDao {
       return cdm.fromMap(maps[i]);
     });
   }
+
+  Future getAllTables() async {
+    final database = await dbProvider.database;
+    List<String> tableNames = new List();
+    tableNames = (await database
+            .query('sqlite_master', where: 'type = ?', whereArgs: ['table']))
+        .map((row) => row['name'] as String)
+        .toList(growable: true);
+    print(tableNames);
+    return tableNames;
+  }
 }

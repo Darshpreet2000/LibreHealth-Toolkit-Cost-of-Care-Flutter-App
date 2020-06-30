@@ -12,9 +12,9 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         child: BlocListener<NearbyHospitalBloc, NearbyHospitalState>(
-      listener: (BuildContext context, NearbyHospitalState state) {
+      listener: (BuildContext context, NearbyHospitalState state) async {
         if (state is NearbyHospitalsLoadedState) {
-          String state = box.get('state');
+          String state =await box.get('state');
           context.bloc<DownloadCdmBloc>().add(DownloadCDMFetchData(state));
         } else if (state is NearbyHospitalsErrorState) {
           context.bloc<DownloadCdmBloc>().add(DownloadCDMError());

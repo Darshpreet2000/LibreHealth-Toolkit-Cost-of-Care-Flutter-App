@@ -1,43 +1,53 @@
+import 'package:curativecare/screens/view_cdm/view_cdm.dart';
 import 'package:flutter/material.dart';
 
-List<String> saved_list = [
-  'Providence Alaska Medical Center',
-  'North Star Behavorial Hospital',
-  'UCLA Medical Center'
-];
+class SavedList extends StatelessWidget {
+  List<String> hospitalNames;
 
-class SavedList extends StatefulWidget {
-  @override
-  _SavedListState createState() => _SavedListState();
-}
+  SavedList(this.hospitalNames);
 
-class _SavedListState extends State<SavedList> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        itemCount: saved_list.length,
+        itemCount: hospitalNames.length,
         itemBuilder: (BuildContext context, int index) {
-          return makeCard(index);
+          return makeCard(context, index);
         });
   }
 
-  Card makeCard(int index) {
+  Card makeCard(BuildContext context, int index) {
     return Card(
       elevation: 4.0,
       margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
       child: Container(
         decoration: BoxDecoration(color: Colors.grey[50]),
-        child: makeListTile(index),
+        child: makeListTile(context, index),
       ),
     );
   }
 
-  ListTile makeListTile(int index) {
+  ListTile makeListTile(BuildContext context, int index) {
     return ListTile(
-      title: Text(saved_list[index]),
+      title: Text(
+        hospitalNames[index],
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+        style: TextStyle(
+          color: Colors.black,
+          fontFamily: 'Source',
+          fontWeight: FontWeight.w600,
+          fontSize: 18,
+        ),
+      ),
       trailing: RaisedButton(
         color: Colors.indigo,
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ViewCDM(hospitalNames[index])),
+          );
+        },
         child: Text(
           'View',
           maxLines: 2,

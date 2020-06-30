@@ -25,14 +25,14 @@ class DownloadCDMRepositoryImpl extends DownloadCDMRepository {
     listbox.put('downloadCDMList$state', hospitalsName);
   }
 
-  bool checkDataSaved() {
-    String state = box.get('state');
+  Future<bool> checkDataSaved() async {
+    String state = await box.get('state');
     bool condition = listbox.containsKey('downloadCDMList$state');
     return condition;
   }
 
   Future<List<DownloadCdmModel>> getSavedData() async {
-    String state = box.get('state');
+    String state = await box.get('state');
     List<DownloadCdmModel> data =
         await listbox.get('downloadCDMList$state').cast<DownloadCdmModel>();
     return data;

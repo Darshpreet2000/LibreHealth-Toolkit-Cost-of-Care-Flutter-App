@@ -21,7 +21,7 @@ class DownloadCdmBloc extends Bloc<DownloadCdmEvent, DownloadCdmState> {
   ) async* {
     if (event is DownloadCDMFetchData) {
       yield LoadingState();
-      if (downloadCDMRepositoryImpl.checkDataSaved()) {
+      if (await downloadCDMRepositoryImpl.checkDataSaved()) {
         hospitals = await downloadCDMRepositoryImpl.getSavedData();
         yield LoadedState(hospitals);
       } else {
