@@ -10,10 +10,7 @@ class ReportIssue extends StatelessWidget {
         backgroundColor: Colors.indigo,
       ),
       body: Container(
-        child: Center(
-            child: Text('Pending for now')
-
-        ),
+        child: Center(child: Text('Pending for now')),
       ),
     );
   }

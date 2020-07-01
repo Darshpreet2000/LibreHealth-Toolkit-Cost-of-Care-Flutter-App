@@ -9,12 +9,9 @@ class About extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Colors.indigo,
       ),
-    body: Container(
-      child: Center(
-         child: Text('Pending for now')
-
+      body: Container(
+        child: Center(child: Text('Pending for now')),
       ),
-    ),
     );
   }
 }

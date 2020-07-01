@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 class Dash extends StatelessWidget {
   const Dash(
       {Key key,
-        this.direction = Axis.horizontal,
-        this.dashColor = Colors.black,
-        this.length = 200,
-        this.dashGap = 3,
-        this.dashLength = 6,
-        this.dashThickness = 1,
-        this.dashBorderRadius = 0})
+      this.direction = Axis.horizontal,
+      this.dashColor = Colors.black,
+      this.length = 200,
+      this.dashGap = 3,
+      this.dashLength = 6,
+      this.dashThickness = 1,
+      this.dashBorderRadius = 0})
       : super(key: key);
 
   final Axis direction;
@@ -55,7 +55,7 @@ class Dash extends StatelessWidget {
             decoration: BoxDecoration(
                 color: dashColor,
                 borderRadius:
-                BorderRadius.all(Radius.circular(dashBorderRadius))),
+                    BorderRadius.all(Radius.circular(dashBorderRadius))),
           ),
         ));
   }

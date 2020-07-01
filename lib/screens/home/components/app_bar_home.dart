@@ -1,4 +1,3 @@
-import 'package:curativecare/screens/home/components/body.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -42,9 +41,9 @@ class AppBarHome extends StatelessWidget {
               ),
             ),
             Expanded(
-              child:InkWell(
-                onTap: ()=>{Navigator.pushNamed(context, '/SearchProcedure')},
-                child:Text(
+                child: InkWell(
+              onTap: () => {Navigator.pushNamed(context, '/SearchProcedure')},
+              child: Text(
                 'Search for Procedures, Pharmacy, DRG',
                 style: TextStyle(
                   color: Colors.grey[600],
@@ -52,8 +51,7 @@ class AppBarHome extends StatelessWidget {
                 ),
                 overflow: TextOverflow.ellipsis,
               ),
-              )
-            ),
+            )),
             IconButton(
               icon: Icon(
                 Icons.settings,
