@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'components/body.dart';
 
 class Saved extends StatefulWidget {
+  FloatingActionButton bottomSheet;
   @override
   _SavedState createState() => _SavedState();
 }
@@ -22,3 +23,5 @@ class _SavedState extends State<Saved> {
         body: Body());
   }
 }
+
+

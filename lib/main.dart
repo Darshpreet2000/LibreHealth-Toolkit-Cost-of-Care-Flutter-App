@@ -46,6 +46,18 @@ void main() async {
   runApp(MyApp());
 }
 
+var box;
+Future _openBox() async {
+  var dir = await getApplicationDocumentsDirectory();
+  Hive.init(dir.path);
+  box = await Hive.openBox("myBox");
+}
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await _openBox();
+  runApp(MyApp());
+}
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
 

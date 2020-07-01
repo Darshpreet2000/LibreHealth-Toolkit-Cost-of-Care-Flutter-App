@@ -1,6 +1,7 @@
 import 'package:curativecare/bloc/search_screen_bloc/bloc.dart';
 import 'package:curativecare/bloc/search_screen_bloc/search_screen_bloc.dart';
 import 'package:curativecare/screens/search/components/body.dart';
+import 'package:curativecare/screens/search/components/floating_action_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -42,6 +43,8 @@ class _SearchProcedureState extends State<SearchProcedure> {
         ),
       ),
       body: Body(),
+
+      floatingActionButton: FloatingAction(),
     );
   }
 }
