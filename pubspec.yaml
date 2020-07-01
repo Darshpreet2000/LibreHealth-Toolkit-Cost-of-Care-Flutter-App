@@ -38,8 +38,8 @@ dependencies:
   equatable: ^1.2.0
   cached_network_image: ^2.2.0+1
   file_utils: ^0.1.4
-  hive:
-  hive_flutter:
+  hive: ^1.4.1+1
+  hive_flutter: ^0.3.0+2
     # For OS-specific directory paths
   path_provider: ^1.6.5
   dio: ^3.0.9
@@ -52,9 +52,8 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  hive_generator:
-  build_runner:
-
+  hive_generator: ^0.7.0+2
+  build_runner: ^1.10.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
