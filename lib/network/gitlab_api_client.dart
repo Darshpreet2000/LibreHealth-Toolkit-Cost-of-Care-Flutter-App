@@ -12,7 +12,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 class GitLabApiClient {
   String base_url =
-      "https://gitlab.com/api/v4/projects/18885282/repository/tree?ref=scrap-cdm-of-Indiana&path=CDM/";
+      "https://gitlab.com/api/v4/projects/18885282/repository/tree?ref=scrap-cdm-of-new-york&path=CDM/";
 
   Future getAvailableCdm(String stateName) async {
     String url = base_url + stateName + "&per_page=100&page=";
@@ -65,7 +65,7 @@ class GitLabApiClient {
 
   Future getCSVFile(DownloadCdmModel hospital, String stateName) async {
     String baseURL =
-        "https://gitlab.com/Darshpreet2000/lh-toolkit-cost-of-care-app-data-scraper/-/raw/scrap-cdm-of-Indiana/CDM";
+        "https://gitlab.com/Darshpreet2000/lh-toolkit-cost-of-care-app-data-scraper/-/raw/scrap-cdm-of-new-york/CDM";
     String url = baseURL + "/$stateName/${hospital.hospitalName}" + ".csv";
     Dio dio = Dio();
     bool checkPermission = false;
