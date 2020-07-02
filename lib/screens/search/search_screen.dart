@@ -1,5 +1,5 @@
-import 'package:curativecare/bloc/search_screen_bloc/bloc.dart';
-import 'package:curativecare/bloc/search_screen_bloc/search_screen_bloc.dart';
+import 'file:///C:/Users/Darshpreet/AndroidStudioProjects/lh-toolkit-cost-of-care-app/lib/bloc/search_screen_bloc/search_procedures/bloc.dart';
+import 'file:///C:/Users/Darshpreet/AndroidStudioProjects/lh-toolkit-cost-of-care-app/lib/bloc/search_screen_bloc/search_procedures/search_screen_bloc.dart';
 import 'package:curativecare/screens/search/components/body.dart';
 import 'package:curativecare/screens/search/components/floating_action_button.dart';
 import 'package:flutter/cupertino.dart';
@@ -29,7 +29,6 @@ class _SearchProcedureState extends State<SearchProcedure> {
           textInputAction: TextInputAction.search,
           onSubmitted: (value) {
             context.bloc<SearchScreenBloc>().add(SearchInDatabase(value));
-
           },
           decoration: InputDecoration(
               focusedBorder: InputBorder.none,
@@ -42,7 +41,7 @@ class _SearchProcedureState extends State<SearchProcedure> {
               hintStyle: TextStyle(color: Colors.grey)),
         ),
       ),
-      body: Body(),
+      body: Body(_searchQuery),
 
       floatingActionButton: FloatingAction(),
     );

@@ -1,6 +1,9 @@
 import 'package:curativecare/database/hospital_database.dart';
 import 'package:curativecare/models/search_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:sqflite/sqflite.dart';
+
+import '../main.dart';
 
 class DatabaseDao {
   final dbProvider = DatabaseProvider.dbProvider;
@@ -58,7 +61,21 @@ class DatabaseDao {
         List<String> hospitalName=await getAllTables();
         if(hospitalName.length>0)
           hospitalName.removeAt(0);
-        String query=" Select * from ( SELECT description , charge ,category , ";
+        bool checkCategory=await box.containsKey('category');
+        String category;
+        if(checkCategory&&box.get('category')!=0) {
+           int  categoryType = await box.get('category');
+           if(categoryType==1){
+             category="Standard";
+           }
+           else if(categoryType==2){
+             category="DRG";
+           }
+           else{
+             category="Pharmacy";
+           }
+        }
+        String query="Select * from ( SELECT description , charge ,category , ";
         int length=hospitalName.length;
         int start=0;
         for(int i=0;i<length;i++) {
@@ -66,17 +83,19 @@ class DatabaseDao {
           query +=
         "'"+  hospitalName[i]+"'"+" as name " "from "  + hospitalName[i] +
                   " where " + hospitalName[i]  + ".description like " +
-                  "'%" + searchQuery + "%'" +" limit 50 ) ";
+                  "'%" + searchQuery+ "%' "+ (checkCategory==true&&box.get('category')!=0?" and category = '${category}'":" ") +" limit 50 ) ";
           if(start != length)
            query+=" union Select * from ( SELECT description , charge ,category , ";
           }
         List<SearchModel> list=new List();
         print(query);
-        List<Map<String,dynamic>> result=await database.rawQuery(query);
+
+        List<Map<String,dynamic>> result= await database.rawQuery(query);
         result.forEach((itemMap) {
           SearchModel searchmodel=new SearchModel.empty();
           list.add(searchmodel.fromMapResult(itemMap));
         });
+
         return list;
   }
 }

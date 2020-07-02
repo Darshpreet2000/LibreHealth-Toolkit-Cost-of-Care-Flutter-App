@@ -98,7 +98,8 @@ class GitLabApiClient {
           List<SearchModel> myList = new List();
           for (var line in lines) {
             bool first = false, second = false, third = false;
-            String description, price, category;
+            String description,  category;
+            double price;
             int lastindex = line.length;
             for (int i = line.length - 1; i >= 0; i--) {
               if (second == true && third == true) {
@@ -112,8 +113,15 @@ class GitLabApiClient {
                   third = true;
                   lastindex = i;
                 } else if (line[i] == ',' && second == false) {
-                  price = line.substring(i + 1, lastindex);
-                  second = true;
+                  String priceString = line.substring(i + 1, lastindex);
+                try {
+                  double priceDouble = double.parse(priceString);
+                  if (priceDouble is double)
+                    price = priceDouble;
+                } catch(NumberFormatException){
+                  price = 0.0;
+                }
+                second = true;
                   lastindex = i;
                 }
               }

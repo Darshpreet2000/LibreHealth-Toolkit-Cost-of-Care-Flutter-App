@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:curativecare/models/search_model.dart';
 import 'package:curativecare/repository/search_screen_repository_impl.dart';
-import './bloc.dart';
+import 'bloc.dart';
 
 class SearchScreenBloc extends Bloc<SearchScreenEvent, SearchScreenState> {
   SearchScreenRepositoryImpl searchScreenRepositoryImpl;

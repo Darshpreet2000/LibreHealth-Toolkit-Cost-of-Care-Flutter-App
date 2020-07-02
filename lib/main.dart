@@ -3,7 +3,8 @@ import 'package:curativecare/bloc/home_settings_bloc/bloc.dart';
 import 'package:curativecare/bloc/location_bloc/location_bloc.dart';
 import 'package:curativecare/bloc/nearby_hospital_bloc/bloc.dart';
 import 'package:curativecare/bloc/saved_screen_bloc/saved_screen_bloc.dart';
-import 'package:curativecare/bloc/search_screen_bloc/bloc.dart';
+import 'package:curativecare/bloc/search_screen_bloc/bottom_sheet/bloc.dart';
+import 'file:///C:/Users/Darshpreet/AndroidStudioProjects/lh-toolkit-cost-of-care-app/lib/bloc/search_screen_bloc/search_procedures/bloc.dart';
 import 'package:curativecare/bloc/view_cdm_screen_bloc/bloc.dart';
 import 'package:curativecare/repository/download_cdm_repository_impl.dart';
 import 'package:curativecare/repository/home_settings_repository_impl.dart';
@@ -81,6 +82,10 @@ class MyApp extends StatelessWidget {
         BlocProvider<SearchScreenBloc>(
           create: (BuildContext context) =>
               SearchScreenBloc(SearchScreenRepositoryImpl()),
+        ),
+        BlocProvider<BottomSheetBloc>(
+          create: (BuildContext context) =>
+              BottomSheetBloc(SearchScreenRepositoryImpl()),
         ),
       ],
       child: MaterialApp(

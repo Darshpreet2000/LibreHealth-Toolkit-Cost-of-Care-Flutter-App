@@ -28,7 +28,7 @@ Card makeCard(SearchModel searchModel) {
 }
 
 ListTile makeListTile(SearchModel searchModel) {
-  searchModel.charge=searchModel.charge.length>10?"N/A":searchModel.charge;
+
   searchModel.name = searchModel.name.replaceAll('_', ' ');
   return ListTile(
     title: Text(
@@ -50,7 +50,7 @@ ListTile makeListTile(SearchModel searchModel) {
     ),
     isThreeLine: true,
     trailing: Text(
-      searchModel.charge + ' \$',
+      searchModel.charge.toString() + ' \$',
       style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
     ),
   );

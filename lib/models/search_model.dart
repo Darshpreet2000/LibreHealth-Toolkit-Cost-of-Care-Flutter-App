@@ -1,6 +1,6 @@
 class SearchModel {
   String description, category, name;
-  String charge;
+  double charge;
 
   SearchModel(this.description, this.charge, this.category, [this.name]);
 
@@ -16,13 +16,13 @@ class SearchModel {
 
   SearchModel fromMap(Map<String, dynamic> map) {
     description = map['description'] != null ? map['description'] : "N/A";
-    charge = map['charge'] != null ? map['charge'] : "N/A";
+    charge = double.parse(map['charge']);
     category = map['category'] != null ? map['category'] : "N/A";
     return SearchModel(description, charge, category);
   }
   SearchModel fromMapResult(Map<String, dynamic> map) {
     description = map['description'] != null ? map['description'] : "N/A";
-    charge = map['charge'] != null ? map['charge'] : "N/A";
+    charge = double.parse(map['charge']);
     category = map['category'] != null ? map['category'] : "N/A";
     name = map['name'] != null ? map['name'] : "N/A";
     return SearchModel(description, charge, category, name);

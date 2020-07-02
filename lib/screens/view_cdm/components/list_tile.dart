@@ -24,7 +24,7 @@ ListTile makeListTile(SearchModel cdm) {
     ),
     isThreeLine: true,
     trailing: Text(
-      cdm.charge + ' \$',
+      cdm.charge.toString() + ' \$',
       style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
     ),
   );
