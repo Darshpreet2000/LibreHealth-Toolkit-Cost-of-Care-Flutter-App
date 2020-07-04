@@ -24,9 +24,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
-
-import 'file:///C:/Users/Darshpreet/AndroidStudioProjects/lh-toolkit-cost-of-care-app/lib/bloc/search_screen_bloc/search_procedures/bloc.dart';
-
+import 'bloc/search_screen_bloc/search_procedures/search_screen_bloc.dart';
 import 'models/download_cdm_model.dart';
 import 'models/hospitals.dart';
 
