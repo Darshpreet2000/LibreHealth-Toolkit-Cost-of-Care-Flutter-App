@@ -128,18 +128,7 @@ class Body extends StatelessWidget {
                 )
             ),
           ),
-          Container(
 
-            padding: EdgeInsets.fromLTRB(9,4,8,4),
-            child: RaisedButton(
-              padding: EdgeInsets.all(8),
-                onPressed: () {  },
-                child: Text(
-                  'New York',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                )
-            ),
-          ),
         ],
       ),
     );
