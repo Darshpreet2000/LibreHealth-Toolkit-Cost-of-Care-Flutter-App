@@ -135,7 +135,6 @@ class Body extends StatelessWidget {
                 padding: EdgeInsets.all(8),
                 onPressed: () {
                   context.bloc<LocationBloc>().add(ChangeLocation(
-
                       "40.720839",
                       "-74.000815",
                       "459 Broadway, New York, NY 10013, USA",
