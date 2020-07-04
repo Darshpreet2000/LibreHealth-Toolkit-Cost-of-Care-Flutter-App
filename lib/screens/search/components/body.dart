@@ -1,8 +1,9 @@
 import 'package:curativecare/bloc/search_screen_bloc/bottom_sheet/bloc.dart';
+import 'package:curativecare/bloc/search_screen_bloc/search_procedures/search_screen_bloc.dart';
+import 'package:curativecare/bloc/search_screen_bloc/search_procedures/search_screen_event.dart';
+import 'package:curativecare/bloc/search_screen_bloc/search_procedures/search_screen_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'file:///C:/Users/Darshpreet/AndroidStudioProjects/lh-toolkit-cost-of-care-app/lib/bloc/search_screen_bloc/search_procedures/bloc.dart';
 
 import 'list_tile.dart';
 
