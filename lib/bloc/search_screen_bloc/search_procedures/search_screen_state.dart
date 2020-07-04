@@ -10,21 +10,21 @@ class InitialSearchScreenState extends SearchScreenState {
   List<Object> get props => [];
 }
 
-class SearchScreenLoadingState extends SearchScreenState{
+class SearchScreenLoadingState extends SearchScreenState {
   @override
   List<Object> get props => [];
-
 }
 
-class SearchScreenLoadedState extends SearchScreenState{
+class SearchScreenLoadedState extends SearchScreenState {
   List<SearchModel> searchResult;
+
   SearchScreenLoadedState(this.searchResult);
+
   @override
   List<Object> get props => [searchResult];
-
 }
-class SearchScreenNoDataState extends SearchScreenState{
+
+class SearchScreenNoDataState extends SearchScreenState {
   @override
   List<Object> get props => [];
-
 }

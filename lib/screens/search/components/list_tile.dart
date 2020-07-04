@@ -2,13 +2,13 @@ import 'package:curativecare/models/search_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-Widget showList(List<SearchModel> searchResult){
+Widget showList(List<SearchModel> searchResult) {
   return Scrollbar(
     child: ListView.builder(
       primary: false,
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
-      itemCount:  searchResult.length,
+      itemCount: searchResult.length,
       itemBuilder: (BuildContext context, int index) {
         return makeCard(searchResult[index]);
       },
@@ -28,7 +28,6 @@ Card makeCard(SearchModel searchModel) {
 }
 
 ListTile makeListTile(SearchModel searchModel) {
-
   searchModel.name = searchModel.name.replaceAll('_', ' ');
   return ListTile(
     title: Text(

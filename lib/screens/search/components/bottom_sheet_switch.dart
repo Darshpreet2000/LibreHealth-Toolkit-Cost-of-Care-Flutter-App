@@ -192,12 +192,14 @@ class _BottomSheetSwitch extends State<BottomSheetSwitch> {
                         child: RaisedButton(
                           shape: RoundedRectangleBorder(
                             side: BorderSide(color: Colors.indigo),
-                            borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(4.0)),
                           ),
                           color: Colors.white,
                           onPressed: () {
-                            context.bloc<BottomSheetBloc>().add(BottomSheetApply(
-                                0,0));
+                            context
+                                .bloc<BottomSheetBloc>()
+                                .add(BottomSheetApply(0, 0));
                           },
                           padding: EdgeInsets.all(8),
                           child: Text(
@@ -220,8 +222,9 @@ class _BottomSheetSwitch extends State<BottomSheetSwitch> {
                                   BorderRadius.all(Radius.circular(4.0))),
                           color: Colors.indigo,
                           onPressed: () {
-                            context.bloc<BottomSheetBloc>().add(BottomSheetApply(
-                                selectedRadioTile, priceRadioTile));
+                            context.bloc<BottomSheetBloc>().add(
+                                BottomSheetApply(
+                                    selectedRadioTile, priceRadioTile));
                             Navigator.pop(context);
                           },
                           padding: EdgeInsets.all(8),

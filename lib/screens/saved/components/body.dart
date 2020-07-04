@@ -13,10 +13,8 @@ class Body extends StatelessWidget {
       listener: (BuildContext context, DownloadCdmState state) {
         if (state is LoadedState) {
           context.bloc<SavedScreenBloc>().add(LoadSavedData());
-        }
-        else if (state is ErrorState){
+        } else if (state is ErrorState) {
           context.bloc<SavedScreenBloc>().add(ShowNoDataFound());
-
         }
       },
       child: BlocBuilder<SavedScreenBloc, SavedScreenState>(

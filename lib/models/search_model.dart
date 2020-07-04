@@ -20,6 +20,7 @@ class SearchModel {
     category = map['category'] != null ? map['category'] : "N/A";
     return SearchModel(description, charge, category);
   }
+
   SearchModel fromMapResult(Map<String, dynamic> map) {
     description = map['description'] != null ? map['description'] : "N/A";
     charge = double.parse(map['charge']);

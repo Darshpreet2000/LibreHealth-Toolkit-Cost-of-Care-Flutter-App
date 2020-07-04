@@ -1,11 +1,12 @@
-import 'file:///C:/Users/Darshpreet/AndroidStudioProjects/lh-toolkit-cost-of-care-app/lib/bloc/search_screen_bloc/search_procedures/bloc.dart';
-import 'file:///C:/Users/Darshpreet/AndroidStudioProjects/lh-toolkit-cost-of-care-app/lib/bloc/search_screen_bloc/search_procedures/search_screen_bloc.dart';
 import 'package:curativecare/screens/search/components/body.dart';
 import 'package:curativecare/screens/search/components/floating_action_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'file:///C:/Users/Darshpreet/AndroidStudioProjects/lh-toolkit-cost-of-care-app/lib/bloc/search_screen_bloc/search_procedures/bloc.dart';
+import 'file:///C:/Users/Darshpreet/AndroidStudioProjects/lh-toolkit-cost-of-care-app/lib/bloc/search_screen_bloc/search_procedures/search_screen_bloc.dart';
 
 class SearchProcedure extends StatefulWidget {
   @override
@@ -42,7 +43,6 @@ class _SearchProcedureState extends State<SearchProcedure> {
         ),
       ),
       body: Body(_searchQuery),
-
       floatingActionButton: FloatingAction(),
     );
   }

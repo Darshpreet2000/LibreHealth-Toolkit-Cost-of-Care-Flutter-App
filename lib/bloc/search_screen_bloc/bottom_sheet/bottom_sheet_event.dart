@@ -4,13 +4,12 @@ abstract class BottomSheetEvent extends Equatable {
   const BottomSheetEvent();
 }
 
-class BottomSheetFetchValues extends BottomSheetEvent{
+class BottomSheetFetchValues extends BottomSheetEvent {
   @override
   List<Object> get props => [];
-
 }
 
-class BottomSheetApply extends BottomSheetEvent{
+class BottomSheetApply extends BottomSheetEvent {
   int selectedRadioTile;
   int priceRadioTile;
 
@@ -18,15 +17,14 @@ class BottomSheetApply extends BottomSheetEvent{
 
   @override
   List<Object> get props => [];
-
 }
-class BottomSheetChangeValue extends BottomSheetEvent{
+
+class BottomSheetChangeValue extends BottomSheetEvent {
   int selectedRadioTile;
   int priceRadioTile;
 
   BottomSheetChangeValue(this.selectedRadioTile, this.priceRadioTile);
 
   @override
-  List<Object> get props => [selectedRadioTile,priceRadioTile];
-
+  List<Object> get props => [selectedRadioTile, priceRadioTile];
 }

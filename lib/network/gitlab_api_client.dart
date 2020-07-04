@@ -1,4 +1,4 @@
-import'dart:convert';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:curativecare/models/download_cdm_model.dart';
@@ -98,7 +98,7 @@ class GitLabApiClient {
           List<SearchModel> myList = new List();
           for (var line in lines) {
             bool first = false, second = false, third = false;
-            String description,  category;
+            String description, category;
             double price;
             int lastindex = line.length;
             for (int i = line.length - 1; i >= 0; i--) {
@@ -114,14 +114,13 @@ class GitLabApiClient {
                   lastindex = i;
                 } else if (line[i] == ',' && second == false) {
                   String priceString = line.substring(i + 1, lastindex);
-                try {
-                  double priceDouble = double.parse(priceString);
-                  if (priceDouble is double)
-                    price = priceDouble;
-                } catch(NumberFormatException){
-                  price = 0.0;
-                }
-                second = true;
+                  try {
+                    double priceDouble = double.parse(priceString);
+                    if (priceDouble is double) price = priceDouble;
+                  } catch (NumberFormatException) {
+                    price = 0.0;
+                  }
+                  second = true;
                   lastindex = i;
                 }
               }

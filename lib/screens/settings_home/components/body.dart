@@ -92,47 +92,54 @@ class Body extends StatelessWidget {
                 'Choose Location  //For Testing',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               )),
-          Material(
-            child: InkWell(
-              child: Container(
-                  decoration:
-                      BoxDecoration(border: Border.all(color: Colors.indigo)),
-                  padding: EdgeInsets.all(8),
-                  child: Text(
-                    'Indiana',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  )),
-              onTap: () => {
-                context.bloc<LocationBloc>().add(ChangeLocation(
-                    "39.765299",
-                    "-86.206019",
-                    "2720-2798 W Washington St, Indianapolis, IN 46222, USA",
-                    "Indiana"))
-              },
+          Container(
+            padding: EdgeInsets.fromLTRB(9,4,8,4),
+            child: RaisedButton(
+                padding: EdgeInsets.all(8),
+                onPressed: () {
+                  context.bloc<LocationBloc>().add(ChangeLocation(
+                      "39.765299",
+                      "-86.206019",
+                      "2720-2798 W Washington St, Indianapolis, IN 46222, USA",
+                      "Indiana"));
+                },
+                child: Text(
+                  'Indiana',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                )
             ),
           ),
-          SizedBox(
-            height: 8,
-          ),
-          Material(
-            child: InkWell(
-              child: Container(
-                  decoration:
-                      BoxDecoration(border: Border.all(color: Colors.indigo)),
-                  padding: EdgeInsets.all(8),
-                  child: Text(
-                    'Alaska',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  )),
-              onTap: () => {
-                context.bloc<LocationBloc>().add(ChangeLocation(
-                    "64.831564",
-                    "-147.736312",
-                    "1673-1661 Cowles St, Fairbanks, AK 99701, USA",
-                    "Alaska"))
-              },
+
+          Container(
+
+            padding: EdgeInsets.fromLTRB(9,4,8,4),
+            child: RaisedButton(
+                padding: EdgeInsets.all(8),
+                onPressed: () {
+                  context.bloc<LocationBloc>().add(ChangeLocation(
+                      "64.831564",
+                      "-147.736312",
+                      "1673-1661 Cowles St, Fairbanks, AK 99701, USA",
+                      "Alaska"));
+                },
+                child: Text(
+                  'Alaska',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                )
             ),
-          )
+          ),
+          Container(
+
+            padding: EdgeInsets.fromLTRB(9,4,8,4),
+            child: RaisedButton(
+              padding: EdgeInsets.all(8),
+                onPressed: () {  },
+                child: Text(
+                  'New York',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                )
+            ),
+          ),
         ],
       ),
     );

@@ -1,4 +1,3 @@
-abstract class SearchScreenRepository{
-
+abstract class SearchScreenRepository {
   Future searchForProcedure(String procedureName);
 }

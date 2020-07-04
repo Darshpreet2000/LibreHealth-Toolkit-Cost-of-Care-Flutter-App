@@ -10,7 +10,6 @@ class LoadSavedData extends SavedScreenEvent {
 }
 
 class ShowNoDataFound extends SavedScreenEvent {
-
   @override
   List<Object> get props => [];
 }

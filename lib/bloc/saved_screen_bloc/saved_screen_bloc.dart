@@ -25,8 +25,7 @@ class SavedScreenBloc extends Bloc<SavedScreenEvent, SavedScreenState> {
       } else {
         yield SavedScreenErrorState("No Saved Data Found");
       }
-    }
-    else if (event is ShowNoDataFound){
+    } else if (event is ShowNoDataFound) {
       yield SavedScreenErrorState("No Saved Data Found");
     }
   }

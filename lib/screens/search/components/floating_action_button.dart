@@ -7,21 +7,20 @@ class FloatingAction extends StatefulWidget {
 }
 
 class _FloatingActionState extends State<FloatingAction> {
-
-
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
-      onPressed: () {  showModalBottomSheet<void>(
-        isScrollControlled: true,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30.0),
-        ),
-        context: context,
-        builder: (BuildContext context) {
-          return BottomSheetSwitch();
-        },
-      );
+      onPressed: () {
+        showModalBottomSheet<void>(
+          isScrollControlled: true,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30.0),
+          ),
+          context: context,
+          builder: (BuildContext context) {
+            return BottomSheetSwitch();
+          },
+        );
       },
       backgroundColor: Colors.indigo,
       child: Icon(
@@ -30,5 +29,4 @@ class _FloatingActionState extends State<FloatingAction> {
       ),
     );
   }
-
-  }
+}
