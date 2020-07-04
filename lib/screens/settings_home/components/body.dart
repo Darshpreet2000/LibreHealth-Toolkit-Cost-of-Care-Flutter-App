@@ -128,7 +128,25 @@ class Body extends StatelessWidget {
                 )
             ),
           ),
+          Container(
 
+            padding: EdgeInsets.fromLTRB(9,4,8,4),
+            child: RaisedButton(
+                padding: EdgeInsets.all(8),
+                onPressed: () {
+                  context.bloc<LocationBloc>().add(ChangeLocation(
+
+                      "40.720839",
+                      "-74.000815",
+                      "459 Broadway, New York, NY 10013, USA",
+                      "New York"));
+                },
+                child: Text(
+                  'New York',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                )
+            ),
+          ),
         ],
       ),
     );
