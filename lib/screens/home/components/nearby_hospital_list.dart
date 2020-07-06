@@ -10,8 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class NearbyHospitalList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: BlocListener<LocationBloc, LocationState>(
+    return  BlocListener<LocationBloc, LocationState>(
       listener: (BuildContext context, state) {
         if (state is LocationLoaded) {
           context.bloc<NearbyHospitalBloc>().add(FetchHospitals());
@@ -32,7 +31,7 @@ class NearbyHospitalList extends StatelessWidget {
           }
         },
       ),
-    ));
+    );
   }
 }
 

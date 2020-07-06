@@ -45,11 +45,11 @@ Container makeListTile(Hospitals hospital) {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(10)),
                     ),
-                    child: Expanded(
+
                       child: new FittedBox(
                           fit: BoxFit.fill,
                           child: Image.asset('assets/placeholder.png')),
-                    ));
+                    );
               }
               if (snapshot.hasData) {
                 return CachedNetworkImage(
