@@ -24,7 +24,6 @@ dependencies:
   path_provider: ^1.6.5
   dio: ^3.0.9
   permission_handler: ^5.0.0+hotfix.5
-  csv: ^4.0.3
 
 dependency_overrides:
   dartx: ^0.3.0

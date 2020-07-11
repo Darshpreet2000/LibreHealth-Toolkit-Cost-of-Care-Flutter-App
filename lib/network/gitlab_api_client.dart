@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:curativecare/models/download_cdm_model.dart';
 import 'package:curativecare/models/search_model.dart';
 import 'package:curativecare/repository/database_repository_impl.dart';
@@ -12,7 +11,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 class GitLabApiClient {
   String base_url =
-      "https://gitlab.com/api/v4/projects/18885282/repository/tree?ref=scrap-cdm-of-new-york&path=CDM/";
+      "https://gitlab.com/api/v4/projects/18885282/repository/tree?ref=branch-with-data&path=CDM/";
 
   Future getAvailableCdm(String stateName) async {
     String url = base_url + stateName + "&per_page=100&page=";
@@ -65,7 +64,7 @@ class GitLabApiClient {
 
   Future getCSVFile(DownloadCdmModel hospital, String stateName) async {
     String baseURL =
-        "https://gitlab.com/Darshpreet2000/lh-toolkit-cost-of-care-app-data-scraper/-/raw/scrap-cdm-of-new-york/CDM";
+        "https://gitlab.com/Darshpreet2000/lh-toolkit-cost-of-care-app-data-scraper/-/raw/branch-with-data/CDM";
     String url = baseURL + "/$stateName/${hospital.hospitalName}" + ".csv";
     Dio dio = Dio();
     bool checkPermission = false;
@@ -82,62 +81,53 @@ class GitLabApiClient {
         Directory appDocDir = await getApplicationDocumentsDirectory();
         dirloc = appDocDir.path;
       }
-
+      FileUtils.mkdir([dirloc]);
+      var response;
       try {
-        FileUtils.mkdir([dirloc]);
 
-        var response = await dio.download(
+         response= await dio.download(
             url, dirloc + "${hospital.hospitalName}" + ".csv");
+      }
+      on DioError {
+        hospital.isDownload = 0;
+        return hospital;
+      }
         if (response.statusCode == 200) {
           DatabaseRepositoryImpl databaseRepositoryImpl =
               new DatabaseRepositoryImpl();
-          List<String> lines =
-              new File(dirloc + "${hospital.hospitalName}" + ".csv")
-                  .readAsLinesSync();
-          bool isFirstLine = true;
+
           List<SearchModel> myList = new List();
-          for (var line in lines) {
-            bool first = false, second = false, third = false;
-            String description, category;
-            double price;
-            int lastindex = line.length;
-            for (int i = line.length - 1; i >= 0; i--) {
-              if (second == true && third == true) {
-                description = line.substring(0, lastindex);
-                first = true;
-                lastindex = i;
-                break;
-              } else if (line[i] == ',') {
-                if (line[i] == ',' && third == false) {
-                  category = line.substring(i + 1, lastindex);
-                  third = true;
-                  lastindex = i;
-                } else if (line[i] == ',' && second == false) {
-                  String priceString = line.substring(i + 1, lastindex);
-                  try {
-                    double priceDouble = double.parse(priceString);
-                    if (priceDouble is double) price = priceDouble;
-                  } catch (NumberFormatException) {
-                    price = 0.0;
-                  }
-                  second = true;
-                  lastindex = i;
-                }
-              }
-            }
-            if (isFirstLine == false)
-              myList.add(new SearchModel(description, price, category));
-            isFirstLine = false;
+      List<String> lines= File(dirloc + "${hospital.hospitalName}" + ".csv").readAsLinesSync();
+      lines.removeAt(0);
+       for( int i=0;i<lines.length;i++){
+         String description="", category;
+         double price;
+
+         String line=lines[i];
+          List<String> parts = line.split(',');
+          category=parts[parts.length-1];
+          try {
+            double priceDouble = double.parse(parts[parts.length-2]);
+            if (priceDouble is double) price = priceDouble;
+          } catch (NumberFormatException) {
+            price = 0.0;
           }
+          for(int i=0;i<parts.length-2;i++){
+            if(i==parts.length-3)
+              description+=parts[i];
+            else
+              description+=parts[i]+", ";
+          }
+          myList.add(new SearchModel(description,price,category));
+      } // Skip the header row
+
+
           await databaseRepositoryImpl.insertCDM(hospital.hospitalName, myList);
           hospital.isDownload = 2;
           return hospital;
         }
-      } on DioError {
-        hospital.isDownload = 0;
-        return hospital;
       }
-    } else {
+    else {
       hospital.isDownload = 0;
       return hospital;
     }

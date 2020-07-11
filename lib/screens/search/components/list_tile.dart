@@ -29,6 +29,8 @@ Card makeCard(SearchModel searchModel) {
 
 ListTile makeListTile(SearchModel searchModel) {
   searchModel.name = searchModel.name.replaceAll('_', ' ');
+  String charge=searchModel.charge==0.0?"N/A":'\$ '+searchModel.charge.toString();
+
   return ListTile(
     title: Text(
       searchModel.description,
@@ -49,7 +51,7 @@ ListTile makeListTile(SearchModel searchModel) {
     ),
     isThreeLine: true,
     trailing: Text(
-      searchModel.charge.toString() + ' \$',
+       charge,
       style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
     ),
   );

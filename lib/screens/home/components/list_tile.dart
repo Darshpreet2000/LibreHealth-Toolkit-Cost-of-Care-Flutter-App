@@ -149,7 +149,7 @@ Container makeListTile(Hospitals hospital) {
                         child: Image.asset('assets/distance_icon.png'),
                       ),
                       Text(
-                        hospital.distance,
+                        hospital.distance+" km",
                         style: TextStyle(fontSize: 14),
                       ),
                       SizedBox(
