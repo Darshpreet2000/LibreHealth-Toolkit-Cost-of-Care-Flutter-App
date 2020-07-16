@@ -1,9 +1,7 @@
-import 'package:curativecare/bloc/download_cdm_bloc/bloc.dart';
-import 'package:curativecare/bloc/download_cdm_bloc/download_cdm_bloc.dart';
-import 'package:curativecare/bloc/download_cdm_bloc/download_cdm_event.dart';
-import 'package:curativecare/main.dart';
+import 'package:curativecare/bloc/download_cdm_bloc/download_file_bloc/bloc.dart';
 import 'package:curativecare/models/download_cdm_model.dart';
 import 'package:curativecare/screens/view_cdm/view_cdm.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
@@ -23,8 +21,8 @@ ListTile makeShimmerListTile() {
   );
 }
 
-ListTile makeListTile(
-    BuildContext context, DownloadCdmModel hospital, int index) {
+ListTile makeListTile(BuildContext context, DownloadCdmModel hospital,
+    int index, DownloadFileButtonBloc downloadFileButtonBloc) {
   return ListTile(
     title: Text(
       hospital.hospitalName,
@@ -37,51 +35,99 @@ ListTile makeListTile(
         fontSize: 18,
       ),
     ),
-    trailing: conditionalWidget(hospital.isDownload, context, hospital, index),
+    trailing: downloadWidget(hospital, index, downloadFileButtonBloc),
   );
 }
 
-Widget conditionalWidget(
-    int condition, BuildContext context, DownloadCdmModel hospital, int index) {
-  if (condition == 0) {
-    return Material(
-        borderRadius: BorderRadius.circular(20.0),
-        child: InkWell(
-          splashColor: Colors.blue,
-          borderRadius: BorderRadius.circular(20.0),
-          onTap: () async {
-            String state = await box.get('state');
-            context
-                .bloc<DownloadCdmBloc>()
-                .add(DownloadCDMGetCSV(state, hospital, index));
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Icon(
-              Icons.file_download,
-              color: Colors.indigo,
-              size: 32,
-            ),
+Widget downloadWidget(DownloadCdmModel hospital, int index,
+    DownloadFileButtonBloc downloadFileButtonBloc) {
+  return BlocBuilder<DownloadFileButtonBloc, DownloadFileButtonState>(
+    builder: (BuildContext context, DownloadFileButtonState state) {
+      if (state is DownloadButtonLoadingProgressIndicator &&
+          index == state.index) {
+        Color foreground = Colors.red;
+        if (state.progress >= 0.8) {
+          foreground = Colors.green;
+        } else if (state.progress >= 0.4) {
+          foreground = Colors.orange;
+        }
+        Color background = foreground.withOpacity(0.2);
+        return Stack(
+          children: <Widget>[
+          SizedBox(
+          height: 45.0,
+          width: 45.0,
+          child: CircularProgressIndicator(
+            strokeWidth: 6,
+            valueColor: new AlwaysStoppedAnimation<Color>(foreground),
+            backgroundColor: background,
+            value: (state.progress),
           ),
-        ));
-  } else if (condition == 1) {
-    return CircularProgressIndicator();
-  } else if (condition == 2) {
-    return RaisedButton(
-      color: Colors.indigo,
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => ViewCDM(hospital.hospitalName)),
+          ),
+
+            Positioned.fill(
+              child: Align(
+                alignment: Alignment.center,
+                child: Text((state.progress * 100).toStringAsFixed(0)),
+              ),
+            )
+          ],
         );
-      },
-      child: Text(
-        'View',
-        maxLines: 2,
-        overflow: TextOverflow.ellipsis,
-        style: TextStyle(color: Colors.white),
-      ),
-    );
-  }
+      } else if (state is DownloadButtonLoadingCircular &&
+          index == state.index) {
+        return CircularProgressIndicator();
+      } else if ((hospital.isDownload == 1) ||
+          (state is DownloadButtonLoaded && index == state.index)) {
+        return RaisedButton(
+          color: Colors.indigo,
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ViewCDM(hospital.hospitalName)),
+            );
+          },
+          child: Text(
+            'View',
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(color: Colors.white),
+          ),
+        );
+      }
+      return Material(
+          borderRadius: BorderRadius.circular(20.0),
+          child: InkWell(
+            splashColor: Colors.blue,
+            borderRadius: BorderRadius.circular(20.0),
+            onTap: () async {
+              if (downloadFileButtonBloc.state.toString() !=
+                      "DownloadButtonLoadingProgressIndicator" &&
+                  downloadFileButtonBloc.state.toString() !=
+                      "DownloadButtonLoadingCircular") {
+                downloadFileButtonBloc.add(DownloadFileButtonClick(
+                    index,
+                    hospital.hospitalName,
+                    BlocProvider.of<DownloadFileButtonBloc>(context)));
+              } else {
+                Scaffold.of(context).showSnackBar(SnackBar(
+                  content: Text(
+                    'Please wait',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  backgroundColor: Colors.green,
+                ));
+              }
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(
+                Icons.file_download,
+                color: Colors.indigo,
+                size: 32,
+              ),
+            ),
+          ));
+    },
+  );
 }

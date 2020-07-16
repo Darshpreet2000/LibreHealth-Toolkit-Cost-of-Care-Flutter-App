@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
+
+import 'package:curativecare/bloc/download_cdm_bloc/download_file_bloc/bloc.dart';
+import 'package:curativecare/bloc/download_cdm_bloc/download_file_bloc/download_file_button_event.dart';
 import 'package:curativecare/models/download_cdm_model.dart';
-import 'package:curativecare/models/search_model.dart';
-import 'package:curativecare/repository/database_repository_impl.dart';
 import 'package:dio/dio.dart';
-import 'package:file_utils/file_utils.dart';
 import 'package:http/http.dart' as http;
-import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
+
+import '../main.dart';
 
 class GitLabApiClient {
   String base_url =
@@ -62,74 +62,39 @@ class GitLabApiClient {
     return name;
   }
 
-  Future getCSVFile(DownloadCdmModel hospital, String stateName) async {
-    String baseURL =
-        "https://gitlab.com/Darshpreet2000/lh-toolkit-cost-of-care-app-data-scraper/-/raw/branch-with-data/CDM";
-    String url = baseURL + "/$stateName/${hospital.hospitalName}" + ".csv";
-    Dio dio = Dio();
-    bool checkPermission = false;
-    var status = await Permission.storage.status;
-    if (status.isDenied || status.isUndetermined) {
-      status = await Permission.storage.request();
+  Future getCSVFileSize(String url, DownloadFileButtonClick event) async {
+    try {
+      var response = await http.head(url);
+      Map<String, dynamic> map = response.headers;
+      double total = double.parse(map['x-gitlab-size']);
+      return total;
+    } on SocketException {
+      event.downloadFileButtonBloc.add(DownloadFileButtonError("Network Error"));
+      return;
     }
-    if (status.isGranted) checkPermission = true;
-    if (checkPermission == true) {
-      String dirloc = "";
-      if (Platform.isAndroid) {
-        dirloc = "/sdcard/download/";
-      } else {
-        Directory appDocDir = await getApplicationDocumentsDirectory();
-        dirloc = appDocDir.path;
-      }
-      FileUtils.mkdir([dirloc]);
-      var response;
-      try {
+  }
 
-         response= await dio.download(
-            url, dirloc + "${hospital.hospitalName}" + ".csv");
-      }
-      on DioError {
-        hospital.isDownload = 0;
-        return hospital;
-      }
-        if (response.statusCode == 200) {
-          DatabaseRepositoryImpl databaseRepositoryImpl =
-              new DatabaseRepositoryImpl();
+  Future downloadCSVFile(String url, double fileSize,
+      DownloadFileButtonClick event, String dirloc) async {
+    Dio dio = new Dio();
+    String stateName = box.get('state');
+    url =
+        "https://gitlab.com/Darshpreet2000/lh-toolkit-cost-of-care-app-data-scraper/-/raw/branch-with-data/CDM" +
+            "/$stateName/${event.hospitalName}" +
+            ".csv";
 
-          List<SearchModel> myList = new List();
-      List<String> lines= File(dirloc + "${hospital.hospitalName}" + ".csv").readAsLinesSync();
-      lines.removeAt(0);
-       for( int i=0;i<lines.length;i++){
-         String description="", category;
-         double price;
-
-         String line=lines[i];
-          List<String> parts = line.split(',');
-          category=parts[parts.length-1];
-          try {
-            double priceDouble = double.parse(parts[parts.length-2]);
-            if (priceDouble is double) price = priceDouble;
-          } catch (NumberFormatException) {
-            price = 0.0;
-          }
-          for(int i=0;i<parts.length-2;i++){
-            if(i==parts.length-3)
-              description+=parts[i];
-            else
-              description+=parts[i]+", ";
-          }
-          myList.add(new SearchModel(description,price,category));
-      } // Skip the header row
-
-
-          await databaseRepositoryImpl.insertCDM(hospital.hospitalName, myList);
-          hospital.isDownload = 2;
-          return hospital;
-        }
-      }
-    else {
-      hospital.isDownload = 0;
-      return hospital;
+    event.downloadFileButtonBloc
+        .add(DownloadFileButtonProgress(0.0, event.index, event.hospitalName,event.downloadFileButtonBloc));
+    try {
+      double progress = 0;
+      await dio.download(url, dirloc + "${event.hospitalName}" + ".csv",
+          onReceiveProgress: (receivedBytes, totalBytes) {
+        progress = ((receivedBytes / fileSize));
+        event.downloadFileButtonBloc.add(DownloadFileButtonProgress(
+            progress*0.6, event.index, event.hospitalName,event.downloadFileButtonBloc));
+      });
+    } on DioError {
+      event.downloadFileButtonBloc.add(DownloadFileButtonError("Network Error"));
     }
   }
 }

@@ -13,7 +13,7 @@ Card makeCard(SearchModel cdm) {
 }
 
 ListTile makeListTile(SearchModel cdm) {
-  String charge=cdm.charge==0.0?"N/A":'\$ '+cdm.charge.toString();
+  String charge = cdm.charge == 0.0 ? "N/A" : '\$ ' + cdm.charge.toString();
   return ListTile(
     title: Text(
       cdm.description,
@@ -25,7 +25,7 @@ ListTile makeListTile(SearchModel cdm) {
     ),
     isThreeLine: true,
     trailing: Text(
-          charge,
+      charge,
       style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
     ),
   );

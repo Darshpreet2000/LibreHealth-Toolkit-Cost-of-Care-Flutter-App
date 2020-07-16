@@ -1,4 +1,3 @@
-import 'package:curativecare/bloc/download_cdm_bloc/bloc.dart';
 import 'package:curativecare/bloc/home_settings_bloc/bloc.dart';
 import 'package:curativecare/bloc/location_bloc/location_bloc.dart';
 import 'package:curativecare/bloc/nearby_hospital_bloc/bloc.dart';
@@ -24,6 +23,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
+
+import 'file:///C:/Users/Darshpreet/AndroidStudioProjects/lh-toolkit-cost-of-care-app/lib/bloc/download_cdm_bloc/download_list_bloc/bloc.dart';
+
+import 'bloc/download_cdm_bloc/download_file_bloc/bloc.dart';
 import 'bloc/search_screen_bloc/search_procedures/search_screen_bloc.dart';
 import 'models/download_cdm_model.dart';
 import 'models/hospitals.dart';
@@ -84,6 +87,10 @@ class MyApp extends StatelessWidget {
         BlocProvider<BottomSheetBloc>(
           create: (BuildContext context) =>
               BottomSheetBloc(SearchScreenRepositoryImpl()),
+        ),
+        BlocProvider<DownloadFileButtonBloc>(
+          create: (BuildContext context) =>
+              DownloadFileButtonBloc(DownloadCDMRepositoryImpl()),
         ),
       ],
       child: MaterialApp(

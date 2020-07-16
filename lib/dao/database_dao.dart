@@ -1,7 +1,7 @@
+import 'package:curativecare/bloc/download_cdm_bloc/download_file_bloc/download_file_button_event.dart';
 import 'package:curativecare/database/hospital_database.dart';
 import 'package:curativecare/models/search_model.dart';
 import 'package:sqflite/sqflite.dart';
-
 import '../main.dart';
 
 class DatabaseDao {
@@ -16,17 +16,33 @@ class DatabaseDao {
     return;
   }
 
-  void insertData(String tableName, List<SearchModel> cdmList) async {
+  void insertData(DownloadFileButtonProgress event, List<SearchModel> cdmList) async {
+    String tableName=event.hospitalName;
     final database = await dbProvider.database;
     tableName = tableName.replaceAll(' ', '_');
-    await database.transaction((txn) async {
+    int total=cdmList.length;
+    int  completed=0;
+    double percentCount=0,progressNow=0,percent=1;
+    double progress=event.progress;
+    database.transaction((txn) async {
       Batch batch = txn.batch();
-      cdmList.forEach((val) {
-        //assuming you have 'Cities' class defined
-        SearchModel cdm = val;
-        batch.insert(tableName, cdm.toMap());
-      });
-      await batch.commit();
+ for(int i=0;i<cdmList.length;i++){
+    SearchModel cdm=cdmList[i];
+     await Future(() {
+       batch.insert(tableName, cdm.toMap());
+       completed += 1;
+       percentCount+=1;
+       progressNow = ((completed / total) * 0.4);
+       if(percentCount==(total~/40)) {
+         event.downloadFileButtonBloc.add(DownloadFileButtonProgress(
+             progress + progressNow, event.index, event.hospitalName,
+             event.downloadFileButtonBloc));
+         percent++;
+         percentCount=0;
+       }
+     });
+   }
+     await  batch.commit();
     });
 
     //checking
@@ -38,7 +54,10 @@ class DatabaseDao {
     name = name.replaceAll(' ', '_');
     final database = await dbProvider.database;
     //Table name is given
-    List<Map<String, dynamic>> maps = await database.query(name);
+    List<Map<String, dynamic>> maps;
+   await database.transaction((txn) async {
+         maps = await txn.query(name);
+    });
     return List.generate(maps.length, (i) {
       SearchModel cdm = new SearchModel.empty();
       return cdm.fromMap(maps[i]);

@@ -39,17 +39,16 @@ Container makeListTile(Hospitals hospital) {
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
               if (snapshot.hasError) {
                 return Container(
-                    margin: EdgeInsets.only(
-                        left: 10, top: 16, bottom: 16, right: 10),
-                    width: 100,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                    ),
-
-                      child: new FittedBox(
-                          fit: BoxFit.fill,
-                          child: Image.asset('assets/placeholder.png')),
-                    );
+                  margin:
+                      EdgeInsets.only(left: 10, top: 16, bottom: 16, right: 10),
+                  width: 100,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                  ),
+                  child: new FittedBox(
+                      fit: BoxFit.fill,
+                      child: Image.asset('assets/placeholder.png')),
+                );
               }
               if (snapshot.hasData) {
                 return CachedNetworkImage(
@@ -149,7 +148,7 @@ Container makeListTile(Hospitals hospital) {
                         child: Image.asset('assets/distance_icon.png'),
                       ),
                       Text(
-                        hospital.distance+" km",
+                        hospital.distance + " km",
                         style: TextStyle(fontSize: 14),
                       ),
                       SizedBox(

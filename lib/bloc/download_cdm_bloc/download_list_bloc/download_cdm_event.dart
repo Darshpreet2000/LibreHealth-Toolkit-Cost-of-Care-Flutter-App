@@ -1,4 +1,3 @@
-import 'package:curativecare/models/download_cdm_model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class DownloadCdmEvent extends Equatable {
@@ -14,16 +13,22 @@ class DownloadCDMFetchData extends DownloadCdmEvent {
   List<Object> get props => [stateName];
 }
 
-class DownloadCDMGetCSV extends DownloadCdmEvent {
-  String stateName;
-
-  DownloadCdmModel hospital;
+class DownloadCDMSaveList extends DownloadCdmEvent {
   int index;
 
-  DownloadCDMGetCSV(this.stateName, this.hospital, this.index);
+  DownloadCDMSaveList(this.index);
 
   @override
-  List<Object> get props => [hospital, stateName, index];
+  List<Object> get props => [index];
+}
+
+class DownloadCDMRefreshList extends DownloadCdmEvent {
+  int index;
+
+  DownloadCDMRefreshList(this.index);
+
+  @override
+  List<Object> get props => [index];
 }
 
 class DownloadCDMError extends DownloadCdmEvent {

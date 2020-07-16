@@ -8,8 +8,12 @@ abstract class NearbyHospitalEvent extends Equatable {
 }
 
 class FetchHospitals extends NearbyHospitalEvent {
+  String state;
+
+  FetchHospitals(this.state);
+
   @override
-  List<Object> get props => [];
+  List<Object> get props => [state];
 }
 
 class FetchImages extends NearbyHospitalEvent {

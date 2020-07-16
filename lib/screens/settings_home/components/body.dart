@@ -93,7 +93,7 @@ class Body extends StatelessWidget {
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               )),
           Container(
-            padding: EdgeInsets.fromLTRB(9,4,8,4),
+            padding: EdgeInsets.fromLTRB(9, 4, 8, 4),
             child: RaisedButton(
                 padding: EdgeInsets.all(8),
                 onPressed: () {
@@ -106,13 +106,10 @@ class Body extends StatelessWidget {
                 child: Text(
                   'Indiana',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                )
-            ),
+                )),
           ),
-
           Container(
-
-            padding: EdgeInsets.fromLTRB(9,4,8,4),
+            padding: EdgeInsets.fromLTRB(9, 4, 8, 4),
             child: RaisedButton(
                 padding: EdgeInsets.all(8),
                 onPressed: () {
@@ -125,12 +122,10 @@ class Body extends StatelessWidget {
                 child: Text(
                   'Alaska',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                )
-            ),
+                )),
           ),
           Container(
-
-            padding: EdgeInsets.fromLTRB(9,4,8,4),
+            padding: EdgeInsets.fromLTRB(9, 4, 8, 4),
             child: RaisedButton(
                 padding: EdgeInsets.all(8),
                 onPressed: () {
@@ -143,8 +138,7 @@ class Body extends StatelessWidget {
                 child: Text(
                   'New York',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                )
-            ),
+                )),
           ),
         ],
       ),

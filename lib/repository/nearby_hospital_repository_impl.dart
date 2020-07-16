@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:curativecare/models/hospitals.dart';
 import 'package:curativecare/network/overpass_api_client.dart';
@@ -65,9 +66,12 @@ class NearbyHospitalsRepoImpl implements NearbyHospitalsRepository {
   Future<String> fetchImages(String name) async {
     String url = 'https://www.google.com/search?tbm=isch&q=';
     url = url + "${name} Hospital";
-
-    var response = await http.get(url);
-
+    http.Response response;
+    try {
+      response = await http.get(url);
+    } on SocketException {
+      throw Exception('Failed to load');
+    }
     if (response.statusCode == 200) {
       String document = response.body;
       var doc = parse(document);

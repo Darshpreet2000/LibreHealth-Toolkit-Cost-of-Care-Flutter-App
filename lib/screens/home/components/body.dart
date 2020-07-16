@@ -16,11 +16,11 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     return Column(
-          children: <Widget>[
-            UserLocation(appBackgroundColor),
-            Expanded(child: NearbyHospitalList())
-            //List of Nearby
-          ],
-        );
+      children: <Widget>[
+        UserLocation(appBackgroundColor),
+        Expanded(child: NearbyHospitalList())
+        //List of Nearby
+      ],
+    );
   }
 }
