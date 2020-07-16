@@ -1,13 +1,11 @@
-import 'package:curativecare/bloc/download_cdm_bloc/download_file_bloc/bloc.dart';
+import 'package:curativecare/bloc/download_cdm_bloc/download_cdm_list/bloc.dart';
+import 'package:curativecare/bloc/download_cdm_bloc/download_cdm_progress/bloc.dart';
 import 'package:curativecare/bloc/location_bloc/location_bloc.dart';
 import 'package:curativecare/bloc/location_bloc/user_location_state.dart';
 import 'package:curativecare/bloc/nearby_hospital_bloc/bloc.dart';
 import 'package:curativecare/models/download_cdm_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'file:///C:/Users/Darshpreet/AndroidStudioProjects/lh-toolkit-cost-of-care-app/lib/bloc/download_cdm_bloc/download_list_bloc/bloc.dart';
-
 import '../../../main.dart';
 import 'list_tile.dart';
 
@@ -17,13 +15,12 @@ class Body extends StatelessWidget {
     return Container(
         child: BlocListener<LocationBloc, LocationState>(
             listener: (BuildContext context, state) async {
-        if (state is LocationLoaded) {
-        String state = await box.get('state');
-        context
-            .bloc<DownloadCdmBloc>()
-            .add(DownloadCDMFetchData(state));
-
-        }
+              if (state is LocationLoaded) {
+                String state = await box.get('state');
+                context
+                    .bloc<DownloadCdmBloc>()
+                    .add(DownloadCDMFetchData(state));
+              }
               if (state is NearbyHospitalsLoadedState) {
               } else if (state is LocationError) {
                 context.bloc<DownloadCdmBloc>().add(DownloadCDMError());

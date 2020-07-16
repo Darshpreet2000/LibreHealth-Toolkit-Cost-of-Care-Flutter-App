@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:curativecare/bloc/download_cdm_bloc/download_file_bloc/bloc.dart';
+import 'package:curativecare/bloc/download_cdm_bloc/download_cdm_progress/download_file_button_event.dart';
 import 'package:curativecare/models/download_cdm_model.dart';
 import 'package:curativecare/models/search_model.dart';
 import 'package:curativecare/network/gitlab_api_client.dart';
@@ -77,7 +77,8 @@ class DownloadCDMRepositoryImpl extends DownloadCDMRepository {
       gitLabApiClient.downloadCSVFile(url, fileSize, event, dirloc);
     } else {
       //Permission denied
-      event.downloadFileButtonBloc.add(DownloadFileButtonError("Permission Denied"));
+      event.downloadFileButtonBloc
+          .add(DownloadFileButtonError("Permission Denied"));
     }
   }
 

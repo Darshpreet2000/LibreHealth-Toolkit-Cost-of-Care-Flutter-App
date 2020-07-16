@@ -6,6 +6,7 @@ import 'package:curativecare/screens/home/components/list_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../main.dart';
 
 class NearbyHospitalList extends StatelessWidget {
@@ -14,7 +15,7 @@ class NearbyHospitalList extends StatelessWidget {
     return BlocListener<LocationBloc, LocationState>(
       listener: (BuildContext context, state) {
         if (state is LocationLoaded) {
-         String state= box.get('state');
+          String state = box.get('state');
           context.bloc<NearbyHospitalBloc>().add(FetchHospitals(state));
         }
       },

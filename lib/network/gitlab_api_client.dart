@@ -1,8 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:curativecare/bloc/download_cdm_bloc/download_file_bloc/bloc.dart';
-import 'package:curativecare/bloc/download_cdm_bloc/download_file_bloc/download_file_button_event.dart';
+import 'package:curativecare/bloc/download_cdm_bloc/download_cdm_progress/download_file_button_event.dart';
 import 'package:curativecare/models/download_cdm_model.dart';
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
@@ -69,7 +68,8 @@ class GitLabApiClient {
       double total = double.parse(map['x-gitlab-size']);
       return total;
     } on SocketException {
-      event.downloadFileButtonBloc.add(DownloadFileButtonError("Network Error"));
+      event.downloadFileButtonBloc
+          .add(DownloadFileButtonError("Network Error"));
       return;
     }
   }
@@ -83,18 +83,22 @@ class GitLabApiClient {
             "/$stateName/${event.hospitalName}" +
             ".csv";
 
-    event.downloadFileButtonBloc
-        .add(DownloadFileButtonProgress(0.0, event.index, event.hospitalName,event.downloadFileButtonBloc));
+    event.downloadFileButtonBloc.add(DownloadFileButtonProgress(
+        0.0, event.index, event.hospitalName, event.downloadFileButtonBloc));
     try {
       double progress = 0;
       await dio.download(url, dirloc + "${event.hospitalName}" + ".csv",
           onReceiveProgress: (receivedBytes, totalBytes) {
         progress = ((receivedBytes / fileSize));
         event.downloadFileButtonBloc.add(DownloadFileButtonProgress(
-            progress*0.6, event.index, event.hospitalName,event.downloadFileButtonBloc));
+            progress * 0.6,
+            event.index,
+            event.hospitalName,
+            event.downloadFileButtonBloc));
       });
     } on DioError {
-      event.downloadFileButtonBloc.add(DownloadFileButtonError("Network Error"));
+      event.downloadFileButtonBloc
+          .add(DownloadFileButtonError("Network Error"));
     }
   }
 }

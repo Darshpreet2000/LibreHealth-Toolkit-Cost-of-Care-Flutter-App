@@ -1,9 +1,7 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:curativecare/models/download_cdm_model.dart';
 import 'package:curativecare/repository/download_cdm_repository_impl.dart';
-
 import 'bloc.dart';
 
 class DownloadCdmBloc extends Bloc<DownloadCdmEvent, DownloadCdmState> {

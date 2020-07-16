@@ -1,4 +1,6 @@
-import 'package:curativecare/bloc/download_cdm_bloc/download_file_bloc/bloc.dart';
+import 'package:curativecare/bloc/download_cdm_bloc/download_cdm_progress/download_file_button_bloc.dart';
+import 'package:curativecare/bloc/download_cdm_bloc/download_cdm_progress/download_file_button_event.dart';
+import 'package:curativecare/bloc/download_cdm_bloc/download_cdm_progress/download_file_button_state.dart';
 import 'package:curativecare/models/download_cdm_model.dart';
 import 'package:curativecare/screens/view_cdm/view_cdm.dart';
 import 'package:flutter/cupertino.dart';
@@ -54,17 +56,16 @@ Widget downloadWidget(DownloadCdmModel hospital, int index,
         Color background = foreground.withOpacity(0.2);
         return Stack(
           children: <Widget>[
-          SizedBox(
-          height: 45.0,
-          width: 45.0,
-          child: CircularProgressIndicator(
-            strokeWidth: 6,
-            valueColor: new AlwaysStoppedAnimation<Color>(foreground),
-            backgroundColor: background,
-            value: (state.progress),
-          ),
-          ),
-
+            SizedBox(
+              height: 45.0,
+              width: 45.0,
+              child: CircularProgressIndicator(
+                strokeWidth: 6,
+                valueColor: new AlwaysStoppedAnimation<Color>(foreground),
+                backgroundColor: background,
+                value: (state.progress),
+              ),
+            ),
             Positioned.fill(
               child: Align(
                 alignment: Alignment.center,

@@ -1,6 +1,8 @@
 import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:curativecare/repository/download_cdm_repository_impl.dart';
+
 import './bloc.dart';
 
 class DownloadFileButtonBloc
@@ -19,13 +21,11 @@ class DownloadFileButtonBloc
       //Show circular progress initially
       yield DownloadButtonLoadingCircular(event.index);
       downloadCDMRepositoryImpl.downloadCDM(event);
-    }
-    else if (event is DownloadFileButtonProgress) {
+    } else if (event is DownloadFileButtonProgress) {
       yield DownloadButtonLoadingProgressIndicator(event.progress, event.index);
       if (event.progress == 0.6) {
         downloadCDMRepositoryImpl.insertInDatabase(event);
-      }
-      else if((event.progress * 100).toStringAsFixed(0)=="100"){
+      } else if ((event.progress * 100).toStringAsFixed(0) == "100") {
         yield DownloadButtonLoaded(event.index);
       }
     } else if (event is DownloadFileButtonError) {

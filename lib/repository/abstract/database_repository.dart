@@ -1,4 +1,4 @@
-import 'package:curativecare/bloc/download_cdm_bloc/download_file_bloc/download_file_button_event.dart';
+import 'package:curativecare/bloc/download_cdm_bloc/download_cdm_progress/download_file_button_event.dart';
 import 'package:curativecare/models/search_model.dart';
 
 abstract class DatabaseRepository {

@@ -1,5 +1,6 @@
-import 'package:curativecare/bloc/download_cdm_bloc/download_file_bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+
+import 'download_file_button_bloc.dart';
 
 abstract class DownloadFileButtonEvent extends Equatable {
   const DownloadFileButtonEvent();
