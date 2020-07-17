@@ -1,11 +1,9 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:curativecare/models/hospitals.dart';
+import 'package:curativecare/network/hospital_image_client.dart';
 import 'package:curativecare/network/overpass_api_client.dart';
 import 'package:curativecare/repository/abstract/nearby_hospitals_repository.dart';
-import 'package:html/parser.dart';
-import 'package:http/http.dart' as http;
 
 import '../main.dart';
 
@@ -52,11 +50,12 @@ class NearbyHospitalsRepoImpl implements NearbyHospitalsRepository {
 
   Future fetchHospitals() async {
     OverpassAPIClient overpassAPIClient = new OverpassAPIClient();
-    return overpassAPIClient.fetch_nearby_hospitals();
+    var response = await overpassAPIClient.fetch_nearby_hospitals();
+    return response;
   }
 
   @override
-  Future<List<Hospitals>> parseJson(String responseBody) async {
+  Future<List<Hospitals>> parseJson(Map<String, dynamic> responseBody) async {
     OverpassAPIClient overpassAPIClient = new OverpassAPIClient();
     //Store List in Hive
     return overpassAPIClient.parse_hospital_json_data(responseBody);
@@ -64,21 +63,10 @@ class NearbyHospitalsRepoImpl implements NearbyHospitalsRepository {
 
   @override
   Future<String> fetchImages(String name) async {
-    String url = 'https://www.google.com/search?tbm=isch&q=';
-    url = url + "${name} Hospital";
-    http.Response response;
+    FetchHospitalImages fetchHospitalImages = new FetchHospitalImages();
     try {
-      response = await http.get(url);
-    } on SocketException {
-      throw Exception('Failed to load');
-    }
-    if (response.statusCode == 200) {
-      String document = response.body;
-      var doc = parse(document);
-      var img = doc.getElementsByTagName('img')[1].attributes['src'];
-      return img;
-    } else {
-      throw Exception('Failed to load');
-    }
+      Future<String> response = fetchHospitalImages.fetchImagesFromGoogle(name);
+      return response;
+    } catch (e) {}
   }
 }

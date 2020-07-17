@@ -1,11 +1,6 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:curativecare/bloc/download_cdm_bloc/download_cdm_progress/download_file_button_event.dart';
 import 'package:curativecare/models/download_cdm_model.dart';
 import 'package:dio/dio.dart';
-import 'package:http/http.dart' as http;
-
 import '../main.dart';
 
 class GitLabApiClient {
@@ -13,44 +8,62 @@ class GitLabApiClient {
       "https://gitlab.com/api/v4/projects/18885282/repository/tree?ref=branch-with-data&path=CDM/";
 
   Future getAvailableCdm(String stateName) async {
+    Dio dio = new Dio();
+
     String url = base_url + stateName + "&per_page=100&page=";
     int i = 1;
 
-    http.Response response;
+    var response;
     try {
-      response = await http.get(url + "1");
-    } on SocketException {
-      return "Network problem";
+      response = await dio.get(url + "1");
+    } on DioError catch (e) {
+      if (DioErrorType.RECEIVE_TIMEOUT == e.type ||
+          DioErrorType.CONNECT_TIMEOUT == e.type) {
+        throw Exception("Please check your internet connection and try again");
+      } else if (DioErrorType.DEFAULT == e.type) {
+        if (e.message.contains('SocketException')) {
+          throw Exception('No Internet Connection');
+        }
+      } else {
+        throw Exception("Problem connecting to the server. Please try again.");
+      }
     }
 
-    Map<String, String> headers = response.headers;
-    String responseBody = response.body;
-    if (responseBody.length == 2) {
-      return "CDMs Not Avaialable For Your Location";
+    var headers = response.headers;
+    List<dynamic> responseBody = response.data;
+    if (responseBody.length == 0) {
+      throw Exception("CDMs Not Available For Your Location");
     }
-    responseBody = responseBody.substring(
-        responseBody.indexOf("[") + 1, responseBody.lastIndexOf("]"));
-    String maxLen = headers["x-total-pages"];
+    // responseBody = responseBody.substring(
+    //     responseBody.indexOf("[") + 1, responseBody.lastIndexOf("]"));
+    var maxLen = headers["x-total-pages"];
     i++;
-    while (i <= int.parse(maxLen)) {
+    while (i <= int.parse(maxLen[0])) {
       try {
-        response = await http.get(url + i.toString());
-      } on SocketException {
-        return "Network problem";
+        response = await dio.get(url + i.toString());
+      } on DioError catch (e) {
+        if (DioErrorType.RECEIVE_TIMEOUT == e.type ||
+            DioErrorType.CONNECT_TIMEOUT == e.type) {
+          throw Exception(
+              "Please check your internet connection and try again");
+        } else if (DioErrorType.DEFAULT == e.type) {
+          if (e.message.contains('SocketException')) {
+            throw Exception('No Internet Connection');
+          }
+        } else {
+          throw Exception(
+              "Problem connecting to the server. Please try again.");
+        }
       }
-      String currentResponse = response.body;
-      currentResponse = currentResponse.substring(
-          currentResponse.indexOf("[") + 1, currentResponse.lastIndexOf("]"));
-      responseBody += "," + currentResponse;
+      responseBody.addAll(response.data);
       i++;
     }
 
-    return "[" + responseBody + "]";
+    return responseBody;
   }
 
-  Future<List<DownloadCdmModel>> parseAvailableCdm(String responseBody) async {
-    var res = await responseBody;
-    var elements = json.decode(res) as List;
+  Future<List<DownloadCdmModel>> parseAvailableCdm(
+      List<dynamic> elements) async {
     List<DownloadCdmModel> name = new List();
     for (int i = 0; i < elements.length; i++) {
       Map<String, dynamic> current_hospital = elements[i];
@@ -62,21 +75,39 @@ class GitLabApiClient {
   }
 
   Future getCSVFileSize(String url, DownloadFileButtonClick event) async {
+    BaseOptions options = new BaseOptions(
+        connectTimeout: 10 * 1000, // 60 seconds
+        receiveTimeout: 10 * 1000 // 60 seconds
+        );
+    Dio dio = new Dio(options);
+
     try {
-      var response = await http.head(url);
-      Map<String, dynamic> map = response.headers;
-      double total = double.parse(map['x-gitlab-size']);
+      var response = await dio.head(url);
+      Headers map = response.headers;
+      double total = double.parse(map.value('x-gitlab-size'));
       return total;
-    } on SocketException {
-      event.downloadFileButtonBloc
-          .add(DownloadFileButtonError("Network Error"));
-      return;
+    } on DioError catch (e) {
+      if (DioErrorType.RECEIVE_TIMEOUT == e.type ||
+          DioErrorType.CONNECT_TIMEOUT == e.type) {
+        throw Exception("Please check your internet connection and try again");
+      } else if (DioErrorType.DEFAULT == e.type) {
+        if (e.message.contains('SocketException')) {
+          throw Exception('No Internet Connection');
+        }
+      } else {
+        throw Exception("Problem connecting to the server. Please try again.");
+      }
     }
   }
 
   Future downloadCSVFile(String url, double fileSize,
       DownloadFileButtonClick event, String dirloc) async {
-    Dio dio = new Dio();
+    BaseOptions options = new BaseOptions(
+        connectTimeout: 25 * 1000, // 25 seconds
+        receiveTimeout: 25 * 1000 // 25 seconds
+        );
+    Dio dio = new Dio(options);
+
     String stateName = box.get('state');
     url =
         "https://gitlab.com/Darshpreet2000/lh-toolkit-cost-of-care-app-data-scraper/-/raw/branch-with-data/CDM" +
@@ -96,9 +127,16 @@ class GitLabApiClient {
             event.hospitalName,
             event.downloadFileButtonBloc));
       });
-    } on DioError {
-      event.downloadFileButtonBloc
-          .add(DownloadFileButtonError("Network Error"));
+    }
+    on DioError catch (e) {
+      if (DioErrorType.RECEIVE_TIMEOUT == e.type ||
+          DioErrorType.CONNECT_TIMEOUT == e.type) {
+        throw Exception("Please check your internet connection and try again");
+      } else if (DioErrorType.DEFAULT == e.type) {
+        throw Exception('Please check your internet connection and try again');
+      } else {
+        throw Exception("Problem connecting to the server. Please try again.");
+      }
     }
   }
 }

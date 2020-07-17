@@ -3,9 +3,11 @@ import 'package:curativecare/bloc/download_cdm_bloc/download_cdm_progress/bloc.d
 import 'package:curativecare/bloc/location_bloc/location_bloc.dart';
 import 'package:curativecare/bloc/location_bloc/user_location_state.dart';
 import 'package:curativecare/bloc/nearby_hospital_bloc/bloc.dart';
+import 'package:curativecare/bloc/saved_screen_bloc/bloc.dart';
 import 'package:curativecare/models/download_cdm_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../main.dart';
 import 'list_tile.dart';
 
@@ -44,8 +46,12 @@ class Body extends StatelessWidget {
                     (BuildContext context, DownloadFileButtonState state) {
                   if (state is DownloadButtonLoaded) {
                     context
+                        .bloc<SavedScreenBloc>()
+                        .add(LoadSavedData());
+                    context
                         .bloc<DownloadCdmBloc>()
                         .add(DownloadCDMRefreshList(state.index));
+
                   } else if (state is DownloadButtonErrorState) {
                     Scaffold.of(context).showSnackBar(SnackBar(
                       content: Text(

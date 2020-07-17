@@ -2,7 +2,6 @@ import 'package:curativecare/bloc/download_cdm_bloc/download_cdm_progress/downlo
 import 'package:curativecare/database/hospital_database.dart';
 import 'package:curativecare/models/search_model.dart';
 import 'package:sqflite/sqflite.dart';
-
 import '../main.dart';
 
 class DatabaseDao {
@@ -10,10 +9,15 @@ class DatabaseDao {
 
   Future<void> createHospitalTable(String name) async {
     name = name.replaceAll(' ', '_');
+    name = name.replaceAll('(', '_');
+    name = name.replaceAll(')', '_');
+    name = name.replaceAll(',', '_');
+    name = name.replaceAll('.', '_');
+
     final db = await dbProvider.database;
-    await db.rawQuery('DROP TABLE IF EXISTS ${name} ');
+    await db.rawQuery('DROP TABLE IF EXISTS $name ');
     await db.rawQuery(
-        'CREATE TABLE ${name} ( description varchar ,  charge varchar, category varchar )');
+        'CREATE TABLE $name ( description varchar ,  charge varchar, category varchar )');
     return;
   }
 
@@ -22,9 +26,14 @@ class DatabaseDao {
     String tableName = event.hospitalName;
     final database = await dbProvider.database;
     tableName = tableName.replaceAll(' ', '_');
+    tableName = tableName.replaceAll('(', '_');
+    tableName = tableName.replaceAll(')', '_');
+    tableName = tableName.replaceAll(',', '_');
+    tableName = tableName.replaceAll('.', '_');
+
     int total = cdmList.length;
     int completed = 0;
-    double percentCount = 0, progressNow = 0, percent = 1;
+    double percentCount = 0, progressNow = 0;
     double progress = event.progress;
     database.transaction((txn) async {
       Batch batch = txn.batch();
@@ -41,7 +50,6 @@ class DatabaseDao {
                 event.index,
                 event.hospitalName,
                 event.downloadFileButtonBloc));
-            percent++;
             percentCount = 0;
           }
         });
@@ -56,6 +64,11 @@ class DatabaseDao {
 
   Future<List<SearchModel>> readData(String name) async {
     name = name.replaceAll(' ', '_');
+    name = name.replaceAll('(', '_');
+    name = name.replaceAll(')', '_');
+    name = name.replaceAll(',', '_');
+    name = name.replaceAll('.', '_');
+
     final database = await dbProvider.database;
     //Table name is given
     List<Map<String, dynamic>> maps;

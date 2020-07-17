@@ -28,19 +28,17 @@ class NearbyHospitalBloc
         nearby_hospital = nearbyHospitalsServices.sortList(nearby_hospital);
         yield NearbyHospitalsLoadedState(nearby_hospital);
       } else {
-        final response = await nearbyHospitalsServices.fetchHospitals();
-        if (response.statusCode == 200) {
-          // If the server did return a 200 OK response,
-          // then parse the JSON.
-          List<Hospitals> nearby_hospital =
-              await nearbyHospitalsServices.parseJson(response.body);
-          nearbyHospitalsServices.saveList(nearby_hospital);
-          nearby_hospital = nearbyHospitalsServices.sortList(nearby_hospital);
-          yield NearbyHospitalsLoadedState(nearby_hospital);
-        } else {
-          // If the server did not return a 200 OK response,
-          // then throw an exception.
-          yield NearbyHospitalsErrorState('Network Error Unable to Fetch Data');
+        try {
+          var response = await nearbyHospitalsServices.fetchHospitals();
+          if (response.statusCode == 200) {
+            List<Hospitals> nearby_hospital =
+                await nearbyHospitalsServices.parseJson(response.data);
+            nearbyHospitalsServices.saveList(nearby_hospital);
+            nearby_hospital = nearbyHospitalsServices.sortList(nearby_hospital);
+            yield NearbyHospitalsLoadedState(nearby_hospital);
+          }
+        } catch (e) {
+          yield NearbyHospitalsErrorState(e.message);
         }
       }
     }

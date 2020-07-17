@@ -20,7 +20,7 @@ class DownloadCDMRepositoryImpl extends DownloadCDMRepository {
     return responseBody;
   }
 
-  Future parseData(String responseBody) async {
+  Future parseData(List<dynamic> responseBody) async {
     GitLabApiClient gitLabApiClient = new GitLabApiClient();
     List<DownloadCdmModel> hospitalsName =
         await gitLabApiClient.parseAvailableCdm(responseBody);
@@ -69,12 +69,23 @@ class DownloadCDMRepositoryImpl extends DownloadCDMRepository {
               "%2F$stateName%2F${event.hospitalName}" +
               ".csv" +
               "?ref=branch-with-data";
-      double fileSize = await gitLabApiClient.getCSVFileSize(url, event);
-      if (fileSize == null) return;
+      double fileSize;
+      try {
+        fileSize = await gitLabApiClient.getCSVFileSize(url, event);
+      } catch (e) {
+        event.downloadFileButtonBloc.add(DownloadFileButtonError(e.message));
+        return;
+      }
       String baseURL =
           "https://gitlab.com/Darshpreet2000/lh-toolkit-cost-of-care-app-data-scraper/-/raw/branch-with-data/CDM";
       url = baseURL + "/$stateName/${event.hospitalName}" + ".csv";
-      gitLabApiClient.downloadCSVFile(url, fileSize, event, dirloc);
+      try {
+        await gitLabApiClient.downloadCSVFile(url, fileSize, event, dirloc);
+      }
+      catch (e) {
+        event.downloadFileButtonBloc.add(DownloadFileButtonError(e.message));
+        return;
+      }
     } else {
       //Permission denied
       event.downloadFileButtonBloc

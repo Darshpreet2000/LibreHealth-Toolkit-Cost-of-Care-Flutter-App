@@ -1,10 +1,8 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
 
 import 'package:curativecare/models/hospitals.dart';
+import 'package:dio/dio.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:http/http.dart' as http;
 
 import '../main.dart';
 
@@ -27,22 +25,33 @@ class OverpassAPIClient {
           """[out:json];(node["amenity"="hospital"](around:$radius,$latitude,$longitude);way["amenity"="hospital"](around:$radius,$latitude,$longitude);relation["amenity"="hospital"](around:$radius,$latitude,$longitude););out center;""";
       print(API_DOMAIN + Nearby_Hospitals);
       try {
-        final response = await http.get(API_DOMAIN + Nearby_Hospitals);
+        Dio dio = new Dio();
+        final response = await dio.get(API_DOMAIN + Nearby_Hospitals);
         print(response);
         return response;
-      } on SocketException {
-        http.Response response = new http.Response(" ", 400);
-
-        return response;
+      } on DioError catch (e) {
+        if (DioErrorType.RECEIVE_TIMEOUT == e.type ||
+            DioErrorType.CONNECT_TIMEOUT == e.type) {
+          throw Exception(
+              "Please check your internet connection and try again");
+        } else if (DioErrorType.DEFAULT == e.type) {
+          if (e.message.contains('SocketException')) {
+            throw Exception('No Internet Connection');
+          }
+        } else {
+          throw Exception(
+              "Problem connecting to the server. Please try again.");
+        }
       }
     }
   }
 
-  Future<List<Hospitals>> parse_hospital_json_data(String responseBody) async {
+  Future<List<Hospitals>> parse_hospital_json_data(
+      Map<String, dynamic> responseBody) async {
     List<Hospitals> hospital_list = new List();
     latitude = box.get('latitude');
     longitude = box.get('longitude');
-    Map<String, dynamic> parsedJson = json.decode(responseBody);
+    Map<String, dynamic> parsedJson = (responseBody);
     var elements = parsedJson['elements'] as List;
     for (int i = 0; i < elements.length; i++) {
       String name, operator, beds, lat, lon;

@@ -17,6 +17,7 @@ class Body extends StatelessWidget {
         } else if (state is ErrorState) {
           context.bloc<SavedScreenBloc>().add(ShowNoDataFound());
         }
+
       },
       child: BlocBuilder<SavedScreenBloc, SavedScreenState>(
         builder: (BuildContext context, SavedScreenState state) {
@@ -28,7 +29,10 @@ class Body extends StatelessWidget {
             );
           } else if (state is SavedScreenErrorState) {
             return Container(
-              child: Center(child: Text(state.message)),
+              child: Center(child: Text(state.message,style: TextStyle(
+                fontSize: 16.0,
+              ),),
+            )
             );
           }
         },

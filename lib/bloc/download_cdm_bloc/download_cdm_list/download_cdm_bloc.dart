@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:curativecare/models/download_cdm_model.dart';
 import 'package:curativecare/repository/download_cdm_repository_impl.dart';
@@ -23,21 +24,20 @@ class DownloadCdmBloc extends Bloc<DownloadCdmEvent, DownloadCdmState> {
         hospitals = await downloadCDMRepositoryImpl.getSavedData();
         yield LoadedState(hospitals);
       } else {
-        String response =
-            await downloadCDMRepositoryImpl.fetchData(event.stateName);
-        if (response == "Network Problem" ||
-            response == "CDMs Not Avaialable For Your Location") {
-          yield ErrorState(response);
-        } else {
+        try {
+          List<dynamic> response =
+              await downloadCDMRepositoryImpl.fetchData(event.stateName);
           hospitals = await downloadCDMRepositoryImpl.parseData(response);
           yield LoadedState(hospitals);
           downloadCDMRepositoryImpl.saveData(hospitals);
+        } catch (e) {
+          yield ErrorState(e.message);
         }
       }
     } else if (event is DownloadCDMRefreshList) {
       hospitals[event.index].isDownload = 1;
       downloadCDMRepositoryImpl.saveData(hospitals);
-      yield (LoadedState(hospitals));
+      yield LoadedState(hospitals);
     } else if (event is DownloadCDMError) {
       yield ErrorState("Network Problem! Try Again");
     }
