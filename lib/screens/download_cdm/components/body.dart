@@ -7,11 +7,14 @@ import 'package:curativecare/bloc/saved_screen_bloc/bloc.dart';
 import 'package:curativecare/models/download_cdm_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../main.dart';
 import 'list_tile.dart';
 
 class Body extends StatelessWidget {
+  String stateName;
+
+  Body([this.stateName]);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -39,19 +42,28 @@ class Body extends StatelessWidget {
                     backgroundColor: Colors.deepOrangeAccent,
                   ));
                 }
+                else if(state is ErrorState){
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                    content: Text(
+                      state.message,
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    backgroundColor: Colors.deepOrangeAccent,
+                  ));
+                }
               },
               child:
                   BlocListener<DownloadFileButtonBloc, DownloadFileButtonState>(
                 listener:
                     (BuildContext context, DownloadFileButtonState state) {
                   if (state is DownloadButtonLoaded) {
-                    context
-                        .bloc<SavedScreenBloc>()
-                        .add(LoadSavedData());
+                    context.bloc<SavedScreenBloc>().add(LoadSavedData());
+                    if(stateName==null) {
+                       stateName = box.get('state');
+                    }
                     context
                         .bloc<DownloadCdmBloc>()
-                        .add(DownloadCDMRefreshList(state.index));
-
+                        .add(DownloadCDMRefreshList(state.index,stateName));
                   } else if (state is DownloadButtonErrorState) {
                     Scaffold.of(context).showSnackBar(SnackBar(
                       content: Text(
@@ -67,13 +79,18 @@ class Body extends StatelessWidget {
                     if (state is LoadingState)
                       return ShimmerLoading();
                     else if (state is LoadedState) {
-                      return ShowList(state.hospitalsName);
+                      if(stateName==null)
+                        stateName=box.get('state');
+                      return ShowList(state.hospitalsName,stateName);
                     } else if (state is RefreshedState) {
-                      return ShowList(state.hospitalsName);
+                        if(stateName==null)
+                        stateName=box.get('state');
+                      return ShowList(state.hospitalsName,stateName);
                     } else if (state is ErrorState) {
                       return Center(
                         child: Container(
-                          child: Text(state.message),
+                          child: Text(state.message,style: TextStyle(fontSize: 18),
+                        ),
                         ),
                       );
                     }
@@ -87,7 +104,7 @@ class Body extends StatelessWidget {
 Widget ShimmerLoading() {
   return ListView.builder(
     scrollDirection: Axis.vertical,
-    itemCount: 6,
+    itemCount: 10,
     itemBuilder: (BuildContext context, int index) {
       return Card(
         elevation: 4.0,
@@ -101,23 +118,18 @@ Widget ShimmerLoading() {
   );
 }
 
-class ShowList extends StatefulWidget {
+class ShowList extends StatelessWidget {
   List<DownloadCdmModel> hospitalsName;
+  String stateName;
+  ShowList(this.hospitalsName, this.stateName);
 
-  ShowList(this.hospitalsName);
-
-  @override
-  _ShowListState createState() => _ShowListState();
-}
-
-class _ShowListState extends State<ShowList> {
   @override
   Widget build(BuildContext context) {
     DownloadFileButtonBloc downloadFileButtonBloc =
         BlocProvider.of<DownloadFileButtonBloc>(context);
     return Scrollbar(
       child: ListView.builder(
-        itemCount: widget.hospitalsName.length,
+        itemCount: hospitalsName.length,
         shrinkWrap: true,
         itemBuilder: (BuildContext context, int index) {
           return Card(
@@ -125,8 +137,8 @@ class _ShowListState extends State<ShowList> {
             margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
             child: Container(
               decoration: BoxDecoration(color: Colors.grey[50]),
-              child: makeListTile(context, widget.hospitalsName[index], index,
-                  downloadFileButtonBloc),
+              child: makeListTile(context, hospitalsName[index], index,
+                  downloadFileButtonBloc,stateName),
             ),
           );
         },

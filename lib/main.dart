@@ -4,6 +4,7 @@ import 'package:curativecare/bloc/nearby_hospital_bloc/bloc.dart';
 import 'package:curativecare/bloc/saved_screen_bloc/saved_screen_bloc.dart';
 import 'package:curativecare/bloc/search_screen_bloc/bottom_sheet/bloc.dart';
 import 'package:curativecare/bloc/view_cdm_screen_bloc/bloc.dart';
+import 'package:curativecare/bloc/view_cdm_statewise_screen_bloc/bloc.dart';
 import 'package:curativecare/repository/download_cdm_repository_impl.dart';
 import 'package:curativecare/repository/home_settings_repository_impl.dart';
 import 'package:curativecare/repository/location_repository_impl.dart';
@@ -11,6 +12,7 @@ import 'package:curativecare/repository/nearby_hospital_repository_impl.dart';
 import 'package:curativecare/repository/saved_screen_repository_impl.dart';
 import 'package:curativecare/repository/search_screen_repository_impl.dart';
 import 'package:curativecare/repository/view_cdm_screen_repository_impl.dart';
+import 'package:curativecare/repository/view_cdm_statewise_repository_impl.dart';
 import 'package:curativecare/screens/about/about.dart';
 import 'package:curativecare/screens/base/base_class.dart';
 import 'package:curativecare/screens/compare_hospitals/compare_hospital.dart';
@@ -90,6 +92,10 @@ class MyApp extends StatelessWidget {
         BlocProvider<DownloadFileButtonBloc>(
           create: (BuildContext context) =>
               DownloadFileButtonBloc(DownloadCDMRepositoryImpl()),
+        ),
+        BlocProvider<ViewCdmStatewiseBloc>(
+          create: (BuildContext context) =>
+              ViewCdmStatewiseBloc(ViewCDMStatewiseRepositoryImpl()),
         ),
       ],
       child: MaterialApp(

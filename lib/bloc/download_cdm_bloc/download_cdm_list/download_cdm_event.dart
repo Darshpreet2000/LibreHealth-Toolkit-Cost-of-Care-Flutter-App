@@ -24,11 +24,12 @@ class DownloadCDMSaveList extends DownloadCdmEvent {
 
 class DownloadCDMRefreshList extends DownloadCdmEvent {
   int index;
+  String stateName;
 
-  DownloadCDMRefreshList(this.index);
+  DownloadCDMRefreshList(this.index, this.stateName);
 
   @override
-  List<Object> get props => [index];
+  List<Object> get props => [index,stateName];
 }
 
 class DownloadCDMError extends DownloadCdmEvent {

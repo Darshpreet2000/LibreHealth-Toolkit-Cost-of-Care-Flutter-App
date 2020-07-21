@@ -1,11 +1,46 @@
 import 'package:curativecare/bloc/download_cdm_bloc/download_cdm_progress/download_file_button_event.dart';
 import 'package:curativecare/models/download_cdm_model.dart';
 import 'package:dio/dio.dart';
+
 import '../main.dart';
 
 class GitLabApiClient {
   String base_url =
       "https://gitlab.com/api/v4/projects/18885282/repository/tree?ref=branch-with-data&path=CDM/";
+
+  Future fetchStatesName() async {
+    List<String> States = new List();
+    Dio dio = new Dio();
+    String url = base_url;
+    var response;
+    try {
+      response = await dio.get(url);
+    } on DioError catch (e) {
+      if (DioErrorType.RECEIVE_TIMEOUT == e.type ||
+          DioErrorType.CONNECT_TIMEOUT == e.type) {
+        throw Exception("Please check your internet connection and try again");
+      } else if (DioErrorType.DEFAULT == e.type) {
+        if (e.message.contains('SocketException')) {
+          throw Exception('No Internet Connection');
+        }
+      } else {
+        throw Exception("Problem connecting to the server. Please try again.");
+      }
+    }
+
+    List<dynamic> responseBody = response.data;
+    if (responseBody.length == 0) {
+      throw Exception("CDMs Not Available For Your Location");
+    }
+
+    for (int i = 0; i < responseBody.length; i++) {
+      Map<String, dynamic> current_hospital = responseBody[i];
+      String stateName = current_hospital['name'];
+      stateName = stateName.substring(0, stateName.length);
+      States.add(stateName);
+    }
+    return States;
+  }
 
   Future getAvailableCdm(String stateName) async {
     Dio dio = new Dio();
@@ -92,7 +127,7 @@ class GitLabApiClient {
         throw Exception("Please check your internet connection and try again");
       } else if (DioErrorType.DEFAULT == e.type) {
         if (e.message.contains('SocketException')) {
-          throw Exception('No Internet Connection');
+          throw Exception('Please check your internet connection and try again');
         }
       } else {
         throw Exception("Problem connecting to the server. Please try again.");
@@ -108,12 +143,6 @@ class GitLabApiClient {
         );
     Dio dio = new Dio(options);
 
-    String stateName = box.get('state');
-    url =
-        "https://gitlab.com/Darshpreet2000/lh-toolkit-cost-of-care-app-data-scraper/-/raw/branch-with-data/CDM" +
-            "/$stateName/${event.hospitalName}" +
-            ".csv";
-
     event.downloadFileButtonBloc.add(DownloadFileButtonProgress(
         0.0, event.index, event.hospitalName, event.downloadFileButtonBloc));
     try {
@@ -127,8 +156,7 @@ class GitLabApiClient {
             event.hospitalName,
             event.downloadFileButtonBloc));
       });
-    }
-    on DioError catch (e) {
+    } on DioError catch (e) {
       if (DioErrorType.RECEIVE_TIMEOUT == e.type ||
           DioErrorType.CONNECT_TIMEOUT == e.type) {
         throw Exception("Please check your internet connection and try again");

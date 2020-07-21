@@ -15,7 +15,7 @@ class LocationClient {
       position =
           await location.getLocation().timeout(const Duration(seconds: 10));
     } on TimeoutException catch (e) {
-      return 'Network Problem';
+      return 'Please check your internet connection and try again';
     }
     //Save coordinate in shared preference
     //To use it in Overpass API

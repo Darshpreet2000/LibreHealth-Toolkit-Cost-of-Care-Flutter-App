@@ -18,6 +18,18 @@ class NearbyHospitalList extends StatelessWidget {
           String state = box.get('state');
           context.bloc<NearbyHospitalBloc>().add(FetchHospitals(state));
         }
+        else if(state is LocationError){
+          Scaffold.of(context).showSnackBar(SnackBar(
+            content: Text(
+              state.message,
+              style: TextStyle(color: Colors.white),
+            ),
+            backgroundColor: Colors.deepOrangeAccent,
+          ));
+          context
+              .bloc<NearbyHospitalBloc>()
+              .add(NearbyHospitalShowError());
+        }
       },
       child: BlocBuilder<NearbyHospitalBloc, NearbyHospitalState>(
         builder: (BuildContext context, NearbyHospitalState state) {

@@ -38,7 +38,7 @@ class _BodyState extends State<Body> {
           } else if (state is SearchScreenNoDataState) {
             return Container(
               child: Center(
-                child: Text("No Data Found"),
+                child: Text("No Data Found",style: TextStyle(fontSize: 18.0),),
               ),
             );
           } else if (state is SearchScreenLoadedState) {

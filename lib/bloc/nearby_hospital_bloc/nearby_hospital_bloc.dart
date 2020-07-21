@@ -1,9 +1,7 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:curativecare/models/hospitals.dart';
 import 'package:curativecare/repository/nearby_hospital_repository_impl.dart';
-
 import './bloc.dart';
 
 class NearbyHospitalBloc
@@ -24,7 +22,7 @@ class NearbyHospitalBloc
       bool checkSaved = await nearbyHospitalsServices.checkSaved();
       if (checkSaved) {
         List<Hospitals> nearby_hospital =
-            await nearbyHospitalsServices.getSavedList();
+          nearbyHospitalsServices.getSavedList();
         nearby_hospital = nearbyHospitalsServices.sortList(nearby_hospital);
         yield NearbyHospitalsLoadedState(nearby_hospital);
       } else {
@@ -41,6 +39,9 @@ class NearbyHospitalBloc
           yield NearbyHospitalsErrorState(e.message);
         }
       }
+    }
+    else if(event is NearbyHospitalShowError){
+      yield NearbyHospitalsErrorState("Please check your internet connection and try again");
     }
   }
 }

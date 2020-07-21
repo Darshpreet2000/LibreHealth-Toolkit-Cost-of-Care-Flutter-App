@@ -9,13 +9,15 @@ abstract class DownloadFileButtonEvent extends Equatable {
 class DownloadFileButtonClick extends DownloadFileButtonEvent {
   int index;
   String hospitalName;
+  String stateName;
   final DownloadFileButtonBloc downloadFileButtonBloc;
 
-  DownloadFileButtonClick(
-      this.index, this.hospitalName, this.downloadFileButtonBloc);
+
+  DownloadFileButtonClick(this.index, this.hospitalName, this.stateName,
+      this.downloadFileButtonBloc);
 
   @override
-  List<Object> get props => [index, hospitalName];
+  List<Object> get props => [index, hospitalName,stateName];
 }
 
 class DownloadFileButtonProgress extends DownloadFileButtonEvent {

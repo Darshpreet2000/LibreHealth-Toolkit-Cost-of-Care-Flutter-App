@@ -28,19 +28,17 @@ class DownloadCDMRepositoryImpl extends DownloadCDMRepository {
   }
 
   @override
-  void saveData(List<DownloadCdmModel> hospitalsName) {
-    String state = box.get('state');
+  void saveData(List<DownloadCdmModel> hospitalsName,String state) {
+
     listbox.put('downloadCDMList$state', hospitalsName);
   }
 
-  Future<bool> checkDataSaved() async {
-    String state = await box.get('state');
+  Future<bool> checkDataSaved(String state) async {
     bool condition = listbox.containsKey('downloadCDMList$state');
     return condition;
   }
 
-  Future<List<DownloadCdmModel>> getSavedData() async {
-    String state = await box.get('state');
+  Future<List<DownloadCdmModel>> getSavedData(String state) async {
     List<DownloadCdmModel> data =
         await listbox.get('downloadCDMList$state').cast<DownloadCdmModel>();
     return data;
@@ -63,10 +61,9 @@ class DownloadCDMRepositoryImpl extends DownloadCDMRepository {
         dirloc = appDocDir.path;
       }
       FileUtils.mkdir([dirloc]);
-      String stateName = box.get('state');
       String url =
           "https://gitlab.com/api/v4/projects/18885282/repository/files/CDM" +
-              "%2F$stateName%2F${event.hospitalName}" +
+              "%2F${event.stateName}%2F${event.hospitalName}" +
               ".csv" +
               "?ref=branch-with-data";
       double fileSize;
@@ -78,11 +75,10 @@ class DownloadCDMRepositoryImpl extends DownloadCDMRepository {
       }
       String baseURL =
           "https://gitlab.com/Darshpreet2000/lh-toolkit-cost-of-care-app-data-scraper/-/raw/branch-with-data/CDM";
-      url = baseURL + "/$stateName/${event.hospitalName}" + ".csv";
+      url = baseURL + "/${event.stateName}/${event.hospitalName}" + ".csv";
       try {
         await gitLabApiClient.downloadCSVFile(url, fileSize, event, dirloc);
-      }
-      catch (e) {
+      } catch (e) {
         event.downloadFileButtonBloc.add(DownloadFileButtonError(e.message));
         return;
       }

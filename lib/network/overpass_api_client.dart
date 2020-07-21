@@ -1,9 +1,7 @@
 import 'dart:async';
-
 import 'package:curativecare/models/hospitals.dart';
 import 'package:dio/dio.dart';
 import 'package:geolocator/geolocator.dart';
-
 import '../main.dart';
 
 class OverpassAPIClient {

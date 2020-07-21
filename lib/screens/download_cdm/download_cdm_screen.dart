@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-
 import 'components/body.dart';
 
 class DownloadCDMScreen extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,6 +14,7 @@ class DownloadCDMScreen extends StatelessWidget {
         ),
         centerTitle: true,
       ),
+
       body: Body(),
     );
   }

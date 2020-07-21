@@ -29,3 +29,9 @@ class SaveHospitals extends NearbyHospitalEvent {
   @override
   List<Object> get props => [];
 }
+
+class NearbyHospitalShowError extends NearbyHospitalEvent{
+  @override
+  List<Object> get props => [];
+
+}

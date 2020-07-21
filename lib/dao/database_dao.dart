@@ -2,6 +2,7 @@ import 'package:curativecare/bloc/download_cdm_bloc/download_cdm_progress/downlo
 import 'package:curativecare/database/hospital_database.dart';
 import 'package:curativecare/models/search_model.dart';
 import 'package:sqflite/sqflite.dart';
+
 import '../main.dart';
 
 class DatabaseDao {
@@ -15,9 +16,11 @@ class DatabaseDao {
     name = name.replaceAll('.', '_');
 
     final db = await dbProvider.database;
-    await db.rawQuery('DROP TABLE IF EXISTS $name ');
-    await db.rawQuery(
-        'CREATE TABLE $name ( description varchar ,  charge varchar, category varchar )');
+    await db.transaction((txn) async {
+      await txn.rawQuery('DROP TABLE IF EXISTS $name ');
+      await txn.rawQuery(
+          'CREATE TABLE $name ( description varchar ,  charge varchar, category varchar )');
+    });
     return;
   }
 
@@ -84,16 +87,19 @@ class DatabaseDao {
   Future getAllTables() async {
     final database = await dbProvider.database;
     List<String> tableNames = new List();
-    tableNames = (await database
-            .query('sqlite_master', where: 'type = ?', whereArgs: ['table']))
-        .map((row) => row['name'] as String)
-        .toList(growable: true);
+    await database.transaction((txn) async {
+      tableNames = (await txn
+          .query('sqlite_master', where: 'type = ?', whereArgs: ['table']))
+          .map((row) => row['name'] as String)
+          .toList(growable: true);
+    });
     print(tableNames);
     return tableNames;
   }
 
   Future searchProcedureInAllTables(String searchQuery) async {
     final database = await dbProvider.database;
+    List<SearchModel> list = new List();
     List<String> hospitalName = await getAllTables();
     if (hospitalName.length > 0) hospitalName.removeAt(0);
     bool checkCategory = await box.containsKey('category');
@@ -111,36 +117,37 @@ class DatabaseDao {
     String query = "Select * from ( SELECT description , charge ,category , ";
     int length = hospitalName.length;
     int start = 0;
-    for (int i = 0; i < length; i++) {
-      start = start + 1;
-      query += "'" +
-          hospitalName[i] +
-          "'" +
-          " as name " "from " +
-          hospitalName[i] +
-          " where " +
-          hospitalName[i] +
-          ".description like " +
-          "'%" +
-          searchQuery +
-          "%' " +
-          (checkCategory == true && box.get('category') != 0
-              ? " and category = '${category}'"
-              : " ") +
-          " limit 50 ) ";
-      if (start != length)
-        query +=
-            " union Select * from ( SELECT description , charge ,category , ";
+    if(length>0) {
+      for (int i = 0; i < length; i++) {
+        start = start + 1;
+        query += "'" +
+            hospitalName[i] +
+            "'" +
+            " as name " "from " +
+            hospitalName[i] +
+            " where " +
+            hospitalName[i] +
+            ".description like " +
+            "'%" +
+            searchQuery +
+            "%' " +
+            (checkCategory == true && box.get('category') != 0
+                ? " and category = '${category}'"
+                : " ") +
+            " limit 50 ) ";
+        if (start != length)
+          query +=
+          " union Select * from ( SELECT description , charge ,category , ";
+      }
+      print(query);
+      await database.transaction((txn) async {
+        List<Map<String, dynamic>> result = await txn.rawQuery(query);
+        result.forEach((itemMap) {
+          SearchModel searchmodel = new SearchModel.empty();
+          list.add(searchmodel.fromMapResult(itemMap));
+        });
+      });
     }
-    List<SearchModel> list = new List();
-    print(query);
-
-    List<Map<String, dynamic>> result = await database.rawQuery(query);
-    result.forEach((itemMap) {
-      SearchModel searchmodel = new SearchModel.empty();
-      list.add(searchmodel.fromMapResult(itemMap));
-    });
-
     return list;
   }
 }

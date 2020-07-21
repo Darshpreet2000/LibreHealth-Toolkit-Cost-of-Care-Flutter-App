@@ -24,7 +24,7 @@ ListTile makeShimmerListTile() {
 }
 
 ListTile makeListTile(BuildContext context, DownloadCdmModel hospital,
-    int index, DownloadFileButtonBloc downloadFileButtonBloc) {
+    int index, DownloadFileButtonBloc downloadFileButtonBloc,String stateName) {
   return ListTile(
     title: Text(
       hospital.hospitalName,
@@ -37,12 +37,12 @@ ListTile makeListTile(BuildContext context, DownloadCdmModel hospital,
         fontSize: 18,
       ),
     ),
-    trailing: downloadWidget(hospital, index, downloadFileButtonBloc),
+    trailing: downloadWidget(hospital, index, downloadFileButtonBloc,stateName),
   );
 }
 
 Widget downloadWidget(DownloadCdmModel hospital, int index,
-    DownloadFileButtonBloc downloadFileButtonBloc) {
+    DownloadFileButtonBloc downloadFileButtonBloc,String stateName) {
   return BlocBuilder<DownloadFileButtonBloc, DownloadFileButtonState>(
     builder: (BuildContext context, DownloadFileButtonState state) {
       if (state is DownloadButtonLoadingProgressIndicator &&
@@ -77,8 +77,8 @@ Widget downloadWidget(DownloadCdmModel hospital, int index,
       } else if (state is DownloadButtonLoadingCircular &&
           index == state.index) {
         return CircularProgressIndicator();
-      } else if ((hospital.isDownload == 1) ||
-          (state is DownloadButtonLoaded && index == state.index)) {
+      }
+      else if ((hospital.isDownload == 1)) {
         return RaisedButton(
           color: Colors.indigo,
           onPressed: () {
@@ -108,7 +108,7 @@ Widget downloadWidget(DownloadCdmModel hospital, int index,
                       "DownloadButtonLoadingCircular") {
                 downloadFileButtonBloc.add(DownloadFileButtonClick(
                     index,
-                    hospital.hospitalName,
+                    hospital.hospitalName,stateName,
                     BlocProvider.of<DownloadFileButtonBloc>(context)));
               } else {
                 Scaffold.of(context).showSnackBar(SnackBar(
