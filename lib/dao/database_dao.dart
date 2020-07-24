@@ -134,7 +134,7 @@ class DatabaseDao {
             (checkCategory == true && box.get('category') != 0
                 ? " and category = '${category}'"
                 : " ") +
-            " limit 50 ) ";
+            " limit 80 ) ";
         if (start != length)
           query +=
           " union Select * from ( SELECT description , charge ,category , ";
