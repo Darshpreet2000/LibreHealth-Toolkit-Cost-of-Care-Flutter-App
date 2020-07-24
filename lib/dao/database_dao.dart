@@ -14,6 +14,7 @@ class DatabaseDao {
     name = name.replaceAll(')', '_');
     name = name.replaceAll(',', '_');
     name = name.replaceAll('.', '_');
+    name = name.replaceAll('-', '_');
 
     final db = await dbProvider.database;
     await db.transaction((txn) async {
@@ -33,10 +34,11 @@ class DatabaseDao {
     tableName = tableName.replaceAll(')', '_');
     tableName = tableName.replaceAll(',', '_');
     tableName = tableName.replaceAll('.', '_');
+    tableName = tableName.replaceAll('-', '_');
 
     int total = cdmList.length;
     int completed = 0;
-    double percentCount = 0, progressNow = 0;
+    double percentCount = 0, progressNow = 0,counter=1;
     double progress = event.progress;
     database.transaction((txn) async {
       Batch batch = txn.batch();
@@ -44,16 +46,16 @@ class DatabaseDao {
         SearchModel cdm = cdmList[i];
         await Future(() {
           batch.insert(tableName, cdm.toMap());
-          completed += 1;
-          percentCount += 1;
-          progressNow = ((completed / total) * 0.4);
-          if (percentCount == (total ~/ 40)) {
+          completed +=1;
+          percentCount = (completed/total)*40;
+          if (percentCount >= counter) {
+            progressNow = ((completed / total) * 0.4);
             event.downloadFileButtonBloc.add(DownloadFileButtonProgress(
                 progress + progressNow,
                 event.index,
                 event.hospitalName,
                 event.downloadFileButtonBloc));
-            percentCount = 0;
+            counter++;
           }
         });
       }
@@ -71,6 +73,7 @@ class DatabaseDao {
     name = name.replaceAll(')', '_');
     name = name.replaceAll(',', '_');
     name = name.replaceAll('.', '_');
+    name = name.replaceAll('-', '_');
 
     final database = await dbProvider.database;
     //Table name is given

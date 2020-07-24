@@ -38,11 +38,15 @@ class NearbyHospitalList extends StatelessWidget {
           } else if (state is NearbyHospitalsLoadedState) {
             return ListBuilder(state.nearby_hospital);
           } else if (state is NearbyHospitalsErrorState) {
-            return Center(
-                child: Text(
-              state.message,
-              style: TextStyle(fontSize: 18),
-            ));
+            return Container(
+              padding: EdgeInsets.all(8),
+              child: Center(
+                  child: Text(
+                state.message,
+                maxLines: 3,
+                style: TextStyle(fontSize: 18),
+              )),
+            );
           }
         },
       ),

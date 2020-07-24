@@ -15,15 +15,15 @@ class DownloadFileButtonBloc
 
   @override
   Stream<DownloadFileButtonState> mapEventToState(
-    DownloadFileButtonEvent event,
-  ) async* {
+      DownloadFileButtonEvent event,
+      ) async* {
     if (event is DownloadFileButtonClick) {
       //Show circular progress initially
       yield DownloadButtonLoadingCircular(event.index);
       downloadCDMRepositoryImpl.downloadCDM(event);
     } else if (event is DownloadFileButtonProgress) {
       yield DownloadButtonLoadingProgressIndicator(event.progress, event.index);
-      if (event.progress == 0.6) {
+      if (event.progress == 0.6||(event.progress * 100).toStringAsFixed(0) == "60") {
         downloadCDMRepositoryImpl.insertInDatabase(event);
       } else if ((event.progress * 100).toStringAsFixed(0) == "100" ||
           (event.progress * 100) > 99) {

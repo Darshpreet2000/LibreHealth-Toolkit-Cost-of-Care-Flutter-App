@@ -22,3 +22,13 @@ class ViewCDMStatewiseLoadedState extends ViewCdmStatewiseState {
   @override
   List<Object> get props => [states];
 }
+
+class ViewCDMStatewiseErrorState extends ViewCdmStatewiseState{
+  String message;
+
+  ViewCDMStatewiseErrorState(this.message);
+
+  @override
+  List<Object> get props => [message];
+
+}

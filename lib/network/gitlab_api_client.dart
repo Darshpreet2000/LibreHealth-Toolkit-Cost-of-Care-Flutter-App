@@ -30,7 +30,7 @@ class GitLabApiClient {
 
     List<dynamic> responseBody = response.data;
     if (responseBody.length == 0) {
-      throw Exception("CDMs Not Available For Your Location");
+      throw Exception("Problem Connecting to Server, Try Again Later");
     }
 
     for (int i = 0; i < responseBody.length; i++) {
@@ -111,8 +111,8 @@ class GitLabApiClient {
 
   Future getCSVFileSize(String url, DownloadFileButtonClick event) async {
     BaseOptions options = new BaseOptions(
-        connectTimeout: 10 * 1000, // 60 seconds
-        receiveTimeout: 10 * 1000 // 60 seconds
+        connectTimeout: 13 * 1000, // 60 seconds
+        receiveTimeout: 13 * 1000 // 60 seconds
         );
     Dio dio = new Dio(options);
 

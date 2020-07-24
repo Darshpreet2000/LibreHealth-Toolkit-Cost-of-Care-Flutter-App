@@ -21,19 +21,35 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ViewCdmStatewiseBloc, ViewCdmStatewiseState>(
-        builder: (BuildContext context, ViewCdmStatewiseState state) {
-      if (state is ViewCDMStatewiseLoadingState) {
-        return Center(
-          child: CircularProgressIndicator(),
-        );
-      } else if (state is ViewCDMStatewiseLoadedState) {
-
-        return StateListTile(state.states);
-      }
-      return Center(
-        child: CircularProgressIndicator(),
-      );
-    });
+    return BlocListener<ViewCdmStatewiseBloc, ViewCdmStatewiseState>(
+        listener: (BuildContext context, state) async {
+          if(state is ViewCDMStatewiseErrorState){
+            Scaffold.of(context).showSnackBar(SnackBar(
+              content: Text(
+               state.message,
+                style: TextStyle(color: Colors.white),
+              ),
+              backgroundColor: Colors.deepOrangeAccent,
+            ));
+          }
+        },
+        child: BlocBuilder<ViewCdmStatewiseBloc, ViewCdmStatewiseState>(
+            builder: (BuildContext context, ViewCdmStatewiseState state) {
+          if (state is ViewCDMStatewiseLoadingState) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (state is ViewCDMStatewiseLoadedState) {
+            return StateListTile(state.states);
+          } else if (state is ViewCDMStatewiseErrorState) {
+            return Center(
+              child: Container(
+                  child: Text(
+                state.message,
+                style: TextStyle(fontSize: 16),
+              )),
+            );
+          }
+        }));
   }
 }

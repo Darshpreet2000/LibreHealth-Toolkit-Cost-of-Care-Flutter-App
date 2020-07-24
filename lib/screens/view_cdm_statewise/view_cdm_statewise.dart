@@ -18,7 +18,7 @@ class _ViewCDMStatewiseState extends State<ViewCDMStatewise> {
       appBar: AppBar(
         title: Text('View CDM Statewise'),
         centerTitle: true,
-        backgroundColor: Colors.orange,
+        backgroundColor: Colors.indigo,
       ),
       body: Body(),
 

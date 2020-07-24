@@ -10,7 +10,7 @@ class ViewCdmStatewiseBloc
   ViewCdmStatewiseBloc(this.viewCDMStatewiseRepositoryImpl);
 
   @override
-  ViewCdmStatewiseState get initialState => InitialViewCdmStatewiseState();
+  ViewCdmStatewiseState get initialState => ViewCDMStatewiseLoadingState();
   ViewCDMStatewiseRepositoryImpl viewCDMStatewiseRepositoryImpl;
 
   @override
@@ -27,16 +27,17 @@ class ViewCdmStatewiseBloc
       }
       //Fetch Data
       else {
-        List<String> states =
-        await viewCDMStatewiseRepositoryImpl.getListOfStates();
-        yield ViewCDMStatewiseLoadedState(states);
-        viewCDMStatewiseRepositoryImpl.saveData(states);
+        try {
+          List<String> states =
+          await viewCDMStatewiseRepositoryImpl.getListOfStates();
+            yield ViewCDMStatewiseLoadedState(states);
+            viewCDMStatewiseRepositoryImpl.saveData(states);
+
+        }
+        catch (e){
+          yield ViewCDMStatewiseErrorState(e.message);
+        }
       }
-      } else if (event is ViewCDMStatewiseFetchCDM) {
-      yield ViewCDMStatewiseLoadingState();
-      //Fetch Data
-      List<String> states;
-      yield ViewCDMStatewiseLoadedState(states);
     }
   }
 }

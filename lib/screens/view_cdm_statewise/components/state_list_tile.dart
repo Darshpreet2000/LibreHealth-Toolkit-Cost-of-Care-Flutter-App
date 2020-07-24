@@ -39,7 +39,7 @@ class StateListTile extends StatelessWidget {
             fontSize: 18,
           )),
       trailing: RaisedButton(
-        color: Colors.orange,
+        color: Colors.indigo,
         onPressed: () {
           Navigator.push(
               context,

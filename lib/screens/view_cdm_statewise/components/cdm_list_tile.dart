@@ -40,7 +40,7 @@ DownloadFileButtonBloc downloadFileButtonBloc;
     return Scaffold(
         appBar: AppBar(
           title: Text("${widget.stateName} Hospitals ChargeMasters"),
-          backgroundColor: Colors.orange,
+          backgroundColor: Colors.indigo,
         ),
         body: BlocListener(
           bloc: downloadCdmBloc,
@@ -199,7 +199,7 @@ Widget downloadWidget(DownloadCdmModel hospital, int index,
         return CircularProgressIndicator();
       } else if ((hospital.isDownload == 1)) {
         return RaisedButton(
-          color: Colors.orange,
+          color: Colors.indigo,
           onPressed: () {
             Navigator.push(
               context,
@@ -244,7 +244,7 @@ Widget downloadWidget(DownloadCdmModel hospital, int index,
               padding: const EdgeInsets.all(8.0),
               child: Icon(
                 Icons.file_download,
-                color: Colors.orange,
+                color: Colors.indigo,
                 size: 32,
               ),
             ),
