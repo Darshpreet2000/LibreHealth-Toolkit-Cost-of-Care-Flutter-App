@@ -15,7 +15,7 @@ import 'package:curativecare/repository/view_cdm_screen_repository_impl.dart';
 import 'package:curativecare/repository/view_cdm_statewise_repository_impl.dart';
 import 'package:curativecare/screens/about/about.dart';
 import 'package:curativecare/screens/base/base_class.dart';
-import 'file:///C:/Users/Darshpreet/AndroidStudioProjects/lh-toolkit-cost-of-care-app/lib/screens/compare_hospitals/compare_hospitals_list/compare_hospital.dart';
+import 'package:curativecare/screens/compare_hospitals/compare_hospitals_list/compare_hospital.dart';
 import 'package:curativecare/screens/report_an_issue/report_an_issue.dart';
 import 'package:curativecare/screens/search/search_screen.dart';
 import 'package:curativecare/screens/settings_home/settings_home.dart';
