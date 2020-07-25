@@ -111,8 +111,8 @@ class GitLabApiClient {
 
   Future getCSVFileSize(String url, DownloadFileButtonClick event) async {
     BaseOptions options = new BaseOptions(
-        connectTimeout: 13 * 1000, // 60 seconds
-        receiveTimeout: 13 * 1000 // 60 seconds
+        connectTimeout: 15 * 1000, // 60 seconds
+        receiveTimeout: 15 * 1000 // 60 seconds
         );
     Dio dio = new Dio(options);
 
