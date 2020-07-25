@@ -11,7 +11,7 @@ class GitLabApiClient {
   Future fetchStatesName() async {
     List<String> States = new List();
     Dio dio = new Dio();
-    String url = base_url;
+    String url = base_url+"&per_page=100";
     var response;
     try {
       response = await dio.get(url);

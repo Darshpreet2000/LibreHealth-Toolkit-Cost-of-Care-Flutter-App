@@ -9,11 +9,13 @@ class StateListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return Scrollbar(
+        child:ListView.builder(
         itemCount: states.length,
         itemBuilder: (BuildContext context, int index) {
           return makeCard(context, index);
-        });
+        }),
+    );
   }
 
   Card makeCard(BuildContext context, int index) {
