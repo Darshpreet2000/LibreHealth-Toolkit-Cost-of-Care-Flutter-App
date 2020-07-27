@@ -1,3 +1,4 @@
+import 'package:curativecare/bloc/compare_screen_bloc/compare_screen_list/bloc.dart';
 import 'package:curativecare/bloc/home_settings_bloc/bloc.dart';
 import 'package:curativecare/bloc/location_bloc/location_bloc.dart';
 import 'package:curativecare/bloc/nearby_hospital_bloc/bloc.dart';
@@ -5,6 +6,7 @@ import 'package:curativecare/bloc/saved_screen_bloc/saved_screen_bloc.dart';
 import 'package:curativecare/bloc/search_screen_bloc/bottom_sheet/bloc.dart';
 import 'package:curativecare/bloc/view_cdm_screen_bloc/bloc.dart';
 import 'package:curativecare/bloc/view_cdm_statewise_screen_bloc/bloc.dart';
+import 'package:curativecare/repository/compare_screen_repository_impl.dart';
 import 'package:curativecare/repository/download_cdm_repository_impl.dart';
 import 'package:curativecare/repository/home_settings_repository_impl.dart';
 import 'package:curativecare/repository/location_repository_impl.dart';
@@ -96,6 +98,10 @@ class MyApp extends StatelessWidget {
         BlocProvider<ViewCdmStatewiseBloc>(
           create: (BuildContext context) =>
               ViewCdmStatewiseBloc(ViewCDMStatewiseRepositoryImpl()),
+        ),
+        BlocProvider<CompareScreenListBloc>(
+          create: (BuildContext context) =>
+              CompareScreenListBloc(CompareScreenRepositoryImpl()),
         ),
       ],
       child: MaterialApp(

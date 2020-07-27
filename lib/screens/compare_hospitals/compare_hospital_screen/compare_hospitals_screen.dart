@@ -15,5 +15,4 @@ class CompareHospitalsScreen extends StatelessWidget{
      body: Body(),
     );
   }
-
 }

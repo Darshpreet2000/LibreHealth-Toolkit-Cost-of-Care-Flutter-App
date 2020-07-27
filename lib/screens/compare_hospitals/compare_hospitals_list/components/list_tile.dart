@@ -35,7 +35,7 @@ class _AddToCompareButtonState extends State<AddToCompareButton> {
     return RaisedButton(
     color: widget.hospitalName.isAddedToCompare?Colors.green:Colors.indigo,
     child: Text(
-      widget.hospitalName.isAddedToCompare?"Added":"Add To Compare",
+      widget.hospitalName.isAddedToCompare?"Comparing":"Compare",
       style: TextStyle(
           color: Colors.white
       ),
