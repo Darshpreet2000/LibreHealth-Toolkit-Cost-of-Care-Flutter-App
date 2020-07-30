@@ -43,7 +43,7 @@ DownloadFileButtonBloc downloadFileButtonBloc;
           backgroundColor: Colors.indigo,
         ),
         body: BlocListener(
-          bloc: downloadCdmBloc,
+         cubit: downloadCdmBloc,
           listener: (BuildContext context, DownloadCdmState state) {
             if (state is ErrorStateSnackbar) {
               Scaffold.of(context).showSnackBar(SnackBar(
@@ -65,7 +65,7 @@ DownloadFileButtonBloc downloadFileButtonBloc;
             }
           },
           child: BlocListener(
-            bloc: downloadFileButtonBloc,
+            cubit: downloadFileButtonBloc,
             listener: (BuildContext context, DownloadFileButtonState state) {
               if (state is DownloadButtonLoaded) {
                 context.bloc<SavedScreenBloc>().add(LoadSavedData());
@@ -82,7 +82,7 @@ DownloadFileButtonBloc downloadFileButtonBloc;
               }
             },
             child: BlocBuilder(
-              bloc: downloadCdmBloc,
+              cubit: downloadCdmBloc,
               builder: (BuildContext context, DownloadCdmState state) {
                 if (state is LoadingState)
                   return Center(
@@ -163,7 +163,7 @@ ListTile makeListTile(
 Widget downloadWidget(DownloadCdmModel hospital, int index,
     DownloadFileButtonBloc downloadFileButtonBloc, String stateName) {
   return BlocBuilder(
-    bloc: downloadFileButtonBloc,
+    cubit: downloadFileButtonBloc,
     builder: (BuildContext context, DownloadFileButtonState state) {
       if (state is DownloadButtonLoadingProgressIndicator &&
           index == state.index) {

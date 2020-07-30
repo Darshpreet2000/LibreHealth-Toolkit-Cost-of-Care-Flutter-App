@@ -8,3 +8,15 @@ class CompareScreenListFetchHospitalName extends CompareScreenListEvent{
   @override
   List<Object> get props => [];
 }
+
+
+class CompareScreenListCompareButtonEvent extends CompareScreenListEvent{
+  bool isAddedForCompare;
+  int index;
+
+
+  CompareScreenListCompareButtonEvent(this.isAddedForCompare, this.index);
+
+  @override
+  List<Object> get props => [isAddedForCompare,index];
+}

@@ -1,6 +1,15 @@
+import 'package:curativecare/models/patient_experience.dart';
 import 'package:flutter/material.dart';
 
-class PatientSurvey extends StatelessWidget {
+class PatientSurveyWidget extends StatelessWidget {
+  PatientExperience patientSurveyFirstHospital;
+
+  PatientExperience patientSurveySecondHospital;
+
+
+  PatientSurveyWidget(
+      this.patientSurveyFirstHospital, this.patientSurveySecondHospital);
+
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
@@ -27,7 +36,7 @@ class PatientSurvey extends StatelessWidget {
                   children: <Widget>[
                 Expanded(
                   child: Text(
-                    "74%",
+                    patientSurveyFirstHospital.communicationWithNursesPerformanceRate,
                     style: TextStyle(fontSize: 18,),
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
@@ -41,7 +50,7 @@ class PatientSurvey extends StatelessWidget {
                 ),
                 Expanded(
                   child: Text(
-                    "N/A",
+                    patientSurveySecondHospital.communicationWithNursesPerformanceRate,
                     style: TextStyle(fontSize: 18, ),
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
@@ -66,7 +75,7 @@ class PatientSurvey extends StatelessWidget {
                   children: <Widget>[
                     Expanded(
                       child: Text(
-                        "80%",
+                        patientSurveyFirstHospital.communicationWithDoctorsPerformanceRate,
                         style: TextStyle(fontSize: 18, ),
                         textAlign: TextAlign.center,
                         overflow: TextOverflow.ellipsis,
@@ -80,7 +89,7 @@ class PatientSurvey extends StatelessWidget {
                     ),
                     Expanded(
                       child: Text(
-                        "76%",
+                        patientSurveySecondHospital.communicationWithDoctorsPerformanceRate,
                         style: TextStyle(fontSize: 18, ),
                         textAlign: TextAlign.center,
                         overflow: TextOverflow.ellipsis,
@@ -106,7 +115,7 @@ class PatientSurvey extends StatelessWidget {
                   children: <Widget>[
                     Expanded(
                       child: Text(
-                        "66%",
+                        patientSurveyFirstHospital.communicationAboutMedicinesPerformanceRate,
                         style: TextStyle(fontSize: 18, ),
                         textAlign: TextAlign.center,
                         overflow: TextOverflow.ellipsis,
@@ -120,46 +129,7 @@ class PatientSurvey extends StatelessWidget {
                     ),
                     Expanded(
                       child: Text(
-                        "47%",
-                        style: TextStyle(fontSize: 18,),
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 4,
-                      ),
-                    )
-                  ])),
-          SizedBox(
-            height: 5,
-          ),
-
-          Text(
-            "Patients who reported that their room and bathroom were Always clean",
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          IntrinsicHeight(
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Expanded(
-                      child: Text(
-                        "90%",
-                        style: TextStyle(fontSize: 18,),
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 4,
-                      ),
-                    ),
-                    VerticalDivider(
-                      thickness: 2,
-                      width: 20,
-                      color: Colors.grey[400],
-                    ),
-                    Expanded(
-                      child: Text(
-                        "94%",
+                        patientSurveySecondHospital.communicationAboutMedicinesPerformanceRate,
                         style: TextStyle(fontSize: 18,),
                         textAlign: TextAlign.center,
                         overflow: TextOverflow.ellipsis,
@@ -184,7 +154,46 @@ class PatientSurvey extends StatelessWidget {
                   children: <Widget>[
                     Expanded(
                       child: Text(
-                        "99%",
+                        patientSurveyFirstHospital.cleanlinessAndQuietnessOfHospitalEnvironmentPerformanceRate,
+                        style: TextStyle(fontSize: 18,),
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 4,
+                      ),
+                    ),
+                    VerticalDivider(
+                      thickness: 2,
+                      width: 20,
+                      color: Colors.grey[400],
+                    ),
+                    Expanded(
+                      child: Text(
+                        patientSurveySecondHospital.cleanlinessAndQuietnessOfHospitalEnvironmentPerformanceRate,
+                        style: TextStyle(fontSize: 18,),
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 4,
+                      ),
+                    )
+                  ])),
+          SizedBox(
+            height: 5,
+          ),
+
+          Text(
+            "Patients who \"Strongly Agree\" they understood their care when they left the hospital",
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          IntrinsicHeight(
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Expanded(
+                      child: Text(
+                        patientSurveyFirstHospital.careTransitionPerformanceRate,
                         style: TextStyle(fontSize: 18, ),
                         textAlign: TextAlign.center,
                         overflow: TextOverflow.ellipsis,
@@ -198,7 +207,8 @@ class PatientSurvey extends StatelessWidget {
                     ),
                     Expanded(
                       child: Text(
-                        "89%",
+                        patientSurveySecondHospital.careTransitionPerformanceRate,
+
                         style: TextStyle(fontSize: 18, ),
                         textAlign: TextAlign.center,
                         overflow: TextOverflow.ellipsis,

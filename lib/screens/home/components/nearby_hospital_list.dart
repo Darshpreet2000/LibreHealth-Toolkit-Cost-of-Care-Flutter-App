@@ -1,3 +1,5 @@
+import 'package:curativecare/bloc/compare_screen_bloc/compare_screen_list/compare_screen_list_bloc.dart';
+import 'package:curativecare/bloc/compare_screen_bloc/compare_screen_list/compare_screen_list_event.dart';
 import 'package:curativecare/bloc/location_bloc/location_bloc.dart';
 import 'package:curativecare/bloc/location_bloc/user_location_state.dart';
 import 'package:curativecare/bloc/nearby_hospital_bloc/bloc.dart';
@@ -17,6 +19,9 @@ class NearbyHospitalList extends StatelessWidget {
         if (state is LocationLoaded) {
           String state = box.get('state');
           context.bloc<NearbyHospitalBloc>().add(FetchHospitals(state));
+          //Compare hospital bloc
+          context.bloc<CompareScreenListBloc>().add(CompareScreenListFetchHospitalName());
+
         }
         else if(state is LocationError){
           Scaffold.of(context).showSnackBar(SnackBar(

@@ -7,10 +7,8 @@ import './bloc.dart';
 
 class ViewCdmStatewiseBloc
     extends Bloc<ViewCdmStatewiseEvent, ViewCdmStatewiseState> {
-  ViewCdmStatewiseBloc(this.viewCDMStatewiseRepositoryImpl);
+  ViewCdmStatewiseBloc(this.viewCDMStatewiseRepositoryImpl) : super(ViewCDMStatewiseLoadingState());
 
-  @override
-  ViewCdmStatewiseState get initialState => ViewCDMStatewiseLoadingState();
   ViewCDMStatewiseRepositoryImpl viewCDMStatewiseRepositoryImpl;
 
   @override

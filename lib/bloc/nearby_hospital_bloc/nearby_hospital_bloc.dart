@@ -8,10 +8,9 @@ class NearbyHospitalBloc
     extends Bloc<NearbyHospitalEvent, NearbyHospitalState> {
   final NearbyHospitalsRepoImpl nearbyHospitalsServices;
 
-  NearbyHospitalBloc(this.nearbyHospitalsServices);
+  NearbyHospitalBloc(this.nearbyHospitalsServices) : super(NearbyHospitalsLoadingState());
 
-  @override
-  NearbyHospitalState get initialState => NearbyHospitalsLoadingState();
+
 
   @override
   Stream<NearbyHospitalState> mapEventToState(

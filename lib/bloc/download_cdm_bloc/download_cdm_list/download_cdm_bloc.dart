@@ -7,11 +7,10 @@ import 'package:curativecare/repository/download_cdm_repository_impl.dart';
 import 'bloc.dart';
 
 class DownloadCdmBloc extends Bloc<DownloadCdmEvent, DownloadCdmState> {
-  @override
-  DownloadCdmState get initialState => LoadingState();
+
   DownloadCDMRepositoryImpl downloadCDMRepositoryImpl;
 
-  DownloadCdmBloc(this.downloadCDMRepositoryImpl);
+  DownloadCdmBloc(this.downloadCDMRepositoryImpl) : super(LoadingState());
 
   List<DownloadCdmModel> hospitals = new List();
 

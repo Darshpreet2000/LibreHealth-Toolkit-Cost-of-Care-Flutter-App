@@ -9,10 +9,8 @@ import 'bloc.dart';
 class SearchScreenBloc extends Bloc<SearchScreenEvent, SearchScreenState> {
   SearchScreenRepositoryImpl searchScreenRepositoryImpl;
 
-  SearchScreenBloc(this.searchScreenRepositoryImpl);
+  SearchScreenBloc(this.searchScreenRepositoryImpl) : super(InitialSearchScreenState());
 
-  @override
-  SearchScreenState get initialState => InitialSearchScreenState();
 
   @override
   Stream<SearchScreenState> mapEventToState(

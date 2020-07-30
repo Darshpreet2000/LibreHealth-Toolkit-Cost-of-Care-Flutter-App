@@ -7,11 +7,10 @@ import './bloc.dart';
 
 class DownloadFileButtonBloc
     extends Bloc<DownloadFileButtonEvent, DownloadFileButtonState> {
-  @override
-  DownloadFileButtonState get initialState => InitialDownloadFileButtonState();
+
   DownloadCDMRepositoryImpl downloadCDMRepositoryImpl;
 
-  DownloadFileButtonBloc(this.downloadCDMRepositoryImpl);
+  DownloadFileButtonBloc(this.downloadCDMRepositoryImpl) : super(InitialDownloadFileButtonState());
 
   @override
   Stream<DownloadFileButtonState> mapEventToState(

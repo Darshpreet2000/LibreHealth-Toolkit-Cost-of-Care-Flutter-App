@@ -18,7 +18,6 @@ class CompareScreenListLoadedState extends CompareScreenListState {
   List<Object> get props => [hospitalName];
 }
 class CompareScreenListErrorState extends CompareScreenListState{
-
   String message;
   CompareScreenListErrorState(this.message);
 
