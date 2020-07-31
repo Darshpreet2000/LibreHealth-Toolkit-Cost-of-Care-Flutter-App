@@ -16,6 +16,7 @@ class CompareScreenBloc extends Bloc<CompareScreenEvent, CompareScreenState> {
     CompareScreenEvent event,
   ) async* {
     if (event is CompareScreenFetchData) {
+      yield CompareScreenLoadingState();
     try {
       GeneralInformation generalInformationFirstHospital =
       await compareScreenRepositoryImpl

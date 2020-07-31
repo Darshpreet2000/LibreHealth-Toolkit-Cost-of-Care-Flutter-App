@@ -41,12 +41,16 @@ class _BodyState extends State<Body> {
               return showList(state.hospitalName);
             }
             else if(state is CompareScreenListErrorState){
-              return Container();
+              return Container(
+                child: Center(child: Text(state.message,style: TextStyle(fontSize: 18),)),
+              );
             }
        }
      ),
    );
   }
+
+
 }
 
 Widget showList(List<CompareHospitalModel> hospitalsName){

@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:curativecare/models/compare_hospital_model.dart';
 import 'package:curativecare/repository/compare_screen_repository_impl.dart';
@@ -19,30 +20,39 @@ class CompareScreenListBloc
     CompareScreenListEvent event,
   ) async* {
     if (event is CompareScreenListFetchHospitalName) {
+      yield CompareScreenListLoadingState();
+      hospitalsAddedToCompare = 0;
       try {
-        List<CompareHospitalModel> hospitalName = await compareScreenRepositoryImpl.getListOfHospitals();
+        List<CompareHospitalModel> hospitalName =
+            await compareScreenRepositoryImpl.getListOfHospitals();
         yield CompareScreenListLoadedState(hospitalName);
       } catch (e) {
         yield CompareScreenListErrorState(e.message);
       }
     } else if (event is CompareScreenListCompareButtonEvent) {
-      if (hospitalsAddedToCompare == 2&&event.isAddedForCompare) {
-        List<CompareHospitalModel> hospitalList=(state as CompareScreenListLoadedState).hospitalName;
+      if (hospitalsAddedToCompare == 2 && event.isAddedForCompare) {
+        List<CompareHospitalModel> hospitalList =
+            (state as CompareScreenListLoadedState).hospitalName;
         yield CompareScreenListErrorState(
             "Cannot compare more than two hospitals");
         yield CompareScreenListLoadedState(hospitalList);
       } else {
-       List<CompareHospitalModel> updatedList=new List();
-       (state as CompareScreenListLoadedState).hospitalName.forEach((element) {
-        updatedList.add(element.copyWith());
-      });
-      if (event.isAddedForCompare)
-        hospitalsAddedToCompare++;
-      else
-        hospitalsAddedToCompare--;
-      updatedList[event.index].isAddedToCompare = event.isAddedForCompare;
-      yield CompareScreenListLoadedState(updatedList);
+        List<CompareHospitalModel> updatedList = new List();
+        (state as CompareScreenListLoadedState).hospitalName.forEach((element) {
+          updatedList.add(element.copyWith());
+        });
+        if (event.isAddedForCompare)
+          hospitalsAddedToCompare++;
+        else
+          hospitalsAddedToCompare--;
+        updatedList[event.index].isAddedToCompare = event.isAddedForCompare;
+        yield CompareScreenListLoadedState(updatedList);
       }
+    } else if (event is CompareScreenListCompareButtonError) {
+      List<CompareHospitalModel> hospitalList =
+          (state as CompareScreenListLoadedState).hospitalName;
+      yield CompareScreenListErrorState(event.message);
+      yield CompareScreenListLoadedState(hospitalList);
     }
   }
 }

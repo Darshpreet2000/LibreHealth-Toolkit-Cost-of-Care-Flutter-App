@@ -28,11 +28,6 @@ class _BodyState extends State<Body> {
      context.bloc<CompareScreenBloc>().add(CompareScreenFetchData(widget.hospitalNamesForCompare[0].hospitalName,widget.hospitalNamesForCompare[1].hospitalName));
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    context.bloc<CompareScreenBloc>().close();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -228,7 +223,7 @@ class _BodyState extends State<Body> {
                 return Container(
                   padding: EdgeInsets.all(8),
                   child: Center(
-                    child: Text(state.message),
+                    child: Text(state.message,style: TextStyle(fontSize: 18),),
                   ),
                 );
               }

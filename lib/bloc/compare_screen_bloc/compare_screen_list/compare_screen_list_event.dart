@@ -20,3 +20,12 @@ class CompareScreenListCompareButtonEvent extends CompareScreenListEvent{
   @override
   List<Object> get props => [isAddedForCompare,index];
 }
+class CompareScreenListCompareButtonError extends CompareScreenListEvent{
+  String message;
+
+  CompareScreenListCompareButtonError(this.message);
+
+  @override
+  List<Object> get props => [message];
+
+}

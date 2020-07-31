@@ -31,13 +31,20 @@ class _CompareHospitalsState extends State<CompareHospitals> {
           child: FloatingActionButton.extended(
            backgroundColor: Colors.indigo,
             onPressed: (){
-           CompareScreenListLoadedState state=  context.bloc<CompareScreenListBloc>().state as CompareScreenListLoadedState;
+           CompareScreenListLoadedState state= context.bloc<CompareScreenListBloc>().state as CompareScreenListLoadedState;
             List<CompareHospitalModel> hospitals=state.hospitalName;
             List<CompareHospitalModel> hospitalNamesForCompare=hospitals.where((element) => element.isAddedToCompare==true).toList();
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => CompareHospitalsScreen(hospitalNamesForCompare)),
-              );
+             if(hospitalNamesForCompare.length==2) {
+               Navigator.push(
+                 context,
+                 MaterialPageRoute(builder: (context) =>
+                     CompareHospitalsScreen(hospitalNamesForCompare)),
+               );
+             }
+             else{
+               context.bloc<CompareScreenListBloc>().add(CompareScreenListCompareButtonError("Please add two Hospitals to compare"));
+
+             }
             },
             icon: Icon(Icons.compare),
             label: Text("Compare Hospitals", style: TextStyle(
@@ -54,5 +61,12 @@ class _CompareHospitalsState extends State<CompareHospitals> {
 
     );
   }
+
+  @override
+  void initState() {
+   super.initState();
+    context.bloc<CompareScreenListBloc>().add(CompareScreenListFetchHospitalName());
+  }
+
 
 }
