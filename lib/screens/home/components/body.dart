@@ -15,20 +15,12 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
- color: Colors.grey[100],
-      child: SingleChildScrollView(
-          child:Column(
-           children: <Widget>[
-            UserLocation(appBackgroundColor),
-
-            NearbyHospitalList()
-
-
-         //List of Nearby
-        ],
-      )
-      )
+    return Column(
+      children: <Widget>[
+        UserLocation(appBackgroundColor),
+        Expanded(child: NearbyHospitalList())
+        //List of Nearby
+      ],
     );
   }
 }

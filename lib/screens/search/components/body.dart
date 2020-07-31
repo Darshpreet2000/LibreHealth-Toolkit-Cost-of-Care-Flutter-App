@@ -1,11 +1,17 @@
-import 'package:curativecare/models/search_model.dart';
+import 'package:curativecare/bloc/search_screen_bloc/bottom_sheet/bloc.dart';
+import 'package:curativecare/bloc/search_screen_bloc/search_procedures/search_screen_bloc.dart';
+import 'package:curativecare/bloc/search_screen_bloc/search_procedures/search_screen_event.dart';
+import 'package:curativecare/bloc/search_screen_bloc/search_procedures/search_screen_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-//Dummy Data
-List<SearchModel> procedures_list=[SearchModel('ROOM/BED: Newborn Routine','3172.4','Standard','UCLA Medical Center'),SearchModel('Lung Transplant','4000','DRG','UCLA Medical Center'),SearchModel('Heart Failure','5800','DRG','University of Michigan'),
-  SearchModel('Kidney Transplant Paired Donor','20008','DRG','Alaska Regional Medical Center'),SearchModel('ALTEPLASE 100MG SOLR 1 EACH VIAL','3801.76','Pharmacy','Alaska Regional Medical Center')];
+import 'list_tile.dart';
 
 class Body extends StatefulWidget {
+  TextEditingController _searchQuery = TextEditingController();
+
+  Body(this._searchQuery);
+
   @override
   _BodyState createState() => _BodyState();
 }
@@ -13,37 +19,46 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      primary: false,
-      scrollDirection: Axis.vertical,
-      shrinkWrap: true,
-      itemCount: procedures_list.length,
-      itemBuilder: (BuildContext context, int index) {
-        return makeCard(index);
+    return BlocListener<BottomSheetBloc, BottomSheetState>(
+      listener: (BuildContext context, BottomSheetState state) {
+        if (state is BottomSheetSaved && widget._searchQuery.text.length > 0) {
+          context
+              .bloc<SearchScreenBloc>()
+              .add(SearchInDatabase(widget._searchQuery.text));
+        }
       },
+      child: BlocBuilder<SearchScreenBloc, SearchScreenState>(
+        builder: (BuildContext context, SearchScreenState state) {
+          if (state is SearchScreenLoadingState) {
+            return Container(
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          } else if (state is SearchScreenNoDataState) {
+            return Container(
+              child: Center(
+                child: Text("No Data Found",style: TextStyle(fontSize: 18.0),),
+              ),
+            );
+          } else if (state is SearchScreenLoadedState) {
+            return showList(state.searchResult);
+          } else {
+            return Container(
+              child: Center(
+                  child: Text(
+                'Enter Procedure to Search',
+                style: TextStyle(fontSize: 18),
+              )),
+            );
+          }
+        },
+      ),
     );
   }
-}
 
-Card makeCard(int index){
-  return Card(
-    elevation: 4.0,
-
-    margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-    child: Container(
-
-      decoration: BoxDecoration(color: Colors.grey[50]),
-      child: makeListTile(index),
-    ),
-  );
-}
-
-ListTile makeListTile(int index) {
-  return  ListTile(
-    title:   Text(procedures_list[index].desciption,style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
-    subtitle: Text(procedures_list[index].category+'\n'+procedures_list[index].name,style: TextStyle(fontSize: 16),),
-    isThreeLine: true,
-    trailing: Text(procedures_list[index].charge+' \$',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
-
-  );
+  @override
+  void dispose() {
+    context.bloc<SearchScreenBloc>().close();
+  }
 }
