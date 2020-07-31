@@ -57,7 +57,6 @@ class Body extends StatelessWidget {
                 listener:
                     (BuildContext context, DownloadFileButtonState state) {
                   if (state is DownloadButtonLoaded) {
-                    context.bloc<SavedScreenBloc>().add(LoadSavedData());
                     if(stateName==null) {
                        stateName = box.get('state');
                     }

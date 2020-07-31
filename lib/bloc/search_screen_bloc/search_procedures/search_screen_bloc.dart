@@ -25,5 +25,14 @@ class SearchScreenBloc extends Bloc<SearchScreenEvent, SearchScreenState> {
       else
         yield SearchScreenLoadedState(resultList);
     }
+    else if(event is SearchInDatabaseFromViewCDMScreen){
+      yield SearchScreenLoadingState();
+      List<SearchModel> resultList = await searchScreenRepositoryImpl.searchForProcedureByHospitalName(event.searchString, event.hospitalName);
+      if (resultList.length == 0)
+        yield SearchScreenNoDataState();
+      else
+        yield SearchScreenLoadedState(resultList);
+
+    }
   }
 }

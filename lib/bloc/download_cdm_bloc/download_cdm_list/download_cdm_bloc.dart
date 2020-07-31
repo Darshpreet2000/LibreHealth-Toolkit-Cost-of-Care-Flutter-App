@@ -37,7 +37,7 @@ class DownloadCdmBloc extends Bloc<DownloadCdmEvent, DownloadCdmState> {
     } else if (event is DownloadCDMRefreshList) {
       hospitals[event.index].isDownload = 1;
       downloadCDMRepositoryImpl.saveData(hospitals,event.stateName);
-      yield LoadedState(hospitals);
+      yield RefreshedState(hospitals);
     } else if (event is DownloadCDMError) {
       yield ErrorState("Network Problem! Try Again");
     }

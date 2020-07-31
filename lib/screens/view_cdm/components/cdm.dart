@@ -17,11 +17,13 @@ class CDM extends StatefulWidget {
 class _CDMState extends State<CDM> {
   @override
   void initState() {
+    super.initState();
     context.bloc<ViewCdmScreenBloc>().add(LoadCdm(widget.name));
   }
 
   @override
   void dispose() {
+    super.dispose();
     context.bloc<ViewCdmScreenBloc>().close();
   }
 
@@ -43,10 +45,12 @@ class _CDMState extends State<CDM> {
   }
 
   Widget showList(List<SearchModel> cdmList) {
-    return ListView.builder(
-        itemCount: cdmList.length,
-        itemBuilder: (BuildContext context, int index) {
-          return makeCard(cdmList[index]);
-        });
+    return Scrollbar(
+      child: ListView.builder(
+          itemCount: cdmList.length,
+          itemBuilder: (BuildContext context, int index) {
+            return makeCard(cdmList[index]);
+          }),
+    );
   }
 }

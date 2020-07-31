@@ -25,6 +25,19 @@ class DatabaseDao {
     return;
   }
 
+  Future getAllTables() async {
+    final database = await dbProvider.database;
+    List<String> tableNames = new List();
+    await database.transaction((txn) async {
+      tableNames = (await txn
+              .query('sqlite_master', where: 'type = ?', whereArgs: ['table']))
+          .map((row) => row['name'] as String)
+          .toList(growable: true);
+    });
+    print(tableNames);
+    return tableNames;
+  }
+
   void insertData(
       DownloadFileButtonProgress event, List<SearchModel> cdmList) async {
     String tableName = event.hospitalName;
@@ -38,7 +51,7 @@ class DatabaseDao {
 
     int total = cdmList.length;
     int completed = 0;
-    double percentCount = 0, progressNow = 0,counter=1;
+    double percentCount = 0, progressNow = 0, counter = 1;
     double progress = event.progress;
     database.transaction((txn) async {
       Batch batch = txn.batch();
@@ -46,8 +59,8 @@ class DatabaseDao {
         SearchModel cdm = cdmList[i];
         await Future(() {
           batch.insert(tableName, cdm.toMap());
-          completed +=1;
-          percentCount = (completed/total)*40;
+          completed += 1;
+          percentCount = (completed / total) * 40;
           if (percentCount >= counter) {
             progressNow = ((completed / total) * 0.4);
             event.downloadFileButtonBloc.add(DownloadFileButtonProgress(
@@ -87,19 +100,6 @@ class DatabaseDao {
     });
   }
 
-  Future getAllTables() async {
-    final database = await dbProvider.database;
-    List<String> tableNames = new List();
-    await database.transaction((txn) async {
-      tableNames = (await txn
-          .query('sqlite_master', where: 'type = ?', whereArgs: ['table']))
-          .map((row) => row['name'] as String)
-          .toList(growable: true);
-    });
-    print(tableNames);
-    return tableNames;
-  }
-
   Future searchProcedureInAllTables(String searchQuery) async {
     final database = await dbProvider.database;
     List<SearchModel> list = new List();
@@ -120,7 +120,7 @@ class DatabaseDao {
     String query = "Select * from ( SELECT description , charge ,category , ";
     int length = hospitalName.length;
     int start = 0;
-    if(length>0) {
+    if (length > 0) {
       for (int i = 0; i < length; i++) {
         start = start + 1;
         query += "'" +
@@ -140,7 +140,7 @@ class DatabaseDao {
             " limit 80 ) ";
         if (start != length)
           query +=
-          " union Select * from ( SELECT description , charge ,category , ";
+              " union Select * from ( SELECT description , charge ,category , ";
       }
       print(query);
       await database.transaction((txn) async {
@@ -151,6 +151,41 @@ class DatabaseDao {
         });
       });
     }
+    return list;
+  }
+
+  Future searchProcedureInSingleTable(
+      String searchQuery, String name) async {
+    name = name.replaceAll(' ', '_');
+    name = name.replaceAll('(', '_');
+    name = name.replaceAll(')', '_');
+    name = name.replaceAll(',', '_');
+    name = name.replaceAll('.', '_');
+    name = name.replaceAll('-', '_');
+
+    final database = await dbProvider.database;
+    List<SearchModel> list = new List();
+    String query = "Select * from ( SELECT description , charge ,category , ";
+    query += "'" +
+        name +
+        "'" +
+        " as name " "from " +
+        name +
+        " where " +
+        name +
+        ".description like " +
+        "'%" +
+        searchQuery +
+        "%' " +
+        "  ) ";
+    print(query);
+    await database.transaction((txn) async {
+      List<Map<String, dynamic>> result = await txn.rawQuery(query);
+      result.forEach((itemMap) {
+        SearchModel searchmodel = new SearchModel.empty();
+        list.add(searchmodel.fromMapResult(itemMap));
+      });
+    });
     return list;
   }
 }
