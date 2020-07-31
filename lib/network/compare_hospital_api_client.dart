@@ -15,9 +15,14 @@ class CompareHospitalAPIClient {
     String url = apiConfig.generalInformationUrl +
         statesAbbreviation.getAbbreviation(stateName) +
         "&hospital_name=$hospitalsName";
-    Dio dio = new Dio();
+    BaseOptions options = new BaseOptions(
+        connectTimeout: 15 * 1000, // 60 seconds
+        receiveTimeout: 15 * 1000 // 60 seconds
+    );
+    Dio dio = new Dio(options);
     var response;
     try {
+
       response = await dio.get(url);
     } on DioError catch (e) {
       if (DioErrorType.RECEIVE_TIMEOUT == e.type ||
@@ -77,7 +82,11 @@ class CompareHospitalAPIClient {
     StatesAbbreviation statesAbbreviation = new StatesAbbreviation();
     String url = apiConfig.hospitalNameUrl +
         statesAbbreviation.getAbbreviation(stateName);
-    Dio dio = new Dio();
+    BaseOptions options = new BaseOptions(
+        connectTimeout: 15 * 1000, // 60 seconds
+        receiveTimeout: 15 * 1000 // 60 seconds
+    );
+    Dio dio = new Dio(options);
 
     var response;
     try {
@@ -118,7 +127,11 @@ class CompareHospitalAPIClient {
     String url = apiConfig.patientExperienceUrl +
         statesAbbreviation.getAbbreviation(stateName) +
         "&hospital_name=$hospitalsName";
-    Dio dio = new Dio();
+    BaseOptions options = new BaseOptions(
+        connectTimeout: 15 * 1000, // 60 seconds
+        receiveTimeout: 15 * 1000 // 60 seconds
+    );
+    Dio dio = new Dio(options);
     var response;
     try {
       response = await dio.get(url);
