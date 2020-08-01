@@ -4,6 +4,7 @@ import 'package:curativecare/models/patient_experience.dart';
 import 'package:curativecare/util/api_config.dart';
 import 'package:curativecare/util/states_abbreviation.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'hospital_image_client.dart';
 
@@ -79,6 +80,7 @@ class CompareHospitalAPIClient {
 
   Future fetchHospitalsName(String stateName) async {
     ApiConfig apiConfig = new ApiConfig();
+
     StatesAbbreviation statesAbbreviation = new StatesAbbreviation();
     String url = apiConfig.hospitalNameUrl +
         statesAbbreviation.getAbbreviation(stateName);
@@ -110,6 +112,9 @@ class CompareHospitalAPIClient {
       String hospitalName = current_hospital['hospital_name'];
       name.add(new CompareHospitalModel(hospitalName, false));
     }
+    if(name.length==0)
+      throw Exception("No hospital available to compare for your location");
+
     return name;
   }
 

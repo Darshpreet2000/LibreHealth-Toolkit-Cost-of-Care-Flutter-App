@@ -11,20 +11,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocListener<DownloadFileButtonBloc, DownloadFileButtonState>(
-      listener: (BuildContext context, DownloadFileButtonState state) {
-        if (state is DownloadButtonLoaded) {
-          context.bloc<SavedScreenBloc>().add(LoadSavedData());
-        } else if (state is  DownloadFileButtonError) {
-          context.bloc<SavedScreenBloc>().add(ShowNoDataFound());
-        }
-      },
-
-      child:BlocListener<DownloadCdmBloc, DownloadCdmState>(
+    return BlocListener<DownloadCdmBloc, DownloadCdmState>(
       listener: (BuildContext context, DownloadCdmState state) {
         if (state is LoadedState) {
           context.bloc<SavedScreenBloc>().add(LoadSavedData());
-        } else if (state is ErrorState) {
+        }
+        else if(state is RefreshedState){
+            context.bloc<SavedScreenBloc>().add(LoadSavedData());
+        }
+        else if (state is ErrorState) {
           context.bloc<SavedScreenBloc>().add(ShowNoDataFound());
         }
       },
@@ -49,7 +44,6 @@ class Body extends StatelessWidget {
           }
         },
       ),
-    )
     );
   }
 }

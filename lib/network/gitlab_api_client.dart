@@ -1,17 +1,20 @@
 import 'package:curativecare/bloc/download_cdm_bloc/download_cdm_progress/download_file_button_event.dart';
 import 'package:curativecare/models/download_cdm_model.dart';
+import 'package:curativecare/util/api_config.dart';
 import 'package:dio/dio.dart';
 
-import '../main.dart';
-
 class GitLabApiClient {
-  String base_url =
-      "https://gitlab.com/api/v4/projects/18885282/repository/tree?ref=branch-with-data&path=CDM/";
 
   Future fetchStatesName() async {
     List<String> States = new List();
-    Dio dio = new Dio();
-    String url = base_url+"&per_page=100";
+    BaseOptions options = new BaseOptions(
+        connectTimeout: 15 * 1000, // 60 seconds
+        receiveTimeout: 15 * 1000 // 60 seconds
+    );
+
+    Dio dio = new Dio(options);
+    ApiConfig apiConfig=new ApiConfig();
+    String url =apiConfig.gitlabApiFetchList+"&per_page=100";
     var response;
     try {
       response = await dio.get(url);
@@ -43,9 +46,15 @@ class GitLabApiClient {
   }
 
   Future getAvailableCdm(String stateName) async {
-    Dio dio = new Dio();
+    BaseOptions options = new BaseOptions(
+        connectTimeout: 15 * 1000, // 60 seconds
+        receiveTimeout: 15 * 1000 // 60 seconds
+    );
 
-    String url = base_url + stateName + "&per_page=100&page=";
+    Dio dio = new Dio(options);
+
+    ApiConfig apiConfig=new ApiConfig();
+    String url = apiConfig.gitlabApiFetchList + stateName + "&per_page=100&page=";
     int i = 1;
 
     var response;
@@ -109,7 +118,13 @@ class GitLabApiClient {
     return name;
   }
 
-  Future getCSVFileSize(String url, DownloadFileButtonClick event) async {
+  Future getCSVFileSize( DownloadFileButtonClick event) async {
+    String url =
+        ApiConfig().gitlabApiGetCDMFileSize +
+            "%2F${event.stateName}%2F${event.hospitalName}" +
+            ".csv" +
+            "?ref=branch-with-data";
+
     BaseOptions options = new BaseOptions(
         connectTimeout: 15 * 1000, // 60 seconds
         receiveTimeout: 15 * 1000 // 60 seconds
@@ -135,8 +150,11 @@ class GitLabApiClient {
     }
   }
 
-  Future downloadCSVFile(String url, double fileSize,
+  Future downloadCSVFile( double fileSize,
       DownloadFileButtonClick event, String dirloc) async {
+
+    String  url =ApiConfig().downloadCDMApi + "/${event.stateName}/${event.hospitalName}" + ".csv";
+
     BaseOptions options = new BaseOptions(
         connectTimeout: 25 * 1000, // 25 seconds
         receiveTimeout: 25 * 1000 // 25 seconds

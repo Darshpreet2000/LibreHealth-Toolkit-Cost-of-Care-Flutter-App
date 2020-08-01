@@ -61,23 +61,15 @@ class DownloadCDMRepositoryImpl extends DownloadCDMRepository {
         dirloc = appDocDir.path;
       }
       FileUtils.mkdir([dirloc]);
-      String url =
-          "https://gitlab.com/api/v4/projects/18885282/repository/files/CDM" +
-              "%2F${event.stateName}%2F${event.hospitalName}" +
-              ".csv" +
-              "?ref=branch-with-data";
       double fileSize;
       try {
-        fileSize = await gitLabApiClient.getCSVFileSize(url, event);
+        fileSize = await gitLabApiClient.getCSVFileSize( event);
       } catch (e) {
         event.downloadFileButtonBloc.add(DownloadFileButtonError(e.message));
         return;
       }
-      String baseURL =
-          "https://gitlab.com/Darshpreet2000/lh-toolkit-cost-of-care-app-data-scraper/-/raw/branch-with-data/CDM";
-      url = baseURL + "/${event.stateName}/${event.hospitalName}" + ".csv";
       try {
-        await gitLabApiClient.downloadCSVFile(url, fileSize, event, dirloc);
+        await gitLabApiClient.downloadCSVFile( fileSize, event, dirloc);
       } catch (e) {
         event.downloadFileButtonBloc.add(DownloadFileButtonError(e.message));
         return;

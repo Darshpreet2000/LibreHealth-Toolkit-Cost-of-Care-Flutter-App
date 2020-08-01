@@ -31,6 +31,7 @@ DownloadFileButtonBloc downloadFileButtonBloc;
   }
   @override
   void dispose() {
+    super.dispose();
     downloadCdmBloc.close();
     downloadFileButtonBloc.close();
   }

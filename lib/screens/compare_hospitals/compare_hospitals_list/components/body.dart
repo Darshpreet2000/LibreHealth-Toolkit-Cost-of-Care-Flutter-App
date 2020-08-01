@@ -42,6 +42,7 @@ class _BodyState extends State<Body> {
             }
             else if(state is CompareScreenListErrorState){
               return Container(
+                padding: EdgeInsets.all(8.0),
                 child: Center(child: Text(state.message,style: TextStyle(fontSize: 18),)),
               );
             }

@@ -2,6 +2,7 @@ import 'package:curativecare/bloc/view_cdm_statewise_screen_bloc/view_cdm_statew
 import 'package:curativecare/bloc/view_cdm_statewise_screen_bloc/view_cdm_statewise_event.dart';
 import 'package:curativecare/bloc/view_cdm_statewise_screen_bloc/view_cdm_statewise_state.dart';
 import 'package:curativecare/screens/view_cdm_statewise/components/state_list_tile.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -44,9 +45,10 @@ class _BodyState extends State<Body> {
           } else if (state is ViewCDMStatewiseErrorState) {
             return Center(
               child: Container(
+                padding: EdgeInsets.all(8),
                   child: Text(
                 state.message,
-                style: TextStyle(fontSize: 16),
+                style: TextStyle(fontSize: 18),
               )),
             );
           }
