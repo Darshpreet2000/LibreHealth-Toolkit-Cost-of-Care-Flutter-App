@@ -38,8 +38,8 @@ class DatabaseDao {
     return tableNames;
   }
 
-  void insertData(
-      DownloadFileButtonProgress event, List<SearchModel> cdmList) async {
+  Future insertData(
+      InsertInDatabase event, List<SearchModel> cdmList) async {
     String tableName = event.hospitalName;
     final database = await dbProvider.database;
     tableName = tableName.replaceAll(' ', '_');
@@ -51,16 +51,16 @@ class DatabaseDao {
 
     int total = cdmList.length;
     int completed = 0;
-    double percentCount = 0, progressNow = 0, counter = 1;
-    double progress = event.progress;
+    double percentCount = 0, progressNow = 0,counter=1;
+    double progress = 0.6;
     database.transaction((txn) async {
       Batch batch = txn.batch();
       for (int i = 0; i < cdmList.length; i++) {
         SearchModel cdm = cdmList[i];
         await Future(() {
           batch.insert(tableName, cdm.toMap());
-          completed += 1;
-          percentCount = (completed / total) * 40;
+          completed +=1;
+          percentCount = (completed/total)*40;
           if (percentCount >= counter) {
             progressNow = ((completed / total) * 0.4);
             event.downloadFileButtonBloc.add(DownloadFileButtonProgress(
@@ -78,6 +78,7 @@ class DatabaseDao {
     //checking
     //   print(database.rawQuery('select * from $tableName limit 10'));
     print('Done');
+   return;
   }
 
   Future<List<SearchModel>> readData(String name) async {

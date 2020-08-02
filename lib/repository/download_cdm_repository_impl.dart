@@ -23,13 +23,12 @@ class DownloadCDMRepositoryImpl extends DownloadCDMRepository {
   Future parseData(List<dynamic> responseBody) async {
     GitLabApiClient gitLabApiClient = new GitLabApiClient();
     List<DownloadCdmModel> hospitalsName =
-        await gitLabApiClient.parseAvailableCdm(responseBody);
+    await gitLabApiClient.parseAvailableCdm(responseBody);
     return hospitalsName;
   }
 
   @override
-  void saveData(List<DownloadCdmModel> hospitalsName,String state) {
-
+  void saveData(List<DownloadCdmModel> hospitalsName, String state) {
     listbox.put('downloadCDMList$state', hospitalsName);
   }
 
@@ -40,60 +39,40 @@ class DownloadCDMRepositoryImpl extends DownloadCDMRepository {
 
   Future<List<DownloadCdmModel>> getSavedData(String state) async {
     List<DownloadCdmModel> data =
-        await listbox.get('downloadCDMList$state').cast<DownloadCdmModel>();
+    await listbox.get('downloadCDMList$state').cast<DownloadCdmModel>();
     return data;
   }
 
   Future downloadCDM(DownloadFileButtonClick event) async {
     GitLabApiClient gitLabApiClient = new GitLabApiClient();
-    bool checkPermission = false;
-    var status = await Permission.storage.status;
-    if (status.isDenied || status.isUndetermined) {
-      status = await Permission.storage.request();
-    }
-    if (status.isGranted) checkPermission = true;
-    if (checkPermission == true) {
-      String dirloc = "";
-      if (Platform.isAndroid) {
-        dirloc = "/sdcard/download/";
-      } else {
-        Directory appDocDir = await getApplicationDocumentsDirectory();
-        dirloc = appDocDir.path;
-      }
-      FileUtils.mkdir([dirloc]);
-      double fileSize;
       try {
-        fileSize = await gitLabApiClient.getCSVFileSize( event);
+        return await gitLabApiClient.downloadCSVFile(event);
       } catch (e) {
         event.downloadFileButtonBloc.add(DownloadFileButtonError(e.message));
         return;
       }
-      try {
-        await gitLabApiClient.downloadCSVFile( fileSize, event, dirloc);
-      } catch (e) {
-        event.downloadFileButtonBloc.add(DownloadFileButtonError(e.message));
-        return;
-      }
-    } else {
-      //Permission denied
-      event.downloadFileButtonBloc
-          .add(DownloadFileButtonError("Permission Denied"));
-    }
   }
 
-  Future insertInDatabase(DownloadFileButtonProgress event) async {
+
+  Future getFileSize(DownloadFileButtonClick event) async {
+    double fileSize;
+    GitLabApiClient gitLabApiClient = new GitLabApiClient();
+
+    try {
+      fileSize = await gitLabApiClient.getCSVFileSize(event);
+    } catch (e) {
+      event.downloadFileButtonBloc.add(DownloadFileButtonError(e.message));
+      return;
+    }
+    return fileSize;
+  }
+  Future insertInDatabase(InsertInDatabase event) async {
     DatabaseRepositoryImpl databaseRepositoryImpl =
         new DatabaseRepositoryImpl();
-    String dirloc = "";
-    if (Platform.isAndroid) {
-      dirloc = "/sdcard/download/";
-    } else {
-      Directory appDocDir = await getApplicationDocumentsDirectory();
-      dirloc = appDocDir.path;
-    }
+
+
     List<SearchModel> myList = new List();
-    List<String> lines =
-        File(dirloc + "${event.hospitalName}" + ".csv").readAsLinesSync();
+    List<String> lines = event.fileInfo.file.readAsLinesSync();
     lines.removeAt(0);
     for (int i = 0; i < lines.length; i++) {
       String description = "", category;
@@ -116,6 +95,6 @@ class DownloadCDMRepositoryImpl extends DownloadCDMRepository {
       }
       myList.add(new SearchModel(description, price, category));
     } // Skip the header row
-    databaseRepositoryImpl.insertCDM(event, myList);
+  return await databaseRepositoryImpl.insertCDM(event, myList);
   }
 }

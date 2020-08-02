@@ -2,6 +2,7 @@ import 'package:curativecare/bloc/download_cdm_bloc/download_cdm_progress/downlo
 import 'package:curativecare/models/download_cdm_model.dart';
 import 'package:curativecare/util/api_config.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 class GitLabApiClient {
 
@@ -150,39 +151,13 @@ class GitLabApiClient {
     }
   }
 
-  Future downloadCSVFile( double fileSize,
-      DownloadFileButtonClick event, String dirloc) async {
+  Future downloadCSVFile(
+      DownloadFileButtonClick event) async {
 
     String  url =ApiConfig().downloadCDMApi + "/${event.stateName}/${event.hospitalName}" + ".csv";
-
-    BaseOptions options = new BaseOptions(
-        connectTimeout: 25 * 1000, // 25 seconds
-        receiveTimeout: 25 * 1000 // 25 seconds
-        );
-    Dio dio = new Dio(options);
-
-    event.downloadFileButtonBloc.add(DownloadFileButtonProgress(
-        0.0, event.index, event.hospitalName, event.downloadFileButtonBloc));
-    try {
-      double progress = 0;
-      await dio.download(url, dirloc + "${event.hospitalName}" + ".csv",
-          onReceiveProgress: (receivedBytes, totalBytes) {
-        progress = ((receivedBytes / fileSize));
-        event.downloadFileButtonBloc.add(DownloadFileButtonProgress(
-            progress * 0.6,
-            event.index,
-            event.hospitalName,
-            event.downloadFileButtonBloc));
-      });
-    } on DioError catch (e) {
-      if (DioErrorType.RECEIVE_TIMEOUT == e.type ||
-          DioErrorType.CONNECT_TIMEOUT == e.type) {
-        throw Exception("Please check your internet connection and try again");
-      } else if (DioErrorType.DEFAULT == e.type) {
-        throw Exception('Please check your internet connection and try again');
-      } else {
-        throw Exception("Problem connecting to the server. Please try again.");
-      }
-    }
+    Stream<FileResponse> fileStream;
+    fileStream = DefaultCacheManager().getFileStream(url, withProgress: true);
+    return fileStream;
   }
+
 }
