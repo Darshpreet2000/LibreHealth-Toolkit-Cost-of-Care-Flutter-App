@@ -6,6 +6,7 @@ import 'package:curativecare/models/search_model.dart';
 import 'package:curativecare/network/gitlab_api_client.dart';
 import 'package:curativecare/repository/abstract/download_cdm_repository.dart';
 import 'package:file_utils/file_utils.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -95,6 +96,8 @@ class DownloadCDMRepositoryImpl extends DownloadCDMRepository {
       }
       myList.add(new SearchModel(description, price, category));
     } // Skip the header row
+//Clearing Cache
+    DefaultCacheManager().emptyCache();
   return await databaseRepositoryImpl.insertCDM(event, myList);
   }
 }

@@ -25,6 +25,7 @@ class DownloadFileButtonBloc extends Bloc<DownloadFileButtonEvent, DownloadFileB
          yield DownloadButtonLoadingProgressIndicator(event.progress,event.index);
          if(event.progress*100>99){
            yield DownloadButtonLoaded(event.index);
+
          }
     }
     else if (event is InsertInDatabase) {

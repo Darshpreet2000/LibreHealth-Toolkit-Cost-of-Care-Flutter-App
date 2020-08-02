@@ -55,6 +55,7 @@ Widget downloadWidget(DownloadCdmModel hospital, int index,
         return StreamBuilder<FileResponse>(
             stream: state.fileStream,
             builder: (context, snapshot) {
+
             if(snapshot.hasError){
               downloadFileButtonBloc.add(DownloadFileButtonError("Please check your internet connection and try again"));
               return Material(
