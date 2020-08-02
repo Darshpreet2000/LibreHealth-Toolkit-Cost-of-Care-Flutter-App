@@ -31,6 +31,7 @@ class CustomSearchDelegate extends SearchDelegate {
       icon: Icon(Icons.arrow_back,color: Colors.black,),
       onPressed: () {
         close(context, null);
+
       },
     );
   }
@@ -49,9 +50,9 @@ class CustomSearchDelegate extends SearchDelegate {
         ],
       );
     }
+    SearchScreenBloc searchScreenBloc=new SearchScreenBloc(SearchScreenRepositoryImpl());
 
-   SearchScreenBloc searchScreenBloc=new SearchScreenBloc(SearchScreenRepositoryImpl());
-   searchScreenBloc.add(SearchInDatabaseFromViewCDMScreen(query,hospitalName));
+    searchScreenBloc.add(SearchInDatabaseFromViewCDMScreen(query,hospitalName));
 
     return   BlocBuilder<SearchScreenBloc, SearchScreenState>(
       cubit: searchScreenBloc,
@@ -86,8 +87,9 @@ class CustomSearchDelegate extends SearchDelegate {
             );
 
           }
-
-
+          else{
+            return Container();
+          }
         }
     );
   }

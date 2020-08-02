@@ -32,7 +32,6 @@ class SearchScreenBloc extends Bloc<SearchScreenEvent, SearchScreenState> {
         yield SearchScreenNoDataState();
       else
         yield SearchScreenLoadedState(resultList);
-
     }
   }
 }

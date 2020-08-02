@@ -96,8 +96,7 @@ class DownloadCDMRepositoryImpl extends DownloadCDMRepository {
       }
       myList.add(new SearchModel(description, price, category));
     } // Skip the header row
-//Clearing Cache
-    DefaultCacheManager().emptyCache();
+
   return await databaseRepositoryImpl.insertCDM(event, myList);
   }
 }
