@@ -35,7 +35,7 @@ class _BottomSheetSwitch extends State<BottomSheetSwitch> {
         priceRadioTile = state.priceRadioTile;
         return SingleChildScrollView(
           child: Container(
-              height: 500,
+              height: 510,
               decoration: new BoxDecoration(
                   color: Colors.white,
                   borderRadius: new BorderRadius.only(
@@ -239,7 +239,8 @@ class _BottomSheetSwitch extends State<BottomSheetSwitch> {
                         ),
                       )
                     ],
-                  )
+                  ),
+                SizedBox(height: 8,)
                 ],
               )),
         );

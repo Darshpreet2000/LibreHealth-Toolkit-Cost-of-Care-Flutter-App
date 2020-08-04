@@ -30,30 +30,35 @@ Card makeCard(SearchModel searchModel) {
 ListTile makeListTile(SearchModel searchModel) {
   searchModel.name = searchModel.name.replaceAll('_', ' ');
   String charge =
-      searchModel.charge == 0.0 ? "N/A" : '\$ ' + searchModel.charge.toString();
-
+      searchModel.charge == 0.0 ? "N/A" : '\$ ' + searchModel.charge.toStringAsFixed(2);
+  var color;
+  if(searchModel.category=="Standard")
+    color=Colors.indigo;
+  else if (searchModel.category=="DRG")
+    color=Colors.red;
+  else
+    color=Colors.green[700];
   return ListTile(
     title: Text(
       searchModel.description,
-      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
     ),
     subtitle: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
           searchModel.category,
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: color),
         ),
         Text(
           searchModel.name,
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,),
         )
       ],
     ),
-    isThreeLine: true,
     trailing: Text(
       charge,
-      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,),
     ),
   );
 }

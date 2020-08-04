@@ -21,181 +21,31 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  CompareScreenRepositoryImpl compareScreenRepositoryImpl=new CompareScreenRepositoryImpl();
+  CompareScreenRepositoryImpl compareScreenRepositoryImpl =
+      new CompareScreenRepositoryImpl();
   @override
   void initState() {
     super.initState();
-     context.bloc<CompareScreenBloc>().add(CompareScreenFetchData(widget.hospitalNamesForCompare[0].hospitalName,widget.hospitalNamesForCompare[1].hospitalName));
+    context
+        .bloc<CompareScreenBloc>()
+        .add(CompareScreenFetchData(widget.hospitalNamesForCompare));
   }
-
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        padding: EdgeInsets.all(8),
           child: Column(children: <Widget>[
-            IntrinsicHeight(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Expanded(
-                    child: Text(
-                      widget.hospitalNamesForCompare[0].hospitalName,
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 4,
-                    ),
-                  ),
-                  VerticalDivider(
-                    thickness: 2,
-                    width: 20,
-                    color: Colors.grey[400],
-                  ),
-                  Expanded(
-                    child: Text(
-                      widget.hospitalNamesForCompare[1].hospitalName,
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 4,
-                    ),
-                  )
-                ],
-              ),
-            ),
+            Row(
+                children: getListOfWidgets()),
             SizedBox(
               height: 8,
             ),
             IntrinsicHeight(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Expanded(
-                    child:FutureBuilder(
-                      future: compareScreenRepositoryImpl.fetchImages(widget.hospitalNamesForCompare[0].hospitalName),
-                      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                        if (snapshot.hasError) {
-                          return Container(
-                            height: 120,
-
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(10)),
-                            ),
-                            child: new FittedBox(
-                                fit: BoxFit.fill,
-                                child: Image.asset('assets/placeholder.png')),
-                          );
-                        }
-                        if (snapshot.hasData) {
-                          return CachedNetworkImage(
-                            imageUrl: snapshot.data,
-                            imageBuilder: (context, imageProvider) => Container(
-                            height: 120,
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black),
-                                borderRadius: BorderRadius.all(Radius.circular(10)),
-                                image: DecorationImage(
-                                  image: imageProvider,
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ),
-                            placeholder: (context, url) => Container(
-                                height: 120,
-
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.black),
-                                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                                ),
-                                child: Center(
-                                  child: CircularProgressIndicator(),
-                                )),
-                            errorWidget: (context, url, error) => Icon(Icons.error),
-                          );
-                        }
-                        return Container(
-                          height: 120,
-                          child: Shimmer.fromColors(
-                            baseColor: Colors.grey[300],
-                            highlightColor: Colors.white,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: Colors.grey[300],
-                                  borderRadius: BorderRadius.all(Radius.circular(20))),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  VerticalDivider(
-                    thickness: 2,
-                    width: 20,
-                    color: Colors.grey[400],
-                  ),
-                  Expanded(
-                    child: FutureBuilder(
-                      future: compareScreenRepositoryImpl.fetchImages(widget.hospitalNamesForCompare[1].hospitalName),
-                      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                        if (snapshot.hasError) {
-                          return Container(
-                            height: 120,
-
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(10)),
-                            ),
-                            child: new FittedBox(
-                                fit: BoxFit.fill,
-                                child: Image.asset('assets/placeholder.png')),
-                          );
-                        }
-                        if (snapshot.hasData) {
-                          return CachedNetworkImage(
-                            imageUrl: snapshot.data,
-                            imageBuilder: (context, imageProvider) => Container(
-                              height: 120,
-
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black),
-                                borderRadius: BorderRadius.all(Radius.circular(10)),
-                                image: DecorationImage(
-                                  image: imageProvider,
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ),
-                            placeholder: (context, url) => Container(
-                                height: 120,
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.black),
-                                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                                ),
-                                child: Center(
-                                  child: CircularProgressIndicator(),
-                                )),
-                            errorWidget: (context, url, error) => Icon(Icons.error),
-                          );
-                        }
-                        return Container(
-                          height: 120,
-                          child: Shimmer.fromColors(
-                            baseColor: Colors.grey[300],
-                            highlightColor: Colors.white,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: Colors.grey[300],
-                                  borderRadius: BorderRadius.all(Radius.circular(20))),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  )
-                ],
+                children:getHospitalImages(),
               ),
             ),
             SizedBox(
@@ -206,24 +56,27 @@ class _BodyState extends State<Body> {
               if (state is CompareScreenLoadedState) {
                 return Column(
                   children: <Widget>[
-                    GeneralInformationWidget(state.generalInformationFirstHospital,state.generalInformationSecondHospital),
-                    PatientSurveyWidget(state.patientExperienceFirstHospital,state.patientExperienceSecondHospital),
+
+                    GeneralInformationWidget(state.generalInformation),
+                    PatientSurveyWidget(state.patientExperience)
+
                   ],
                 );
-              }
-              else if(state is CompareScreenLoadingState){
+              } else if (state is CompareScreenLoadingState) {
                 return Container(
                   padding: EdgeInsets.all(8),
                   child: Center(
                     child: CircularProgressIndicator(),
                   ),
                 );
-              }
-              else if(state is CompareScreenErrorState){
+              } else if (state is CompareScreenErrorState) {
                 return Container(
                   padding: EdgeInsets.all(8),
                   child: Center(
-                    child: Text(state.message,style: TextStyle(fontSize: 18),),
+                    child: Text(
+                      state.message,
+                      style: TextStyle(fontSize: 18),
+                    ),
                   ),
                 );
               }
@@ -232,5 +85,105 @@ class _BodyState extends State<Body> {
     );
   }
 
+  List<Widget> getListOfWidgets() {
+    List listings = List<Widget>();
+    for (int i = 0; i < widget.hospitalNamesForCompare.length; i++) {
+      listings.add(Expanded(
+        child: Text(
+          widget.hospitalNamesForCompare[i].hospitalName,
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          textAlign: TextAlign.center,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 5,
+        ),
+      ));
 
+      listings.add(VerticalDivider(
+        thickness: 2,
+        width: 20,
+        color: Colors.grey[400],
+      ));
+    }
+    return listings;
+  }
+
+  List<Widget> getHospitalImages(){
+    List listings = List<Widget>();
+    for (int i = 0; i < widget.hospitalNamesForCompare.length; i++) {
+      listings.add(
+        Expanded(
+          child: FutureBuilder(
+            future: compareScreenRepositoryImpl.fetchImages(
+                widget.hospitalNamesForCompare[i].hospitalName),
+            builder: (BuildContext context,
+                AsyncSnapshot<dynamic> snapshot) {
+              if (snapshot.hasError) {
+                return Container(
+                  height: 120,
+                  decoration: BoxDecoration(
+                    borderRadius:
+                    BorderRadius.all(Radius.circular(10)),
+                  ),
+                  child: new FittedBox(
+                      fit: BoxFit.fill,
+                      child: Image.asset('assets/placeholder.png')),
+                );
+              }
+              if (snapshot.hasData) {
+                return CachedNetworkImage(
+                  imageUrl: snapshot.data,
+                  imageBuilder: (context, imageProvider) => Container(
+                    height: 120,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black),
+                      borderRadius:
+                      BorderRadius.all(Radius.circular(10)),
+                      image: DecorationImage(
+                        image: imageProvider,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ),
+                  placeholder: (context, url) => Container(
+                      height: 120,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black),
+                        borderRadius:
+                        BorderRadius.all(Radius.circular(10)),
+                      ),
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      )),
+                  errorWidget: (context, url, error) =>
+                      Icon(Icons.error),
+                );
+              }
+              return Container(
+                height: 120,
+                child: Shimmer.fromColors(
+                  baseColor: Colors.grey[300],
+                  highlightColor: Colors.white,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.grey[300],
+                        borderRadius:
+                        BorderRadius.all(Radius.circular(20))),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      );
+      if(i!=widget.hospitalNamesForCompare.length-1)
+      listings.add(VerticalDivider(
+        thickness: 2,
+        width: 20,
+        color: Colors.grey[400],
+      ));
+
+    }
+    return listings;
+
+  }
 }

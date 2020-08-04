@@ -34,7 +34,7 @@ class _CompareHospitalsState extends State<CompareHospitals> {
            CompareScreenListLoadedState state= context.bloc<CompareScreenListBloc>().state as CompareScreenListLoadedState;
             List<CompareHospitalModel> hospitals=state.hospitalName;
             List<CompareHospitalModel> hospitalNamesForCompare=hospitals.where((element) => element.isAddedToCompare==true).toList();
-             if(hospitalNamesForCompare.length==2) {
+             if(hospitalNamesForCompare.length>=2) {
                Navigator.push(
                  context,
                  MaterialPageRoute(builder: (context) =>
@@ -42,7 +42,7 @@ class _CompareHospitalsState extends State<CompareHospitals> {
                );
              }
              else{
-               context.bloc<CompareScreenListBloc>().add(CompareScreenListCompareButtonError("Please add two Hospitals to compare"));
+               context.bloc<CompareScreenListBloc>().add(CompareScreenListCompareButtonError("Please add at least two Hospitals to compare"));
 
              }
             },

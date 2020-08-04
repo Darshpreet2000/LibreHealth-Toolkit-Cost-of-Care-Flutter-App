@@ -11,18 +11,14 @@ class CompareScreenLoadingState extends CompareScreenState {
   List<Object> get props => [];
 }
 class CompareScreenLoadedState extends CompareScreenState {
-  GeneralInformation generalInformationFirstHospital;
-  PatientExperience patientExperienceFirstHospital;
-  GeneralInformation generalInformationSecondHospital;
-  PatientExperience patientExperienceSecondHospital;
 
-  CompareScreenLoadedState(
-      this.generalInformationFirstHospital,
-      this.patientExperienceFirstHospital,
-      this.generalInformationSecondHospital,
-      this.patientExperienceSecondHospital);
+  List<GeneralInformation> generalInformation;
+  List<PatientExperience> patientExperience;
+
+  CompareScreenLoadedState(this.generalInformation, this.patientExperience);
+
   @override
-  List<Object> get props => [generalInformationFirstHospital,patientExperienceFirstHospital,generalInformationSecondHospital,patientExperienceSecondHospital];
+  List<Object> get props => [generalInformation,patientExperience];
 
 }
 class CompareScreenErrorState extends CompareScreenState {

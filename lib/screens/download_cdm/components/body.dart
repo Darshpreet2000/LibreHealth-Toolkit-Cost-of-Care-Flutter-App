@@ -60,9 +60,12 @@ class Body extends StatelessWidget {
                     if(stateName==null) {
                        stateName = box.get('state');
                     }
+
                     context
                         .bloc<DownloadCdmBloc>()
                         .add(DownloadCDMRefreshList(state.index,stateName));
+                    context.bloc<SavedScreenBloc>().add(LoadSavedData());
+
                   } else if (state is DownloadButtonErrorState) {
                     Scaffold.of(context).showSnackBar(SnackBar(
                       content: Text(

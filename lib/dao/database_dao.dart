@@ -95,6 +95,8 @@ class DatabaseDao {
     await database.transaction((txn) async {
       maps = await txn.query(name);
     });
+
+
     return List.generate(maps.length, (i) {
       SearchModel cdm = new SearchModel.empty();
       return cdm.fromMap(maps[i]);

@@ -3,11 +3,9 @@ import 'package:curativecare/widgets/star_widget.dart';
 import 'package:flutter/material.dart';
 
 class GeneralInformationWidget extends StatelessWidget {
-  GeneralInformation generalInformationFirstHospital;
-  GeneralInformation generalInformationSecondHospital;
+  List<GeneralInformation> generalInformationList = new List(3);
 
-  GeneralInformationWidget(this.generalInformationFirstHospital,
-      this.generalInformationSecondHospital);
+  GeneralInformationWidget(this.generalInformationList);
 
   @override
   Widget build(BuildContext context) {
@@ -31,40 +29,9 @@ class GeneralInformationWidget extends StatelessWidget {
         ),
         IntrinsicHeight(
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Expanded(
-                child: Center(
-                  child: IconTheme(
-                    data: IconThemeData(
-                      color: Colors.amber,
-                      size: 30,
-                    ),
-                    child: StarDisplay(
-                            value:(generalInformationFirstHospital
-                                .hospitalOverallRating))
-                  ),
-                ),
-              ),
-              VerticalDivider(
-                thickness: 2,
-                width: 20,
-                color: Colors.grey[400],
-              ),
-              Expanded(
-                child: Center(
-                  child: IconTheme(
-                    data: IconThemeData(
-                      color: Colors.amber,
-                      size: 30,
-                    ),
-                    child:StarDisplay(
-                            value: generalInformationSecondHospital
-                                .hospitalOverallRating)
-                  ),
-                ),
-              )
-            ],
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children:getOverAllRating()
+
           ),
         ),
         SizedBox(
@@ -79,36 +46,8 @@ class GeneralInformationWidget extends StatelessWidget {
         ),
         IntrinsicHeight(
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Expanded(
-                child: Text(
-                  generalInformationFirstHospital.hospitalType,
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 4,
-                ),
-              ),
-              VerticalDivider(
-                thickness: 2,
-                width: 20,
-                color: Colors.grey[400],
-              ),
-              Expanded(
-                child: Text(
-                  generalInformationSecondHospital.hospitalType,
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 4,
-                ),
-              )
-            ],
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children:getHospitalType()
           ),
         ),
         SizedBox(
@@ -123,36 +62,8 @@ class GeneralInformationWidget extends StatelessWidget {
         ),
         IntrinsicHeight(
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Expanded(
-                child: Text(
-                  generalInformationFirstHospital.emergencyServices,
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 4,
-                ),
-              ),
-              VerticalDivider(
-                thickness: 2,
-                width: 20,
-                color: Colors.grey[400],
-              ),
-              Expanded(
-                child: Text(
-                  generalInformationSecondHospital.emergencyServices,
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 4,
-                ),
-              )
-            ],
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: getProvidesEmergency()
           ),
         ),
         SizedBox(
@@ -167,36 +78,8 @@ class GeneralInformationWidget extends StatelessWidget {
         ),
         IntrinsicHeight(
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Expanded(
-                child: Text(
-                  generalInformationFirstHospital.phoneNumber,
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 4,
-                ),
-              ),
-              VerticalDivider(
-                thickness: 2,
-                width: 20,
-                color: Colors.grey[400],
-              ),
-              Expanded(
-                child: Text(
-                  generalInformationSecondHospital.phoneNumber,
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 4,
-                ),
-              )
-            ],
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: getPhoneNumber()
           ),
         ),
         SizedBox(
@@ -211,36 +94,8 @@ class GeneralInformationWidget extends StatelessWidget {
         ),
         IntrinsicHeight(
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Expanded(
-                child: Text(
-                  generalInformationFirstHospital.hospitalOwnership,
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 4,
-                ),
-              ),
-              VerticalDivider(
-                thickness: 2,
-                width: 20,
-                color: Colors.grey[400],
-              ),
-              Expanded(
-                child: Text(
-                  generalInformationSecondHospital.hospitalOwnership,
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 4,
-                ),
-              )
-            ],
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children : getOwnership()
           ),
         ),
         SizedBox(
@@ -248,5 +103,121 @@ class GeneralInformationWidget extends StatelessWidget {
         ),
       ],
     );
+  }
+  List<Widget> getOverAllRating() {
+    List listings = List<Widget>();
+    for (int i = 0; i < generalInformationList.length; i++) {
+      listings.add( Expanded(
+      child: Center(
+      child: IconTheme(
+      data: IconThemeData(
+      color: Colors.amber,
+      size: 30,
+      ),
+    child: StarDisplay(
+    value: (generalInformationList[i]
+        .hospitalOverallRating))),
+    ),
+    ));
+
+      if(i!=generalInformationList.length-1)
+      listings.add(VerticalDivider(
+        thickness: 2,
+        width: 20,
+        color: Colors.grey[400],
+      ));
+    }
+    return listings;
+  }
+  List<Widget> getHospitalType() {
+    List listings = List<Widget>();
+    for (int i = 0; i < generalInformationList.length; i++) {
+      listings.add(Expanded(
+        child: Text(
+          generalInformationList[i].hospitalType,
+          style: TextStyle(
+            fontSize: 18,
+          ),
+          textAlign: TextAlign.center,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 4,
+        ),
+      ));
+
+      if(i!=generalInformationList.length-1)
+      listings.add(VerticalDivider(
+        thickness: 2,
+        width: 20,
+        color: Colors.grey[400],
+      ));
+    }
+    return listings;
+  }
+  List<Widget> getProvidesEmergency() {
+    List listings = List<Widget>();
+    for (int i = 0; i <generalInformationList.length; i++) {
+      listings.add(Expanded(
+        child: Text(
+          generalInformationList[i].emergencyServices,
+          style: TextStyle(
+            fontSize: 18,
+          ),
+          textAlign: TextAlign.center,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 4,
+        ),
+      ));
+
+      if(i!=generalInformationList.length-1)
+      listings.add(VerticalDivider(
+        thickness: 2,
+        width: 20,
+        color: Colors.grey[400],
+      ));
+    }
+    return listings;
+  }
+  List<Widget> getPhoneNumber() {
+    List listings = List<Widget>();
+    for (int i = 0; i <generalInformationList.length; i++) {
+      listings.add(Expanded(
+        child: Text(
+          generalInformationList[i].phoneNumber,
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          textAlign: TextAlign.center,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 5,
+        ),
+      ));
+
+      if(i!=generalInformationList.length-1)
+      listings.add(VerticalDivider(
+        thickness: 2,
+        width: 20,
+        color: Colors.grey[400],
+      ));
+    }
+    return listings;
+  }
+  List<Widget> getOwnership() {
+    List listings = List<Widget>();
+    for (int i = 0; i <generalInformationList.length; i++) {
+      listings.add(Expanded(
+        child: Text(
+          generalInformationList[i].hospitalOwnership,
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          textAlign: TextAlign.center,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 5,
+        ),
+      ));
+      if(i!=generalInformationList.length-1)
+        listings.add(VerticalDivider(
+        thickness: 2,
+        width: 20,
+        color: Colors.grey[400],
+      ));
+    }
+    return listings;
   }
 }

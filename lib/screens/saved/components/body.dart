@@ -16,9 +16,7 @@ class Body extends StatelessWidget {
         if (state is LoadedState) {
           context.bloc<SavedScreenBloc>().add(LoadSavedData());
         }
-        else if(state is RefreshedState){
-            context.bloc<SavedScreenBloc>().add(LoadSavedData());
-        }
+
         else if (state is ErrorState) {
           context.bloc<SavedScreenBloc>().add(ShowNoDataFound());
         }

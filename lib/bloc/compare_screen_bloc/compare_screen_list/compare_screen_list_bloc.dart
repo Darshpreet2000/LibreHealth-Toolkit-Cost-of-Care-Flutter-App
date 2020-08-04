@@ -22,19 +22,28 @@ class CompareScreenListBloc
     if (event is CompareScreenListFetchHospitalName) {
       yield CompareScreenListLoadingState();
       hospitalsAddedToCompare = 0;
-      try {
-        List<CompareHospitalModel> hospitalName =
-            await compareScreenRepositoryImpl.getListOfHospitals();
+     //check if list exists
+      if(await compareScreenRepositoryImpl.checkSavedList()){
+        List<CompareHospitalModel> hospitalName =await compareScreenRepositoryImpl.fetchSavedList();
         yield CompareScreenListLoadedState(hospitalName);
-      } catch (e) {
-        yield CompareScreenListErrorState(e.message);
+      }
+      //otherwise fetch from internet
+      else {
+        try {
+          List<CompareHospitalModel> hospitalName =
+          await compareScreenRepositoryImpl.getListOfHospitals();
+          yield CompareScreenListLoadedState(hospitalName);
+          compareScreenRepositoryImpl.saveList(hospitalName);
+        } catch (e) {
+          yield CompareScreenListErrorState(e.message);
+        }
       }
     } else if (event is CompareScreenListCompareButtonEvent) {
-      if (hospitalsAddedToCompare == 2 && event.isAddedForCompare) {
+      if (hospitalsAddedToCompare == 3 && event.isAddedForCompare) {
         List<CompareHospitalModel> hospitalList =
             (state as CompareScreenListLoadedState).hospitalName;
         yield CompareScreenListErrorState(
-            "Cannot compare more than two hospitals");
+            "Cannot compare more than three hospitals");
         yield CompareScreenListLoadedState(hospitalList);
       } else {
         List<CompareHospitalModel> updatedList = new List();

@@ -30,7 +30,7 @@ import 'package:path_provider/path_provider.dart';
 import 'bloc/compare_screen_bloc/compare_screen/compare_screen_bloc.dart';
 import 'bloc/download_cdm_bloc/download_cdm_list/download_cdm_bloc.dart';
 import 'bloc/download_cdm_bloc/download_cdm_progress/download_file_button_bloc.dart';
-import 'bloc/search_screen_bloc/search_procedures/search_screen_bloc.dart';
+import 'models/compare_hospital_model.dart';
 import 'models/download_cdm_model.dart';
 import 'models/hospitals.dart';
 
@@ -42,6 +42,7 @@ Future _openBox() async {
   Hive.init(dir.path);
   Hive.registerAdapter(HospitalsAdapter());
   Hive.registerAdapter(DownloadCdmModelAdapter());
+  Hive.registerAdapter(CompareHospitalModelAdapter());
   box = await Hive.openBox("myBox");
   listbox = await Hive.openBox<List>("listBox");
 }
@@ -82,10 +83,6 @@ class MyApp extends StatelessWidget {
         BlocProvider<SavedScreenBloc>(
           create: (BuildContext context) =>
               SavedScreenBloc(SavedScreenRepoImpl()),
-        ),
-        BlocProvider<SearchScreenBloc>(
-          create: (BuildContext context) =>
-              SearchScreenBloc(SearchScreenRepositoryImpl()),
         ),
         BlocProvider<BottomSheetBloc>(
           create: (BuildContext context) =>

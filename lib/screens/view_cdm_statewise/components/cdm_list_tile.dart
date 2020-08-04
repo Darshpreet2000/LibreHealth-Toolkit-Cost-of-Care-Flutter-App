@@ -70,6 +70,7 @@ DownloadFileButtonBloc downloadFileButtonBloc;
             cubit: downloadFileButtonBloc,
             listener: (BuildContext context, DownloadFileButtonState state) {
               if (state is DownloadButtonLoaded) {
+                context.bloc<SavedScreenBloc>().add(LoadSavedData());
 
                 downloadCdmBloc.add(DownloadCDMRefreshList(state.index, widget.stateName));
               } else if (state is DownloadButtonErrorState) {
@@ -90,7 +91,6 @@ DownloadFileButtonBloc downloadFileButtonBloc;
                     child: CircularProgressIndicator(),
                   );
                 else if (state is LoadedState) {
-
                   return ShowList(state.hospitalsName, widget.stateName,downloadFileButtonBloc);
                 } else if (state is RefreshedState) {
                   return ShowList(state.hospitalsName, widget.stateName,downloadFileButtonBloc);
