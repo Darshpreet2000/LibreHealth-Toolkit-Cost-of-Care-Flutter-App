@@ -150,7 +150,6 @@ class AppDrawer extends StatelessWidget {
                     'LibreHealth',
                     style: TextStyle(color: Colors.white, fontSize: 25),
                   ),
-
                 ],
               ),
             ),
@@ -159,10 +158,15 @@ class AppDrawer extends StatelessWidget {
             alignment: Alignment.bottomCenter,
             child: Text(
               'Providing better cost estimates',
-              style: TextStyle(color: Colors.white, fontSize: 15,fontStyle: FontStyle.italic),
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontStyle: FontStyle.italic),
             ),
           ),
-          SizedBox(height: 8,)
+          SizedBox(
+            height: 8,
+          )
         ],
       ),
     );

@@ -18,5 +18,4 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     return CDM(widget.name);
   }
-
 }

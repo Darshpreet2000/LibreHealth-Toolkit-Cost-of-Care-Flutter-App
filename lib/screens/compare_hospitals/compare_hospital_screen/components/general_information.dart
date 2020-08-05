@@ -30,9 +30,7 @@ class GeneralInformationWidget extends StatelessWidget {
         IntrinsicHeight(
           child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children:getOverAllRating()
-
-          ),
+              children: getOverAllRating()),
         ),
         SizedBox(
           height: 5,
@@ -47,8 +45,7 @@ class GeneralInformationWidget extends StatelessWidget {
         IntrinsicHeight(
           child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children:getHospitalType()
-          ),
+              children: getHospitalType()),
         ),
         SizedBox(
           height: 5,
@@ -63,8 +60,7 @@ class GeneralInformationWidget extends StatelessWidget {
         IntrinsicHeight(
           child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: getProvidesEmergency()
-          ),
+              children: getProvidesEmergency()),
         ),
         SizedBox(
           height: 5,
@@ -79,8 +75,7 @@ class GeneralInformationWidget extends StatelessWidget {
         IntrinsicHeight(
           child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: getPhoneNumber()
-          ),
+              children: getPhoneNumber()),
         ),
         SizedBox(
           height: 5,
@@ -95,8 +90,7 @@ class GeneralInformationWidget extends StatelessWidget {
         IntrinsicHeight(
           child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children : getOwnership()
-          ),
+              children: getOwnership()),
         ),
         SizedBox(
           height: 5,
@@ -104,31 +98,32 @@ class GeneralInformationWidget extends StatelessWidget {
       ],
     );
   }
+
   List<Widget> getOverAllRating() {
     List listings = List<Widget>();
     for (int i = 0; i < generalInformationList.length; i++) {
-      listings.add( Expanded(
-      child: Center(
-      child: IconTheme(
-      data: IconThemeData(
-      color: Colors.amber,
-      size: 30,
-      ),
-    child: StarDisplay(
-    value: (generalInformationList[i]
-        .hospitalOverallRating))),
-    ),
-    ));
-
-      if(i!=generalInformationList.length-1)
-      listings.add(VerticalDivider(
-        thickness: 2,
-        width: 20,
-        color: Colors.grey[400],
+      listings.add(Expanded(
+        child: Center(
+          child: IconTheme(
+              data: IconThemeData(
+                color: Colors.amber,
+                size: 30,
+              ),
+              child: StarDisplay(
+                  value: (generalInformationList[i].hospitalOverallRating))),
+        ),
       ));
+
+      if (i != generalInformationList.length - 1)
+        listings.add(VerticalDivider(
+          thickness: 2,
+          width: 20,
+          color: Colors.grey[400],
+        ));
     }
     return listings;
   }
+
   List<Widget> getHospitalType() {
     List listings = List<Widget>();
     for (int i = 0; i < generalInformationList.length; i++) {
@@ -144,18 +139,19 @@ class GeneralInformationWidget extends StatelessWidget {
         ),
       ));
 
-      if(i!=generalInformationList.length-1)
-      listings.add(VerticalDivider(
-        thickness: 2,
-        width: 20,
-        color: Colors.grey[400],
-      ));
+      if (i != generalInformationList.length - 1)
+        listings.add(VerticalDivider(
+          thickness: 2,
+          width: 20,
+          color: Colors.grey[400],
+        ));
     }
     return listings;
   }
+
   List<Widget> getProvidesEmergency() {
     List listings = List<Widget>();
-    for (int i = 0; i <generalInformationList.length; i++) {
+    for (int i = 0; i < generalInformationList.length; i++) {
       listings.add(Expanded(
         child: Text(
           generalInformationList[i].emergencyServices,
@@ -168,18 +164,19 @@ class GeneralInformationWidget extends StatelessWidget {
         ),
       ));
 
-      if(i!=generalInformationList.length-1)
-      listings.add(VerticalDivider(
-        thickness: 2,
-        width: 20,
-        color: Colors.grey[400],
-      ));
+      if (i != generalInformationList.length - 1)
+        listings.add(VerticalDivider(
+          thickness: 2,
+          width: 20,
+          color: Colors.grey[400],
+        ));
     }
     return listings;
   }
+
   List<Widget> getPhoneNumber() {
     List listings = List<Widget>();
-    for (int i = 0; i <generalInformationList.length; i++) {
+    for (int i = 0; i < generalInformationList.length; i++) {
       listings.add(Expanded(
         child: Text(
           generalInformationList[i].phoneNumber,
@@ -190,18 +187,19 @@ class GeneralInformationWidget extends StatelessWidget {
         ),
       ));
 
-      if(i!=generalInformationList.length-1)
-      listings.add(VerticalDivider(
-        thickness: 2,
-        width: 20,
-        color: Colors.grey[400],
-      ));
+      if (i != generalInformationList.length - 1)
+        listings.add(VerticalDivider(
+          thickness: 2,
+          width: 20,
+          color: Colors.grey[400],
+        ));
     }
     return listings;
   }
+
   List<Widget> getOwnership() {
     List listings = List<Widget>();
-    for (int i = 0; i <generalInformationList.length; i++) {
+    for (int i = 0; i < generalInformationList.length; i++) {
       listings.add(Expanded(
         child: Text(
           generalInformationList[i].hospitalOwnership,
@@ -211,12 +209,12 @@ class GeneralInformationWidget extends StatelessWidget {
           maxLines: 5,
         ),
       ));
-      if(i!=generalInformationList.length-1)
+      if (i != generalInformationList.length - 1)
         listings.add(VerticalDivider(
-        thickness: 2,
-        width: 20,
-        color: Colors.grey[400],
-      ));
+          thickness: 2,
+          width: 20,
+          color: Colors.grey[400],
+        ));
     }
     return listings;
   }

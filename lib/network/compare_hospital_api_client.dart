@@ -19,11 +19,10 @@ class CompareHospitalAPIClient {
     BaseOptions options = new BaseOptions(
         connectTimeout: 15 * 1000, // 60 seconds
         receiveTimeout: 15 * 1000 // 60 seconds
-    );
+        );
     Dio dio = new Dio(options);
     var response;
     try {
-
       response = await dio.get(url);
     } on DioError catch (e) {
       if (DioErrorType.RECEIVE_TIMEOUT == e.type ||
@@ -87,7 +86,7 @@ class CompareHospitalAPIClient {
     BaseOptions options = new BaseOptions(
         connectTimeout: 15 * 1000, // 60 seconds
         receiveTimeout: 15 * 1000 // 60 seconds
-    );
+        );
     Dio dio = new Dio(options);
 
     var response;
@@ -112,7 +111,7 @@ class CompareHospitalAPIClient {
       String hospitalName = current_hospital['hospital_name'];
       name.add(new CompareHospitalModel(hospitalName, false));
     }
-    if(name.length==0)
+    if (name.length == 0)
       throw Exception("No hospital available to compare for your location");
 
     return name;
@@ -135,7 +134,7 @@ class CompareHospitalAPIClient {
     BaseOptions options = new BaseOptions(
         connectTimeout: 15 * 1000, // 60 seconds
         receiveTimeout: 15 * 1000 // 60 seconds
-    );
+        );
     Dio dio = new Dio(options);
     var response;
     try {

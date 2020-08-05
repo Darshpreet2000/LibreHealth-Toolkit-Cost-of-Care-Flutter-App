@@ -10,7 +10,6 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
 
   LocationBloc(this.locationservices) : super(LocationLoading());
 
-
   @override
   Stream<LocationState> mapEventToState(LocationEvent event) async* {
     yield LocationLoading();

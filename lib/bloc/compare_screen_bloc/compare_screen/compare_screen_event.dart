@@ -4,13 +4,12 @@ import 'package:equatable/equatable.dart';
 abstract class CompareScreenEvent extends Equatable {
   const CompareScreenEvent();
 }
-class CompareScreenFetchData extends CompareScreenEvent{
- List<CompareHospitalModel> hospitalNames;
 
+class CompareScreenFetchData extends CompareScreenEvent {
+  List<CompareHospitalModel> hospitalNames;
 
- CompareScreenFetchData(this.hospitalNames);
+  CompareScreenFetchData(this.hospitalNames);
 
   @override
   List<Object> get props => [hospitalNames];
-
 }

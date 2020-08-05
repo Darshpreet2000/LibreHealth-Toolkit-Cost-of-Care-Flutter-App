@@ -7,8 +7,8 @@ import './bloc.dart';
 class ViewCdmScreenBloc extends Bloc<ViewCdmScreenEvent, ViewCdmScreenState> {
   ViewViewCDMScreenRepositoryImpl viewCDMScreenRepositoryImpl;
 
-  ViewCdmScreenBloc(this.viewCDMScreenRepositoryImpl) : super(LoadingViewCdmScreenState());
-
+  ViewCdmScreenBloc(this.viewCDMScreenRepositoryImpl)
+      : super(LoadingViewCdmScreenState());
 
   @override
   Stream<ViewCdmScreenState> mapEventToState(

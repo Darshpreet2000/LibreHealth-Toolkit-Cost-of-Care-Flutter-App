@@ -21,7 +21,6 @@ class _ViewCDMStatewiseState extends State<ViewCDMStatewise> {
         backgroundColor: Colors.indigo,
       ),
       body: Body(),
-
     );
   }
 }

@@ -10,7 +10,6 @@ class SavedScreenBloc extends Bloc<SavedScreenEvent, SavedScreenState> {
 
   SavedScreenBloc(this.savedScreenRepoImpl) : super(SavedScreenLoadingState());
 
-
   @override
   Stream<SavedScreenState> mapEventToState(
     SavedScreenEvent event,

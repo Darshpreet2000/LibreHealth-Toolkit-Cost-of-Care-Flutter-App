@@ -29,15 +29,16 @@ Card makeCard(SearchModel searchModel) {
 
 ListTile makeListTile(SearchModel searchModel) {
   searchModel.name = searchModel.name.replaceAll('_', ' ');
-  String charge =
-      searchModel.charge == 0.0 ? "N/A" : '\$ ' + searchModel.charge.toStringAsFixed(2);
+  String charge = searchModel.charge == 0.0
+      ? "N/A"
+      : '\$ ' + searchModel.charge.toStringAsFixed(2);
   var color;
-  if(searchModel.category=="Standard")
-    color=Colors.indigo;
-  else if (searchModel.category=="DRG")
-    color=Colors.red;
+  if (searchModel.category == "Standard")
+    color = Colors.indigo;
+  else if (searchModel.category == "DRG")
+    color = Colors.red;
   else
-    color=Colors.green[700];
+    color = Colors.green[700];
   return ListTile(
     title: Text(
       searchModel.description,
@@ -48,17 +49,24 @@ ListTile makeListTile(SearchModel searchModel) {
       children: <Widget>[
         Text(
           searchModel.category,
-          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold,color: color),
+          style: TextStyle(
+              fontSize: 14, fontWeight: FontWeight.bold, color: color),
         ),
         Text(
           searchModel.name,
-          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold,),
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
+          ),
         )
       ],
     ),
     trailing: Text(
       charge,
-      style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold,),
+      style: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.bold,
+      ),
     ),
   );
 }

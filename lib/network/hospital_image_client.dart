@@ -5,7 +5,7 @@ import 'package:html/parser.dart';
 class FetchHospitalImages {
   //Getting image from Google
   Future<String> fetchImagesFromGoogle(String name) async {
-  ApiConfig apiConfig=new ApiConfig();
+    ApiConfig apiConfig = new ApiConfig();
     String url = apiConfig.getHospitalImageFromGoogle + "${name} Hospital";
     Dio dio = new Dio();
     try {

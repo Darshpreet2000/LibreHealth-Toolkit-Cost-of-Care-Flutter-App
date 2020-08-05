@@ -37,7 +37,7 @@ class LocationClient {
       box.put('state', placemark[0].administrativeArea);
       await box.put('address', address);
       return address;
-    } catch(e){
+    } catch (e) {
       return 'Location Not Found';
     }
   }

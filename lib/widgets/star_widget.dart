@@ -9,22 +9,20 @@ class StarDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   try{
-     int intValue=int.parse(value);
-     return SingleChildScrollView(
-         scrollDirection: Axis.horizontal,
-         child: Row(
-           mainAxisSize: MainAxisSize.min,
-           children: List.generate(5, (index) {
-             return Icon(
-               index < intValue ? Icons.star : Icons.star_border,
-             );
-           }),
-         )
-     );
-   }
-   catch(e){
-     return Text("N/A");
-   }
+    try {
+      int intValue = int.parse(value);
+      return SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: List.generate(5, (index) {
+              return Icon(
+                index < intValue ? Icons.star : Icons.star_border,
+              );
+            }),
+          ));
+    } catch (e) {
+      return Text("N/A");
+    }
   }
 }

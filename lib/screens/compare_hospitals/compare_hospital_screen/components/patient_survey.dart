@@ -29,9 +29,7 @@ class PatientSurveyWidget extends StatelessWidget {
           IntrinsicHeight(
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children:
-               getNurseCommunication()
-              )),
+                  children: getNurseCommunication())),
           SizedBox(
             height: 5,
           ),
@@ -45,9 +43,7 @@ class PatientSurveyWidget extends StatelessWidget {
           IntrinsicHeight(
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children:
-                getDoctorCommunication()
-              )),
+                  children: getDoctorCommunication())),
           SizedBox(
             height: 5,
           ),
@@ -61,9 +57,7 @@ class PatientSurveyWidget extends StatelessWidget {
           IntrinsicHeight(
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children:
-                getStaffMedicineExplain()
-              )),
+                  children: getStaffMedicineExplain())),
           SizedBox(
             height: 5,
           ),
@@ -77,9 +71,7 @@ class PatientSurveyWidget extends StatelessWidget {
           IntrinsicHeight(
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children:
-                   getCleanQuiet()
-              )),
+                  children: getCleanQuiet())),
           SizedBox(
             height: 5,
           ),
@@ -93,15 +85,13 @@ class PatientSurveyWidget extends StatelessWidget {
           IntrinsicHeight(
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children:
-                 getAgreeCare()
-              ))
+                  children: getAgreeCare()))
         ]);
   }
 
   List<Widget> getNurseCommunication() {
     List listings = List<Widget>();
-    for (int i = 0; i <patientExperienceList.length; i++) {
+    for (int i = 0; i < patientExperienceList.length; i++) {
       listings.add(Expanded(
         child: Text(
           patientExperienceList[i].communicationWithNursesPerformanceRate,
@@ -112,20 +102,19 @@ class PatientSurveyWidget extends StatelessWidget {
         ),
       ));
 
-      if(i!=patientExperienceList.length-1)
-      listings.add(VerticalDivider(
-        thickness: 2,
-        width: 20,
-        color: Colors.grey[400],
-      ));
+      if (i != patientExperienceList.length - 1)
+        listings.add(VerticalDivider(
+          thickness: 2,
+          width: 20,
+          color: Colors.grey[400],
+        ));
     }
     return listings;
-
   }
-  List<Widget> getDoctorCommunication() {
 
+  List<Widget> getDoctorCommunication() {
     List listings = List<Widget>();
-    for (int i = 0; i <patientExperienceList.length; i++) {
+    for (int i = 0; i < patientExperienceList.length; i++) {
       listings.add(Expanded(
         child: Text(
           patientExperienceList[i].communicationWithDoctorsPerformanceRate,
@@ -136,20 +125,19 @@ class PatientSurveyWidget extends StatelessWidget {
         ),
       ));
 
-      if(i!=patientExperienceList.length-1)
-      listings.add(VerticalDivider(
-        thickness: 2,
-        width: 20,
-        color: Colors.grey[400],
-      ));
+      if (i != patientExperienceList.length - 1)
+        listings.add(VerticalDivider(
+          thickness: 2,
+          width: 20,
+          color: Colors.grey[400],
+        ));
     }
     return listings;
-
   }
-  List<Widget> getStaffMedicineExplain() {
 
+  List<Widget> getStaffMedicineExplain() {
     List listings = List<Widget>();
-    for (int i = 0; i <patientExperienceList.length; i++) {
+    for (int i = 0; i < patientExperienceList.length; i++) {
       listings.add(Expanded(
         child: Text(
           patientExperienceList[i].responsivenessOfHospitalStaffPerformanceRate,
@@ -160,23 +148,23 @@ class PatientSurveyWidget extends StatelessWidget {
         ),
       ));
 
-      if(i!=patientExperienceList.length-1)
-      listings.add(VerticalDivider(
-        thickness: 2,
-        width: 20,
-        color: Colors.grey[400],
-      ));
+      if (i != patientExperienceList.length - 1)
+        listings.add(VerticalDivider(
+          thickness: 2,
+          width: 20,
+          color: Colors.grey[400],
+        ));
     }
     return listings;
-
   }
-  List<Widget> getCleanQuiet() {
 
+  List<Widget> getCleanQuiet() {
     List listings = List<Widget>();
-    for (int i = 0; i <patientExperienceList.length; i++) {
+    for (int i = 0; i < patientExperienceList.length; i++) {
       listings.add(Expanded(
         child: Text(
-          patientExperienceList[i].cleanlinessAndQuietnessOfHospitalEnvironmentPerformanceRate,
+          patientExperienceList[i]
+              .cleanlinessAndQuietnessOfHospitalEnvironmentPerformanceRate,
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           textAlign: TextAlign.center,
           overflow: TextOverflow.ellipsis,
@@ -184,20 +172,19 @@ class PatientSurveyWidget extends StatelessWidget {
         ),
       ));
 
-      if(i!=patientExperienceList.length-1)
-      listings.add(VerticalDivider(
-        thickness: 2,
-        width: 20,
-        color: Colors.grey[400],
-      ));
+      if (i != patientExperienceList.length - 1)
+        listings.add(VerticalDivider(
+          thickness: 2,
+          width: 20,
+          color: Colors.grey[400],
+        ));
     }
     return listings;
-
   }
-  List<Widget> getAgreeCare() {
 
+  List<Widget> getAgreeCare() {
     List listings = List<Widget>();
-    for (int i = 0; i <patientExperienceList.length; i++) {
+    for (int i = 0; i < patientExperienceList.length; i++) {
       listings.add(Expanded(
         child: Text(
           patientExperienceList[i].careTransitionPerformanceRate,
@@ -208,14 +195,13 @@ class PatientSurveyWidget extends StatelessWidget {
         ),
       ));
 
-      if(i!=patientExperienceList.length-1)
-      listings.add(VerticalDivider(
-        thickness: 2,
-        width: 20,
-        color: Colors.grey[400],
-      ));
+      if (i != patientExperienceList.length - 1)
+        listings.add(VerticalDivider(
+          thickness: 2,
+          width: 20,
+          color: Colors.grey[400],
+        ));
     }
     return listings;
-
   }
 }

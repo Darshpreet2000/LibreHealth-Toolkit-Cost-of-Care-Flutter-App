@@ -5,17 +5,16 @@ import 'package:dio/dio.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 class GitLabApiClient {
-
   Future fetchStatesName() async {
     List<String> States = new List();
     BaseOptions options = new BaseOptions(
         connectTimeout: 15 * 1000, // 60 seconds
         receiveTimeout: 15 * 1000 // 60 seconds
-    );
+        );
 
     Dio dio = new Dio(options);
-    ApiConfig apiConfig=new ApiConfig();
-    String url =apiConfig.gitlabApiFetchList+"&per_page=100";
+    ApiConfig apiConfig = new ApiConfig();
+    String url = apiConfig.gitlabApiFetchList + "&per_page=100";
     var response;
     try {
       response = await dio.get(url);
@@ -50,12 +49,13 @@ class GitLabApiClient {
     BaseOptions options = new BaseOptions(
         connectTimeout: 15 * 1000, // 60 seconds
         receiveTimeout: 15 * 1000 // 60 seconds
-    );
+        );
 
     Dio dio = new Dio(options);
 
-    ApiConfig apiConfig=new ApiConfig();
-    String url = apiConfig.gitlabApiFetchList + stateName + "&per_page=100&page=";
+    ApiConfig apiConfig = new ApiConfig();
+    String url =
+        apiConfig.gitlabApiFetchList + stateName + "&per_page=100&page=";
     int i = 1;
 
     var response;
@@ -119,12 +119,11 @@ class GitLabApiClient {
     return name;
   }
 
-  Future getCSVFileSize( DownloadFileButtonClick event) async {
-    String url =
-        ApiConfig().gitlabApiGetCDMFileSize +
-            "%2F${event.stateName}%2F${event.hospitalName}" +
-            ".csv" +
-            "?ref=branch-with-data";
+  Future getCSVFileSize(DownloadFileButtonClick event) async {
+    String url = ApiConfig().gitlabApiGetCDMFileSize +
+        "%2F${event.stateName}%2F${event.hospitalName}" +
+        ".csv" +
+        "?ref=branch-with-data";
 
     BaseOptions options = new BaseOptions(
         connectTimeout: 15 * 1000, // 60 seconds
@@ -143,7 +142,8 @@ class GitLabApiClient {
         throw Exception("Please check your internet connection and try again");
       } else if (DioErrorType.DEFAULT == e.type) {
         if (e.message.contains('SocketException')) {
-          throw Exception('Please check your internet connection and try again');
+          throw Exception(
+              'Please check your internet connection and try again');
         }
       } else {
         throw Exception("Problem connecting to the server. Please try again.");
@@ -151,13 +151,12 @@ class GitLabApiClient {
     }
   }
 
-  Future downloadCSVFile(
-      DownloadFileButtonClick event) async {
-
-    String  url =ApiConfig().downloadCDMApi + "/${event.stateName}/${event.hospitalName}" + ".csv";
+  Future downloadCSVFile(DownloadFileButtonClick event) async {
+    String url = ApiConfig().downloadCDMApi +
+        "/${event.stateName}/${event.hospitalName}" +
+        ".csv";
     Stream<FileResponse> fileStream;
     fileStream = DefaultCacheManager().getFileStream(url, withProgress: true);
     return fileStream;
   }
-
 }

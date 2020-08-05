@@ -8,9 +8,8 @@ class NearbyHospitalBloc
     extends Bloc<NearbyHospitalEvent, NearbyHospitalState> {
   final NearbyHospitalsRepoImpl nearbyHospitalsServices;
 
-  NearbyHospitalBloc(this.nearbyHospitalsServices) : super(NearbyHospitalsLoadingState());
-
-
+  NearbyHospitalBloc(this.nearbyHospitalsServices)
+      : super(NearbyHospitalsLoadingState());
 
   @override
   Stream<NearbyHospitalState> mapEventToState(
@@ -21,7 +20,7 @@ class NearbyHospitalBloc
       bool checkSaved = await nearbyHospitalsServices.checkSaved();
       if (checkSaved) {
         List<Hospitals> nearby_hospital =
-          nearbyHospitalsServices.getSavedList();
+            nearbyHospitalsServices.getSavedList();
         nearby_hospital = nearbyHospitalsServices.sortList(nearby_hospital);
         yield NearbyHospitalsLoadedState(nearby_hospital);
       } else {
@@ -38,9 +37,9 @@ class NearbyHospitalBloc
           yield NearbyHospitalsErrorState(e.message);
         }
       }
-    }
-    else if(event is NearbyHospitalShowError){
-      yield NearbyHospitalsErrorState("Please check your internet connection and try again");
+    } else if (event is NearbyHospitalShowError) {
+      yield NearbyHospitalsErrorState(
+          "Please check your internet connection and try again");
     }
   }
 }

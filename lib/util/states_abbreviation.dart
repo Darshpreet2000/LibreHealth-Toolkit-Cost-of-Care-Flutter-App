@@ -1,5 +1,4 @@
-class StatesAbbreviation{
-
+class StatesAbbreviation {
   String getAbbreviation(String stateName) {
     final name = stateName.trim().toLowerCase();
 

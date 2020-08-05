@@ -10,17 +10,17 @@ class CompareScreenLoadingState extends CompareScreenState {
   @override
   List<Object> get props => [];
 }
-class CompareScreenLoadedState extends CompareScreenState {
 
+class CompareScreenLoadedState extends CompareScreenState {
   List<GeneralInformation> generalInformation;
   List<PatientExperience> patientExperience;
 
   CompareScreenLoadedState(this.generalInformation, this.patientExperience);
 
   @override
-  List<Object> get props => [generalInformation,patientExperience];
-
+  List<Object> get props => [generalInformation, patientExperience];
 }
+
 class CompareScreenErrorState extends CompareScreenState {
   String message;
 

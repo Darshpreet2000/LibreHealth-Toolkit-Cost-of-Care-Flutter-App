@@ -38,8 +38,7 @@ class DatabaseDao {
     return tableNames;
   }
 
-  Future insertData(
-      InsertInDatabase event, List<SearchModel> cdmList) async {
+  Future insertData(InsertInDatabase event, List<SearchModel> cdmList) async {
     String tableName = event.hospitalName;
     final database = await dbProvider.database;
     tableName = tableName.replaceAll(' ', '_');
@@ -51,7 +50,7 @@ class DatabaseDao {
 
     int total = cdmList.length;
     int completed = 0;
-    double percentCount = 0, progressNow = 0,counter=1;
+    double percentCount = 0, progressNow = 0, counter = 1;
     double progress = 0.6;
     database.transaction((txn) async {
       Batch batch = txn.batch();
@@ -59,8 +58,8 @@ class DatabaseDao {
         SearchModel cdm = cdmList[i];
         await Future(() {
           batch.insert(tableName, cdm.toMap());
-          completed +=1;
-          percentCount = (completed/total)*40;
+          completed += 1;
+          percentCount = (completed / total) * 40;
           if (percentCount >= counter) {
             progressNow = ((completed / total) * 0.4);
             event.downloadFileButtonBloc.add(DownloadFileButtonProgress(
@@ -78,7 +77,7 @@ class DatabaseDao {
     //checking
     //   print(database.rawQuery('select * from $tableName limit 10'));
     print('Done');
-   return;
+    return;
   }
 
   Future<List<SearchModel>> readData(String name) async {
@@ -95,7 +94,6 @@ class DatabaseDao {
     await database.transaction((txn) async {
       maps = await txn.query(name);
     });
-
 
     return List.generate(maps.length, (i) {
       SearchModel cdm = new SearchModel.empty();
@@ -157,8 +155,7 @@ class DatabaseDao {
     return list;
   }
 
-  Future searchProcedureInSingleTable(
-      String searchQuery, String name) async {
+  Future searchProcedureInSingleTable(String searchQuery, String name) async {
     name = name.replaceAll(' ', '_');
     name = name.replaceAll('(', '_');
     name = name.replaceAll(')', '_');

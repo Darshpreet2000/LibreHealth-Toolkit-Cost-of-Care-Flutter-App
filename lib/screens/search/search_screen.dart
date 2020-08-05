@@ -18,16 +18,12 @@ class SearchProcedure extends StatefulWidget {
 }
 
 class _SearchProcedureState extends State<SearchProcedure> {
-
   final TextEditingController _searchQuery = TextEditingController();
- SearchScreenBloc searchScreenBloc;
+  SearchScreenBloc searchScreenBloc;
   @override
   void initState() {
-    searchScreenBloc=new SearchScreenBloc(SearchScreenRepositoryImpl());
+    searchScreenBloc = new SearchScreenBloc(SearchScreenRepositoryImpl());
   }
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -42,10 +38,11 @@ class _SearchProcedureState extends State<SearchProcedure> {
           controller: _searchQuery,
           textInputAction: TextInputAction.search,
           onSubmitted: (value) {
-            if(widget.hospitalName!=null)
-              searchScreenBloc.add(SearchInDatabaseFromViewCDMScreen(value,widget.hospitalName));
+            if (widget.hospitalName != null)
+              searchScreenBloc.add(SearchInDatabaseFromViewCDMScreen(
+                  value, widget.hospitalName));
             else
-            searchScreenBloc.add(SearchInDatabase(value));
+              searchScreenBloc.add(SearchInDatabase(value));
           },
           decoration: InputDecoration(
               focusedBorder: InputBorder.none,
@@ -58,7 +55,7 @@ class _SearchProcedureState extends State<SearchProcedure> {
               hintStyle: TextStyle(color: Colors.grey)),
         ),
       ),
-      body: Body(_searchQuery,searchScreenBloc),
+      body: Body(_searchQuery, searchScreenBloc),
       floatingActionButton: FloatingAction(),
     );
   }

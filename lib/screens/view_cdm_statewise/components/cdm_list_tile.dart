@@ -23,13 +23,15 @@ class CDMListTile extends StatefulWidget {
 
 class _CDMListTileState extends State<CDMListTile> {
   DownloadCdmBloc downloadCdmBloc;
-DownloadFileButtonBloc downloadFileButtonBloc;
+  DownloadFileButtonBloc downloadFileButtonBloc;
   @override
   void initState() {
-        downloadCdmBloc=new DownloadCdmBloc(DownloadCDMRepositoryImpl());
-        downloadFileButtonBloc=new DownloadFileButtonBloc(DownloadCDMRepositoryImpl());
-        downloadCdmBloc.add(DownloadCDMFetchData(widget.stateName));
+    downloadCdmBloc = new DownloadCdmBloc(DownloadCDMRepositoryImpl());
+    downloadFileButtonBloc =
+        new DownloadFileButtonBloc(DownloadCDMRepositoryImpl());
+    downloadCdmBloc.add(DownloadCDMFetchData(widget.stateName));
   }
+
   @override
   void dispose() {
     super.dispose();
@@ -45,7 +47,7 @@ DownloadFileButtonBloc downloadFileButtonBloc;
           backgroundColor: Colors.indigo,
         ),
         body: BlocListener(
-         cubit: downloadCdmBloc,
+          cubit: downloadCdmBloc,
           listener: (BuildContext context, DownloadCdmState state) {
             if (state is ErrorStateSnackbar) {
               Scaffold.of(context).showSnackBar(SnackBar(
@@ -55,8 +57,7 @@ DownloadFileButtonBloc downloadFileButtonBloc;
                 ),
                 backgroundColor: Colors.deepOrangeAccent,
               ));
-            }
-            else if(state is ErrorState){
+            } else if (state is ErrorState) {
               Scaffold.of(context).showSnackBar(SnackBar(
                 content: Text(
                   state.message,
@@ -72,7 +73,8 @@ DownloadFileButtonBloc downloadFileButtonBloc;
               if (state is DownloadButtonLoaded) {
                 context.bloc<SavedScreenBloc>().add(LoadSavedData());
 
-                downloadCdmBloc.add(DownloadCDMRefreshList(state.index, widget.stateName));
+                downloadCdmBloc
+                    .add(DownloadCDMRefreshList(state.index, widget.stateName));
               } else if (state is DownloadButtonErrorState) {
                 Scaffold.of(context).showSnackBar(SnackBar(
                   content: Text(
@@ -91,9 +93,11 @@ DownloadFileButtonBloc downloadFileButtonBloc;
                     child: CircularProgressIndicator(),
                   );
                 else if (state is LoadedState) {
-                  return ShowList(state.hospitalsName, widget.stateName,downloadFileButtonBloc);
+                  return ShowList(state.hospitalsName, widget.stateName,
+                      downloadFileButtonBloc);
                 } else if (state is RefreshedState) {
-                  return ShowList(state.hospitalsName, widget.stateName,downloadFileButtonBloc);
+                  return ShowList(state.hospitalsName, widget.stateName,
+                      downloadFileButtonBloc);
                 } else if (state is ErrorState) {
                   return Center(
                     child: Container(
@@ -112,7 +116,7 @@ class ShowList extends StatelessWidget {
   List<DownloadCdmModel> hospitalsName;
 
   String stateName;
-DownloadFileButtonBloc downloadFileButtonBloc;
+  DownloadFileButtonBloc downloadFileButtonBloc;
 
   ShowList(this.hospitalsName, this.stateName, this.downloadFileButtonBloc);
 
@@ -157,7 +161,7 @@ ListTile makeListTile(
       ),
     ),
     trailing:
-    downloadWidget(hospital, index, downloadFileButtonBloc, stateName),
+        downloadWidget(hospital, index, downloadFileButtonBloc, stateName),
   );
 }
 
@@ -170,15 +174,21 @@ Widget downloadWidget(DownloadCdmModel hospital, int index,
         return StreamBuilder<FileResponse>(
             stream: state.fileStream,
             builder: (context, snapshot) {
-              if(snapshot.hasError){
-                downloadFileButtonBloc.add(DownloadFileButtonError("Please check your internet connection and try again"));
+              if (snapshot.hasError) {
+                downloadFileButtonBloc.add(DownloadFileButtonError(
+                    "Please check your internet connection and try again"));
                 return Material(
                     borderRadius: BorderRadius.circular(20.0),
                     child: InkWell(
                       splashColor: Colors.blue,
                       borderRadius: BorderRadius.circular(20.0),
                       onTap: () async {
-                        if ((downloadFileButtonBloc.state is InitialDownloadFileButtonState)||(downloadFileButtonBloc.state is DownloadButtonErrorState)||(downloadFileButtonBloc.state is DownloadButtonLoaded)){
+                        if ((downloadFileButtonBloc.state
+                                is InitialDownloadFileButtonState) ||
+                            (downloadFileButtonBloc.state
+                                is DownloadButtonErrorState) ||
+                            (downloadFileButtonBloc.state
+                                is DownloadButtonLoaded)) {
                           downloadFileButtonBloc.add(DownloadFileButtonClick(
                               index,
                               hospital.hospitalName,
@@ -203,30 +213,27 @@ Widget downloadWidget(DownloadCdmModel hospital, int index,
                         ),
                       ),
                     ));
-
-              }
-              else if (snapshot.connectionState==ConnectionState.active&&snapshot.data is DownloadProgress) {
+              } else if (snapshot.connectionState == ConnectionState.active &&
+                  snapshot.data is DownloadProgress) {
                 double fileSize = state.fileSize;
                 DownloadProgress downloaded = (snapshot.data);
                 double progress = (downloaded.downloaded / fileSize);
                 //showing progress from 60 %
-                return progressIndicator(progress*0.6);
-              }
-              else if(snapshot.connectionState==ConnectionState.done){
-                FileInfo fileInfo=snapshot.data as FileInfo;
-                downloadFileButtonBloc.add(InsertInDatabase(index,fileInfo,hospital.hospitalName, downloadFileButtonBloc));
+                return progressIndicator(progress * 0.6);
+              } else if (snapshot.connectionState == ConnectionState.done) {
+                FileInfo fileInfo = snapshot.data as FileInfo;
+                downloadFileButtonBloc.add(InsertInDatabase(index, fileInfo,
+                    hospital.hospitalName, downloadFileButtonBloc));
                 return progressIndicator(0.6);
-              }
-              else {
+              } else {
                 return CircularProgressIndicator();
               }
             });
-      }
-      else if(state is DownloadButtonLoadingProgressIndicator&&index==state.index){
+      } else if (state is DownloadButtonLoadingProgressIndicator &&
+          index == state.index) {
         return progressIndicator(state.progress);
-      }
-
-      else if ((state is DownloadButtonLoaded&&index==state.index)||(hospital.isDownload == 1)) {
+      } else if ((state is DownloadButtonLoaded && index == state.index) ||
+          (hospital.isDownload == 1)) {
         return RaisedButton(
           color: Colors.indigo,
           onPressed: () {
@@ -250,7 +257,10 @@ Widget downloadWidget(DownloadCdmModel hospital, int index,
             splashColor: Colors.blue,
             borderRadius: BorderRadius.circular(20.0),
             onTap: () async {
-              if ((downloadFileButtonBloc.state is InitialDownloadFileButtonState)||(downloadFileButtonBloc.state is DownloadButtonErrorState)||(downloadFileButtonBloc.state is DownloadButtonLoaded)){
+              if ((downloadFileButtonBloc.state
+                      is InitialDownloadFileButtonState) ||
+                  (downloadFileButtonBloc.state is DownloadButtonErrorState) ||
+                  (downloadFileButtonBloc.state is DownloadButtonLoaded)) {
                 downloadFileButtonBloc.add(DownloadFileButtonClick(
                     index,
                     hospital.hospitalName,
@@ -275,12 +285,11 @@ Widget downloadWidget(DownloadCdmModel hospital, int index,
               ),
             ),
           ));
-
     },
   );
 }
 
-Widget progressIndicator(double progress){
+Widget progressIndicator(double progress) {
   Color foreground = Colors.red;
   if (progress >= 0.8) {
     foreground = Colors.green;
@@ -304,10 +313,9 @@ Widget progressIndicator(double progress){
       Positioned.fill(
         child: Align(
           alignment: Alignment.center,
-          child: Text((progress*100).toStringAsFixed(0)),
+          child: Text((progress * 100).toStringAsFixed(0)),
         ),
       )
     ],
   );
 }
-

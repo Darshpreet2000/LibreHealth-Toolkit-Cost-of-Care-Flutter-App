@@ -35,17 +35,16 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-        padding: EdgeInsets.all(8),
+          padding: EdgeInsets.all(8),
           child: Column(children: <Widget>[
-            Row(
-                children: getListOfWidgets()),
+            Row(children: getListOfWidgets()),
             SizedBox(
               height: 8,
             ),
             IntrinsicHeight(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children:getHospitalImages(),
+                children: getHospitalImages(),
               ),
             ),
             SizedBox(
@@ -56,10 +55,8 @@ class _BodyState extends State<Body> {
               if (state is CompareScreenLoadedState) {
                 return Column(
                   children: <Widget>[
-
                     GeneralInformationWidget(state.generalInformation),
                     PatientSurveyWidget(state.patientExperience)
-
                   ],
                 );
               } else if (state is CompareScreenLoadingState) {
@@ -107,22 +104,20 @@ class _BodyState extends State<Body> {
     return listings;
   }
 
-  List<Widget> getHospitalImages(){
+  List<Widget> getHospitalImages() {
     List listings = List<Widget>();
     for (int i = 0; i < widget.hospitalNamesForCompare.length; i++) {
       listings.add(
         Expanded(
           child: FutureBuilder(
-            future: compareScreenRepositoryImpl.fetchImages(
-                widget.hospitalNamesForCompare[i].hospitalName),
-            builder: (BuildContext context,
-                AsyncSnapshot<dynamic> snapshot) {
+            future: compareScreenRepositoryImpl
+                .fetchImages(widget.hospitalNamesForCompare[i].hospitalName),
+            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
               if (snapshot.hasError) {
                 return Container(
                   height: 120,
                   decoration: BoxDecoration(
-                    borderRadius:
-                    BorderRadius.all(Radius.circular(10)),
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
                   ),
                   child: new FittedBox(
                       fit: BoxFit.fill,
@@ -136,8 +131,7 @@ class _BodyState extends State<Body> {
                     height: 120,
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.black),
-                      borderRadius:
-                      BorderRadius.all(Radius.circular(10)),
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
                       image: DecorationImage(
                         image: imageProvider,
                         fit: BoxFit.fill,
@@ -148,14 +142,12 @@ class _BodyState extends State<Body> {
                       height: 120,
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.black),
-                        borderRadius:
-                        BorderRadius.all(Radius.circular(10)),
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
                       ),
                       child: Center(
                         child: CircularProgressIndicator(),
                       )),
-                  errorWidget: (context, url, error) =>
-                      Icon(Icons.error),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
                 );
               }
               return Container(
@@ -166,8 +158,7 @@ class _BodyState extends State<Body> {
                   child: Container(
                     decoration: BoxDecoration(
                         color: Colors.grey[300],
-                        borderRadius:
-                        BorderRadius.all(Radius.circular(20))),
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
                   ),
                 ),
               );
@@ -175,15 +166,13 @@ class _BodyState extends State<Body> {
           ),
         ),
       );
-      if(i!=widget.hospitalNamesForCompare.length-1)
-      listings.add(VerticalDivider(
-        thickness: 2,
-        width: 20,
-        color: Colors.grey[400],
-      ));
-
+      if (i != widget.hospitalNamesForCompare.length - 1)
+        listings.add(VerticalDivider(
+          thickness: 2,
+          width: 20,
+          color: Colors.grey[400],
+        ));
     }
     return listings;
-
   }
 }

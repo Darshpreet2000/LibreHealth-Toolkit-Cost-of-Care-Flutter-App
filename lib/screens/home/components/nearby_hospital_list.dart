@@ -20,10 +20,10 @@ class NearbyHospitalList extends StatelessWidget {
           String state = box.get('state');
           context.bloc<NearbyHospitalBloc>().add(FetchHospitals(state));
           //Compare hospital bloc
-          context.bloc<CompareScreenListBloc>().add(CompareScreenListFetchHospitalName());
-
-        }
-        else if(state is LocationError){
+          context
+              .bloc<CompareScreenListBloc>()
+              .add(CompareScreenListFetchHospitalName());
+        } else if (state is LocationError) {
           Scaffold.of(context).showSnackBar(SnackBar(
             content: Text(
               state.message,
@@ -31,9 +31,7 @@ class NearbyHospitalList extends StatelessWidget {
             ),
             backgroundColor: Colors.deepOrangeAccent,
           ));
-          context
-              .bloc<NearbyHospitalBloc>()
-              .add(NearbyHospitalShowError());
+          context.bloc<NearbyHospitalBloc>().add(NearbyHospitalShowError());
         }
       },
       child: BlocBuilder<NearbyHospitalBloc, NearbyHospitalState>(

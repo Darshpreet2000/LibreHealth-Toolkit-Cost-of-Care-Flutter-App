@@ -10,11 +10,11 @@ class StateListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scrollbar(
-        child:ListView.builder(
-        itemCount: states.length,
-        itemBuilder: (BuildContext context, int index) {
-          return makeCard(context, index);
-        }),
+      child: ListView.builder(
+          itemCount: states.length,
+          itemBuilder: (BuildContext context, int index) {
+            return makeCard(context, index);
+          }),
     );
   }
 
@@ -46,7 +46,7 @@ class StateListTile extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) =>CDMListTile(states[index]),
+                builder: (context) => CDMListTile(states[index]),
               ));
         },
         child: Text(

@@ -25,11 +25,13 @@ class SearchScreenRepositoryImpl extends SearchScreenRepository {
     }
     return list;
   }
-  Future searchForProcedureByHospitalName(String procedureName,String hospitalName) async {
+
+  Future searchForProcedureByHospitalName(
+      String procedureName, String hospitalName) async {
     DatabaseDao databaseDao = new DatabaseDao();
 
-    List<SearchModel> list =
-        await databaseDao.searchProcedureInSingleTable(procedureName,hospitalName);
+    List<SearchModel> list = await databaseDao.searchProcedureInSingleTable(
+        procedureName, hospitalName);
     return list;
   }
 

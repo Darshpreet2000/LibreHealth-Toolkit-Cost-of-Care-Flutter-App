@@ -21,16 +21,17 @@ class CompareScreenListBloc
     if (event is CompareScreenListFetchHospitalName) {
       yield CompareScreenListLoadingState();
       hospitalsAddedToCompare = 0;
-     //check if list exists
-      if(await compareScreenRepositoryImpl.checkSavedList()){
-        List<CompareHospitalModel> hospitalName =await compareScreenRepositoryImpl.fetchSavedList();
+      //check if list exists
+      if (await compareScreenRepositoryImpl.checkSavedList()) {
+        List<CompareHospitalModel> hospitalName =
+            await compareScreenRepositoryImpl.fetchSavedList();
         yield CompareScreenListLoadedState(hospitalName);
       }
       //otherwise fetch from internet
       else {
         try {
           List<CompareHospitalModel> hospitalName =
-          await compareScreenRepositoryImpl.getListOfHospitals();
+              await compareScreenRepositoryImpl.getListOfHospitals();
           yield CompareScreenListLoadedState(hospitalName);
           compareScreenRepositoryImpl.saveList(hospitalName);
         } catch (e) {

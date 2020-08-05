@@ -9,6 +9,7 @@ class CompareScreenListLoadingState extends CompareScreenListState {
   @override
   List<Object> get props => [];
 }
+
 class CompareScreenListLoadedState extends CompareScreenListState {
   List<CompareHospitalModel> hospitalName;
 
@@ -17,7 +18,8 @@ class CompareScreenListLoadedState extends CompareScreenListState {
   @override
   List<Object> get props => [hospitalName];
 }
-class CompareScreenListErrorState extends CompareScreenListState{
+
+class CompareScreenListErrorState extends CompareScreenListState {
   String message;
   CompareScreenListErrorState(this.message);
 

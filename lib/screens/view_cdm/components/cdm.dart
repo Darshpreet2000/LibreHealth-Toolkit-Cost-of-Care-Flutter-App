@@ -20,7 +20,6 @@ class _CDMState extends State<CDM> {
     context.bloc<ViewCdmScreenBloc>().add(LoadCdm(widget.name));
   }
 
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ViewCdmScreenBloc, ViewCdmScreenState>(

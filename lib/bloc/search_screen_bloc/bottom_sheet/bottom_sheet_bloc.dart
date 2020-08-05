@@ -8,7 +8,8 @@ import './bloc.dart';
 class BottomSheetBloc extends Bloc<BottomSheetEvent, BottomSheetState> {
   SearchScreenRepositoryImpl searchScreenRepositoryImpl;
 
-  BottomSheetBloc(this.searchScreenRepositoryImpl) : super( BottomSheetLoadValues(0, 0));
+  BottomSheetBloc(this.searchScreenRepositoryImpl)
+      : super(BottomSheetLoadValues(0, 0));
 
   @override
   Stream<BottomSheetState> mapEventToState(

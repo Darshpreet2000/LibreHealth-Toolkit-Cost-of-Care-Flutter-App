@@ -13,19 +13,18 @@ class Body extends StatefulWidget {
 
   Body(this._searchQuery, this.searchScreenBloc);
 
-
   @override
   _BodyState createState() => _BodyState();
 }
 
 class _BodyState extends State<Body> {
-
   @override
   Widget build(BuildContext context) {
     return BlocListener<BottomSheetBloc, BottomSheetState>(
       listener: (BuildContext context, BottomSheetState state) {
         if (state is BottomSheetSaved && widget._searchQuery.text.length > 0) {
-          widget.searchScreenBloc.add(SearchInDatabase(widget._searchQuery.text));
+          widget.searchScreenBloc
+              .add(SearchInDatabase(widget._searchQuery.text));
         }
       },
       child: BlocBuilder(
@@ -40,7 +39,10 @@ class _BodyState extends State<Body> {
           } else if (state is SearchScreenNoDataState) {
             return Container(
               child: Center(
-                child: Text("No Data Found",style: TextStyle(fontSize: 18.0),),
+                child: Text(
+                  "No Data Found",
+                  style: TextStyle(fontSize: 18.0),
+                ),
               ),
             );
           } else if (state is SearchScreenLoadedState) {
@@ -58,5 +60,4 @@ class _BodyState extends State<Body> {
       ),
     );
   }
-
 }

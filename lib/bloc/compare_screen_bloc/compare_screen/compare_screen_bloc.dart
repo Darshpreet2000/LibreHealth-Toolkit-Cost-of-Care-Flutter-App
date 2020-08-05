@@ -18,26 +18,25 @@ class CompareScreenBloc extends Bloc<CompareScreenEvent, CompareScreenState> {
   ) async* {
     if (event is CompareScreenFetchData) {
       yield CompareScreenLoadingState();
-    try {
-      List<GeneralInformation> generalInformation=new List();
-      List<PatientExperience> patientExperience=new List();
+      try {
+        List<GeneralInformation> generalInformation = new List();
+        List<PatientExperience> patientExperience = new List();
 
-      for(int i=0;i<event.hospitalNames.length;i++) {
-        CompareHospitalModel compareHospitalModel=event.hospitalNames[i];
-        GeneralInformation generalInformationHospitalObj =
-        await compareScreenRepositoryImpl
-            .fetchGeneralInformation(compareHospitalModel.hospitalName);
-        PatientExperience patientExperienceHospitalObj =
-        await compareScreenRepositoryImpl
-            .fetchPatientExperience(compareHospitalModel.hospitalName);
-        generalInformation.add(generalInformationHospitalObj);
-        patientExperience.add(patientExperienceHospitalObj);
+        for (int i = 0; i < event.hospitalNames.length; i++) {
+          CompareHospitalModel compareHospitalModel = event.hospitalNames[i];
+          GeneralInformation generalInformationHospitalObj =
+              await compareScreenRepositoryImpl
+                  .fetchGeneralInformation(compareHospitalModel.hospitalName);
+          PatientExperience patientExperienceHospitalObj =
+              await compareScreenRepositoryImpl
+                  .fetchPatientExperience(compareHospitalModel.hospitalName);
+          generalInformation.add(generalInformationHospitalObj);
+          patientExperience.add(patientExperienceHospitalObj);
+        }
+        yield CompareScreenLoadedState(generalInformation, patientExperience);
+      } catch (e) {
+        yield CompareScreenErrorState(e.message);
       }
-      yield CompareScreenLoadedState(generalInformation,patientExperience);
-    }
-    catch(e){
-      yield CompareScreenErrorState(e.message);
-    }
     }
   }
 }

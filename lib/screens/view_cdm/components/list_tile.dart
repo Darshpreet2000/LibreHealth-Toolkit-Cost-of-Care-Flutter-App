@@ -13,14 +13,15 @@ Card makeCard(SearchModel cdm) {
 }
 
 ListTile makeListTile(SearchModel cdm) {
-  String charge = cdm.charge == 0.0 ? "N/A" : '\$ ' + cdm.charge.toStringAsFixed(2);
+  String charge =
+      cdm.charge == 0.0 ? "N/A" : '\$ ' + cdm.charge.toStringAsFixed(2);
   var color;
-  if(cdm.category=="Standard")
-    color=Colors.indigo;
-  else if (cdm.category=="DRG")
-    color=Colors.red;
+  if (cdm.category == "Standard")
+    color = Colors.indigo;
+  else if (cdm.category == "DRG")
+    color = Colors.red;
   else
-    color=Colors.green[700];
+    color = Colors.green[700];
   return ListTile(
     title: Text(
       cdm.description,
@@ -28,11 +29,14 @@ ListTile makeListTile(SearchModel cdm) {
     ),
     subtitle: Text(
       cdm.category,
-      style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold,color: color),
+      style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: color),
     ),
     trailing: Text(
       charge,
-      style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold,),
+      style: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.bold,
+      ),
     ),
   );
 }

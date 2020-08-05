@@ -4,7 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-ListTile makeListTile(BuildContext context, CompareHospitalModel hospitalName,int index) {
+ListTile makeListTile(
+    BuildContext context, CompareHospitalModel hospitalName, int index) {
   return ListTile(
     title: Text(
       hospitalName.hospitalName,
@@ -18,17 +19,16 @@ ListTile makeListTile(BuildContext context, CompareHospitalModel hospitalName,in
       ),
     ),
     trailing: RaisedButton(
-      color: hospitalName.isAddedToCompare?Colors.green:Colors.indigo,
+      color: hospitalName.isAddedToCompare ? Colors.green : Colors.indigo,
       child: Text(
-        hospitalName.isAddedToCompare?"Comparing":"Compare",
-        style: TextStyle(
-            color: Colors.white
-        ),
+        hospitalName.isAddedToCompare ? "Comparing" : "Compare",
+        style: TextStyle(color: Colors.white),
       ),
-      onPressed:  ()  {
-        context.bloc<CompareScreenListBloc>().add(CompareScreenListCompareButtonEvent(!hospitalName.isAddedToCompare,index));
+      onPressed: () {
+        context.bloc<CompareScreenListBloc>().add(
+            CompareScreenListCompareButtonEvent(
+                !hospitalName.isAddedToCompare, index));
       },
     ),
   );
 }
-

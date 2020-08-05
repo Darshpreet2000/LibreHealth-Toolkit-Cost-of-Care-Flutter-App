@@ -3,14 +3,13 @@ import 'package:flutter/material.dart';
 import 'components/body.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-class DownloadCDMScreen extends StatefulWidget {
 
+class DownloadCDMScreen extends StatefulWidget {
   @override
   _DownloadCDMScreenState createState() => _DownloadCDMScreenState();
 }
 
 class _DownloadCDMScreenState extends State<DownloadCDMScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,10 +21,7 @@ class _DownloadCDMScreenState extends State<DownloadCDMScreen> {
         ),
         centerTitle: true,
       ),
-
       body: Body(),
     );
   }
-
-
 }

@@ -4,7 +4,7 @@ import 'package:hive/hive.dart';
 part 'download_cdm_model.g.dart';
 
 @HiveType(typeId: 1)
-class DownloadCdmModel extends Equatable{
+class DownloadCdmModel extends Equatable {
   @HiveField(0)
   String hospitalName;
   @HiveField(1)
@@ -24,5 +24,5 @@ class DownloadCdmModel extends Equatable{
   }
 
   @override
-  List<Object> get props => [hospitalName,isDownload];
+  List<Object> get props => [hospitalName, isDownload];
 }

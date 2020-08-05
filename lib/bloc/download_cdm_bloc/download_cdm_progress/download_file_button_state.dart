@@ -46,14 +46,14 @@ class DownloadButtonErrorState extends DownloadFileButtonState {
   @override
   List<Object> get props => [message];
 }
-class DownloadButtonStream extends DownloadFileButtonState {
 
+class DownloadButtonStream extends DownloadFileButtonState {
   Stream<FileResponse> fileStream;
   int index;
   double fileSize;
 
-   @override
-  List<Object> get props => [fileStream,index,fileSize];
+  @override
+  List<Object> get props => [fileStream, index, fileSize];
 
   DownloadButtonStream(this.fileStream, this.index, this.fileSize);
 }

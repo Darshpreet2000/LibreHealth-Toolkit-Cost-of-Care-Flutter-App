@@ -18,18 +18,18 @@ class _ViewCDMState extends State<ViewCDM> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  AppBar(
-        backgroundColor: Colors.indigo,
-        centerTitle: true,
-        iconTheme: IconThemeData(
-          color: Colors.white, //change your color here
-        ),
-        title: Text(
-          widget.name,
-          style: TextStyle(
-            color: Colors.white,
+      appBar: AppBar(
+          backgroundColor: Colors.indigo,
+          centerTitle: true,
+          iconTheme: IconThemeData(
+            color: Colors.white, //change your color here
           ),
-        ),
+          title: Text(
+            widget.name,
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
           actions: <Widget>[
             // action button
             IconButton(
@@ -43,14 +43,10 @@ class _ViewCDMState extends State<ViewCDM> {
                   MaterialPageRoute(
                       builder: (context) => SearchProcedure(widget.name)),
                 );
-
               },
             ),
-          ]
-      ),
-
+          ]),
       body: Body(widget.name),
     );
   }
-
 }

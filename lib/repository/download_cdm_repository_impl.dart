@@ -24,7 +24,7 @@ class DownloadCDMRepositoryImpl extends DownloadCDMRepository {
   Future parseData(List<dynamic> responseBody) async {
     GitLabApiClient gitLabApiClient = new GitLabApiClient();
     List<DownloadCdmModel> hospitalsName =
-    await gitLabApiClient.parseAvailableCdm(responseBody);
+        await gitLabApiClient.parseAvailableCdm(responseBody);
     return hospitalsName;
   }
 
@@ -40,20 +40,19 @@ class DownloadCDMRepositoryImpl extends DownloadCDMRepository {
 
   Future<List<DownloadCdmModel>> getSavedData(String state) async {
     List<DownloadCdmModel> data =
-    await listbox.get('downloadCDMList$state').cast<DownloadCdmModel>();
+        await listbox.get('downloadCDMList$state').cast<DownloadCdmModel>();
     return data;
   }
 
   Future downloadCDM(DownloadFileButtonClick event) async {
     GitLabApiClient gitLabApiClient = new GitLabApiClient();
-      try {
-        return await gitLabApiClient.downloadCSVFile(event);
-      } catch (e) {
-        event.downloadFileButtonBloc.add(DownloadFileButtonError(e.message));
-        return;
-      }
+    try {
+      return await gitLabApiClient.downloadCSVFile(event);
+    } catch (e) {
+      event.downloadFileButtonBloc.add(DownloadFileButtonError(e.message));
+      return;
+    }
   }
-
 
   Future getFileSize(DownloadFileButtonClick event) async {
     double fileSize;
@@ -67,10 +66,10 @@ class DownloadCDMRepositoryImpl extends DownloadCDMRepository {
     }
     return fileSize;
   }
+
   Future insertInDatabase(InsertInDatabase event) async {
     DatabaseRepositoryImpl databaseRepositoryImpl =
         new DatabaseRepositoryImpl();
-
 
     List<SearchModel> myList = new List();
     List<String> lines = event.fileInfo.file.readAsLinesSync();
@@ -97,6 +96,6 @@ class DownloadCDMRepositoryImpl extends DownloadCDMRepository {
       myList.add(new SearchModel(description, price, category));
     } // Skip the header row
 
-  return await databaseRepositoryImpl.insertCDM(event, myList);
+    return await databaseRepositoryImpl.insertCDM(event, myList);
   }
 }

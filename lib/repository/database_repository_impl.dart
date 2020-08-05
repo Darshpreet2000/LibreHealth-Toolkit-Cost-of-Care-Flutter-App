@@ -13,8 +13,7 @@ class DatabaseRepositoryImpl extends DatabaseRepository {
   }
 
   @override
-  Future insertCDM(
-      InsertInDatabase event, List<SearchModel> cdmList) async {
+  Future insertCDM(InsertInDatabase event, List<SearchModel> cdmList) async {
     //Create a table then insert in it
     await hospitalDao.createHospitalTable(event.hospitalName);
     await hospitalDao.insertData(event, cdmList);
