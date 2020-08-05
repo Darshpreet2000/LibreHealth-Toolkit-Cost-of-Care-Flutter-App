@@ -24,15 +24,15 @@ ListTile makeListTile(SearchModel cdm) {
   return ListTile(
     title: Text(
       cdm.description,
-      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+      style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
     ),
     subtitle: Text(
       cdm.category,
-      style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: color),
+      style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold,color: color),
     ),
     trailing: Text(
       charge,
-      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,),
+      style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold,),
     ),
   );
 }

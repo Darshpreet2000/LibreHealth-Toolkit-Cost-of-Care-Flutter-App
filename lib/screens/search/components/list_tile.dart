@@ -41,24 +41,24 @@ ListTile makeListTile(SearchModel searchModel) {
   return ListTile(
     title: Text(
       searchModel.description,
-      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+      style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
     ),
     subtitle: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
           searchModel.category,
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: color),
+          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold,color: color),
         ),
         Text(
           searchModel.name,
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,),
+          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold,),
         )
       ],
     ),
     trailing: Text(
       charge,
-      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,),
+      style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold,),
     ),
   );
 }

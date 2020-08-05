@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:curativecare/models/compare_hospital_model.dart';
 import 'package:curativecare/repository/compare_screen_repository_impl.dart';
@@ -39,11 +38,11 @@ class CompareScreenListBloc
         }
       }
     } else if (event is CompareScreenListCompareButtonEvent) {
-      if (hospitalsAddedToCompare == 3 && event.isAddedForCompare) {
+      if (hospitalsAddedToCompare == 2 && event.isAddedForCompare) {
         List<CompareHospitalModel> hospitalList =
             (state as CompareScreenListLoadedState).hospitalName;
         yield CompareScreenListErrorState(
-            "Cannot compare more than three hospitals");
+            "Cannot compare more than two hospitals");
         yield CompareScreenListLoadedState(hospitalList);
       } else {
         List<CompareHospitalModel> updatedList = new List();
