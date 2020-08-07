@@ -1,24 +1,57 @@
+import 'package:curativecare/bloc/compare_screen_bloc/compare_screen_list/bloc.dart';
+import 'package:curativecare/bloc/compare_screen_bloc/compare_screen_list/compare_screen_list_bloc.dart';
+import 'package:curativecare/bloc/compare_screen_bloc/compare_screen_list/compare_screen_list_state.dart';
 import 'package:curativecare/models/compare_hospital_model.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'list_tile.dart';
 
-class Body extends StatelessWidget{
-  List<CompareHospitalModel> hospitalName=new List();
+class Body extends StatefulWidget {
+  @override
+  _BodyState createState() => _BodyState();
+}
 
+class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
-   return ShowList(hospitalName);
+    return BlocListener<CompareScreenListBloc, CompareScreenListState>(
+      listener: (BuildContext context, state) async {
+        if (state is CompareScreenListErrorState) {
+          Scaffold.of(context).showSnackBar(SnackBar(
+            content: Text(
+              state.message,
+              style: TextStyle(color: Colors.white),
+            ),
+            backgroundColor: Colors.deepOrangeAccent,
+          ));
+        }
+      },
+      child: BlocBuilder<CompareScreenListBloc, CompareScreenListState>(
+          builder: (BuildContext context, CompareScreenListState state) {
+        if (state is CompareScreenListLoadingState) {
+          return Container(
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        } else if (state is CompareScreenListLoadedState) {
+          return showList(state.hospitalName);
+        } else if (state is CompareScreenListErrorState) {
+          return Container(
+            padding: EdgeInsets.all(8.0),
+            child: Center(
+                child: Text(
+              state.message,
+              style: TextStyle(fontSize: 18),
+            )),
+          );
+        }
+      }),
+    );
   }
 }
 
-Widget ShowList(List<CompareHospitalModel> hospitalsName){
-  hospitalsName.add(new CompareHospitalModel("NY EYE AND EAR INFIRMARY OF MOUNT SINAI", false));
-  hospitalsName.add(new CompareHospitalModel("MOUNT SINAI BETH ISRAEL", false));
-  hospitalsName.add(new CompareHospitalModel("JERSEY CITY MEDICAL CENTER", false));
-  hospitalsName.add(new CompareHospitalModel("UCLA MEDICAL CENTER", false));
-  hospitalsName.add(new CompareHospitalModel("ALASKA NATIVE MEDICAL CENTER", false));
-  hospitalsName.add(new CompareHospitalModel("ALASKA PSYCHIATRIC INSTITUTE", false));
+Widget showList(List<CompareHospitalModel> hospitalsName) {
   return Scrollbar(
     child: ListView.builder(
       itemCount: hospitalsName.length,

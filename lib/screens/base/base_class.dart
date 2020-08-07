@@ -1,6 +1,7 @@
 import 'package:curativecare/screens/download_cdm/download_cdm_screen.dart';
 import 'package:curativecare/screens/home/home_screen.dart';
 import 'package:curativecare/screens/saved/saved_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class BaseClass extends StatefulWidget {
@@ -61,7 +62,7 @@ class AppDrawer extends StatelessWidget {
         children: <Widget>[
           _createHeader(),
           _createDrawerItem(
-              icon: Icons.album,
+              icon: Icons.description,
               text: 'View CDM Statewise',
               onTap: () => {
                     Navigator.pop(context),
@@ -130,18 +131,41 @@ class AppDrawer extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.orange,
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Image.asset(
-            'assets/logowhite.png',
-            height: 50,
-            width: 50,
+          Expanded(
+            child: Align(
+              alignment: Alignment.center,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Image.asset(
+                    'assets/logowhite.png',
+                    height: 50,
+                    width: 50,
+                  ),
+                  Text(
+                    'LibreHealth',
+                    style: TextStyle(color: Colors.white, fontSize: 25),
+                  ),
+                ],
+              ),
+            ),
           ),
-          Text(
-            'LibreHealth',
-            style: TextStyle(color: Colors.white, fontSize: 25),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Text(
+              'Providing better cost estimates',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontStyle: FontStyle.italic),
+            ),
+          ),
+          SizedBox(
+            height: 8,
           )
         ],
       ),

@@ -2,7 +2,6 @@ import 'package:curativecare/bloc/view_cdm_screen_bloc/bloc.dart';
 import 'package:curativecare/models/search_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'list_tile.dart';
 
 class CDM extends StatefulWidget {
@@ -17,12 +16,8 @@ class CDM extends StatefulWidget {
 class _CDMState extends State<CDM> {
   @override
   void initState() {
+    super.initState();
     context.bloc<ViewCdmScreenBloc>().add(LoadCdm(widget.name));
-  }
-
-  @override
-  void dispose() {
-    context.bloc<ViewCdmScreenBloc>().close();
   }
 
   @override
@@ -43,10 +38,12 @@ class _CDMState extends State<CDM> {
   }
 
   Widget showList(List<SearchModel> cdmList) {
-    return ListView.builder(
-        itemCount: cdmList.length,
-        itemBuilder: (BuildContext context, int index) {
-          return makeCard(cdmList[index]);
-        });
+    return Scrollbar(
+      child: ListView.builder(
+          itemCount: cdmList.length,
+          itemBuilder: (BuildContext context, int index) {
+            return makeCard(cdmList[index]);
+          }),
+    );
   }
 }

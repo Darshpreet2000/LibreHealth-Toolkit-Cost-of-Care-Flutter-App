@@ -9,11 +9,8 @@ import './bloc.dart';
 class HomeSettingsBloc extends Bloc<HomeSettingsEvent, HomeSettingsState> {
   HomeSettingsRepository homeSettingsRepository;
 
-  HomeSettingsBloc(this.homeSettingsRepository);
-
-  @override
-  HomeSettingsState get initialState =>
-      LoadingState(HomeSettingsModel(5, 'Ascending', true));
+  HomeSettingsBloc(this.homeSettingsRepository)
+      : super(LoadingState(HomeSettingsModel(5, 'Ascending', true)));
 
   @override
   Stream<HomeSettingsState> mapEventToState(

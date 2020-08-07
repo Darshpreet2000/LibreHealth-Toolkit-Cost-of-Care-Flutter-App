@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 abstract class DownloadFileButtonState extends Equatable {
   const DownloadFileButtonState();
@@ -44,4 +45,15 @@ class DownloadButtonErrorState extends DownloadFileButtonState {
 
   @override
   List<Object> get props => [message];
+}
+
+class DownloadButtonStream extends DownloadFileButtonState {
+  Stream<FileResponse> fileStream;
+  int index;
+  double fileSize;
+
+  @override
+  List<Object> get props => [fileStream, index, fileSize];
+
+  DownloadButtonStream(this.fileStream, this.index, this.fileSize);
 }

@@ -1,11 +1,12 @@
+import 'package:curativecare/util/api_config.dart';
 import 'package:dio/dio.dart';
 import 'package:html/parser.dart';
 
 class FetchHospitalImages {
   //Getting image from Google
   Future<String> fetchImagesFromGoogle(String name) async {
-    String url = 'https://www.google.com/search?tbm=isch&q=';
-    url = url + "${name} Hospital";
+    ApiConfig apiConfig = new ApiConfig();
+    String url = apiConfig.getHospitalImageFromGoogle + "${name} Hospital";
     Dio dio = new Dio();
     try {
       var response = await dio.get(url);

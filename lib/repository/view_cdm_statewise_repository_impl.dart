@@ -9,16 +9,18 @@ class ViewCDMStatewiseRepositoryImpl extends ViewCDMStatewiseRepository {
     GitLabApiClient gitLabApiClient = new GitLabApiClient();
     return gitLabApiClient.fetchStatesName();
   }
-  bool checkSavedData(){
+
+  bool checkSavedData() {
     bool condition = listbox.containsKey('statesName');
     return condition;
   }
+
   Future<List<String>> getSavedData() async {
-    List<String> data =
-        await listbox.get('statesName').cast<String>();
+    List<String> data = await listbox.get('statesName').cast<String>();
     return data;
   }
-  Future saveData(List<String> statesName){
-      listbox.put('statesName',statesName);
+
+  Future saveData(List<String> statesName) {
+    listbox.put('statesName', statesName);
   }
 }

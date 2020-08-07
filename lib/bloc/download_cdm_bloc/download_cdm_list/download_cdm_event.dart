@@ -29,7 +29,7 @@ class DownloadCDMRefreshList extends DownloadCdmEvent {
   DownloadCDMRefreshList(this.index, this.stateName);
 
   @override
-  List<Object> get props => [index,stateName];
+  List<Object> get props => [index, stateName];
 }
 
 class DownloadCDMError extends DownloadCdmEvent {

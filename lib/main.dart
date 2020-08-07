@@ -1,3 +1,4 @@
+import 'package:curativecare/bloc/compare_screen_bloc/compare_screen_list/bloc.dart';
 import 'package:curativecare/bloc/home_settings_bloc/bloc.dart';
 import 'package:curativecare/bloc/location_bloc/location_bloc.dart';
 import 'package:curativecare/bloc/nearby_hospital_bloc/bloc.dart';
@@ -5,6 +6,7 @@ import 'package:curativecare/bloc/saved_screen_bloc/saved_screen_bloc.dart';
 import 'package:curativecare/bloc/search_screen_bloc/bottom_sheet/bloc.dart';
 import 'package:curativecare/bloc/view_cdm_screen_bloc/bloc.dart';
 import 'package:curativecare/bloc/view_cdm_statewise_screen_bloc/bloc.dart';
+import 'package:curativecare/repository/compare_screen_repository_impl.dart';
 import 'package:curativecare/repository/download_cdm_repository_impl.dart';
 import 'package:curativecare/repository/home_settings_repository_impl.dart';
 import 'package:curativecare/repository/location_repository_impl.dart';
@@ -25,10 +27,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
-
+import 'bloc/compare_screen_bloc/compare_screen/compare_screen_bloc.dart';
 import 'bloc/download_cdm_bloc/download_cdm_list/download_cdm_bloc.dart';
 import 'bloc/download_cdm_bloc/download_cdm_progress/download_file_button_bloc.dart';
-import 'bloc/search_screen_bloc/search_procedures/search_screen_bloc.dart';
+import 'models/compare_hospital_model.dart';
 import 'models/download_cdm_model.dart';
 import 'models/hospitals.dart';
 
@@ -40,6 +42,7 @@ Future _openBox() async {
   Hive.init(dir.path);
   Hive.registerAdapter(HospitalsAdapter());
   Hive.registerAdapter(DownloadCdmModelAdapter());
+  Hive.registerAdapter(CompareHospitalModelAdapter());
   box = await Hive.openBox("myBox");
   listbox = await Hive.openBox<List>("listBox");
 }
@@ -81,10 +84,6 @@ class MyApp extends StatelessWidget {
           create: (BuildContext context) =>
               SavedScreenBloc(SavedScreenRepoImpl()),
         ),
-        BlocProvider<SearchScreenBloc>(
-          create: (BuildContext context) =>
-              SearchScreenBloc(SearchScreenRepositoryImpl()),
-        ),
         BlocProvider<BottomSheetBloc>(
           create: (BuildContext context) =>
               BottomSheetBloc(SearchScreenRepositoryImpl()),
@@ -96,6 +95,14 @@ class MyApp extends StatelessWidget {
         BlocProvider<ViewCdmStatewiseBloc>(
           create: (BuildContext context) =>
               ViewCdmStatewiseBloc(ViewCDMStatewiseRepositoryImpl()),
+        ),
+        BlocProvider<CompareScreenListBloc>(
+          create: (BuildContext context) =>
+              CompareScreenListBloc(CompareScreenRepositoryImpl()),
+        ),
+        BlocProvider<CompareScreenBloc>(
+          create: (BuildContext context) =>
+              CompareScreenBloc(CompareScreenRepositoryImpl()),
         ),
       ],
       child: MaterialApp(

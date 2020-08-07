@@ -7,10 +7,9 @@ import './bloc.dart';
 
 class ViewCdmStatewiseBloc
     extends Bloc<ViewCdmStatewiseEvent, ViewCdmStatewiseState> {
-  ViewCdmStatewiseBloc(this.viewCDMStatewiseRepositoryImpl);
+  ViewCdmStatewiseBloc(this.viewCDMStatewiseRepositoryImpl)
+      : super(ViewCDMStatewiseLoadingState());
 
-  @override
-  ViewCdmStatewiseState get initialState => ViewCDMStatewiseLoadingState();
   ViewCDMStatewiseRepositoryImpl viewCDMStatewiseRepositoryImpl;
 
   @override
@@ -20,21 +19,19 @@ class ViewCdmStatewiseBloc
     if (event is ViewCDMStatewiseFetchStates) {
       yield ViewCDMStatewiseLoadingState();
       //Check if already saved
-      if(viewCDMStatewiseRepositoryImpl.checkSavedData()){
-        List<String> states  = await viewCDMStatewiseRepositoryImpl.getSavedData();
+      if (viewCDMStatewiseRepositoryImpl.checkSavedData()) {
+        List<String> states =
+            await viewCDMStatewiseRepositoryImpl.getSavedData();
         yield ViewCDMStatewiseLoadedState(states);
-
       }
       //Fetch Data
       else {
         try {
           List<String> states =
-          await viewCDMStatewiseRepositoryImpl.getListOfStates();
-            yield ViewCDMStatewiseLoadedState(states);
-            viewCDMStatewiseRepositoryImpl.saveData(states);
-
-        }
-        catch (e){
+              await viewCDMStatewiseRepositoryImpl.getListOfStates();
+          yield ViewCDMStatewiseLoadedState(states);
+          viewCDMStatewiseRepositoryImpl.saveData(states);
+        } catch (e) {
           yield ViewCDMStatewiseErrorState(e.message);
         }
       }

@@ -1,8 +1,15 @@
+import 'package:curativecare/bloc/search_screen_bloc/search_procedures/search_screen_bloc.dart';
 import 'package:flutter/material.dart';
 import 'components/body.dart';
 
-class DownloadCDMScreen extends StatelessWidget {
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+class DownloadCDMScreen extends StatefulWidget {
+  @override
+  _DownloadCDMScreenState createState() => _DownloadCDMScreenState();
+}
+
+class _DownloadCDMScreenState extends State<DownloadCDMScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,7 +21,6 @@ class DownloadCDMScreen extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-
       body: Body(),
     );
   }

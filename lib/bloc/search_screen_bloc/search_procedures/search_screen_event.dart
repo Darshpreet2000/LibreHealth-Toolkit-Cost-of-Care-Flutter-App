@@ -12,3 +12,13 @@ class SearchInDatabase extends SearchScreenEvent {
   @override
   List<Object> get props => [searchString];
 }
+
+class SearchInDatabaseFromViewCDMScreen extends SearchScreenEvent {
+  String searchString;
+  String hospitalName;
+
+  SearchInDatabaseFromViewCDMScreen(this.searchString, this.hospitalName);
+
+  @override
+  List<Object> get props => [searchString];
+}

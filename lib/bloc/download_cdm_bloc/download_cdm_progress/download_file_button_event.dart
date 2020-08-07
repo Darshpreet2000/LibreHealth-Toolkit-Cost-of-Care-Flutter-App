@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 import 'download_file_button_bloc.dart';
 
@@ -12,12 +13,11 @@ class DownloadFileButtonClick extends DownloadFileButtonEvent {
   String stateName;
   final DownloadFileButtonBloc downloadFileButtonBloc;
 
-
   DownloadFileButtonClick(this.index, this.hospitalName, this.stateName,
       this.downloadFileButtonBloc);
 
   @override
-  List<Object> get props => [index, hospitalName,stateName];
+  List<Object> get props => [index, hospitalName, stateName];
 }
 
 class DownloadFileButtonProgress extends DownloadFileButtonEvent {
@@ -40,4 +40,18 @@ class DownloadFileButtonError extends DownloadFileButtonEvent {
 
   @override
   List<Object> get props => [message];
+}
+
+class InsertInDatabase extends DownloadFileButtonEvent {
+  int index;
+  FileInfo fileInfo;
+  String hospitalName;
+  DownloadFileButtonBloc downloadFileButtonBloc;
+
+  InsertInDatabase(this.index, this.fileInfo, this.hospitalName,
+      this.downloadFileButtonBloc);
+
+  @override
+  List<Object> get props =>
+      [index, fileInfo, hospitalName, downloadFileButtonBloc];
 }

@@ -25,8 +25,20 @@ class DatabaseDao {
     return;
   }
 
-  void insertData(
-      DownloadFileButtonProgress event, List<SearchModel> cdmList) async {
+  Future getAllTables() async {
+    final database = await dbProvider.database;
+    List<String> tableNames = new List();
+    await database.transaction((txn) async {
+      tableNames = (await txn
+              .query('sqlite_master', where: 'type = ?', whereArgs: ['table']))
+          .map((row) => row['name'] as String)
+          .toList(growable: true);
+    });
+    print(tableNames);
+    return tableNames;
+  }
+
+  Future insertData(InsertInDatabase event, List<SearchModel> cdmList) async {
     String tableName = event.hospitalName;
     final database = await dbProvider.database;
     tableName = tableName.replaceAll(' ', '_');
@@ -38,16 +50,16 @@ class DatabaseDao {
 
     int total = cdmList.length;
     int completed = 0;
-    double percentCount = 0, progressNow = 0,counter=1;
-    double progress = event.progress;
+    double percentCount = 0, progressNow = 0, counter = 1;
+    double progress = 0.6;
     database.transaction((txn) async {
       Batch batch = txn.batch();
       for (int i = 0; i < cdmList.length; i++) {
         SearchModel cdm = cdmList[i];
         await Future(() {
           batch.insert(tableName, cdm.toMap());
-          completed +=1;
-          percentCount = (completed/total)*40;
+          completed += 1;
+          percentCount = (completed / total) * 40;
           if (percentCount >= counter) {
             progressNow = ((completed / total) * 0.4);
             event.downloadFileButtonBloc.add(DownloadFileButtonProgress(
@@ -65,6 +77,7 @@ class DatabaseDao {
     //checking
     //   print(database.rawQuery('select * from $tableName limit 10'));
     print('Done');
+    return;
   }
 
   Future<List<SearchModel>> readData(String name) async {
@@ -81,23 +94,11 @@ class DatabaseDao {
     await database.transaction((txn) async {
       maps = await txn.query(name);
     });
+
     return List.generate(maps.length, (i) {
       SearchModel cdm = new SearchModel.empty();
       return cdm.fromMap(maps[i]);
     });
-  }
-
-  Future getAllTables() async {
-    final database = await dbProvider.database;
-    List<String> tableNames = new List();
-    await database.transaction((txn) async {
-      tableNames = (await txn
-          .query('sqlite_master', where: 'type = ?', whereArgs: ['table']))
-          .map((row) => row['name'] as String)
-          .toList(growable: true);
-    });
-    print(tableNames);
-    return tableNames;
   }
 
   Future searchProcedureInAllTables(String searchQuery) async {
@@ -120,7 +121,7 @@ class DatabaseDao {
     String query = "Select * from ( SELECT description , charge ,category , ";
     int length = hospitalName.length;
     int start = 0;
-    if(length>0) {
+    if (length > 0) {
       for (int i = 0; i < length; i++) {
         start = start + 1;
         query += "'" +
@@ -140,7 +141,7 @@ class DatabaseDao {
             " limit 80 ) ";
         if (start != length)
           query +=
-          " union Select * from ( SELECT description , charge ,category , ";
+              " union Select * from ( SELECT description , charge ,category , ";
       }
       print(query);
       await database.transaction((txn) async {
@@ -151,6 +152,40 @@ class DatabaseDao {
         });
       });
     }
+    return list;
+  }
+
+  Future searchProcedureInSingleTable(String searchQuery, String name) async {
+    name = name.replaceAll(' ', '_');
+    name = name.replaceAll('(', '_');
+    name = name.replaceAll(')', '_');
+    name = name.replaceAll(',', '_');
+    name = name.replaceAll('.', '_');
+    name = name.replaceAll('-', '_');
+
+    final database = await dbProvider.database;
+    List<SearchModel> list = new List();
+    String query = "Select * from ( SELECT description , charge ,category , ";
+    query += "'" +
+        name +
+        "'" +
+        " as name " "from " +
+        name +
+        " where " +
+        name +
+        ".description like " +
+        "'%" +
+        searchQuery +
+        "%' " +
+        "  ) ";
+    print(query);
+    await database.transaction((txn) async {
+      List<Map<String, dynamic>> result = await txn.rawQuery(query);
+      result.forEach((itemMap) {
+        SearchModel searchmodel = new SearchModel.empty();
+        list.add(searchmodel.fromMapResult(itemMap));
+      });
+    });
     return list;
   }
 }

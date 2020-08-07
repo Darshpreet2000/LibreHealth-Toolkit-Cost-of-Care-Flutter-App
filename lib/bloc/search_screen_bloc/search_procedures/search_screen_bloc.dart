@@ -9,10 +9,8 @@ import 'bloc.dart';
 class SearchScreenBloc extends Bloc<SearchScreenEvent, SearchScreenState> {
   SearchScreenRepositoryImpl searchScreenRepositoryImpl;
 
-  SearchScreenBloc(this.searchScreenRepositoryImpl);
-
-  @override
-  SearchScreenState get initialState => InitialSearchScreenState();
+  SearchScreenBloc(this.searchScreenRepositoryImpl)
+      : super(InitialSearchScreenState());
 
   @override
   Stream<SearchScreenState> mapEventToState(
@@ -22,6 +20,15 @@ class SearchScreenBloc extends Bloc<SearchScreenEvent, SearchScreenState> {
       yield SearchScreenLoadingState();
       List<SearchModel> resultList = await searchScreenRepositoryImpl
           .searchForProcedure(event.searchString);
+      if (resultList.length == 0)
+        yield SearchScreenNoDataState();
+      else
+        yield SearchScreenLoadedState(resultList);
+    } else if (event is SearchInDatabaseFromViewCDMScreen) {
+      yield SearchScreenLoadingState();
+      List<SearchModel> resultList =
+          await searchScreenRepositoryImpl.searchForProcedureByHospitalName(
+              event.searchString, event.hospitalName);
       if (resultList.length == 0)
         yield SearchScreenNoDataState();
       else

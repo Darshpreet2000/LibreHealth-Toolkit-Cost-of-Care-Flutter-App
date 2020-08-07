@@ -8,10 +8,7 @@ import './bloc.dart';
 class SavedScreenBloc extends Bloc<SavedScreenEvent, SavedScreenState> {
   SavedScreenRepoImpl savedScreenRepoImpl;
 
-  SavedScreenBloc(this.savedScreenRepoImpl);
-
-  @override
-  SavedScreenState get initialState => SavedScreenLoadingState();
+  SavedScreenBloc(this.savedScreenRepoImpl) : super(SavedScreenLoadingState());
 
   @override
   Stream<SavedScreenState> mapEventToState(

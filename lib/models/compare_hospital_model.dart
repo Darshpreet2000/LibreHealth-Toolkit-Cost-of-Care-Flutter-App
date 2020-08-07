@@ -1,12 +1,25 @@
 import 'package:equatable/equatable.dart';
+import 'package:hive/hive.dart';
 
-class CompareHospitalModel extends Equatable{
+part 'compare_hospital_model.g.dart';
+
+@HiveType(typeId: 2)
+class CompareHospitalModel extends Equatable {
+  @HiveField(0)
   String hospitalName;
-  bool isAddedToCompare=false;
+  @HiveField(1)
+  bool isAddedToCompare = false;
 
   CompareHospitalModel(this.hospitalName, this.isAddedToCompare);
+  CompareHospitalModel copyWith({String hospitalName, bool isAddedToCompare}) {
+    return CompareHospitalModel(this.hospitalName, this.isAddedToCompare);
+  }
 
   @override
-  List<Object> get props => [hospitalName,isAddedToCompare];
+  String toString() {
+    return 'Todo { complete: $hospitalName, name: $isAddedToCompare }';
+  }
 
+  @override
+  List<Object> get props => [hospitalName, isAddedToCompare];
 }

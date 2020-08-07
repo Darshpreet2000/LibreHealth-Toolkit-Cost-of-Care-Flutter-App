@@ -41,8 +41,7 @@ class Body extends StatelessWidget {
                     ),
                     backgroundColor: Colors.deepOrangeAccent,
                   ));
-                }
-                else if(state is ErrorState){
+                } else if (state is ErrorState) {
                   Scaffold.of(context).showSnackBar(SnackBar(
                     content: Text(
                       state.message,
@@ -57,13 +56,14 @@ class Body extends StatelessWidget {
                 listener:
                     (BuildContext context, DownloadFileButtonState state) {
                   if (state is DownloadButtonLoaded) {
-                    context.bloc<SavedScreenBloc>().add(LoadSavedData());
-                    if(stateName==null) {
-                       stateName = box.get('state');
+                    if (stateName == null) {
+                      stateName = box.get('state');
                     }
+
                     context
                         .bloc<DownloadCdmBloc>()
-                        .add(DownloadCDMRefreshList(state.index,stateName));
+                        .add(DownloadCDMRefreshList(state.index, stateName));
+                    context.bloc<SavedScreenBloc>().add(LoadSavedData());
                   } else if (state is DownloadButtonErrorState) {
                     Scaffold.of(context).showSnackBar(SnackBar(
                       content: Text(
@@ -79,18 +79,18 @@ class Body extends StatelessWidget {
                     if (state is LoadingState)
                       return ShimmerLoading();
                     else if (state is LoadedState) {
-                      if(stateName==null)
-                        stateName=box.get('state');
-                      return ShowList(state.hospitalsName,stateName);
+                      if (stateName == null) stateName = box.get('state');
+                      return ShowList(state.hospitalsName, stateName);
                     } else if (state is RefreshedState) {
-                        if(stateName==null)
-                        stateName=box.get('state');
-                      return ShowList(state.hospitalsName,stateName);
+                      if (stateName == null) stateName = box.get('state');
+                      return ShowList(state.hospitalsName, stateName);
                     } else if (state is ErrorState) {
                       return Center(
                         child: Container(
-                          child: Text(state.message,style: TextStyle(fontSize: 18),
-                        ),
+                          child: Text(
+                            state.message,
+                            style: TextStyle(fontSize: 18),
+                          ),
                         ),
                       );
                     }
@@ -138,7 +138,7 @@ class ShowList extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(color: Colors.grey[50]),
               child: makeListTile(context, hospitalsName[index], index,
-                  downloadFileButtonBloc,stateName),
+                  downloadFileButtonBloc, stateName),
             ),
           );
         },

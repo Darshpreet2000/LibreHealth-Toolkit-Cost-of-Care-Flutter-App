@@ -1,5 +1,6 @@
 import 'package:curativecare/bloc/search_screen_bloc/search_procedures/search_screen_bloc.dart';
 import 'package:curativecare/bloc/search_screen_bloc/search_procedures/search_screen_event.dart';
+import 'package:curativecare/repository/search_screen_repository_impl.dart';
 import 'package:curativecare/screens/search/components/body.dart';
 import 'package:curativecare/screens/search/components/floating_action_button.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,12 +9,21 @@ import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SearchProcedure extends StatefulWidget {
+  String hospitalName;
+
+  SearchProcedure([this.hospitalName]);
+
   @override
   _SearchProcedureState createState() => _SearchProcedureState();
 }
 
 class _SearchProcedureState extends State<SearchProcedure> {
   final TextEditingController _searchQuery = TextEditingController();
+  SearchScreenBloc searchScreenBloc;
+  @override
+  void initState() {
+    searchScreenBloc = new SearchScreenBloc(SearchScreenRepositoryImpl());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +38,11 @@ class _SearchProcedureState extends State<SearchProcedure> {
           controller: _searchQuery,
           textInputAction: TextInputAction.search,
           onSubmitted: (value) {
-            context.bloc<SearchScreenBloc>().add(SearchInDatabase(value));
+            if (widget.hospitalName != null)
+              searchScreenBloc.add(SearchInDatabaseFromViewCDMScreen(
+                  value, widget.hospitalName));
+            else
+              searchScreenBloc.add(SearchInDatabase(value));
           },
           decoration: InputDecoration(
               focusedBorder: InputBorder.none,
@@ -41,7 +55,7 @@ class _SearchProcedureState extends State<SearchProcedure> {
               hintStyle: TextStyle(color: Colors.grey)),
         ),
       ),
-      body: Body(_searchQuery),
+      body: Body(_searchQuery, searchScreenBloc),
       floatingActionButton: FloatingAction(),
     );
   }

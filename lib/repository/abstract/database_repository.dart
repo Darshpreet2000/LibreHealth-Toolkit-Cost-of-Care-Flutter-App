@@ -2,7 +2,7 @@ import 'package:curativecare/bloc/download_cdm_bloc/download_cdm_progress/downlo
 import 'package:curativecare/models/search_model.dart';
 
 abstract class DatabaseRepository {
-  void insertCDM(DownloadFileButtonProgress event, List<SearchModel> cdmList);
+  void insertCDM(InsertInDatabase event, List<SearchModel> cdmList);
 
   Future getCDM(String tableName);
 }

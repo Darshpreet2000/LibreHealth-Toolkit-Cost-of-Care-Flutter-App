@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:curativecare/models/hospitals.dart';
+import 'package:curativecare/util/api_config.dart';
 import 'package:dio/dio.dart';
 import 'package:geolocator/geolocator.dart';
 import '../main.dart';
@@ -8,9 +9,8 @@ class OverpassAPIClient {
   String latitude;
   String radius = '15000';
   String longitude;
-  String API_DOMAIN = "https://lz4.overpass-api.de/api/interpreter?data=";
-
   Future fetch_nearby_hospitals() async {
+    String nearbyHospitalApi = ApiConfig().nearbyHospitalApi;
     if (box.containsKey('latitude') && box.containsKey('longitude')) {
       latitude = box.get('latitude');
       longitude = box.get('longitude');
@@ -21,10 +21,10 @@ class OverpassAPIClient {
       }
       String Nearby_Hospitals =
           """[out:json];(node["amenity"="hospital"](around:$radius,$latitude,$longitude);way["amenity"="hospital"](around:$radius,$latitude,$longitude);relation["amenity"="hospital"](around:$radius,$latitude,$longitude););out center;""";
-      print(API_DOMAIN + Nearby_Hospitals);
+      print(nearbyHospitalApi + Nearby_Hospitals);
       try {
         Dio dio = new Dio();
-        final response = await dio.get(API_DOMAIN + Nearby_Hospitals);
+        final response = await dio.get(nearbyHospitalApi + Nearby_Hospitals);
         print(response);
         return response;
       } on DioError catch (e) {

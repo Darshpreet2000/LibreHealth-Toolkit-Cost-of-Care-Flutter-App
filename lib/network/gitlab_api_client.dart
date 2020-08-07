@@ -1,17 +1,20 @@
 import 'package:curativecare/bloc/download_cdm_bloc/download_cdm_progress/download_file_button_event.dart';
 import 'package:curativecare/models/download_cdm_model.dart';
+import 'package:curativecare/util/api_config.dart';
 import 'package:dio/dio.dart';
-
-import '../main.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 class GitLabApiClient {
-  String base_url =
-      "https://gitlab.com/api/v4/projects/18885282/repository/tree?ref=branch-with-data&path=CDM/";
-
   Future fetchStatesName() async {
     List<String> States = new List();
-    Dio dio = new Dio();
-    String url = base_url+"&per_page=100";
+    BaseOptions options = new BaseOptions(
+        connectTimeout: 15 * 1000, // 60 seconds
+        receiveTimeout: 15 * 1000 // 60 seconds
+        );
+
+    Dio dio = new Dio(options);
+    ApiConfig apiConfig = new ApiConfig();
+    String url = apiConfig.gitlabApiFetchList + "&per_page=100";
     var response;
     try {
       response = await dio.get(url);
@@ -43,9 +46,16 @@ class GitLabApiClient {
   }
 
   Future getAvailableCdm(String stateName) async {
-    Dio dio = new Dio();
+    BaseOptions options = new BaseOptions(
+        connectTimeout: 15 * 1000, // 60 seconds
+        receiveTimeout: 15 * 1000 // 60 seconds
+        );
 
-    String url = base_url + stateName + "&per_page=100&page=";
+    Dio dio = new Dio(options);
+
+    ApiConfig apiConfig = new ApiConfig();
+    String url =
+        apiConfig.gitlabApiFetchList + stateName + "&per_page=100&page=";
     int i = 1;
 
     var response;
@@ -109,7 +119,12 @@ class GitLabApiClient {
     return name;
   }
 
-  Future getCSVFileSize(String url, DownloadFileButtonClick event) async {
+  Future getCSVFileSize(DownloadFileButtonClick event) async {
+    String url = ApiConfig().gitlabApiGetCDMFileSize +
+        "%2F${event.stateName}%2F${event.hospitalName}" +
+        ".csv" +
+        "?ref=branch-with-data";
+
     BaseOptions options = new BaseOptions(
         connectTimeout: 15 * 1000, // 60 seconds
         receiveTimeout: 15 * 1000 // 60 seconds
@@ -127,7 +142,8 @@ class GitLabApiClient {
         throw Exception("Please check your internet connection and try again");
       } else if (DioErrorType.DEFAULT == e.type) {
         if (e.message.contains('SocketException')) {
-          throw Exception('Please check your internet connection and try again');
+          throw Exception(
+              'Please check your internet connection and try again');
         }
       } else {
         throw Exception("Problem connecting to the server. Please try again.");
@@ -135,36 +151,12 @@ class GitLabApiClient {
     }
   }
 
-  Future downloadCSVFile(String url, double fileSize,
-      DownloadFileButtonClick event, String dirloc) async {
-    BaseOptions options = new BaseOptions(
-        connectTimeout: 25 * 1000, // 25 seconds
-        receiveTimeout: 25 * 1000 // 25 seconds
-        );
-    Dio dio = new Dio(options);
-
-    event.downloadFileButtonBloc.add(DownloadFileButtonProgress(
-        0.0, event.index, event.hospitalName, event.downloadFileButtonBloc));
-    try {
-      double progress = 0;
-      await dio.download(url, dirloc + "${event.hospitalName}" + ".csv",
-          onReceiveProgress: (receivedBytes, totalBytes) {
-        progress = ((receivedBytes / fileSize));
-        event.downloadFileButtonBloc.add(DownloadFileButtonProgress(
-            progress * 0.6,
-            event.index,
-            event.hospitalName,
-            event.downloadFileButtonBloc));
-      });
-    } on DioError catch (e) {
-      if (DioErrorType.RECEIVE_TIMEOUT == e.type ||
-          DioErrorType.CONNECT_TIMEOUT == e.type) {
-        throw Exception("Please check your internet connection and try again");
-      } else if (DioErrorType.DEFAULT == e.type) {
-        throw Exception('Please check your internet connection and try again');
-      } else {
-        throw Exception("Problem connecting to the server. Please try again.");
-      }
-    }
+  Future downloadCSVFile(DownloadFileButtonClick event) async {
+    String url = ApiConfig().downloadCDMApi +
+        "/${event.stateName}/${event.hospitalName}" +
+        ".csv";
+    Stream<FileResponse> fileStream;
+    fileStream = DefaultCacheManager().getFileStream(url, withProgress: true);
+    return fileStream;
   }
 }

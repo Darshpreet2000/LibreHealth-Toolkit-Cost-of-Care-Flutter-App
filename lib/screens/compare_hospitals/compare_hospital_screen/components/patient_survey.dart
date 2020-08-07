@@ -1,6 +1,11 @@
+import 'package:curativecare/models/patient_experience.dart';
 import 'package:flutter/material.dart';
 
-class PatientSurvey extends StatelessWidget {
+class PatientSurveyWidget extends StatelessWidget {
+  List<PatientExperience> patientExperienceList = new List(3);
+
+  PatientSurveyWidget(this.patientExperienceList);
+
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
@@ -24,38 +29,13 @@ class PatientSurvey extends StatelessWidget {
           IntrinsicHeight(
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                Expanded(
-                  child: Text(
-                    "74%",
-                    style: TextStyle(fontSize: 18,),
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 4,
-                  ),
-                ),
-                VerticalDivider(
-                  thickness: 2,
-                  width: 20,
-                  color: Colors.grey[400],
-                ),
-                Expanded(
-                  child: Text(
-                    "N/A",
-                    style: TextStyle(fontSize: 18, ),
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 4,
-                  ),
-                )
-              ])),
+                  children: getNurseCommunication())),
           SizedBox(
             height: 5,
           ),
-
           Text(
             "Patients who reported that their doctors Always communicated well",
-            style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           SizedBox(
             height: 5,
@@ -63,36 +43,10 @@ class PatientSurvey extends StatelessWidget {
           IntrinsicHeight(
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Expanded(
-                      child: Text(
-                        "80%",
-                        style: TextStyle(fontSize: 18, ),
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 4,
-                      ),
-                    ),
-                    VerticalDivider(
-                      thickness: 2,
-                      width: 20,
-                      color: Colors.grey[400],
-                    ),
-                    Expanded(
-                      child: Text(
-                        "76%",
-                        style: TextStyle(fontSize: 18, ),
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 4,
-                      ),
-                    )
-                  ])),
-
+                  children: getDoctorCommunication())),
           SizedBox(
             height: 5,
           ),
-
           Text(
             "Patients who reported that staff Always explained about medicines before giving it to them",
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -103,74 +57,10 @@ class PatientSurvey extends StatelessWidget {
           IntrinsicHeight(
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Expanded(
-                      child: Text(
-                        "66%",
-                        style: TextStyle(fontSize: 18, ),
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 4,
-                      ),
-                    ),
-                    VerticalDivider(
-                      thickness: 2,
-                      width: 20,
-                      color: Colors.grey[400],
-                    ),
-                    Expanded(
-                      child: Text(
-                        "47%",
-                        style: TextStyle(fontSize: 18,),
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 4,
-                      ),
-                    )
-                  ])),
+                  children: getStaffMedicineExplain())),
           SizedBox(
             height: 5,
           ),
-
-          Text(
-            "Patients who reported that their room and bathroom were Always clean",
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          IntrinsicHeight(
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Expanded(
-                      child: Text(
-                        "90%",
-                        style: TextStyle(fontSize: 18,),
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 4,
-                      ),
-                    ),
-                    VerticalDivider(
-                      thickness: 2,
-                      width: 20,
-                      color: Colors.grey[400],
-                    ),
-                    Expanded(
-                      child: Text(
-                        "94%",
-                        style: TextStyle(fontSize: 18,),
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 4,
-                      ),
-                    )
-                  ])),
-          SizedBox(
-            height: 5,
-          ),
-
           Text(
             "Patients who reported that the area around their room was Always quiet at night",
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -181,31 +71,137 @@ class PatientSurvey extends StatelessWidget {
           IntrinsicHeight(
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Expanded(
-                      child: Text(
-                        "99%",
-                        style: TextStyle(fontSize: 18, ),
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 4,
-                      ),
-                    ),
-                    VerticalDivider(
-                      thickness: 2,
-                      width: 20,
-                      color: Colors.grey[400],
-                    ),
-                    Expanded(
-                      child: Text(
-                        "89%",
-                        style: TextStyle(fontSize: 18, ),
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 4,
-                      ),
-                    )
-                  ]))
+                  children: getCleanQuiet())),
+          SizedBox(
+            height: 5,
+          ),
+          Text(
+            "Patients who \"Strongly Agree\" they understood their care when they left the hospital",
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          IntrinsicHeight(
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: getAgreeCare()))
         ]);
+  }
+
+  List<Widget> getNurseCommunication() {
+    List listings = List<Widget>();
+    for (int i = 0; i < patientExperienceList.length; i++) {
+      listings.add(Expanded(
+        child: Text(
+          patientExperienceList[i].communicationWithNursesPerformanceRate,
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          textAlign: TextAlign.center,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 5,
+        ),
+      ));
+
+      if (i != patientExperienceList.length - 1)
+        listings.add(VerticalDivider(
+          thickness: 2,
+          width: 20,
+          color: Colors.grey[400],
+        ));
+    }
+    return listings;
+  }
+
+  List<Widget> getDoctorCommunication() {
+    List listings = List<Widget>();
+    for (int i = 0; i < patientExperienceList.length; i++) {
+      listings.add(Expanded(
+        child: Text(
+          patientExperienceList[i].communicationWithDoctorsPerformanceRate,
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          textAlign: TextAlign.center,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 5,
+        ),
+      ));
+
+      if (i != patientExperienceList.length - 1)
+        listings.add(VerticalDivider(
+          thickness: 2,
+          width: 20,
+          color: Colors.grey[400],
+        ));
+    }
+    return listings;
+  }
+
+  List<Widget> getStaffMedicineExplain() {
+    List listings = List<Widget>();
+    for (int i = 0; i < patientExperienceList.length; i++) {
+      listings.add(Expanded(
+        child: Text(
+          patientExperienceList[i].responsivenessOfHospitalStaffPerformanceRate,
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          textAlign: TextAlign.center,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 5,
+        ),
+      ));
+
+      if (i != patientExperienceList.length - 1)
+        listings.add(VerticalDivider(
+          thickness: 2,
+          width: 20,
+          color: Colors.grey[400],
+        ));
+    }
+    return listings;
+  }
+
+  List<Widget> getCleanQuiet() {
+    List listings = List<Widget>();
+    for (int i = 0; i < patientExperienceList.length; i++) {
+      listings.add(Expanded(
+        child: Text(
+          patientExperienceList[i]
+              .cleanlinessAndQuietnessOfHospitalEnvironmentPerformanceRate,
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          textAlign: TextAlign.center,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 5,
+        ),
+      ));
+
+      if (i != patientExperienceList.length - 1)
+        listings.add(VerticalDivider(
+          thickness: 2,
+          width: 20,
+          color: Colors.grey[400],
+        ));
+    }
+    return listings;
+  }
+
+  List<Widget> getAgreeCare() {
+    List listings = List<Widget>();
+    for (int i = 0; i < patientExperienceList.length; i++) {
+      listings.add(Expanded(
+        child: Text(
+          patientExperienceList[i].careTransitionPerformanceRate,
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          textAlign: TextAlign.center,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 5,
+        ),
+      ));
+
+      if (i != patientExperienceList.length - 1)
+        listings.add(VerticalDivider(
+          thickness: 2,
+          width: 20,
+          color: Colors.grey[400],
+        ));
+    }
+    return listings;
   }
 }
