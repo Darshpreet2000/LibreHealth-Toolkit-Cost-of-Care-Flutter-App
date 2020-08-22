@@ -1,26 +1,27 @@
 import 'package:curativecare/models/home_settings_model.dart';
 import 'package:equatable/equatable.dart';
 
-abstract class HomeSettingsState extends Equatable {
-  HomeSettingsModel homeSettingsModel;
+abstract class HomeSettingsState extends Equatable {}
 
-  HomeSettingsState(this.homeSettingsModel);
-}
+class HomeSettingsLoadedState extends HomeSettingsState {
+  final HomeSettingsModel homeSettingsModel;
 
-class LoadedState extends HomeSettingsState {
-  HomeSettingsModel homeSettingsModel;
-
-  LoadedState(this.homeSettingsModel) : super(homeSettingsModel);
+  HomeSettingsLoadedState(this.homeSettingsModel);
 
   @override
-  List<Object> get props => [homeSettingsModel];
+  List<Object> get props => [
+        homeSettingsModel.order,
+        homeSettingsModel.radius,
+        homeSettingsModel.isSelected,
+        homeSettingsModel.latitude,
+        homeSettingsModel.longitude,
+        homeSettingsModel.address,
+      ];
 }
 
-class LoadingState extends HomeSettingsState {
-  HomeSettingsModel homeSettingsModel;
-
-  LoadingState(this.homeSettingsModel) : super(homeSettingsModel);
-
+class HomeSettingsLoadingState extends HomeSettingsState {
   @override
-  List<Object> get props => [homeSettingsModel];
+  List<Object> get props => [];
+
+  HomeSettingsLoadingState();
 }

@@ -10,8 +10,8 @@ class CompareScreenListFetchHospitalName extends CompareScreenListEvent {
 }
 
 class CompareScreenListCompareButtonEvent extends CompareScreenListEvent {
-  bool isAddedForCompare;
-  int index;
+  final bool isAddedForCompare;
+  final int index;
 
   CompareScreenListCompareButtonEvent(this.isAddedForCompare, this.index);
 
@@ -20,7 +20,7 @@ class CompareScreenListCompareButtonEvent extends CompareScreenListEvent {
 }
 
 class CompareScreenListCompareButtonError extends CompareScreenListEvent {
-  String message;
+  final String message;
 
   CompareScreenListCompareButtonError(this.message);
 

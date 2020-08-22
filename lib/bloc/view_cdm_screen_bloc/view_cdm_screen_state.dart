@@ -18,3 +18,12 @@ class LoadingViewCdmScreenState extends ViewCdmScreenState {
   @override
   List<Object> get props => [];
 }
+
+class ErrorViewCdmScreenState extends ViewCdmScreenState {
+  final String message;
+
+  ErrorViewCdmScreenState(this.message);
+
+  @override
+  List<Object> get props => [message];
+}

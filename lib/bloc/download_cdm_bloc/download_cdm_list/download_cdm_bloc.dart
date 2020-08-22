@@ -13,6 +13,8 @@ class DownloadCdmBloc extends Bloc<DownloadCdmEvent, DownloadCdmState> {
 
   List<DownloadCdmModel> hospitals = new List();
 
+  DownloadCdmState get initialState => LoadingState();
+
   @override
   Stream<DownloadCdmState> mapEventToState(
     DownloadCdmEvent event,
@@ -39,7 +41,7 @@ class DownloadCdmBloc extends Bloc<DownloadCdmEvent, DownloadCdmState> {
       downloadCDMRepositoryImpl.saveData(hospitals, event.stateName);
       yield RefreshedState(hospitals);
     } else if (event is DownloadCDMError) {
-      yield ErrorState("Network Problem! Try Again");
+      yield ErrorState(event.message);
     }
   }
 }

@@ -49,7 +49,8 @@ ListTile makeListTile(
 
 Widget downloadWidget(DownloadCdmModel hospital, int index,
     DownloadFileButtonBloc downloadFileButtonBloc, String stateName) {
-  return BlocBuilder<DownloadFileButtonBloc, DownloadFileButtonState>(
+  return BlocBuilder(
+    cubit: downloadFileButtonBloc,
     builder: (BuildContext context, DownloadFileButtonState state) {
       if (state is DownloadButtonStream && index == state.index) {
         return StreamBuilder<FileResponse>(
@@ -61,7 +62,7 @@ Widget downloadWidget(DownloadCdmModel hospital, int index,
                 return Material(
                     borderRadius: BorderRadius.circular(20.0),
                     child: InkWell(
-                      splashColor: Colors.blue,
+                      splashColor: Colors.orange,
                       borderRadius: BorderRadius.circular(20.0),
                       onTap: () async {
                         if ((downloadFileButtonBloc.state
@@ -74,8 +75,7 @@ Widget downloadWidget(DownloadCdmModel hospital, int index,
                               index,
                               hospital.hospitalName,
                               stateName,
-                              BlocProvider.of<DownloadFileButtonBloc>(
-                                  context)));
+                              downloadFileButtonBloc));
                         } else {
                           Scaffold.of(context).showSnackBar(SnackBar(
                             content: Text(
@@ -90,7 +90,7 @@ Widget downloadWidget(DownloadCdmModel hospital, int index,
                         padding: const EdgeInsets.all(8.0),
                         child: Icon(
                           Icons.file_download,
-                          color: Colors.indigo,
+                          color: Colors.orange,
                           size: 32,
                         ),
                       ),
@@ -104,11 +104,8 @@ Widget downloadWidget(DownloadCdmModel hospital, int index,
                 return progressIndicator(progress * 0.6);
               } else if (snapshot.connectionState == ConnectionState.done) {
                 FileInfo fileInfo = snapshot.data as FileInfo;
-                downloadFileButtonBloc.add(InsertInDatabase(
-                    index,
-                    fileInfo,
-                    hospital.hospitalName,
-                    BlocProvider.of<DownloadFileButtonBloc>(context)));
+                downloadFileButtonBloc.add(InsertInDatabase(index, fileInfo,
+                    hospital.hospitalName, downloadFileButtonBloc));
                 return progressIndicator(0.6);
               } else {
                 return CircularProgressIndicator();
@@ -120,7 +117,7 @@ Widget downloadWidget(DownloadCdmModel hospital, int index,
       } else if ((state is DownloadButtonLoaded && index == state.index) ||
           (hospital.isDownload == 1)) {
         return RaisedButton(
-          color: Colors.indigo,
+          color: Colors.orange,
           onPressed: () {
             Navigator.push(
               context,
@@ -139,7 +136,7 @@ Widget downloadWidget(DownloadCdmModel hospital, int index,
       return Material(
           borderRadius: BorderRadius.circular(20.0),
           child: InkWell(
-            splashColor: Colors.blue,
+            splashColor: Colors.orange,
             borderRadius: BorderRadius.circular(20.0),
             onTap: () async {
               if ((downloadFileButtonBloc.state
@@ -165,7 +162,7 @@ Widget downloadWidget(DownloadCdmModel hospital, int index,
               padding: const EdgeInsets.all(8.0),
               child: Icon(
                 Icons.file_download,
-                color: Colors.indigo,
+                color: Colors.orange,
                 size: 32,
               ),
             ),

@@ -50,7 +50,7 @@ class NearbyHospitalsRepoImpl implements NearbyHospitalsRepository {
 
   Future fetchHospitals() async {
     OverpassAPIClient overpassAPIClient = new OverpassAPIClient();
-    var response = await overpassAPIClient.fetch_nearby_hospitals();
+    var response = await overpassAPIClient.fetchNearbyHospitals();
     return response;
   }
 
@@ -58,15 +58,18 @@ class NearbyHospitalsRepoImpl implements NearbyHospitalsRepository {
   Future<List<Hospitals>> parseJson(Map<String, dynamic> responseBody) async {
     OverpassAPIClient overpassAPIClient = new OverpassAPIClient();
     //Store List in Hive
-    return overpassAPIClient.parse_hospital_json_data(responseBody);
+    return overpassAPIClient.parseHospitalJsonData(responseBody);
   }
 
   @override
-  Future<String> fetchImages(String name) async {
+  Future<dynamic> fetchImages(String name) async {
     FetchHospitalImages fetchHospitalImages = new FetchHospitalImages();
     try {
-      Future<String> response = fetchHospitalImages.fetchImagesFromGoogle(name);
+      Future<dynamic> response =
+          fetchHospitalImages.fetchImagesFromGoogle(name);
       return response;
-    } catch (e) {}
+    } catch (e) {
+      throw Exception("Network Error");
+    }
   }
 }

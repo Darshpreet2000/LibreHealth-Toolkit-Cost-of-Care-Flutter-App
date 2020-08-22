@@ -15,7 +15,7 @@ class ViewCDMStatewiseLoadingState extends ViewCdmStatewiseState {
 }
 
 class ViewCDMStatewiseLoadedState extends ViewCdmStatewiseState {
-  List<String> states;
+  final List<String> states;
 
   ViewCDMStatewiseLoadedState(this.states);
 
@@ -24,7 +24,7 @@ class ViewCDMStatewiseLoadedState extends ViewCdmStatewiseState {
 }
 
 class ViewCDMStatewiseErrorState extends ViewCdmStatewiseState {
-  String message;
+  final String message;
 
   ViewCDMStatewiseErrorState(this.message);
 

@@ -6,7 +6,7 @@ abstract class CompareScreenEvent extends Equatable {
 }
 
 class CompareScreenFetchData extends CompareScreenEvent {
-  List<CompareHospitalModel> hospitalNames;
+  final List<CompareHospitalModel> hospitalNames;
 
   CompareScreenFetchData(this.hospitalNames);
 

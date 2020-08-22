@@ -11,7 +11,7 @@ class CompareScreenListLoadingState extends CompareScreenListState {
 }
 
 class CompareScreenListLoadedState extends CompareScreenListState {
-  List<CompareHospitalModel> hospitalName;
+  final List<CompareHospitalModel> hospitalName;
 
   CompareScreenListLoadedState(this.hospitalName);
 
@@ -20,7 +20,7 @@ class CompareScreenListLoadedState extends CompareScreenListState {
 }
 
 class CompareScreenListErrorState extends CompareScreenListState {
-  String message;
+  final String message;
   CompareScreenListErrorState(this.message);
 
   @override

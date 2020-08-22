@@ -17,7 +17,8 @@ class _CompareHospitalsState extends State<CompareHospitals> {
       appBar: AppBar(
         title: Text('Available Hospitals To Compare'),
         centerTitle: true,
-        backgroundColor: Colors.indigo,
+        backgroundColor: Colors.orange,
+        leading: BackButton(color: Colors.white),
       ),
       body: Body(),
       floatingActionButton: Container(
@@ -25,7 +26,7 @@ class _CompareHospitalsState extends State<CompareHospitals> {
         child: Align(
           alignment: Alignment.bottomCenter,
           child: FloatingActionButton.extended(
-            backgroundColor: Colors.indigo,
+            backgroundColor: Colors.orange,
             onPressed: () {
               CompareScreenListLoadedState state = context
                   .bloc<CompareScreenListBloc>()
@@ -47,7 +48,10 @@ class _CompareHospitalsState extends State<CompareHospitals> {
                         "Add two Hospitals to compare"));
               }
             },
-            icon: Icon(Icons.compare),
+            icon: Icon(
+              Icons.compare,
+              color: Colors.white,
+            ),
             label: Text(
               "Compare Hospitals",
               style: TextStyle(

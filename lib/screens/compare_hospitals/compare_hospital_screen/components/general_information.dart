@@ -3,7 +3,7 @@ import 'package:curativecare/widgets/star_widget.dart';
 import 'package:flutter/material.dart';
 
 class GeneralInformationWidget extends StatelessWidget {
-  List<GeneralInformation> generalInformationList = new List(3);
+  final List<GeneralInformation> generalInformationList;
 
   GeneralInformationWidget(this.generalInformationList);
 

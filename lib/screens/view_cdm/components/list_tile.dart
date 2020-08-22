@@ -17,7 +17,7 @@ ListTile makeListTile(SearchModel cdm) {
       cdm.charge == 0.0 ? "N/A" : '\$ ' + cdm.charge.toStringAsFixed(2);
   var color;
   if (cdm.category == "Standard")
-    color = Colors.indigo;
+    color = Colors.orange;
   else if (cdm.category == "DRG")
     color = Colors.red;
   else

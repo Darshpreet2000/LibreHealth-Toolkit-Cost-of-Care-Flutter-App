@@ -5,8 +5,6 @@ abstract class LocationState extends Equatable {
 }
 
 class LocationLoading extends LocationState {
-  const LocationLoading();
-
   @override
   List<Object> get props => [];
 }
@@ -14,7 +12,7 @@ class LocationLoading extends LocationState {
 class LocationLoaded extends LocationState {
   final String address;
 
-  const LocationLoaded(this.address);
+  LocationLoaded(this.address);
 
   @override
   List<Object> get props => [address];
@@ -23,7 +21,7 @@ class LocationLoaded extends LocationState {
 class LocationError extends LocationState {
   final String message;
 
-  const LocationError(this.message);
+  LocationError(this.message);
 
   @override
   List<Object> get props => [message];

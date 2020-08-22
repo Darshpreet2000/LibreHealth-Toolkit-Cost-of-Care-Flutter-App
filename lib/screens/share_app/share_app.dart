@@ -1,17 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:share/share.dart';
 
-class ShareApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Share App'),
-        centerTitle: true,
-        backgroundColor: Colors.indigo,
-      ),
-      body: Container(
-        child: Center(child: Text('Pending for now')),
-      ),
-    );
-  }
+void shareApp() {
+  Share.share("Try the Cost Of Care App," +
+      " it is developed by LibreHealth & it provides functionality to compare costs of medical procedures of different hospitals." +
+      "\n  APP_LINK ");
 }

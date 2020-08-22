@@ -8,9 +8,9 @@ abstract class DownloadFileButtonEvent extends Equatable {
 }
 
 class DownloadFileButtonClick extends DownloadFileButtonEvent {
-  int index;
-  String hospitalName;
-  String stateName;
+  final int index;
+  final String hospitalName;
+  final String stateName;
   final DownloadFileButtonBloc downloadFileButtonBloc;
 
   DownloadFileButtonClick(this.index, this.hospitalName, this.stateName,
@@ -21,9 +21,9 @@ class DownloadFileButtonClick extends DownloadFileButtonEvent {
 }
 
 class DownloadFileButtonProgress extends DownloadFileButtonEvent {
-  double progress;
-  int index;
-  String hospitalName;
+  final double progress;
+  final int index;
+  final String hospitalName;
   final DownloadFileButtonBloc downloadFileButtonBloc;
 
   DownloadFileButtonProgress(this.progress, this.index, this.hospitalName,
@@ -34,7 +34,7 @@ class DownloadFileButtonProgress extends DownloadFileButtonEvent {
 }
 
 class DownloadFileButtonError extends DownloadFileButtonEvent {
-  String message;
+  final String message;
 
   DownloadFileButtonError(this.message);
 
@@ -43,10 +43,10 @@ class DownloadFileButtonError extends DownloadFileButtonEvent {
 }
 
 class InsertInDatabase extends DownloadFileButtonEvent {
-  int index;
-  FileInfo fileInfo;
-  String hospitalName;
-  DownloadFileButtonBloc downloadFileButtonBloc;
+  final int index;
+  final FileInfo fileInfo;
+  final String hospitalName;
+  final DownloadFileButtonBloc downloadFileButtonBloc;
 
   InsertInDatabase(this.index, this.fileInfo, this.hospitalName,
       this.downloadFileButtonBloc);

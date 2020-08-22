@@ -1,9 +1,8 @@
-import 'package:curativecare/screens/download_cdm/download_cdm_screen.dart';
 import 'package:curativecare/screens/view_cdm_statewise/components/cdm_list_tile.dart';
 import 'package:flutter/material.dart';
 
 class StateListTile extends StatelessWidget {
-  List<String> states;
+  final List<String> states;
 
   StateListTile(this.states);
 
@@ -41,7 +40,7 @@ class StateListTile extends StatelessWidget {
             fontSize: 18,
           )),
       trailing: RaisedButton(
-        color: Colors.indigo,
+        color: Colors.orange,
         onPressed: () {
           Navigator.push(
               context,

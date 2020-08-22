@@ -12,22 +12,39 @@ AppBar settingsAppBar(BuildContext context, HomeSettingsState state) {
         style: TextStyle(color: Colors.white),
       ),
       centerTitle: true,
-      backgroundColor: Colors.indigo,
+      leading: BackButton(color: Colors.white),
+      backgroundColor: Colors.orange,
       actions: <Widget>[
-        // action button
-        IconButton(
-          icon: Icon(
-            Icons.save,
-            color: Colors.white,
-            size: 30,
-          ),
-          onPressed: () {
-            if (state is LoadedState)
-              context
-                  .bloc<HomeSettingsBloc>()
-                  .add(SaveSettings(state.homeSettingsModel));
-            context.bloc<LocationBloc>().add(RefreshLocation());
+        Builder(
+          builder: (BuildContext context) {
+            return FlatButton(
+              textColor: Colors.white,
+              onPressed: () {
+                if (state is HomeSettingsLoadedState) if (state
+                            .homeSettingsModel.latitude !=
+                        null &&
+                    state.homeSettingsModel.longitude != null) {
+                  context
+                      .bloc<HomeSettingsBloc>()
+                      .add(SaveSettings(state.homeSettingsModel));
+                  context.bloc<LocationBloc>().add(ChangeLocationAndSettings());
+                } else {
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                    content: Text(
+                      "Unable to Save, Location Not Found",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    backgroundColor: Colors.deepOrangeAccent,
+                  ));
+                }
+              },
+              child: Text(
+                "Save",
+                style: TextStyle(fontSize: 20),
+              ),
+              shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
+            );
           },
-        ),
+        )
       ]);
 }

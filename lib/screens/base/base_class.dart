@@ -1,6 +1,7 @@
 import 'package:curativecare/screens/download_cdm/download_cdm_screen.dart';
 import 'package:curativecare/screens/home/home_screen.dart';
 import 'package:curativecare/screens/saved/saved_screen.dart';
+import 'package:curativecare/screens/share_app/share_app.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -40,7 +41,7 @@ class _BaseClassState extends State<BaseClass> {
               icon: Icon(Icons.bookmark), title: Text('Saved')),
         ],
         currentIndex: selectedIndex,
-        fixedColor: Colors.indigo,
+        fixedColor: Colors.orange,
         onTap: onItemTapped,
       ),
     );
@@ -80,10 +81,7 @@ class AppDrawer extends StatelessWidget {
           _createDrawerItem(
               icon: Icons.share,
               text: 'Share App',
-              onTap: () => {
-                    Navigator.pop(context),
-                    Navigator.pushNamed(context, '/Share')
-                  }),
+              onTap: () => {Navigator.pop(context), shareApp()}),
           Divider(),
           _createDrawerItem(
               icon: Icons.book,
@@ -114,7 +112,10 @@ class AppDrawer extends StatelessWidget {
     return ListTile(
       title: Row(
         children: <Widget>[
-          Icon(icon),
+          Icon(
+            icon,
+            color: Colors.black,
+          ),
           Padding(
             padding: EdgeInsets.only(left: 8.0),
             child: Text(text),
@@ -142,13 +143,9 @@ class AppDrawer extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Image.asset(
-                    'assets/logowhite.png',
-                    height: 50,
-                    width: 50,
-                  ),
-                  Text(
-                    'LibreHealth',
-                    style: TextStyle(color: Colors.white, fontSize: 25),
+                    'assets/libre_white.png',
+                    height: 200,
+                    width: 200,
                   ),
                 ],
               ),

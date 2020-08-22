@@ -2,18 +2,24 @@ import 'package:curativecare/bloc/download_cdm_bloc/download_cdm_list/bloc.dart'
 import 'package:curativecare/bloc/download_cdm_bloc/download_cdm_progress/bloc.dart';
 import 'package:curativecare/bloc/location_bloc/location_bloc.dart';
 import 'package:curativecare/bloc/location_bloc/user_location_state.dart';
-import 'package:curativecare/bloc/nearby_hospital_bloc/bloc.dart';
 import 'package:curativecare/bloc/saved_screen_bloc/bloc.dart';
 import 'package:curativecare/models/download_cdm_model.dart';
+import 'package:curativecare/repository/download_cdm_repository_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../main.dart';
 import 'list_tile.dart';
 
-class Body extends StatelessWidget {
-  String stateName;
+class Body extends StatefulWidget {
+  final String stateName;
+  Body(this.stateName);
 
-  Body([this.stateName]);
+  @override
+  _BodyState createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+  DownloadFileButtonBloc downloadFileButtonBloc;
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +28,13 @@ class Body extends StatelessWidget {
             listener: (BuildContext context, state) async {
               if (state is LocationLoaded) {
                 String state = await box.get('state');
-                context
-                    .bloc<DownloadCdmBloc>()
+                BlocProvider.of<DownloadCdmBloc>(context)
                     .add(DownloadCDMFetchData(state));
-              }
-              if (state is NearbyHospitalsLoadedState) {
+                downloadFileButtonBloc =
+                    new DownloadFileButtonBloc(DownloadCDMRepositoryImpl());
               } else if (state is LocationError) {
-                context.bloc<DownloadCdmBloc>().add(DownloadCDMError());
+                BlocProvider.of<DownloadCdmBloc>(context)
+                    .add(DownloadCDMError(state.message));
               }
             },
             child: BlocListener<DownloadCdmBloc, DownloadCdmState>(
@@ -51,18 +57,13 @@ class Body extends StatelessWidget {
                   ));
                 }
               },
-              child:
-                  BlocListener<DownloadFileButtonBloc, DownloadFileButtonState>(
+              child: BlocListener(
+                cubit: downloadFileButtonBloc,
                 listener:
                     (BuildContext context, DownloadFileButtonState state) {
                   if (state is DownloadButtonLoaded) {
-                    if (stateName == null) {
-                      stateName = box.get('state');
-                    }
-
-                    context
-                        .bloc<DownloadCdmBloc>()
-                        .add(DownloadCDMRefreshList(state.index, stateName));
+                    BlocProvider.of<DownloadCdmBloc>(context).add(
+                        DownloadCDMRefreshList(state.index, widget.stateName));
                     context.bloc<SavedScreenBloc>().add(LoadSavedData());
                   } else if (state is DownloadButtonErrorState) {
                     Scaffold.of(context).showSnackBar(SnackBar(
@@ -77,13 +78,13 @@ class Body extends StatelessWidget {
                 child: BlocBuilder<DownloadCdmBloc, DownloadCdmState>(
                   builder: (BuildContext context, DownloadCdmState state) {
                     if (state is LoadingState)
-                      return ShimmerLoading();
+                      return shimmerLoading();
                     else if (state is LoadedState) {
-                      if (stateName == null) stateName = box.get('state');
-                      return ShowList(state.hospitalsName, stateName);
+                      return ShowList(state.hospitalsName, widget.stateName,
+                          downloadFileButtonBloc);
                     } else if (state is RefreshedState) {
-                      if (stateName == null) stateName = box.get('state');
-                      return ShowList(state.hospitalsName, stateName);
+                      return ShowList(state.hospitalsName, widget.stateName,
+                          downloadFileButtonBloc);
                     } else if (state is ErrorState) {
                       return Center(
                         child: Container(
@@ -94,14 +95,21 @@ class Body extends StatelessWidget {
                         ),
                       );
                     }
+                    return Container();
                   },
                 ),
               ),
             )));
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+    downloadFileButtonBloc.close();
+  }
 }
 
-Widget ShimmerLoading() {
+Widget shimmerLoading() {
   return ListView.builder(
     scrollDirection: Axis.vertical,
     itemCount: 10,
@@ -119,14 +127,14 @@ Widget ShimmerLoading() {
 }
 
 class ShowList extends StatelessWidget {
-  List<DownloadCdmModel> hospitalsName;
-  String stateName;
-  ShowList(this.hospitalsName, this.stateName);
+  final List<DownloadCdmModel> hospitalsName;
+  final String stateName;
+  final DownloadFileButtonBloc downloadFileButtonBloc;
+
+  ShowList(this.hospitalsName, this.stateName, this.downloadFileButtonBloc);
 
   @override
   Widget build(BuildContext context) {
-    DownloadFileButtonBloc downloadFileButtonBloc =
-        BlocProvider.of<DownloadFileButtonBloc>(context);
     return Scrollbar(
       child: ListView.builder(
         itemCount: hospitalsName.length,

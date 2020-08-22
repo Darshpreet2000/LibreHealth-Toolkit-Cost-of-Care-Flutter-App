@@ -3,7 +3,7 @@ import 'package:curativecare/screens/compare_hospitals/compare_hospital_screen/c
 import 'package:flutter/material.dart';
 
 class CompareHospitalsScreen extends StatelessWidget {
-  List<CompareHospitalModel> hospitalNamesForCompare;
+  final List<CompareHospitalModel> hospitalNamesForCompare;
 
   CompareHospitalsScreen(this.hospitalNamesForCompare);
 
@@ -13,7 +13,8 @@ class CompareHospitalsScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text("Compare Hospitals"),
         centerTitle: true,
-        backgroundColor: Colors.indigo,
+        backgroundColor: Colors.orange,
+        leading: BackButton(color: Colors.white),
       ),
       body: Body(hospitalNamesForCompare),
     );

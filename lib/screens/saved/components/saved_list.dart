@@ -2,7 +2,7 @@ import 'package:curativecare/screens/view_cdm/view_cdm.dart';
 import 'package:flutter/material.dart';
 
 class SavedList extends StatelessWidget {
-  List<String> hospitalNames;
+  final List<String> hospitalNames;
 
   SavedList(this.hospitalNames);
 
@@ -40,7 +40,7 @@ class SavedList extends StatelessWidget {
         ),
       ),
       trailing: RaisedButton(
-        color: Colors.indigo,
+        color: Colors.orange,
         onPressed: () {
           Navigator.push(
             context,

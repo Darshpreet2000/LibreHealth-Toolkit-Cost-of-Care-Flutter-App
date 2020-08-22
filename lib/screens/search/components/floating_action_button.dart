@@ -22,7 +22,7 @@ class _FloatingActionState extends State<FloatingAction> {
           },
         );
       },
-      backgroundColor: Colors.indigo,
+      backgroundColor: Colors.orange,
       child: Icon(
         Icons.filter_list,
         color: Colors.white,

@@ -24,22 +24,17 @@ class NearbyHospitalList extends StatelessWidget {
               .bloc<CompareScreenListBloc>()
               .add(CompareScreenListFetchHospitalName());
         } else if (state is LocationError) {
-          Scaffold.of(context).showSnackBar(SnackBar(
-            content: Text(
-              state.message,
-              style: TextStyle(color: Colors.white),
-            ),
-            backgroundColor: Colors.deepOrangeAccent,
-          ));
-          context.bloc<NearbyHospitalBloc>().add(NearbyHospitalShowError());
+          context
+              .bloc<NearbyHospitalBloc>()
+              .add(NearbyHospitalShowError(state.message));
         }
       },
       child: BlocBuilder<NearbyHospitalBloc, NearbyHospitalState>(
         builder: (BuildContext context, NearbyHospitalState state) {
           if (state is NearbyHospitalsLoadingState) {
-            return ShimmerLoading();
+            return shimmerLoading();
           } else if (state is NearbyHospitalsLoadedState) {
-            return ListBuilder(state.nearby_hospital);
+            return ListBuilder(state.nearbyHospital);
           } else if (state is NearbyHospitalsErrorState) {
             return Container(
               padding: EdgeInsets.all(8),
@@ -47,17 +42,20 @@ class NearbyHospitalList extends StatelessWidget {
                   child: Text(
                 state.message,
                 maxLines: 3,
+                textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 18),
               )),
             );
           }
+
+          return Container();
         },
       ),
     );
   }
 }
 
-Widget ShimmerLoading() {
+Widget shimmerLoading() {
   return ListView.builder(
     scrollDirection: Axis.vertical,
     itemCount: 6,
@@ -75,7 +73,7 @@ Widget ShimmerLoading() {
 }
 
 class ListBuilder extends StatelessWidget {
-  List<Hospitals> items = new List();
+  final List<Hospitals> items;
 
   ListBuilder(this.items);
 

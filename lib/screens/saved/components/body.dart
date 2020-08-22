@@ -1,6 +1,5 @@
 import 'package:curativecare/bloc/download_cdm_bloc/download_cdm_list/download_cdm_bloc.dart';
 import 'package:curativecare/bloc/download_cdm_bloc/download_cdm_list/download_cdm_state.dart';
-import 'package:curativecare/bloc/download_cdm_bloc/download_cdm_progress/bloc.dart';
 import 'package:curativecare/bloc/saved_screen_bloc/saved_screen_bloc.dart';
 import 'package:curativecare/bloc/saved_screen_bloc/saved_screen_event.dart';
 import 'package:curativecare/bloc/saved_screen_bloc/saved_screen_state.dart';
@@ -38,6 +37,8 @@ class Body extends StatelessWidget {
               ),
             ));
           }
+
+          return Container();
         },
       ),
     );

@@ -13,7 +13,7 @@ class CompareScreenListBloc
 
   CompareScreenListBloc(this.compareScreenRepositoryImpl)
       : super(CompareScreenListLoadingState());
-
+  CompareScreenListState get initialState => CompareScreenListLoadingState();
   @override
   Stream<CompareScreenListState> mapEventToState(
     CompareScreenListEvent event,

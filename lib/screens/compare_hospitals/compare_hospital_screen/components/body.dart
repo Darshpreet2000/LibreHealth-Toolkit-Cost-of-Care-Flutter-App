@@ -12,7 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 
 class Body extends StatefulWidget {
-  List<CompareHospitalModel> hospitalNamesForCompare;
+  final List<CompareHospitalModel> hospitalNamesForCompare;
 
   Body(this.hospitalNamesForCompare);
 
@@ -77,6 +77,8 @@ class _BodyState extends State<Body> {
                   ),
                 );
               }
+
+              return Container();
             })
           ])),
     );

@@ -5,10 +5,12 @@ import 'package:curativecare/repository/view_cdm_screen_repository_impl.dart';
 import './bloc.dart';
 
 class ViewCdmScreenBloc extends Bloc<ViewCdmScreenEvent, ViewCdmScreenState> {
-  ViewViewCDMScreenRepositoryImpl viewCDMScreenRepositoryImpl;
+  ViewCDMScreenRepositoryImpl viewCDMScreenRepositoryImpl;
 
   ViewCdmScreenBloc(this.viewCDMScreenRepositoryImpl)
       : super(LoadingViewCdmScreenState());
+
+  ViewCdmScreenState get initialState => LoadingViewCdmScreenState();
 
   @override
   Stream<ViewCdmScreenState> mapEventToState(
@@ -16,9 +18,13 @@ class ViewCdmScreenBloc extends Bloc<ViewCdmScreenEvent, ViewCdmScreenState> {
   ) async* {
     if (event is LoadCdm) {
       yield LoadingViewCdmScreenState();
-      List<SearchModel> cdmList =
-          await viewCDMScreenRepositoryImpl.fetchCDMList(event.tableName);
-      yield LoadedViewCdmScreenState(cdmList);
+      try {
+        List<SearchModel> cdmList =
+            await viewCDMScreenRepositoryImpl.fetchCDMList(event.tableName);
+        yield LoadedViewCdmScreenState(cdmList);
+      } catch (e) {
+        yield ErrorViewCdmScreenState(e.message);
+      }
     }
   }
 }

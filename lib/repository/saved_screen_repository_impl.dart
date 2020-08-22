@@ -7,10 +7,6 @@ class SavedScreenRepoImpl extends SavedScreenRepository {
     DatabaseDao databaseDao = new DatabaseDao();
     List<String> hospitals = new List();
     hospitals = await databaseDao.getAllTables();
-    hospitals.removeAt(0);
-    for (int i = 0; i < hospitals.length; i++) {
-      hospitals[i] = hospitals[i].replaceAll('_', ' ');
-    }
     return hospitals;
   }
 }

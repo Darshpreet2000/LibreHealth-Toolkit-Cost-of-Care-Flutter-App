@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'list_tile.dart';
 
 class CDM extends StatefulWidget {
-  String name;
+  final String name;
 
   CDM(this.name);
 
@@ -32,7 +32,16 @@ class _CDMState extends State<CDM> {
           );
         } else if (state is LoadedViewCdmScreenState) {
           return showList(state.cdmList);
+        } else if (state is ErrorViewCdmScreenState) {
+          return Container(
+            padding: EdgeInsets.all(8),
+            child: Center(
+              child: Text(state.message),
+            ),
+          );
         }
+
+        return Container();
       },
     );
   }

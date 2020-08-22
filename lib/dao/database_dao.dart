@@ -2,20 +2,13 @@ import 'package:curativecare/bloc/download_cdm_bloc/download_cdm_progress/downlo
 import 'package:curativecare/database/hospital_database.dart';
 import 'package:curativecare/models/search_model.dart';
 import 'package:sqflite/sqflite.dart';
-
 import '../main.dart';
 
 class DatabaseDao {
   final dbProvider = DatabaseProvider.dbProvider;
 
   Future<void> createHospitalTable(String name) async {
-    name = name.replaceAll(' ', '_');
-    name = name.replaceAll('(', '_');
-    name = name.replaceAll(')', '_');
-    name = name.replaceAll(',', '_');
-    name = name.replaceAll('.', '_');
-    name = name.replaceAll('-', '_');
-
+    name = "`$name`";
     final db = await dbProvider.database;
     await db.transaction((txn) async {
       await txn.rawQuery('DROP TABLE IF EXISTS $name ');
@@ -29,8 +22,10 @@ class DatabaseDao {
     final database = await dbProvider.database;
     List<String> tableNames = new List();
     await database.transaction((txn) async {
-      tableNames = (await txn
-              .query('sqlite_master', where: 'type = ?', whereArgs: ['table']))
+      tableNames = (await txn.query('sqlite_master',
+              where:
+                  "type = ? AND name NOT IN ('sqlite_sequence', 'android_metadata')",
+              whereArgs: ['table']))
           .map((row) => row['name'] as String)
           .toList(growable: true);
     });
@@ -41,13 +36,7 @@ class DatabaseDao {
   Future insertData(InsertInDatabase event, List<SearchModel> cdmList) async {
     String tableName = event.hospitalName;
     final database = await dbProvider.database;
-    tableName = tableName.replaceAll(' ', '_');
-    tableName = tableName.replaceAll('(', '_');
-    tableName = tableName.replaceAll(')', '_');
-    tableName = tableName.replaceAll(',', '_');
-    tableName = tableName.replaceAll('.', '_');
-    tableName = tableName.replaceAll('-', '_');
-
+    tableName = "`$tableName`";
     int total = cdmList.length;
     int completed = 0;
     double percentCount = 0, progressNow = 0, counter = 1;
@@ -81,12 +70,7 @@ class DatabaseDao {
   }
 
   Future<List<SearchModel>> readData(String name) async {
-    name = name.replaceAll(' ', '_');
-    name = name.replaceAll('(', '_');
-    name = name.replaceAll(')', '_');
-    name = name.replaceAll(',', '_');
-    name = name.replaceAll('.', '_');
-    name = name.replaceAll('-', '_');
+    name = "`$name`";
 
     final database = await dbProvider.database;
     //Table name is given
@@ -105,7 +89,6 @@ class DatabaseDao {
     final database = await dbProvider.database;
     List<SearchModel> list = new List();
     List<String> hospitalName = await getAllTables();
-    if (hospitalName.length > 0) hospitalName.removeAt(0);
     bool checkCategory = await box.containsKey('category');
     String category;
     if (checkCategory && box.get('category') != 0) {
@@ -123,6 +106,7 @@ class DatabaseDao {
     int start = 0;
     if (length > 0) {
       for (int i = 0; i < length; i++) {
+        hospitalName[i] = "`${hospitalName[i]}`";
         start = start + 1;
         query += "'" +
             hospitalName[i] +
@@ -136,9 +120,10 @@ class DatabaseDao {
             searchQuery +
             "%' " +
             (checkCategory == true && box.get('category') != 0
-                ? " and category = '${category}'"
+                ? " and category = '$category'"
                 : " ") +
             " limit 80 ) ";
+
         if (start != length)
           query +=
               " union Select * from ( SELECT description , charge ,category , ";
@@ -156,14 +141,10 @@ class DatabaseDao {
   }
 
   Future searchProcedureInSingleTable(String searchQuery, String name) async {
-    name = name.replaceAll(' ', '_');
-    name = name.replaceAll('(', '_');
-    name = name.replaceAll(')', '_');
-    name = name.replaceAll(',', '_');
-    name = name.replaceAll('.', '_');
-    name = name.replaceAll('-', '_');
+    name = "`$name`";
 
     final database = await dbProvider.database;
+
     List<SearchModel> list = new List();
     String query = "Select * from ( SELECT description , charge ,category , ";
     query += "'" +
@@ -182,8 +163,85 @@ class DatabaseDao {
     await database.transaction((txn) async {
       List<Map<String, dynamic>> result = await txn.rawQuery(query);
       result.forEach((itemMap) {
-        SearchModel searchmodel = new SearchModel.empty();
-        list.add(searchmodel.fromMapResult(itemMap));
+        SearchModel searchModel = new SearchModel.empty();
+        list.add(searchModel.fromMapResult(itemMap));
+      });
+    });
+    return list;
+  }
+
+  Future searchProcedureInAllTablesByPrice(double searchQuery) async {
+    final database = await dbProvider.database;
+    List<SearchModel> list = new List();
+    List<String> hospitalName = await getAllTables();
+    bool checkCategory = await box.containsKey('category');
+    String category;
+    if (checkCategory && box.get('category') != 0) {
+      int categoryType = await box.get('category');
+      if (categoryType == 1) {
+        category = "Standard";
+      } else if (categoryType == 2) {
+        category = "DRG";
+      } else {
+        category = "Pharmacy";
+      }
+    }
+    String query = "Select * from ( SELECT description , charge ,category , ";
+    int length = hospitalName.length;
+    int start = 0;
+    if (length > 0) {
+      for (int i = 0; i < length; i++) {
+        start = start + 1;
+        hospitalName[i] = "`${hospitalName[i]}`";
+        query += "'" +
+            hospitalName[i] +
+            "'" +
+            " as name " "from " +
+            hospitalName[i] +
+            " where " +
+            "ROUND(${hospitalName[i]}.charge,0) = ROUND($searchQuery,0)" +
+            (checkCategory == true && box.get('category') != 0
+                ? " and category = '$category'"
+                : " ") +
+            " limit 80 ) ";
+        if (start != length)
+          query +=
+              " union Select * from ( SELECT description , charge ,category , ";
+      }
+      print(query);
+      await database.transaction((txn) async {
+        List<Map<String, dynamic>> result = await txn.rawQuery(query);
+        result.forEach((itemMap) {
+          SearchModel searchmodel = new SearchModel.empty();
+          list.add(searchmodel.fromMapResult(itemMap));
+        });
+      });
+    }
+    return list;
+  }
+
+  Future searchProcedureInSingleTableByPrice(
+      double searchQuery, String name) async {
+    name = "`$name`";
+
+    final database = await dbProvider.database;
+
+    List<SearchModel> list = new List();
+    String query = "Select * from ( SELECT description , charge ,category , ";
+    query += "'" +
+        name +
+        "'" +
+        " as name " "from " +
+        name +
+        " where " +
+        "ROUND($name.charge,0) = ROUND($searchQuery,0)" +
+        "  ) ";
+    print(query);
+    await database.transaction((txn) async {
+      List<Map<String, dynamic>> result = await txn.rawQuery(query);
+      result.forEach((itemMap) {
+        SearchModel searchModel = new SearchModel.empty();
+        list.add(searchModel.fromMapResult(itemMap));
       });
     });
     return list;

@@ -4,10 +4,11 @@ import 'package:curativecare/bloc/location_bloc/user_location_state.dart';
 import 'package:curativecare/widgets/dash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shimmer/shimmer.dart';
 
 class UserLocation extends StatefulWidget {
-  Color appBackgroundColor;
+  final Color appBackgroundColor;
 
   UserLocation(this.appBackgroundColor);
 
@@ -16,11 +17,6 @@ class UserLocation extends StatefulWidget {
 }
 
 class _UserLocationState extends State<UserLocation> {
-  @override
-  void initState() {
-    context.bloc<LocationBloc>().add(FetchLocation());
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -57,10 +53,11 @@ class _UserLocationState extends State<UserLocation> {
                       if (state is LocationError) {
                         Scaffold.of(context).showSnackBar(SnackBar(
                           content: Text(
-                            'Location Not Found',
+                            state.message,
                             style: TextStyle(color: Colors.white),
                           ),
-                          backgroundColor: Colors.deepOrangeAccent,
+                          duration: Duration(seconds: 3),
+                          backgroundColor: Colors.green,
                         ));
                       }
                     },
@@ -83,7 +80,7 @@ class _UserLocationState extends State<UserLocation> {
               padding: const EdgeInsets.only(top: 4.0),
               child: Dash(
                 length: MediaQuery.of(context).size.width - 20,
-                dashColor: Colors.blue,
+                dashColor: Colors.orange,
                 dashThickness: 4,
                 dashLength: 15,
               ))
@@ -91,6 +88,37 @@ class _UserLocationState extends State<UserLocation> {
       ),
     );
   }
+}
+
+Future showCustomPermissionDialog(BuildContext context) {
+  return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'Permission Needed',
+          ),
+          content: Container(
+              width: double.maxFinite,
+              child: Text(
+                  'Location permission is needed to fetch nearby hospital around your location, you have denied permission too many times, now you have to manually enable it in settings of App')),
+          actions: [
+            FlatButton(
+              child: Text("Enable Location Permission in Settings"),
+              onPressed: () {
+                openAppSettings();
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text("Deny"),
+              onPressed: () {
+                Navigator.of(context, rootNavigator: true).pop('dialog');
+              },
+            ),
+          ],
+        );
+      });
 }
 
 Widget buildLoading(BuildContext context) {
@@ -125,11 +153,10 @@ Widget buildData(BuildContext context, String address) {
         ),
       ),
       IconButton(
-        icon: Icon(Icons.refresh),
-        onPressed: () {
-          context.bloc<LocationBloc>().add(RefreshLocation());
-        },
-      )
+          icon: Icon(Icons.refresh),
+          onPressed: () {
+            context.bloc<LocationBloc>().add(RefreshLocation());
+          })
     ],
   );
 }

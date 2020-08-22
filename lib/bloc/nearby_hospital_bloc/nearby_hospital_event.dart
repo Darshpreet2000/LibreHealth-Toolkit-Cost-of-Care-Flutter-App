@@ -8,7 +8,7 @@ abstract class NearbyHospitalEvent extends Equatable {
 }
 
 class FetchHospitals extends NearbyHospitalEvent {
-  String state;
+  final String state;
 
   FetchHospitals(this.state);
 
@@ -17,7 +17,7 @@ class FetchHospitals extends NearbyHospitalEvent {
 }
 
 class FetchImages extends NearbyHospitalEvent {
-  List<Hospitals> list;
+  final List<Hospitals> list;
 
   FetchImages(this.list);
 
@@ -31,6 +31,10 @@ class SaveHospitals extends NearbyHospitalEvent {
 }
 
 class NearbyHospitalShowError extends NearbyHospitalEvent {
+  final String message;
+
+  NearbyHospitalShowError(this.message);
+
   @override
-  List<Object> get props => [];
+  List<Object> get props => [message];
 }

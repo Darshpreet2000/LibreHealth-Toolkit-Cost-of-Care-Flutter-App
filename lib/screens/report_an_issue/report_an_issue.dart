@@ -7,7 +7,8 @@ class ReportIssue extends StatelessWidget {
       appBar: AppBar(
         title: Text('Report a Bug'),
         centerTitle: true,
-        backgroundColor: Colors.indigo,
+        backgroundColor: Colors.orange,
+        leading: BackButton(color: Colors.white),
       ),
       body: Container(
         child: Center(child: Text('Pending for now')),

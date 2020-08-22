@@ -4,33 +4,37 @@ import 'package:curativecare/models/patient_experience.dart';
 import 'package:curativecare/util/api_config.dart';
 import 'package:curativecare/util/states_abbreviation.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
-
 import 'hospital_image_client.dart';
 
 class CompareHospitalAPIClient {
   //To Fetch Hospitals Name
+  Dio dio;
+
+  CompareHospitalAPIClient(this.dio);
+
   Future fetchGeneralInformation(String hospitalsName, String stateName) async {
     ApiConfig apiConfig = new ApiConfig();
     StatesAbbreviation statesAbbreviation = new StatesAbbreviation();
     String url = apiConfig.generalInformationUrl +
         statesAbbreviation.getAbbreviation(stateName) +
         "&hospital_name=$hospitalsName";
-    BaseOptions options = new BaseOptions(
-        connectTimeout: 15 * 1000, // 60 seconds
-        receiveTimeout: 15 * 1000 // 60 seconds
-        );
-    Dio dio = new Dio(options);
+
     var response;
     try {
       response = await dio.get(url);
-    } on DioError catch (e) {
-      if (DioErrorType.RECEIVE_TIMEOUT == e.type ||
-          DioErrorType.CONNECT_TIMEOUT == e.type) {
-        throw Exception("Please check your internet connection and try again");
-      } else if (DioErrorType.DEFAULT == e.type) {
-        if (e.message.contains('SocketException')) {
-          throw Exception('No Internet Connection');
+    } catch (e) {
+      if (e is DioError) {
+        if (DioErrorType.RECEIVE_TIMEOUT == e.type ||
+            DioErrorType.CONNECT_TIMEOUT == e.type) {
+          throw Exception(
+              "Please check your internet connection and try again");
+        } else if (DioErrorType.DEFAULT == e.type) {
+          if (e.message.contains('SocketException')) {
+            throw Exception('No Internet Connection');
+          }
+        } else {
+          throw Exception(
+              "Problem connecting to the server. Please try again.");
         }
       } else {
         throw Exception("Problem connecting to the server. Please try again.");
@@ -83,22 +87,23 @@ class CompareHospitalAPIClient {
     StatesAbbreviation statesAbbreviation = new StatesAbbreviation();
     String url = apiConfig.hospitalNameUrl +
         statesAbbreviation.getAbbreviation(stateName);
-    BaseOptions options = new BaseOptions(
-        connectTimeout: 15 * 1000, // 60 seconds
-        receiveTimeout: 15 * 1000 // 60 seconds
-        );
-    Dio dio = new Dio(options);
 
     var response;
     try {
       response = await dio.get(url);
-    } on DioError catch (e) {
-      if (DioErrorType.RECEIVE_TIMEOUT == e.type ||
-          DioErrorType.CONNECT_TIMEOUT == e.type) {
-        throw Exception("Please check your internet connection and try again");
-      } else if (DioErrorType.DEFAULT == e.type) {
-        if (e.message.contains('SocketException')) {
-          throw Exception('No Internet Connection');
+    } catch (e) {
+      if (e is DioError) {
+        if (DioErrorType.RECEIVE_TIMEOUT == e.type ||
+            DioErrorType.CONNECT_TIMEOUT == e.type) {
+          throw Exception(
+              "Please check your internet connection and try again");
+        } else if (DioErrorType.DEFAULT == e.type) {
+          if (e.message.contains('SocketException')) {
+            throw Exception('No Internet Connection');
+          }
+        } else {
+          throw Exception(
+              "Problem connecting to the server. Please try again.");
         }
       } else {
         throw Exception("Problem connecting to the server. Please try again.");
@@ -107,8 +112,8 @@ class CompareHospitalAPIClient {
     List<dynamic> elements = response.data;
     List<CompareHospitalModel> name = new List();
     for (int i = 0; i < elements.length; i++) {
-      Map<String, dynamic> current_hospital = elements[i];
-      String hospitalName = current_hospital['hospital_name'];
+      Map<String, dynamic> currentHospital = elements[i];
+      String hospitalName = currentHospital['hospital_name'];
       name.add(new CompareHospitalModel(hospitalName, false));
     }
     if (name.length == 0)
@@ -117,12 +122,9 @@ class CompareHospitalAPIClient {
     return name;
   }
 
-  Future fetchImages(String name) {
+  Future fetchImages(String name) async {
     FetchHospitalImages fetchHospitalImages = new FetchHospitalImages();
-    try {
-      Future<String> response = fetchHospitalImages.fetchImagesFromGoogle(name);
-      return response;
-    } catch (e) {}
+    return await fetchHospitalImages.fetchImagesFromGoogle(name);
   }
 
   Future fetchPatientExperience(String hospitalsName, String stateName) async {
@@ -131,21 +133,22 @@ class CompareHospitalAPIClient {
     String url = apiConfig.patientExperienceUrl +
         statesAbbreviation.getAbbreviation(stateName) +
         "&hospital_name=$hospitalsName";
-    BaseOptions options = new BaseOptions(
-        connectTimeout: 15 * 1000, // 60 seconds
-        receiveTimeout: 15 * 1000 // 60 seconds
-        );
-    Dio dio = new Dio(options);
     var response;
     try {
       response = await dio.get(url);
-    } on DioError catch (e) {
-      if (DioErrorType.RECEIVE_TIMEOUT == e.type ||
-          DioErrorType.CONNECT_TIMEOUT == e.type) {
-        throw Exception("Please check your internet connection and try again");
-      } else if (DioErrorType.DEFAULT == e.type) {
-        if (e.message.contains('SocketException')) {
-          throw Exception('No Internet Connection');
+    } catch (e) {
+      if (e is DioError) {
+        if (DioErrorType.RECEIVE_TIMEOUT == e.type ||
+            DioErrorType.CONNECT_TIMEOUT == e.type) {
+          throw Exception(
+              "Please check your internet connection and try again");
+        } else if (DioErrorType.DEFAULT == e.type) {
+          if (e.message.contains('SocketException')) {
+            throw Exception('No Internet Connection');
+          }
+        } else {
+          throw Exception(
+              "Problem connecting to the server. Please try again.");
         }
       } else {
         throw Exception("Problem connecting to the server. Please try again.");

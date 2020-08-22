@@ -8,5 +8,5 @@ abstract class NearbyHospitalsRepository {
       Map<String, dynamic>
           responseBody); //To Parse Json Data & convert it to List
 //Future<String> fetchImages(String name);
-  Future<String> fetchImages(String name);
+  Future fetchImages(String name);
 }

@@ -3,7 +3,7 @@ import 'package:curativecare/repository/database_repository_impl.dart';
 
 import 'abstract/view_cdm_screen_repository.dart';
 
-class ViewViewCDMScreenRepositoryImpl extends ViewCDMScreenRepository {
+class ViewCDMScreenRepositoryImpl extends ViewCDMScreenRepository {
   @override
   Future fetchCDMList(String tableName) async {
     DatabaseRepositoryImpl databaseRepositoryImpl =

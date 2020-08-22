@@ -11,7 +11,7 @@ class CompareScreenBloc extends Bloc<CompareScreenEvent, CompareScreenState> {
 
   CompareScreenBloc(this.compareScreenRepositoryImpl)
       : super(CompareScreenLoadingState());
-
+  CompareScreenState get initialState => CompareScreenLoadingState();
   @override
   Stream<CompareScreenState> mapEventToState(
     CompareScreenEvent event,

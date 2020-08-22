@@ -19,7 +19,7 @@ ListTile makeListTile(
       ),
     ),
     trailing: RaisedButton(
-      color: hospitalName.isAddedToCompare ? Colors.green : Colors.indigo,
+      color: hospitalName.isAddedToCompare ? Colors.green : Colors.orange,
       child: Text(
         hospitalName.isAddedToCompare ? "Comparing" : "Compare",
         style: TextStyle(color: Colors.white),

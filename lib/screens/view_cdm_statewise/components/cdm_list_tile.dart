@@ -14,7 +14,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 class CDMListTile extends StatefulWidget {
-  String stateName;
+  final String stateName;
   CDMListTile(this.stateName);
 
   @override
@@ -26,6 +26,7 @@ class _CDMListTileState extends State<CDMListTile> {
   DownloadFileButtonBloc downloadFileButtonBloc;
   @override
   void initState() {
+    super.initState();
     downloadCdmBloc = new DownloadCdmBloc(DownloadCDMRepositoryImpl());
     downloadFileButtonBloc =
         new DownloadFileButtonBloc(DownloadCDMRepositoryImpl());
@@ -44,7 +45,8 @@ class _CDMListTileState extends State<CDMListTile> {
     return Scaffold(
         appBar: AppBar(
           title: Text("${widget.stateName} Hospitals ChargeMasters"),
-          backgroundColor: Colors.indigo,
+          leading: BackButton(color: Colors.white),
+          backgroundColor: Colors.orange,
         ),
         body: BlocListener(
           cubit: downloadCdmBloc,
@@ -105,6 +107,7 @@ class _CDMListTileState extends State<CDMListTile> {
                     ),
                   );
                 }
+                return Container();
               },
             ),
           ),
@@ -113,10 +116,10 @@ class _CDMListTileState extends State<CDMListTile> {
 }
 
 class ShowList extends StatelessWidget {
-  List<DownloadCdmModel> hospitalsName;
+  final List<DownloadCdmModel> hospitalsName;
 
-  String stateName;
-  DownloadFileButtonBloc downloadFileButtonBloc;
+  final String stateName;
+  final DownloadFileButtonBloc downloadFileButtonBloc;
 
   ShowList(this.hospitalsName, this.stateName, this.downloadFileButtonBloc);
 
@@ -180,7 +183,7 @@ Widget downloadWidget(DownloadCdmModel hospital, int index,
                 return Material(
                     borderRadius: BorderRadius.circular(20.0),
                     child: InkWell(
-                      splashColor: Colors.blue,
+                      splashColor: Colors.orange,
                       borderRadius: BorderRadius.circular(20.0),
                       onTap: () async {
                         if ((downloadFileButtonBloc.state
@@ -208,7 +211,7 @@ Widget downloadWidget(DownloadCdmModel hospital, int index,
                         padding: const EdgeInsets.all(8.0),
                         child: Icon(
                           Icons.file_download,
-                          color: Colors.indigo,
+                          color: Colors.orange,
                           size: 32,
                         ),
                       ),
@@ -235,7 +238,7 @@ Widget downloadWidget(DownloadCdmModel hospital, int index,
       } else if ((state is DownloadButtonLoaded && index == state.index) ||
           (hospital.isDownload == 1)) {
         return RaisedButton(
-          color: Colors.indigo,
+          color: Colors.orange,
           onPressed: () {
             Navigator.push(
               context,
@@ -254,7 +257,7 @@ Widget downloadWidget(DownloadCdmModel hospital, int index,
       return Material(
           borderRadius: BorderRadius.circular(20.0),
           child: InkWell(
-            splashColor: Colors.blue,
+            splashColor: Colors.orange,
             borderRadius: BorderRadius.circular(20.0),
             onTap: () async {
               if ((downloadFileButtonBloc.state
@@ -280,7 +283,7 @@ Widget downloadWidget(DownloadCdmModel hospital, int index,
               padding: const EdgeInsets.all(8.0),
               child: Icon(
                 Icons.file_download,
-                color: Colors.indigo,
+                color: Colors.orange,
                 size: 32,
               ),
             ),

@@ -10,21 +10,25 @@ class BottomSheetFetchValues extends BottomSheetEvent {
 }
 
 class BottomSheetApply extends BottomSheetEvent {
-  int selectedRadioTile;
-  int priceRadioTile;
+  final int selectedRadioTile;
+  final int priceRadioTile;
 
-  BottomSheetApply(this.selectedRadioTile, this.priceRadioTile);
+  final bool searchBy;
+
+  BottomSheetApply(this.selectedRadioTile, this.priceRadioTile, this.searchBy);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [selectedRadioTile, priceRadioTile, searchBy];
 }
 
 class BottomSheetChangeValue extends BottomSheetEvent {
-  int selectedRadioTile;
-  int priceRadioTile;
+  final int selectedRadioTile;
+  final int priceRadioTile;
+  final bool searchBy;
 
-  BottomSheetChangeValue(this.selectedRadioTile, this.priceRadioTile);
+  BottomSheetChangeValue(
+      this.selectedRadioTile, this.priceRadioTile, this.searchBy);
 
   @override
-  List<Object> get props => [selectedRadioTile, priceRadioTile];
+  List<Object> get props => [selectedRadioTile, priceRadioTile, searchBy];
 }

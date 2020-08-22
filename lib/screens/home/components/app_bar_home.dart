@@ -2,9 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AppBarHome extends StatelessWidget {
-  AppBarHome(this.drawerKey);
+  final GlobalKey<ScaffoldState> drawerKey;
+  final userLocationWidget;
 
-  GlobalKey<ScaffoldState> drawerKey;
+  AppBarHome(this.drawerKey, this.userLocationWidget);
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +60,8 @@ class AppBarHome extends StatelessWidget {
                 size: 25,
               ),
               onPressed: () {
-                Navigator.pushNamed(context, '/SettingsHome');
+                Navigator.pushNamed(context, '/SettingsHome',
+                    arguments: userLocationWidget);
               },
             )
           ],

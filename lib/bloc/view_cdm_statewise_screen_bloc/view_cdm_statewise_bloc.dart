@@ -11,7 +11,7 @@ class ViewCdmStatewiseBloc
       : super(ViewCDMStatewiseLoadingState());
 
   ViewCDMStatewiseRepositoryImpl viewCDMStatewiseRepositoryImpl;
-
+  ViewCdmStatewiseState get initialState => ViewCDMStatewiseLoadingState();
   @override
   Stream<ViewCdmStatewiseState> mapEventToState(
     ViewCdmStatewiseEvent event,

@@ -4,6 +4,7 @@ import 'package:hive/hive.dart';
 part 'compare_hospital_model.g.dart';
 
 @HiveType(typeId: 2)
+// ignore: must_be_immutable
 class CompareHospitalModel extends Equatable {
   @HiveField(0)
   String hospitalName;

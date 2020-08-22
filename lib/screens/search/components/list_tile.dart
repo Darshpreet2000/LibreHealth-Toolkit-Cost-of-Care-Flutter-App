@@ -28,7 +28,7 @@ Card makeCard(SearchModel searchModel) {
 }
 
 ListTile makeListTile(SearchModel searchModel) {
-  searchModel.name = searchModel.name.replaceAll('_', ' ');
+  searchModel.name = searchModel.name.replaceAll('`', '');
   String charge = searchModel.charge == 0.0
       ? "N/A"
       : '\$ ' + searchModel.charge.toStringAsFixed(2);

@@ -10,7 +10,7 @@ class SavedScreenLoadingState extends SavedScreenState {
 }
 
 class SavedScreenLoadedState extends SavedScreenState {
-  List<String> savedHospitals;
+  final List<String> savedHospitals;
 
   SavedScreenLoadedState(this.savedHospitals);
 
@@ -19,10 +19,8 @@ class SavedScreenLoadedState extends SavedScreenState {
 }
 
 class SavedScreenErrorState extends SavedScreenState {
-  String message;
-
+  final String message;
   SavedScreenErrorState(this.message);
-
   @override
   List<Object> get props => [message];
 }

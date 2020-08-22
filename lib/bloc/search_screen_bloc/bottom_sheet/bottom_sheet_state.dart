@@ -1,26 +1,35 @@
 import 'package:equatable/equatable.dart';
 
 abstract class BottomSheetState extends Equatable {
-  int selectedRadioTile;
-  int priceRadioTile;
+  const BottomSheetState();
+
+  int get selectedRadioTile => null;
+
+  int get priceRadioTile => null;
+
+  bool get searchBy => null;
 }
 
 class BottomSheetLoadValues extends BottomSheetState {
-  int selectedRadioTile;
-  int priceRadioTile;
+  final int selectedRadioTile;
+  final int priceRadioTile;
+  final bool searchBy;
 
-  BottomSheetLoadValues(this.selectedRadioTile, this.priceRadioTile);
+  BottomSheetLoadValues(
+      this.selectedRadioTile, this.priceRadioTile, this.searchBy);
 
   @override
-  List<Object> get props => [selectedRadioTile, priceRadioTile];
+  List<Object> get props => [selectedRadioTile, priceRadioTile, searchBy];
 }
 
-class BottomSheetSaved extends BottomSheetState {
-  int selectedRadioTile;
-  int priceRadioTile;
+class BottomSheetApplyValues extends BottomSheetState {
+  final int selectedRadioTile;
+  final int priceRadioTile;
+  final bool searchBy;
 
-  BottomSheetSaved(this.selectedRadioTile, this.priceRadioTile);
+  BottomSheetApplyValues(
+      this.selectedRadioTile, this.priceRadioTile, this.searchBy);
 
   @override
-  List<Object> get props => [selectedRadioTile, priceRadioTile];
+  List<Object> get props => [selectedRadioTile, priceRadioTile, searchBy];
 }

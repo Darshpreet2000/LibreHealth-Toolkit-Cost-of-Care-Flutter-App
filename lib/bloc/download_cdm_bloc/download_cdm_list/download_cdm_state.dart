@@ -36,7 +36,7 @@ class ErrorStateSnackbar extends DownloadCdmState {
 }
 
 class ErrorState extends DownloadCdmState {
-  String message;
+  final String message;
 
   ErrorState(this.message);
 
