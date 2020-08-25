@@ -1,3 +1,4 @@
+import 'package:cost_of_care/bloc/report_a_bug_bloc/report_a_bug_bloc.dart';
 import 'package:cost_of_care/screens/download_cdm/download_cdm_screen.dart';
 import 'package:cost_of_care/screens/home/home_screen.dart';
 import 'package:cost_of_care/screens/report_an_issue/report_an_issue.dart';
@@ -5,6 +6,7 @@ import 'package:cost_of_care/screens/saved/saved_screen.dart';
 import 'package:cost_of_care/screens/share_app/share_app.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:package_info/package_info.dart';
 
 class BaseClass extends StatefulWidget {
@@ -96,16 +98,15 @@ class AppDrawer extends StatelessWidget {
           _createDrawerItem(
               icon: Icons.bug_report,
               text: 'Report A Bug',
-              onTap: () {
-                Navigator.pop(context);
+              onTap: () async {
                 try {
-                  reportABug();
+                 await reportABug();
                 } catch (e) {
-                  Scaffold.of(context).showSnackBar(SnackBar(
-                    content: e.message,
-                    backgroundColor: Colors.red,
-                  ));
+                  BlocProvider.of<ReportABugBloc>(context)
+                      .add(ShowErrorSnackBarEvent(e.message));
                 }
+
+                Navigator.pop(context);
               }),
           ListTile(
             title: FutureBuilder(
@@ -113,7 +114,8 @@ class AppDrawer extends StatelessWidget {
               builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                 if (snapshot.hasData) {
                   return Text(snapshot.data);
-                } return Text("1.0.0");
+                }
+                return Text("1.0.0");
               },
             ),
             onTap: () {},

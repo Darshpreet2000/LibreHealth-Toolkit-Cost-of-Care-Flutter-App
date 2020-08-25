@@ -11,7 +11,7 @@ reportABug() async {
   if (await canLaunch(_emailLaunchUri.toString())) {
     await launch(_emailLaunchUri.toString());
   } else {
-    throw Exception('Could not launch');
+    throw Exception('No App found to send mail');
   }
 }
 

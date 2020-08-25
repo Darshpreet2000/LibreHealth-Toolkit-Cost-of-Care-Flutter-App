@@ -32,6 +32,7 @@ import 'package:path_provider/path_provider.dart';
 import 'bloc/compare_screen_bloc/compare_screen/compare_screen_bloc.dart';
 import 'bloc/download_cdm_bloc/download_cdm_list/download_cdm_bloc.dart';
 import 'bloc/download_cdm_bloc/download_cdm_progress/download_file_button_bloc.dart';
+import 'bloc/report_a_bug_bloc/report_a_bug_bloc.dart';
 import 'models/compare_hospital_model.dart';
 import 'models/download_cdm_model.dart';
 import 'models/hospitals.dart';
@@ -127,6 +128,9 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider<RefreshSavedCdmBloc>(
           create: (BuildContext context) => RefreshSavedCdmBloc(),
+        ),
+        BlocProvider<ReportABugBloc>(
+          create: (BuildContext context) => ReportABugBloc(),
         ),
       ],
       child: MaterialApp(
