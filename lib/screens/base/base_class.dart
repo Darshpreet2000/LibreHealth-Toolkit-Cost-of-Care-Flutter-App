@@ -97,7 +97,6 @@ class AppDrawer extends StatelessWidget {
               icon: Icons.bug_report,
               text: 'Report A Bug',
               onTap: () {
-                Navigator.pop(context);
                 try {
                   reportABug();
                 } catch (e) {
@@ -106,6 +105,7 @@ class AppDrawer extends StatelessWidget {
                     backgroundColor: Colors.red,
                   ));
                 }
+                Navigator.pop(context);
               }),
           ListTile(
             title: FutureBuilder(
