@@ -1,5 +1,5 @@
-import 'package:curativecare/bloc/search_screen_bloc/bottom_sheet/bloc.dart';
-import 'package:curativecare/widgets/dash.dart';
+import 'package:cost_of_care/bloc/search_screen_bloc/bottom_sheet/bloc.dart';
+import 'package:cost_of_care/widgets/dash.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -22,6 +22,7 @@ class _BottomSheetSwitch extends State<BottomSheetSwitch> {
   int priceRadioTile;
   bool searchBy;
   String searchByStringValue;
+
   @override
   void initState() {
     super.initState();

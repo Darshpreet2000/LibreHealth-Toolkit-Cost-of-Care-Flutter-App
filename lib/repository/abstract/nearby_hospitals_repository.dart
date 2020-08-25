@@ -1,4 +1,4 @@
-import 'package:curativecare/models/hospitals.dart';
+import 'package:cost_of_care/models/hospitals.dart';
 
 // To find Nearby Hospitals using coordinates
 abstract class NearbyHospitalsRepository {

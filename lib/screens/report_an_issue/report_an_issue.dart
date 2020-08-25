@@ -1,18 +1,23 @@
-import 'package:flutter/material.dart';
+import 'package:package_info/package_info.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class ReportIssue extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Report a Bug'),
-        centerTitle: true,
-        backgroundColor: Colors.orange,
-        leading: BackButton(color: Colors.white),
-      ),
-      body: Container(
-        child: Center(child: Text('Pending for now')),
-      ),
-    );
+reportABug() async {
+  String version = await getAppInfo();
+  final Uri _emailLaunchUri = Uri(
+    scheme: 'mailto',
+    path: 'costofcare225@gmail.com',
+    query: 'subject=Bug Report&body=App Version $version',
+  );
+  if (await canLaunch(_emailLaunchUri.toString())) {
+    await launch(_emailLaunchUri.toString());
+  } else {
+    throw Exception('Could not launch');
   }
+}
+
+Future getAppInfo() async {
+  PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+  String version = packageInfo.version;
+  return version;
 }

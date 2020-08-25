@@ -1,7 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:curativecare/bloc/search_screen_bloc/search_procedures/bloc.dart';
-import 'package:curativecare/models/search_model.dart';
-import 'package:curativecare/repository/search_screen_repository_impl.dart';
+import 'package:cost_of_care/bloc/search_screen_bloc/search_procedures/bloc.dart';
+import 'package:cost_of_care/models/search_model.dart';
+import 'package:cost_of_care/repository/search_screen_repository_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 

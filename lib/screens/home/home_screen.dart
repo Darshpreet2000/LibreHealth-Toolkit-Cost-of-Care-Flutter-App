@@ -1,6 +1,6 @@
-import 'package:curativecare/bloc/location_bloc/location_bloc.dart';
-import 'package:curativecare/bloc/location_bloc/user_location_events.dart';
-import 'package:curativecare/widgets/user_location.dart';
+import 'package:cost_of_care/bloc/location_bloc/location_bloc.dart';
+import 'package:cost_of_care/bloc/location_bloc/user_location_events.dart';
+import 'package:cost_of_care/widgets/user_location.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,6 +19,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   static const Color appBackgroundColor = Color(0xFFFFF7EC);
   final userLocationWidget = UserLocation(appBackgroundColor);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

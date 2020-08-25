@@ -1,9 +1,10 @@
-import 'package:curativecare/bloc/compare_screen_bloc/compare_screen_list/bloc.dart';
-import 'package:curativecare/bloc/compare_screen_bloc/compare_screen_list/compare_screen_list_bloc.dart';
-import 'package:curativecare/bloc/compare_screen_bloc/compare_screen_list/compare_screen_list_state.dart';
-import 'package:curativecare/models/compare_hospital_model.dart';
+import 'package:cost_of_care/bloc/compare_screen_bloc/compare_screen_list/bloc.dart';
+import 'package:cost_of_care/bloc/compare_screen_bloc/compare_screen_list/compare_screen_list_bloc.dart';
+import 'package:cost_of_care/bloc/compare_screen_bloc/compare_screen_list/compare_screen_list_state.dart';
+import 'package:cost_of_care/models/compare_hospital_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'list_tile.dart';
 
 class Body extends StatefulWidget {

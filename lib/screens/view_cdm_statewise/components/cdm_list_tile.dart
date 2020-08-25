@@ -1,20 +1,22 @@
-import 'package:curativecare/bloc/download_cdm_bloc/download_cdm_list/download_cdm_bloc.dart';
-import 'package:curativecare/bloc/download_cdm_bloc/download_cdm_list/download_cdm_event.dart';
-import 'package:curativecare/bloc/download_cdm_bloc/download_cdm_list/download_cdm_state.dart';
-import 'package:curativecare/bloc/download_cdm_bloc/download_cdm_progress/download_file_button_bloc.dart';
-import 'package:curativecare/bloc/download_cdm_bloc/download_cdm_progress/download_file_button_event.dart';
-import 'package:curativecare/bloc/download_cdm_bloc/download_cdm_progress/download_file_button_state.dart';
-import 'package:curativecare/bloc/saved_screen_bloc/saved_screen_bloc.dart';
-import 'package:curativecare/bloc/saved_screen_bloc/saved_screen_event.dart';
-import 'package:curativecare/models/download_cdm_model.dart';
-import 'package:curativecare/repository/download_cdm_repository_impl.dart';
-import 'package:curativecare/screens/view_cdm/view_cdm.dart';
+import 'package:cost_of_care/bloc/download_cdm_bloc/download_cdm_list/download_cdm_bloc.dart';
+import 'package:cost_of_care/bloc/download_cdm_bloc/download_cdm_list/download_cdm_event.dart';
+import 'package:cost_of_care/bloc/download_cdm_bloc/download_cdm_list/download_cdm_state.dart';
+import 'package:cost_of_care/bloc/download_cdm_bloc/download_cdm_progress/download_file_button_bloc.dart';
+import 'package:cost_of_care/bloc/download_cdm_bloc/download_cdm_progress/download_file_button_event.dart';
+import 'package:cost_of_care/bloc/download_cdm_bloc/download_cdm_progress/download_file_button_state.dart';
+import 'package:cost_of_care/bloc/refresh_saved_cdm_bloc/refresh_saved_cdm_bloc.dart';
+import 'package:cost_of_care/bloc/saved_screen_bloc/saved_screen_bloc.dart';
+import 'package:cost_of_care/bloc/saved_screen_bloc/saved_screen_event.dart';
+import 'package:cost_of_care/models/download_cdm_model.dart';
+import 'package:cost_of_care/repository/download_cdm_repository_impl.dart';
+import 'package:cost_of_care/screens/view_cdm/view_cdm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 class CDMListTile extends StatefulWidget {
   final String stateName;
+
   CDMListTile(this.stateName);
 
   @override
@@ -24,6 +26,7 @@ class CDMListTile extends StatefulWidget {
 class _CDMListTileState extends State<CDMListTile> {
   DownloadCdmBloc downloadCdmBloc;
   DownloadFileButtonBloc downloadFileButtonBloc;
+
   @override
   void initState() {
     super.initState();
@@ -73,7 +76,9 @@ class _CDMListTileState extends State<CDMListTile> {
             cubit: downloadFileButtonBloc,
             listener: (BuildContext context, DownloadFileButtonState state) {
               if (state is DownloadButtonLoaded) {
-                context.bloc<SavedScreenBloc>().add(LoadSavedData());
+                if (!(BlocProvider.of<RefreshSavedCdmBloc>(context).state
+                    is RefreshSavedCdmStart))
+                  context.bloc<SavedScreenBloc>().add(LoadSavedData());
 
                 downloadCdmBloc
                     .add(DownloadCDMRefreshList(state.index, widget.stateName));
@@ -173,7 +178,9 @@ Widget downloadWidget(DownloadCdmModel hospital, int index,
   return BlocBuilder(
     cubit: downloadFileButtonBloc,
     builder: (BuildContext context, DownloadFileButtonState state) {
-      if (state is DownloadButtonStream && index == state.index) {
+      if (state is DownloadButtonLoadingCircular && index == state.index) {
+        return CircularProgressIndicator();
+      } else if (state is DownloadButtonStream && index == state.index) {
         return StreamBuilder<FileResponse>(
             stream: state.fileStream,
             builder: (context, snapshot) {
@@ -260,10 +267,13 @@ Widget downloadWidget(DownloadCdmModel hospital, int index,
             splashColor: Colors.orange,
             borderRadius: BorderRadius.circular(20.0),
             onTap: () async {
-              if ((downloadFileButtonBloc.state
-                      is InitialDownloadFileButtonState) ||
-                  (downloadFileButtonBloc.state is DownloadButtonErrorState) ||
-                  (downloadFileButtonBloc.state is DownloadButtonLoaded)) {
+              if (((downloadFileButtonBloc.state
+                          is InitialDownloadFileButtonState) ||
+                      (downloadFileButtonBloc.state
+                          is DownloadButtonErrorState) ||
+                      (downloadFileButtonBloc.state is DownloadButtonLoaded)) &&
+                  !(BlocProvider.of<RefreshSavedCdmBloc>(context).state
+                      is RefreshSavedCdmStart)) {
                 downloadFileButtonBloc.add(DownloadFileButtonClick(
                     index,
                     hospital.hospitalName,

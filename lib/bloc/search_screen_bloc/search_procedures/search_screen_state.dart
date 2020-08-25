@@ -1,4 +1,4 @@
-import 'package:curativecare/models/search_model.dart';
+import 'package:cost_of_care/models/search_model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class SearchScreenState extends Equatable {

@@ -1,7 +1,7 @@
-import 'package:curativecare/bloc/search_screen_bloc/search_procedures/search_screen_bloc.dart';
-import 'package:curativecare/bloc/search_screen_bloc/search_procedures/search_screen_event.dart';
-import 'package:curativecare/screens/search/components/body.dart';
-import 'package:curativecare/screens/search/components/floating_action_button.dart';
+import 'package:cost_of_care/bloc/search_screen_bloc/search_procedures/search_screen_bloc.dart';
+import 'package:cost_of_care/bloc/search_screen_bloc/search_procedures/search_screen_event.dart';
+import 'package:cost_of_care/screens/search/components/body.dart';
+import 'package:cost_of_care/screens/search/components/floating_action_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';

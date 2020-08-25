@@ -1,9 +1,10 @@
-import 'package:curativecare/models/compare_hospital_model.dart';
-import 'package:curativecare/models/general_information.dart';
-import 'package:curativecare/models/patient_experience.dart';
-import 'package:curativecare/util/api_config.dart';
-import 'package:curativecare/util/states_abbreviation.dart';
+import 'package:cost_of_care/models/compare_hospital_model.dart';
+import 'package:cost_of_care/models/general_information.dart';
+import 'package:cost_of_care/models/patient_experience.dart';
+import 'package:cost_of_care/util/api_config.dart';
+import 'package:cost_of_care/util/states_abbreviation.dart';
 import 'package:dio/dio.dart';
+
 import 'hospital_image_client.dart';
 
 class CompareHospitalAPIClient {
@@ -36,9 +37,8 @@ class CompareHospitalAPIClient {
           throw Exception(
               "Problem connecting to the server. Please try again.");
         }
-      } else {
-        throw Exception("Problem connecting to the server. Please try again.");
       }
+      throw Exception("Problem connecting to the server. Please try again.");
     }
 
     List<dynamic> elements = response.data;
@@ -105,9 +105,8 @@ class CompareHospitalAPIClient {
           throw Exception(
               "Problem connecting to the server. Please try again.");
         }
-      } else {
-        throw Exception("Problem connecting to the server. Please try again.");
       }
+      throw Exception("Problem connecting to the server. Please try again.");
     }
     List<dynamic> elements = response.data;
     List<CompareHospitalModel> name = new List();
@@ -150,9 +149,8 @@ class CompareHospitalAPIClient {
           throw Exception(
               "Problem connecting to the server. Please try again.");
         }
-      } else {
-        throw Exception("Problem connecting to the server. Please try again.");
       }
+      throw Exception("Problem connecting to the server. Please try again.");
     }
 
     List<dynamic> elements = response.data;

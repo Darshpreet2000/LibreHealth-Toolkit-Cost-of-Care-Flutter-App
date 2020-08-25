@@ -1,4 +1,4 @@
-import 'package:curativecare/models/search_model.dart';
+import 'package:cost_of_care/models/search_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

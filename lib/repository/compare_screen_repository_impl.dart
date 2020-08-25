@@ -1,7 +1,8 @@
-import 'package:curativecare/main.dart';
-import 'package:curativecare/models/compare_hospital_model.dart';
-import 'package:curativecare/network/compare_hospital_api_client.dart';
+import 'package:cost_of_care/main.dart';
+import 'package:cost_of_care/models/compare_hospital_model.dart';
+import 'package:cost_of_care/network/compare_hospital_api_client.dart';
 import 'package:dio/dio.dart';
+
 import 'abstract/compare_screen_repository.dart';
 
 class CompareScreenRepositoryImpl extends CompareScreenRepository {

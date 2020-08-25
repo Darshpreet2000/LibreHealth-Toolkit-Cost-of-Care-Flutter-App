@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:curativecare/repository/view_cdm_statewise_repository_impl.dart';
+import 'package:cost_of_care/repository/view_cdm_statewise_repository_impl.dart';
 
 import './bloc.dart';
 
@@ -11,7 +11,9 @@ class ViewCdmStatewiseBloc
       : super(ViewCDMStatewiseLoadingState());
 
   ViewCDMStatewiseRepositoryImpl viewCDMStatewiseRepositoryImpl;
+
   ViewCdmStatewiseState get initialState => ViewCDMStatewiseLoadingState();
+
   @override
   Stream<ViewCdmStatewiseState> mapEventToState(
     ViewCdmStatewiseEvent event,

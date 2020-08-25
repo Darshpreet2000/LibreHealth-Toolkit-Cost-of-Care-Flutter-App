@@ -1,17 +1,21 @@
-import 'package:curativecare/bloc/download_cdm_bloc/download_cdm_list/bloc.dart';
-import 'package:curativecare/bloc/download_cdm_bloc/download_cdm_progress/bloc.dart';
-import 'package:curativecare/bloc/location_bloc/location_bloc.dart';
-import 'package:curativecare/bloc/location_bloc/user_location_state.dart';
-import 'package:curativecare/bloc/saved_screen_bloc/bloc.dart';
-import 'package:curativecare/models/download_cdm_model.dart';
-import 'package:curativecare/repository/download_cdm_repository_impl.dart';
+import 'package:cost_of_care/bloc/download_cdm_bloc/download_cdm_list/bloc.dart';
+import 'package:cost_of_care/bloc/download_cdm_bloc/download_cdm_progress/bloc.dart';
+import 'package:cost_of_care/bloc/location_bloc/location_bloc.dart';
+import 'package:cost_of_care/bloc/location_bloc/user_location_state.dart';
+import 'package:cost_of_care/bloc/refresh_saved_cdm_bloc/refresh_saved_cdm_bloc.dart';
+import 'package:cost_of_care/bloc/saved_screen_bloc/bloc.dart';
+import 'package:cost_of_care/models/download_cdm_model.dart';
+import 'package:cost_of_care/repository/download_cdm_repository_impl.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../main.dart';
 import 'list_tile.dart';
 
 class Body extends StatefulWidget {
   final String stateName;
+
   Body(this.stateName);
 
   @override
@@ -64,7 +68,9 @@ class _BodyState extends State<Body> {
                   if (state is DownloadButtonLoaded) {
                     BlocProvider.of<DownloadCdmBloc>(context).add(
                         DownloadCDMRefreshList(state.index, widget.stateName));
-                    context.bloc<SavedScreenBloc>().add(LoadSavedData());
+                    if (!(BlocProvider.of<RefreshSavedCdmBloc>(context).state
+                        is RefreshSavedCdmStart))
+                      context.bloc<SavedScreenBloc>().add(LoadSavedData());
                   } else if (state is DownloadButtonErrorState) {
                     Scaffold.of(context).showSnackBar(SnackBar(
                       content: Text(
@@ -88,8 +94,10 @@ class _BodyState extends State<Body> {
                     } else if (state is ErrorState) {
                       return Center(
                         child: Container(
+                          padding: EdgeInsets.all(8),
                           child: Text(
                             state.message,
+                            textAlign: TextAlign.center,
                             style: TextStyle(fontSize: 18),
                           ),
                         ),

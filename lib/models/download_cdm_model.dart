@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+
 part 'download_cdm_model.g.dart';
 
 @HiveType(typeId: 1)

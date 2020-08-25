@@ -1,4 +1,4 @@
-name: curativecare
+name: cost_of_care
 description: A new Flutter application.
 publish_to: 'none'
 version: 1.0.0+1
@@ -28,14 +28,21 @@ dependencies:
   location: ^3.0.0
   intro_slider: ^2.3.1
   permission_handler: ^5.0.1+1
-
-
+  package_info: ^0.4.3
 dev_dependencies:
   flutter_test:
     sdk: flutter
   hive_generator: ^0.7.0+2
   build_runner: ^1.10.0
   mockito: ^4.1.1
+  flutter_launcher_icons: ^0.7.5
+  change_app_package_name: ^0.1.2
+flutter_icons:
+  ios: true
+  android: true
+  image_path_ios: "assets/app_icon.png"
+  image_path_android: "assets/app_icon.png"
+
 flutter:
   uses-material-design: true
   assets:

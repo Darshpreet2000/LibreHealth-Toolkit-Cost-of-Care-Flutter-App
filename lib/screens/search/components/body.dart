@@ -1,9 +1,10 @@
-import 'package:curativecare/bloc/search_screen_bloc/bottom_sheet/bloc.dart';
-import 'package:curativecare/bloc/search_screen_bloc/search_procedures/search_screen_bloc.dart';
-import 'package:curativecare/bloc/search_screen_bloc/search_procedures/search_screen_event.dart';
-import 'package:curativecare/bloc/search_screen_bloc/search_procedures/search_screen_state.dart';
+import 'package:cost_of_care/bloc/search_screen_bloc/bottom_sheet/bloc.dart';
+import 'package:cost_of_care/bloc/search_screen_bloc/search_procedures/search_screen_bloc.dart';
+import 'package:cost_of_care/bloc/search_screen_bloc/search_procedures/search_screen_event.dart';
+import 'package:cost_of_care/bloc/search_screen_bloc/search_procedures/search_screen_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'list_tile.dart';
 
 class Body extends StatefulWidget {

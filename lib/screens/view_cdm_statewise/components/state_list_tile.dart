@@ -1,4 +1,4 @@
-import 'package:curativecare/screens/view_cdm_statewise/components/cdm_list_tile.dart';
+import 'package:cost_of_care/screens/view_cdm_statewise/components/cdm_list_tile.dart';
 import 'package:flutter/material.dart';
 
 class StateListTile extends StatelessWidget {

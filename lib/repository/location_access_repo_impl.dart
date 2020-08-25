@@ -1,4 +1,4 @@
-import 'package:curativecare/models/user_location_data.dart';
+import 'package:cost_of_care/models/user_location_data.dart';
 
 class LocationAccessRepositoryImpl {
   List<UserLocationData> stateCoordinatesList = [

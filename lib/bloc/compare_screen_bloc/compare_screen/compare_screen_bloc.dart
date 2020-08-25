@@ -1,9 +1,11 @@
 import 'dart:async';
+
 import 'package:bloc/bloc.dart';
-import 'package:curativecare/models/compare_hospital_model.dart';
-import 'package:curativecare/models/general_information.dart';
-import 'package:curativecare/models/patient_experience.dart';
-import 'package:curativecare/repository/compare_screen_repository_impl.dart';
+import 'package:cost_of_care/models/compare_hospital_model.dart';
+import 'package:cost_of_care/models/general_information.dart';
+import 'package:cost_of_care/models/patient_experience.dart';
+import 'package:cost_of_care/repository/compare_screen_repository_impl.dart';
+
 import './bloc.dart';
 
 class CompareScreenBloc extends Bloc<CompareScreenEvent, CompareScreenState> {
@@ -11,7 +13,9 @@ class CompareScreenBloc extends Bloc<CompareScreenEvent, CompareScreenState> {
 
   CompareScreenBloc(this.compareScreenRepositoryImpl)
       : super(CompareScreenLoadingState());
+
   CompareScreenState get initialState => CompareScreenLoadingState();
+
   @override
   Stream<CompareScreenState> mapEventToState(
     CompareScreenEvent event,

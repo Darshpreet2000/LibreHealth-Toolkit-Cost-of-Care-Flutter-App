@@ -1,8 +1,9 @@
-import 'package:curativecare/bloc/compare_screen_bloc/compare_screen_list/bloc.dart';
-import 'package:curativecare/models/compare_hospital_model.dart';
-import 'package:curativecare/screens/compare_hospitals/compare_hospital_screen/compare_hospitals_screen.dart';
+import 'package:cost_of_care/bloc/compare_screen_bloc/compare_screen_list/bloc.dart';
+import 'package:cost_of_care/models/compare_hospital_model.dart';
+import 'package:cost_of_care/screens/compare_hospitals/compare_hospital_screen/compare_hospitals_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'components/body.dart';
 
 class CompareHospitals extends StatefulWidget {

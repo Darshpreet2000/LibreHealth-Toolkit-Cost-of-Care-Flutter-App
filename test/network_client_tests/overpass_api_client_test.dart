@@ -1,4 +1,4 @@
-import 'package:curativecare/network/overpass_api_client.dart';
+import 'package:cost_of_care/network/overpass_api_client.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive/hive.dart';

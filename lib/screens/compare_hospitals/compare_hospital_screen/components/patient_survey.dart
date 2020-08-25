@@ -1,4 +1,4 @@
-import 'package:curativecare/models/patient_experience.dart';
+import 'package:cost_of_care/models/patient_experience.dart';
 import 'package:flutter/material.dart';
 
 class PatientSurveyWidget extends StatelessWidget {

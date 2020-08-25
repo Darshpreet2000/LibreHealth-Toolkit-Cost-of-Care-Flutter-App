@@ -1,4 +1,4 @@
-import 'package:curativecare/models/hospitals.dart';
+import 'package:cost_of_care/models/hospitals.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 

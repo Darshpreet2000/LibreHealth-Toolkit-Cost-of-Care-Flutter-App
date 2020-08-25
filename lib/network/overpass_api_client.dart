@@ -1,8 +1,10 @@
 import 'dart:async';
-import 'package:curativecare/models/hospitals.dart';
-import 'package:curativecare/util/api_config.dart';
+
+import 'package:cost_of_care/models/hospitals.dart';
+import 'package:cost_of_care/util/api_config.dart';
 import 'package:dio/dio.dart';
 import 'package:geolocator/geolocator.dart';
+
 import '../main.dart';
 
 class OverpassAPIClient {
@@ -11,6 +13,7 @@ class OverpassAPIClient {
   String longitude;
   Dio dio = new Dio();
   var openBox = box;
+
   Future fetchNearbyHospitals() async {
     String nearbyHospitalApi = ApiConfig().nearbyHospitalApi;
     latitude = openBox.get('latitude').toString();

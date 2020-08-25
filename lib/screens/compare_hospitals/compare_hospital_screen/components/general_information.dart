@@ -1,5 +1,5 @@
-import 'package:curativecare/models/general_information.dart';
-import 'package:curativecare/widgets/star_widget.dart';
+import 'package:cost_of_care/models/general_information.dart';
+import 'package:cost_of_care/widgets/star_widget.dart';
 import 'package:flutter/material.dart';
 
 class GeneralInformationWidget extends StatelessWidget {

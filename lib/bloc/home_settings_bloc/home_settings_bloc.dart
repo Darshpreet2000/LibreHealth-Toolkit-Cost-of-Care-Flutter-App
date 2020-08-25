@@ -1,7 +1,9 @@
 import 'dart:async';
+
 import 'package:bloc/bloc.dart';
-import 'package:curativecare/models/home_settings_model.dart';
-import 'package:curativecare/repository/home_settings_repository_impl.dart';
+import 'package:cost_of_care/models/home_settings_model.dart';
+import 'package:cost_of_care/repository/home_settings_repository_impl.dart';
+
 import './bloc.dart';
 
 class HomeSettingsBloc extends Bloc<HomeSettingsEvent, HomeSettingsState> {
@@ -9,7 +11,9 @@ class HomeSettingsBloc extends Bloc<HomeSettingsEvent, HomeSettingsState> {
 
   HomeSettingsBloc(this.homeSettingsRepository)
       : super(HomeSettingsLoadingState());
+
   HomeSettingsState get initialState => HomeSettingsLoadingState();
+
   @override
   Stream<HomeSettingsState> mapEventToState(
     HomeSettingsEvent event,

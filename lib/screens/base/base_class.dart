@@ -1,9 +1,11 @@
-import 'package:curativecare/screens/download_cdm/download_cdm_screen.dart';
-import 'package:curativecare/screens/home/home_screen.dart';
-import 'package:curativecare/screens/saved/saved_screen.dart';
-import 'package:curativecare/screens/share_app/share_app.dart';
+import 'package:cost_of_care/screens/download_cdm/download_cdm_screen.dart';
+import 'package:cost_of_care/screens/home/home_screen.dart';
+import 'package:cost_of_care/screens/report_an_issue/report_an_issue.dart';
+import 'package:cost_of_care/screens/saved/saved_screen.dart';
+import 'package:cost_of_care/screens/share_app/share_app.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:package_info/package_info.dart';
 
 class BaseClass extends StatefulWidget {
   @override
@@ -93,18 +95,39 @@ class AppDrawer extends StatelessWidget {
           Divider(),
           _createDrawerItem(
               icon: Icons.bug_report,
-              text: 'Report a bug',
-              onTap: () => {
-                    Navigator.pop(context),
-                    Navigator.pushNamed(context, '/ReportIssue')
-                  }),
+              text: 'Report A Bug',
+              onTap: () {
+                Navigator.pop(context);
+                try {
+                  reportABug();
+                } catch (e) {
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                    content: e.message,
+                    backgroundColor: Colors.red,
+                  ));
+                }
+              }),
           ListTile(
-            title: Text('0.0.1'),
+            title: FutureBuilder(
+              future: getAppInfo(),
+              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                if (snapshot.hasData) {
+                  return Text(snapshot.data);
+                } return Text("1.0.0");
+              },
+            ),
             onTap: () {},
           ),
         ],
       ),
     );
+  }
+
+  Future getAppInfo() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+    String version = packageInfo.version;
+    return version;
   }
 
   Widget _createDrawerItem(

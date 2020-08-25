@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:curativecare/models/hospitals.dart';
-import 'package:curativecare/repository/nearby_hospital_repository_impl.dart';
+import 'package:cost_of_care/models/hospitals.dart';
+import 'package:cost_of_care/repository/nearby_hospital_repository_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -27,6 +27,7 @@ class MakeListTile extends StatefulWidget {
 class _MakeListTileState extends State<MakeListTile> {
   NearbyHospitalsRepoImpl nearbyHospitalsRepository =
       new NearbyHospitalsRepoImpl();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -175,6 +176,7 @@ class _MakeListTileState extends State<MakeListTile> {
   }
 
   Future imageFuture;
+
   @override
   void initState() {
     super.initState();

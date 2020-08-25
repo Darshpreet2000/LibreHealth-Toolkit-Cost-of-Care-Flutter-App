@@ -1,4 +1,4 @@
-import 'package:curativecare/main.dart';
+import 'package:cost_of_care/main.dart';
 import 'package:flutter/material.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
@@ -19,13 +19,13 @@ class IntroScreenState extends State<IntroScreen> {
 
     slides.add(
       new Slide(
-        title: "Welcome \n To \n Cost Of Care",
-        maxLineTitle: 3,
+        title: "Cost Of Care \n By",
+        maxLineTitle: 2,
         styleTitle: TextStyle(
-            color: Color(0xffD02090),
-            fontSize: 30.0,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'RobotoMono'),
+          color: Colors.white,
+          fontSize: 36.0,
+          fontWeight: FontWeight.bold,
+        ),
         description:
             "We care for you by providing cost estimates for medical procedures of your nearby hospitals in US",
         styleDescription: TextStyle(
@@ -33,12 +33,12 @@ class IntroScreenState extends State<IntroScreen> {
             fontSize: 20.0,
             fontStyle: FontStyle.italic,
             fontFamily: 'Raleway'),
-        pathImage: "assets/app_icon_ideas.png",
-        colorBegin: Colors.white,
+        pathImage: "assets/libre_white.png",
+        colorBegin: Colors.orange,
         colorEnd: Colors.orange,
         directionColorBegin: Alignment.topCenter,
         directionColorEnd: Alignment.bottomCenter,
-        maxLineTextDescription: 5,
+        maxLineTextDescription: 4,
       ),
     );
     slides.add(

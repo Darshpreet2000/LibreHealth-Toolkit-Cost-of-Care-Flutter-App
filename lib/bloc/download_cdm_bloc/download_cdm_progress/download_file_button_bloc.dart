@@ -1,7 +1,9 @@
 import 'dart:async';
+
 import 'package:bloc/bloc.dart';
-import 'package:curativecare/repository/download_cdm_repository_impl.dart';
+import 'package:cost_of_care/repository/download_cdm_repository_impl.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+
 import './bloc.dart';
 
 class DownloadFileButtonBloc
@@ -10,7 +12,9 @@ class DownloadFileButtonBloc
 
   DownloadFileButtonBloc(this.downloadCDMRepositoryImpl)
       : super(InitialDownloadFileButtonState());
+
   DownloadFileButtonState get initialState => InitialDownloadFileButtonState();
+
   @override
   Stream<DownloadFileButtonState> mapEventToState(
     DownloadFileButtonEvent event,
@@ -29,7 +33,7 @@ class DownloadFileButtonBloc
       }
     } else if (event is DownloadFileButtonProgress) {
       yield DownloadButtonLoadingProgressIndicator(event.progress, event.index);
-      if (event.progress * 100 > 99) {
+      if (event.progress * 100 == 100) {
         yield DownloadButtonLoaded(event.index);
       }
     } else if (event is InsertInDatabase) {

@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:curativecare/models/hospitals.dart';
-import 'package:curativecare/network/hospital_image_client.dart';
-import 'package:curativecare/network/overpass_api_client.dart';
-import 'package:curativecare/repository/abstract/nearby_hospitals_repository.dart';
+import 'package:cost_of_care/models/hospitals.dart';
+import 'package:cost_of_care/network/hospital_image_client.dart';
+import 'package:cost_of_care/network/overpass_api_client.dart';
+import 'package:cost_of_care/repository/abstract/nearby_hospitals_repository.dart';
 
 import '../main.dart';
 

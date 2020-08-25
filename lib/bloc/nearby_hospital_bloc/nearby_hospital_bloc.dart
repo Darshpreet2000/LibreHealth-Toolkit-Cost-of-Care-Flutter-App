@@ -1,7 +1,9 @@
 import 'dart:async';
+
 import 'package:bloc/bloc.dart';
-import 'package:curativecare/models/hospitals.dart';
-import 'package:curativecare/repository/nearby_hospital_repository_impl.dart';
+import 'package:cost_of_care/models/hospitals.dart';
+import 'package:cost_of_care/repository/nearby_hospital_repository_impl.dart';
+
 import './bloc.dart';
 
 class NearbyHospitalBloc
@@ -10,7 +12,9 @@ class NearbyHospitalBloc
 
   NearbyHospitalBloc(this.nearbyHospitalsServices)
       : super(NearbyHospitalsLoadingState());
+
   NearbyHospitalState get initialState => NearbyHospitalsLoadingState();
+
   @override
   Stream<NearbyHospitalState> mapEventToState(
     NearbyHospitalEvent event,

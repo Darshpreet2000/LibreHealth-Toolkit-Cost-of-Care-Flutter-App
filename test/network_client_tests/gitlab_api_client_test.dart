@@ -1,6 +1,6 @@
-import 'package:curativecare/bloc/download_cdm_bloc/download_cdm_progress/bloc.dart';
-import 'package:curativecare/network/gitlab_api_client.dart';
-import 'package:curativecare/repository/download_cdm_repository_impl.dart';
+import 'package:cost_of_care/bloc/download_cdm_bloc/download_cdm_progress/bloc.dart';
+import 'package:cost_of_care/network/gitlab_api_client.dart';
+import 'package:cost_of_care/repository/download_cdm_repository_impl.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';

@@ -1,4 +1,4 @@
-import 'package:curativecare/network/gitlab_api_client.dart';
+import 'package:cost_of_care/network/gitlab_api_client.dart';
 import 'package:dio/dio.dart';
 
 import '../main.dart';
@@ -10,6 +10,7 @@ class ViewCDMStatewiseRepositoryImpl extends ViewCDMStatewiseRepository {
       connectTimeout: 15 * 1000, // 60 seconds
       receiveTimeout: 15 * 1000 // 60 seconds
       );
+
   @override
   Future getListOfStates() {
     GitLabApiClient gitLabApiClient = new GitLabApiClient(Dio(options));

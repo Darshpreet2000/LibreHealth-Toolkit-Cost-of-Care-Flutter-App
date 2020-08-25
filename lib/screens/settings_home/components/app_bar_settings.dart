@@ -1,6 +1,6 @@
-import 'package:curativecare/bloc/home_settings_bloc/bloc.dart';
-import 'package:curativecare/bloc/location_bloc/location_bloc.dart';
-import 'package:curativecare/bloc/location_bloc/user_location_events.dart';
+import 'package:cost_of_care/bloc/home_settings_bloc/bloc.dart';
+import 'package:cost_of_care/bloc/location_bloc/location_bloc.dart';
+import 'package:cost_of_care/bloc/location_bloc/user_location_events.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

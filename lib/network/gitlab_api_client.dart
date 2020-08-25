@@ -1,8 +1,10 @@
-import 'package:curativecare/bloc/download_cdm_bloc/download_cdm_progress/download_file_button_event.dart';
-import 'package:curativecare/models/download_cdm_model.dart';
-import 'package:curativecare/util/api_config.dart';
+import 'package:cost_of_care/bloc/download_cdm_bloc/download_cdm_progress/download_file_button_event.dart';
+import 'package:cost_of_care/models/download_cdm_model.dart';
+import 'package:cost_of_care/util/api_config.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+
+import '../main.dart';
 
 class GitLabApiClient {
   Dio dio;
@@ -30,9 +32,8 @@ class GitLabApiClient {
           throw Exception(
               "Problem connecting to the server. Please try again.");
         }
-      } else {
-        throw Exception("Problem connecting to the server. Please try again.");
       }
+      throw Exception("Problem connecting to the server. Please try again.");
     }
 
     List<dynamic> responseBody = response.data;
@@ -72,9 +73,8 @@ class GitLabApiClient {
           throw Exception(
               "Problem connecting to the server. Please try again.");
         }
-      } else {
-        throw Exception("Problem connecting to the server. Please try again.");
       }
+      throw Exception("Problem connecting to the server. Please try again.");
     }
 
     var headers = response.headers;
@@ -103,10 +103,8 @@ class GitLabApiClient {
             throw Exception(
                 "Problem connecting to the server. Please try again.");
           }
-        } else {
-          throw Exception(
-              "Problem connecting to the server. Please try again.");
         }
+        throw Exception("Problem connecting to the server. Please try again.");
       }
       responseBody.addAll(response.data);
       i++;
@@ -152,9 +150,8 @@ class GitLabApiClient {
           throw Exception(
               "Problem connecting to the server. Please try again.");
         }
-      } else {
-        throw Exception("Problem connecting to the server. Please try again.");
       }
+      throw Exception("Problem connecting to the server. Please try again.");
     }
   }
 
@@ -162,6 +159,8 @@ class GitLabApiClient {
     String url = ApiConfig().downloadCDMApi +
         "/${event.stateName}/${event.hospitalName}" +
         ".csv";
+    //Saving stateName for refreshing
+    box.put(event.hospitalName, event.stateName);
     Stream<FileResponse> fileStream;
     //FileStream is handled properly by stream builder. So, testing is not required
     fileStream = DefaultCacheManager().getFileStream(url, withProgress: true);

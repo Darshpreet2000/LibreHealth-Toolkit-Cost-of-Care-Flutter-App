@@ -1,5 +1,6 @@
-import 'package:curativecare/screens/search/search_screen.dart';
+import 'package:cost_of_care/screens/search/search_screen.dart';
 import 'package:flutter/material.dart';
+
 import 'components/body.dart';
 
 class ViewCDM extends StatefulWidget {

@@ -1,9 +1,9 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:curativecare/bloc/compare_screen_bloc/compare_screen_list/compare_screen_list_bloc.dart';
-import 'package:curativecare/bloc/compare_screen_bloc/compare_screen_list/compare_screen_list_event.dart';
-import 'package:curativecare/bloc/compare_screen_bloc/compare_screen_list/compare_screen_list_state.dart';
-import 'package:curativecare/models/compare_hospital_model.dart';
-import 'package:curativecare/repository/compare_screen_repository_impl.dart';
+import 'package:cost_of_care/bloc/compare_screen_bloc/compare_screen_list/compare_screen_list_bloc.dart';
+import 'package:cost_of_care/bloc/compare_screen_bloc/compare_screen_list/compare_screen_list_event.dart';
+import 'package:cost_of_care/bloc/compare_screen_bloc/compare_screen_list/compare_screen_list_state.dart';
+import 'package:cost_of_care/models/compare_hospital_model.dart';
+import 'package:cost_of_care/repository/compare_screen_repository_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 

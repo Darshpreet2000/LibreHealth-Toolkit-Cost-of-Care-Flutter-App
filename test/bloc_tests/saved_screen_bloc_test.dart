@@ -1,6 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:curativecare/bloc/saved_screen_bloc/bloc.dart';
-import 'package:curativecare/repository/saved_screen_repository_impl.dart';
+import 'package:cost_of_care/bloc/saved_screen_bloc/bloc.dart';
+import 'package:cost_of_care/models/download_cdm_model.dart';
+import 'package:cost_of_care/repository/saved_screen_repository_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
@@ -22,8 +23,8 @@ void main() {
     expect(savedScreenBloc.initialState, SavedScreenLoadingState());
   });
   group('SavedScreenBloc test', () {
-    List<String> tableNames = new List();
-    tableNames.add("Alaska Regional Hospital");
+    List<DownloadCdmModel> tableNames = new List();
+    tableNames.add(DownloadCdmModel("Alaska Regional Hospital", 1));
     blocTest(
       'emits [SavedScreenLoadingState(), SavedScreenLoadedState()] when LoadSavedData is added',
       build: () {
@@ -37,7 +38,7 @@ void main() {
     blocTest(
       'emits [SavedScreenLoadingState(), SavedScreenErrorState] when LoadSavedData is added',
       build: () {
-        List<String> tableNames = new List();
+        List<DownloadCdmModel> tableNames = new List();
         when(savedScreenRepoImpl.getAllTables())
             .thenAnswer((realInvocation) => Future.value(tableNames));
         return savedScreenBloc;
@@ -51,7 +52,7 @@ void main() {
     blocTest(
       'emits [SavedScreenErrorState] when LoadSavedData is added',
       build: () {
-        List<String> tableNames = new List();
+        List<DownloadCdmModel> tableNames = new List();
         when(savedScreenRepoImpl.getAllTables())
             .thenAnswer((realInvocation) => Future.value(tableNames));
         return savedScreenBloc;

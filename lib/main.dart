@@ -1,33 +1,34 @@
-import 'package:curativecare/bloc/compare_screen_bloc/compare_screen_list/bloc.dart';
-import 'package:curativecare/bloc/home_settings_bloc/bloc.dart';
-import 'package:curativecare/bloc/location_bloc/location_bloc.dart';
-import 'package:curativecare/bloc/nearby_hospital_bloc/bloc.dart';
-import 'package:curativecare/bloc/saved_screen_bloc/saved_screen_bloc.dart';
-import 'package:curativecare/bloc/search_screen_bloc/bottom_sheet/bloc.dart';
-import 'package:curativecare/bloc/search_screen_bloc/search_procedures/bloc.dart';
-import 'package:curativecare/bloc/view_cdm_screen_bloc/bloc.dart';
-import 'package:curativecare/bloc/view_cdm_statewise_screen_bloc/bloc.dart';
-import 'package:curativecare/repository/compare_screen_repository_impl.dart';
-import 'package:curativecare/repository/download_cdm_repository_impl.dart';
-import 'package:curativecare/repository/home_settings_repository_impl.dart';
-import 'package:curativecare/repository/location_repository_impl.dart';
-import 'package:curativecare/repository/nearby_hospital_repository_impl.dart';
-import 'package:curativecare/repository/saved_screen_repository_impl.dart';
-import 'package:curativecare/repository/search_screen_repository_impl.dart';
-import 'package:curativecare/repository/view_cdm_screen_repository_impl.dart';
-import 'package:curativecare/repository/view_cdm_statewise_repository_impl.dart';
-import 'package:curativecare/screens/about/about.dart';
-import 'package:curativecare/screens/base/base_class.dart';
-import 'package:curativecare/screens/compare_hospitals/compare_hospitals_list/compare_hospital.dart';
-import 'package:curativecare/screens/intro/intro_screen.dart';
-import 'package:curativecare/screens/report_an_issue/report_an_issue.dart';
-import 'package:curativecare/screens/search/search_screen.dart';
-import 'package:curativecare/screens/settings_home/settings_home.dart';
-import 'package:curativecare/screens/view_cdm_statewise/view_cdm_statewise.dart';
+import 'package:cost_of_care/bloc/compare_screen_bloc/compare_screen_list/bloc.dart';
+import 'package:cost_of_care/bloc/home_settings_bloc/bloc.dart';
+import 'package:cost_of_care/bloc/location_bloc/location_bloc.dart';
+import 'package:cost_of_care/bloc/nearby_hospital_bloc/bloc.dart';
+import 'package:cost_of_care/bloc/refresh_saved_cdm_bloc/refresh_saved_cdm_bloc.dart';
+import 'package:cost_of_care/bloc/saved_screen_bloc/saved_screen_bloc.dart';
+import 'package:cost_of_care/bloc/search_screen_bloc/bottom_sheet/bloc.dart';
+import 'package:cost_of_care/bloc/search_screen_bloc/search_procedures/bloc.dart';
+import 'package:cost_of_care/bloc/view_cdm_screen_bloc/bloc.dart';
+import 'package:cost_of_care/bloc/view_cdm_statewise_screen_bloc/bloc.dart';
+import 'package:cost_of_care/repository/compare_screen_repository_impl.dart';
+import 'package:cost_of_care/repository/download_cdm_repository_impl.dart';
+import 'package:cost_of_care/repository/home_settings_repository_impl.dart';
+import 'package:cost_of_care/repository/location_repository_impl.dart';
+import 'package:cost_of_care/repository/nearby_hospital_repository_impl.dart';
+import 'package:cost_of_care/repository/saved_screen_repository_impl.dart';
+import 'package:cost_of_care/repository/search_screen_repository_impl.dart';
+import 'package:cost_of_care/repository/view_cdm_screen_repository_impl.dart';
+import 'package:cost_of_care/repository/view_cdm_statewise_repository_impl.dart';
+import 'package:cost_of_care/screens/about/about.dart';
+import 'package:cost_of_care/screens/base/base_class.dart';
+import 'package:cost_of_care/screens/compare_hospitals/compare_hospitals_list/compare_hospital.dart';
+import 'package:cost_of_care/screens/intro/intro_screen.dart';
+import 'package:cost_of_care/screens/search/search_screen.dart';
+import 'package:cost_of_care/screens/settings_home/settings_home.dart';
+import 'package:cost_of_care/screens/view_cdm_statewise/view_cdm_statewise.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
+
 import 'bloc/compare_screen_bloc/compare_screen/compare_screen_bloc.dart';
 import 'bloc/download_cdm_bloc/download_cdm_list/download_cdm_bloc.dart';
 import 'bloc/download_cdm_bloc/download_cdm_progress/download_file_button_bloc.dart';
@@ -63,6 +64,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String initialAppRoute = '/BaseClass';
+
   @override
   void initState() {
     super.initState();
@@ -107,6 +109,7 @@ class _MyAppState extends State<MyApp> {
               BottomSheetBloc(SearchScreenRepositoryImpl()),
         ),
         BlocProvider<DownloadFileButtonBloc>(
+          lazy: false,
           create: (BuildContext context) =>
               DownloadFileButtonBloc(DownloadCDMRepositoryImpl()),
         ),
@@ -121,6 +124,9 @@ class _MyAppState extends State<MyApp> {
         BlocProvider<CompareScreenBloc>(
           create: (BuildContext context) =>
               CompareScreenBloc(CompareScreenRepositoryImpl()),
+        ),
+        BlocProvider<RefreshSavedCdmBloc>(
+          create: (BuildContext context) => RefreshSavedCdmBloc(),
         ),
       ],
       child: MaterialApp(
@@ -144,7 +150,6 @@ class _MyAppState extends State<MyApp> {
           '/ViewCDMStatewise': (context) => ViewCDMStatewise(),
           '/CompareHospitals': (context) => CompareHospitals(),
           '/About': (context) => About(),
-          '/ReportIssue': (context) => ReportIssue(),
         },
         initialRoute: initialAppRoute,
       ),

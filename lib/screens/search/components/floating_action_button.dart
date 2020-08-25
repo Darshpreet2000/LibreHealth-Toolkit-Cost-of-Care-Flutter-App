@@ -1,4 +1,4 @@
-import 'package:curativecare/screens/search/components/bottom_sheet_switch.dart';
+import 'package:cost_of_care/screens/search/components/bottom_sheet_switch.dart';
 import 'package:flutter/material.dart';
 
 class FloatingAction extends StatefulWidget {

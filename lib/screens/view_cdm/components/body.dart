@@ -1,4 +1,4 @@
-import 'package:curativecare/screens/view_cdm/components/cdm.dart';
+import 'package:cost_of_care/screens/view_cdm/components/cdm.dart';
 import 'package:flutter/material.dart';
 
 class Body extends StatefulWidget {

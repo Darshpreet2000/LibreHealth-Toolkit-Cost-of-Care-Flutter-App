@@ -1,7 +1,7 @@
-import 'package:curativecare/models/compare_hospital_model.dart';
-import 'package:curativecare/models/general_information.dart';
-import 'package:curativecare/models/patient_experience.dart';
-import 'package:curativecare/network/compare_hospital_api_client.dart';
+import 'package:cost_of_care/models/compare_hospital_model.dart';
+import 'package:cost_of_care/models/general_information.dart';
+import 'package:cost_of_care/models/patient_experience.dart';
+import 'package:cost_of_care/network/compare_hospital_api_client.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';

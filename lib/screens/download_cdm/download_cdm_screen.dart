@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
+
 import '../../main.dart';
 import 'components/body.dart';
 
-class DownloadCDMScreen extends StatefulWidget {
-  @override
-  _DownloadCDMScreenState createState() => _DownloadCDMScreenState();
-}
-
-class _DownloadCDMScreenState extends State<DownloadCDMScreen> {
+class DownloadCDMScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

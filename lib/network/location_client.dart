@@ -1,6 +1,7 @@
 import 'dart:async';
-import 'package:curativecare/models/user_location_data.dart';
-import 'package:curativecare/util/states_abbreviation.dart';
+
+import 'package:cost_of_care/models/user_location_data.dart';
+import 'package:cost_of_care/util/states_abbreviation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:location/location.dart';
 

@@ -1,5 +1,5 @@
-import 'package:curativecare/models/user_location_data.dart';
-import 'package:curativecare/network/location_client.dart';
+import 'package:cost_of_care/models/user_location_data.dart';
+import 'package:cost_of_care/network/location_client.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:location/location.dart';

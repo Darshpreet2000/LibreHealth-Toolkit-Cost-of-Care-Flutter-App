@@ -1,8 +1,8 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:curativecare/bloc/location_bloc/location_bloc.dart';
-import 'package:curativecare/bloc/location_bloc/user_location_events.dart';
-import 'package:curativecare/bloc/location_bloc/user_location_state.dart';
-import 'package:curativecare/repository/location_repository_impl.dart';
+import 'package:cost_of_care/bloc/location_bloc/location_bloc.dart';
+import 'package:cost_of_care/bloc/location_bloc/user_location_events.dart';
+import 'package:cost_of_care/bloc/location_bloc/user_location_state.dart';
+import 'package:cost_of_care/repository/location_repository_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 

@@ -17,7 +17,8 @@ class DownloadFileButtonClick extends DownloadFileButtonEvent {
       this.downloadFileButtonBloc);
 
   @override
-  List<Object> get props => [index, hospitalName, stateName];
+  List<Object> get props =>
+      [index, hospitalName, stateName, downloadFileButtonBloc];
 }
 
 class DownloadFileButtonProgress extends DownloadFileButtonEvent {

@@ -1,7 +1,8 @@
-import 'package:curativecare/bloc/download_cdm_bloc/download_cdm_progress/download_file_button_event.dart';
-import 'package:curativecare/database/hospital_database.dart';
-import 'package:curativecare/models/search_model.dart';
+import 'package:cost_of_care/bloc/download_cdm_bloc/download_cdm_progress/download_file_button_event.dart';
+import 'package:cost_of_care/database/hospital_database.dart';
+import 'package:cost_of_care/models/search_model.dart';
 import 'package:sqflite/sqflite.dart';
+
 import '../main.dart';
 
 class DatabaseDao {
@@ -33,7 +34,8 @@ class DatabaseDao {
     return tableNames;
   }
 
-  Future insertData(InsertInDatabase event, List<SearchModel> cdmList) async {
+  Future insertDataInCDM(
+      InsertInDatabase event, List<SearchModel> cdmList) async {
     String tableName = event.hospitalName;
     final database = await dbProvider.database;
     tableName = "`$tableName`";
@@ -69,7 +71,7 @@ class DatabaseDao {
     return;
   }
 
-  Future<List<SearchModel>> readData(String name) async {
+  Future<List<SearchModel>> readDataFromCDM(String name) async {
     name = "`$name`";
 
     final database = await dbProvider.database;

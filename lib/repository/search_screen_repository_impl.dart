@@ -1,6 +1,6 @@
-import 'package:curativecare/dao/database_dao.dart';
-import 'package:curativecare/models/search_model.dart';
-import 'package:curativecare/repository/abstract/search_screen_repository.dart';
+import 'package:cost_of_care/dao/database_dao.dart';
+import 'package:cost_of_care/models/search_model.dart';
+import 'package:cost_of_care/repository/abstract/search_screen_repository.dart';
 
 import '../main.dart';
 

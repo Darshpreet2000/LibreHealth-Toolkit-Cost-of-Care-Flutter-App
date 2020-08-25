@@ -1,8 +1,8 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:curativecare/bloc/download_cdm_bloc/download_cdm_progress/bloc.dart';
-import 'package:curativecare/repository/download_cdm_repository_impl.dart';
+import 'package:cost_of_care/bloc/download_cdm_bloc/download_cdm_progress/bloc.dart';
+import 'package:cost_of_care/repository/download_cdm_repository_impl.dart';
 import 'package:mockito/mockito.dart';
 
 class MockDownloadCDMRepoImpl extends Mock

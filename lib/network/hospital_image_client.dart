@@ -1,4 +1,4 @@
-import 'package:curativecare/util/api_config.dart';
+import 'package:cost_of_care/util/api_config.dart';
 import 'package:dio/dio.dart';
 import 'package:html/parser.dart';
 

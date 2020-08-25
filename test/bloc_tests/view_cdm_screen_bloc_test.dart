@@ -1,7 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:curativecare/bloc/view_cdm_screen_bloc/bloc.dart';
-import 'package:curativecare/models/search_model.dart';
-import 'package:curativecare/repository/view_cdm_screen_repository_impl.dart';
+import 'package:cost_of_care/bloc/view_cdm_screen_bloc/bloc.dart';
+import 'package:cost_of_care/models/search_model.dart';
+import 'package:cost_of_care/repository/view_cdm_screen_repository_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 

@@ -34,7 +34,7 @@ class About extends StatelessWidget {
                   "The Goal of this Cost Of Care Project is to provide patient friendly costs of care, to help patients get better cost estimates for medical procedures of US Hospitals." +
                       " User can view the chargemaster, search for a particular procedure in multiple hospitals chargemasters & can sort data by Category or sort by price in ascending or descending order." +
                       " App downloads hospitals chargemaster from GitLab Repository and save it to local storage of phone in SQL database." +
-                      " This App can work offline and updates data once in a month." +
+                      " This App can work offline and can update downloaded data." +
                       "\n This is Free & Open Source project," +
                       " you can visit to LibreHealth to know more about it & can contribute if you have an interesting idea",
                   style: TextStyle(
@@ -55,7 +55,14 @@ class About extends StatelessWidget {
                     ),
                     color: Colors.white,
                     onPressed: () {
-                      _launchURL();
+                      try {
+                        _launchURL();
+                      } catch (e) {
+                        Scaffold.of(context).showSnackBar(SnackBar(
+                          content: e.message,
+                          backgroundColor: Colors.red,
+                        ));
+                      }
                     },
                     padding: EdgeInsets.all(8),
                     child: Text(
@@ -85,7 +92,7 @@ class About extends StatelessWidget {
     if (await canLaunch(url)) {
       await launch(url);
     } else {
-      throw 'Could not launch $url';
+      throw 'Could not launch';
     }
   }
 }

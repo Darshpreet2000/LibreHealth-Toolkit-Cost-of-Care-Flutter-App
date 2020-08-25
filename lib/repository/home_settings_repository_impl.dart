@@ -1,4 +1,4 @@
-import 'package:curativecare/models/home_settings_model.dart';
+import 'package:cost_of_care/models/home_settings_model.dart';
 
 import '../main.dart';
 import 'abstract/home_settings_repository.dart';

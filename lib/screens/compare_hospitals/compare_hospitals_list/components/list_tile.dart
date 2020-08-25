@@ -1,5 +1,5 @@
-import 'package:curativecare/bloc/compare_screen_bloc/compare_screen_list/bloc.dart';
-import 'package:curativecare/models/compare_hospital_model.dart';
+import 'package:cost_of_care/bloc/compare_screen_bloc/compare_screen_list/bloc.dart';
+import 'package:cost_of_care/models/compare_hospital_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

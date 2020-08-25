@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:curativecare/bloc/compare_screen_bloc/compare_screen/bloc.dart';
-import 'package:curativecare/bloc/compare_screen_bloc/compare_screen/compare_screen_bloc.dart';
-import 'package:curativecare/bloc/compare_screen_bloc/compare_screen/compare_screen_state.dart';
-import 'package:curativecare/models/compare_hospital_model.dart';
-import 'package:curativecare/repository/compare_screen_repository_impl.dart';
-import 'package:curativecare/screens/compare_hospitals/compare_hospital_screen/components/general_information.dart';
-import 'package:curativecare/screens/compare_hospitals/compare_hospital_screen/components/patient_survey.dart';
+import 'package:cost_of_care/bloc/compare_screen_bloc/compare_screen/bloc.dart';
+import 'package:cost_of_care/bloc/compare_screen_bloc/compare_screen/compare_screen_bloc.dart';
+import 'package:cost_of_care/bloc/compare_screen_bloc/compare_screen/compare_screen_state.dart';
+import 'package:cost_of_care/models/compare_hospital_model.dart';
+import 'package:cost_of_care/repository/compare_screen_repository_impl.dart';
+import 'package:cost_of_care/screens/compare_hospitals/compare_hospital_screen/components/general_information.dart';
+import 'package:cost_of_care/screens/compare_hospitals/compare_hospital_screen/components/patient_survey.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,6 +23,7 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   CompareScreenRepositoryImpl compareScreenRepositoryImpl =
       new CompareScreenRepositoryImpl();
+
   @override
   void initState() {
     super.initState();
@@ -72,6 +73,7 @@ class _BodyState extends State<Body> {
                   child: Center(
                     child: Text(
                       state.message,
+                      textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 18),
                     ),
                   ),

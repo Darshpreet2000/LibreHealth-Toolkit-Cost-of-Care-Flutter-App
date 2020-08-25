@@ -1,6 +1,8 @@
 import 'dart:async';
+
 import 'package:bloc/bloc.dart';
-import 'package:curativecare/repository/search_screen_repository_impl.dart';
+import 'package:cost_of_care/repository/search_screen_repository_impl.dart';
+
 import './bloc.dart';
 
 class BottomSheetBloc extends Bloc<BottomSheetEvent, BottomSheetState> {

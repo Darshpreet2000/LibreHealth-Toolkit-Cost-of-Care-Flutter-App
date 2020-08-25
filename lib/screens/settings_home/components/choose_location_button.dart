@@ -1,9 +1,9 @@
-import 'package:curativecare/bloc/home_settings_bloc/home_settings_bloc.dart';
-import 'package:curativecare/bloc/home_settings_bloc/home_settings_event.dart';
-import 'package:curativecare/bloc/home_settings_bloc/home_settings_state.dart';
-import 'package:curativecare/models/home_settings_model.dart';
-import 'package:curativecare/models/user_location_data.dart';
-import 'package:curativecare/repository/location_access_repo_impl.dart';
+import 'package:cost_of_care/bloc/home_settings_bloc/home_settings_bloc.dart';
+import 'package:cost_of_care/bloc/home_settings_bloc/home_settings_event.dart';
+import 'package:cost_of_care/bloc/home_settings_bloc/home_settings_state.dart';
+import 'package:cost_of_care/models/home_settings_model.dart';
+import 'package:cost_of_care/models/user_location_data.dart';
+import 'package:cost_of_care/repository/location_access_repo_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,6 +21,7 @@ class _LocationButtonState extends State<LocationButton> {
 
   final Color mainChooseLocation = Colors.white;
   String changeLocationText = 'Select a US state';
+
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'components/alert_dialog.dart';
 import 'components/body.dart';
 
 class Saved extends StatefulWidget {
@@ -18,6 +19,20 @@ class _SavedState extends State<Saved> {
             style: TextStyle(color: Colors.white),
           ),
           centerTitle: true,
+          actions: [
+            Padding(
+                padding: EdgeInsets.only(right: 15.0),
+                child: InkWell(
+                  onTap: () {
+                    showRefreshDialog(context);
+                  },
+                  child: Icon(
+                    Icons.refresh,
+                    size: 26.0,
+                    color: Colors.white,
+                  ),
+                )),
+          ],
         ),
         body: Body());
   }

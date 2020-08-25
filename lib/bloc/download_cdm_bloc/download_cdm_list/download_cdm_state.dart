@@ -1,4 +1,4 @@
-import 'package:curativecare/models/download_cdm_model.dart';
+import 'package:cost_of_care/models/download_cdm_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 

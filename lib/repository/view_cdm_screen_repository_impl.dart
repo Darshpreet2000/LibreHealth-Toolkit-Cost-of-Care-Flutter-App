@@ -1,5 +1,5 @@
-import 'package:curativecare/models/search_model.dart';
-import 'package:curativecare/repository/database_repository_impl.dart';
+import 'package:cost_of_care/models/search_model.dart';
+import 'package:cost_of_care/repository/database_repository_impl.dart';
 
 import 'abstract/view_cdm_screen_repository.dart';
 

@@ -1,7 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:curativecare/bloc/nearby_hospital_bloc/bloc.dart';
-import 'package:curativecare/models/hospitals.dart';
-import 'package:curativecare/repository/nearby_hospital_repository_impl.dart';
+import 'package:cost_of_care/bloc/nearby_hospital_bloc/bloc.dart';
+import 'package:cost_of_care/models/hospitals.dart';
+import 'package:cost_of_care/repository/nearby_hospital_repository_impl.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';

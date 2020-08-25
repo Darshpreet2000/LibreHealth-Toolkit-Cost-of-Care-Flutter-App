@@ -1,9 +1,9 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:curativecare/bloc/home_settings_bloc/home_settings_bloc.dart';
-import 'package:curativecare/bloc/home_settings_bloc/home_settings_event.dart';
-import 'package:curativecare/bloc/home_settings_bloc/home_settings_state.dart';
-import 'package:curativecare/models/home_settings_model.dart';
-import 'package:curativecare/repository/home_settings_repository_impl.dart';
+import 'package:cost_of_care/bloc/home_settings_bloc/home_settings_bloc.dart';
+import 'package:cost_of_care/bloc/home_settings_bloc/home_settings_event.dart';
+import 'package:cost_of_care/bloc/home_settings_bloc/home_settings_state.dart';
+import 'package:cost_of_care/models/home_settings_model.dart';
+import 'package:cost_of_care/repository/home_settings_repository_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 

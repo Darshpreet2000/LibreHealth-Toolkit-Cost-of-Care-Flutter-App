@@ -1,7 +1,9 @@
 import 'dart:async';
+
 import 'package:bloc/bloc.dart';
-import 'package:curativecare/models/compare_hospital_model.dart';
-import 'package:curativecare/repository/compare_screen_repository_impl.dart';
+import 'package:cost_of_care/models/compare_hospital_model.dart';
+import 'package:cost_of_care/repository/compare_screen_repository_impl.dart';
+
 import './bloc.dart';
 import 'compare_screen_list_event.dart';
 import 'compare_screen_list_state.dart';
@@ -13,7 +15,9 @@ class CompareScreenListBloc
 
   CompareScreenListBloc(this.compareScreenRepositoryImpl)
       : super(CompareScreenListLoadingState());
+
   CompareScreenListState get initialState => CompareScreenListLoadingState();
+
   @override
   Stream<CompareScreenListState> mapEventToState(
     CompareScreenListEvent event,

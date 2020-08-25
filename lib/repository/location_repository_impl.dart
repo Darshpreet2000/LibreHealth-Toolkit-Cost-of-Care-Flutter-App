@@ -1,9 +1,11 @@
 import 'dart:async';
-import 'package:curativecare/models/user_location_data.dart';
-import 'package:curativecare/network/location_client.dart';
-import 'package:curativecare/repository/abstract/location_repository.dart';
+
+import 'package:cost_of_care/models/user_location_data.dart';
+import 'package:cost_of_care/network/location_client.dart';
+import 'package:cost_of_care/repository/abstract/location_repository.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:location/location.dart';
+
 import '../main.dart';
 
 class LocationRepoImpl implements LocationRepository {

@@ -1,7 +1,8 @@
-import 'package:curativecare/bloc/view_cdm_screen_bloc/bloc.dart';
-import 'package:curativecare/models/search_model.dart';
+import 'package:cost_of_care/bloc/view_cdm_screen_bloc/bloc.dart';
+import 'package:cost_of_care/models/search_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'list_tile.dart';
 
 class CDM extends StatefulWidget {

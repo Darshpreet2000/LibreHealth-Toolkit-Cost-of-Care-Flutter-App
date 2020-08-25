@@ -1,4 +1,4 @@
-import 'package:curativecare/models/download_cdm_model.dart';
+import 'package:cost_of_care/models/download_cdm_model.dart';
 
 abstract class DownloadCDMRepository {
   Future fetchData(String stateName);
