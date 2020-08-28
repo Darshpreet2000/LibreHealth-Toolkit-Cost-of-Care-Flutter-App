@@ -43,6 +43,7 @@ class _BodyState extends State<Body> {
             child: Center(
                 child: Text(
               state.message,
+              textAlign: TextAlign.center,
               style: TextStyle(fontSize: 18),
             )),
           );
