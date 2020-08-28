@@ -28,6 +28,13 @@ AppBar settingsAppBar(BuildContext context, HomeSettingsState state) {
                       .bloc<HomeSettingsBloc>()
                       .add(SaveSettings(state.homeSettingsModel));
                   context.bloc<LocationBloc>().add(ChangeLocationAndSettings());
+
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                    content: Text(
+                      "Settings saved successfully",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ));
                 } else {
                   Scaffold.of(context).showSnackBar(SnackBar(
                     content: Text(

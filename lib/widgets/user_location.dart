@@ -56,9 +56,15 @@ class _UserLocationState extends State<UserLocation> {
                             state.message,
                             style: TextStyle(color: Colors.white),
                           ),
-                          duration: Duration(seconds: 3),
-                          backgroundColor: Colors.green,
-                        ));
+                          duration: Duration(seconds: 6),
+                          action: SnackBarAction(
+                            label: 'Retry',
+                            onPressed: () {
+                              context.bloc<LocationBloc>().add(RefreshLocation());
+                            },
+                          ),
+                        )
+                        );
                       }
                     },
                     child: BlocBuilder<LocationBloc, LocationState>(
