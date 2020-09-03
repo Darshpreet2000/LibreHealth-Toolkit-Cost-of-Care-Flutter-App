@@ -60,11 +60,12 @@ class _UserLocationState extends State<UserLocation> {
                           action: SnackBarAction(
                             label: 'Retry',
                             onPressed: () {
-                              context.bloc<LocationBloc>().add(RefreshLocation());
+                              context
+                                  .bloc<LocationBloc>()
+                                  .add(RefreshLocation());
                             },
                           ),
-                        )
-                        );
+                        ));
                       }
                     },
                     child: BlocBuilder<LocationBloc, LocationState>(

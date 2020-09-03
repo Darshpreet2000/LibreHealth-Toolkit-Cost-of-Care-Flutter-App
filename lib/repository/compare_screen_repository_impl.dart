@@ -28,10 +28,10 @@ class CompareScreenRepositoryImpl extends CompareScreenRepository {
   Future getListOfHospitals() async {
     String stateName;
     //Check if location is saved in App
-    if(box.containsKey("state"))
-    stateName = await box.get("state");
-   else
-     throw Exception("Location Not Found");
+    if (box.containsKey("state"))
+      stateName = await box.get("state");
+    else
+      throw Exception("Location Not Found");
     BaseOptions options = new BaseOptions(
         connectTimeout: 15 * 1000, // 60 seconds
         receiveTimeout: 15 * 1000 // 60 seconds

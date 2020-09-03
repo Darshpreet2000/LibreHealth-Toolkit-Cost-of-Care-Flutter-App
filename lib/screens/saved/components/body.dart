@@ -68,11 +68,6 @@ class _BodyState extends State<Body> {
                     box.get(savedHospitals[i].hospitalName),
                     BlocProvider.of<DownloadFileButtonBloc>(context)));
             i++;
-          } else if (i == savedHospitals.length &&
-              state is DownloadButtonLoaded) {
-            i = 0;
-            BlocProvider.of<RefreshSavedCdmBloc>(context)
-                .add(RefreshCDMEventCompleted());
           } else if (state is DownloadButtonErrorState) {
             Scaffold.of(context).showSnackBar(SnackBar(
               content: Text(
@@ -84,6 +79,11 @@ class _BodyState extends State<Body> {
             BlocProvider.of<RefreshSavedCdmBloc>(context).add(
                 RefreshCDMEventError(
                     "Unable to refresh CDM, please try again"));
+          } else if (i == savedHospitals.length &&
+              state is DownloadButtonLoaded) {
+            i = 0;
+            BlocProvider.of<RefreshSavedCdmBloc>(context)
+                .add(RefreshCDMEventCompleted());
           }
         },
         child: BlocListener<DownloadCdmBloc, DownloadCdmState>(

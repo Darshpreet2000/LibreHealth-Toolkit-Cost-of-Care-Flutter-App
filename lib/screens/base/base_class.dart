@@ -100,7 +100,7 @@ class AppDrawer extends StatelessWidget {
               text: 'Report A Bug',
               onTap: () async {
                 try {
-                 await reportABug();
+                  await reportABug();
                 } catch (e) {
                   BlocProvider.of<ReportABugBloc>(context)
                       .add(ShowErrorSnackBarEvent(e.message));
