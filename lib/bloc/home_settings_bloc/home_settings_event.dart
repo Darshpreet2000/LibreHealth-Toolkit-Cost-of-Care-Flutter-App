@@ -1,4 +1,4 @@
-import 'package:curativecare/models/home_settings_model.dart';
+import 'package:cost_of_care/models/home_settings_model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class HomeSettingsEvent extends Equatable {
@@ -11,7 +11,7 @@ class GetInitialSettings extends HomeSettingsEvent {
 }
 
 class ToggleOrder extends HomeSettingsEvent {
-  HomeSettingsModel homeSettingsModel;
+  final HomeSettingsModel homeSettingsModel;
 
   ToggleOrder(this.homeSettingsModel);
 
@@ -20,7 +20,7 @@ class ToggleOrder extends HomeSettingsEvent {
 }
 
 class ChangeRadius extends HomeSettingsEvent {
-  HomeSettingsModel homeSettingsModel;
+  final HomeSettingsModel homeSettingsModel;
 
   ChangeRadius(this.homeSettingsModel);
 
@@ -28,8 +28,17 @@ class ChangeRadius extends HomeSettingsEvent {
   List<Object> get props => [homeSettingsModel];
 }
 
+class ChangeLocation extends HomeSettingsEvent {
+  final HomeSettingsModel homeSettingsModel;
+
+  ChangeLocation(this.homeSettingsModel);
+
+  @override
+  List<Object> get props => [homeSettingsModel];
+}
+
 class SaveSettings extends HomeSettingsEvent {
-  HomeSettingsModel homeSettingsModel;
+  final HomeSettingsModel homeSettingsModel;
 
   SaveSettings(this.homeSettingsModel);
 

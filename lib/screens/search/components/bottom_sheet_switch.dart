@@ -1,5 +1,5 @@
-import 'package:curativecare/bloc/search_screen_bloc/bottom_sheet/bloc.dart';
-import 'package:curativecare/widgets/dash.dart';
+import 'package:cost_of_care/bloc/search_screen_bloc/bottom_sheet/bloc.dart';
+import 'package:cost_of_care/widgets/dash.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -18,11 +18,14 @@ class _BottomSheetSwitch extends State<BottomSheetSwitch> {
   );
 
 // Declare this variable
-  int selectedRadioTile;
+  int categoryRadioTile;
   int priceRadioTile;
+  bool searchBy;
+  String searchByStringValue;
 
   @override
   void initState() {
+    super.initState();
     context.bloc<BottomSheetBloc>().add(BottomSheetFetchValues());
   }
 
@@ -30,12 +33,17 @@ class _BottomSheetSwitch extends State<BottomSheetSwitch> {
   Widget build(BuildContext context) {
     return BlocBuilder<BottomSheetBloc, BottomSheetState>(
         builder: (BuildContext context, BottomSheetState state) {
-      if (state is BottomSheetLoadValues || state is BottomSheetSaved) {
-        selectedRadioTile = state.selectedRadioTile;
+      if (state is BottomSheetLoadValues || state is BottomSheetApplyValues) {
+        categoryRadioTile = state.selectedRadioTile;
         priceRadioTile = state.priceRadioTile;
+        searchBy = state.searchBy;
+        if (searchBy)
+          searchByStringValue = "Price";
+        else
+          searchByStringValue = "Procedure";
+
         return SingleChildScrollView(
           child: Container(
-              height: 510,
               decoration: new BoxDecoration(
                   color: Colors.white,
                   borderRadius: new BorderRadius.only(
@@ -53,7 +61,7 @@ class _BottomSheetSwitch extends State<BottomSheetSwitch> {
                         padding: const EdgeInsets.only(
                             top: 16.0, left: 12, bottom: 8),
                         child: Text(
-                          'Sort by',
+                          'Filter by',
                           style: TextStyle(
                               color: Colors.black,
                               fontFamily: 'Source',
@@ -67,6 +75,7 @@ class _BottomSheetSwitch extends State<BottomSheetSwitch> {
                           icon: Icon(
                             Icons.cancel,
                             size: 30,
+                            color: Colors.orange,
                           ),
                           onPressed: () => {Navigator.pop(context)},
                         ),
@@ -74,7 +83,51 @@ class _BottomSheetSwitch extends State<BottomSheetSwitch> {
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.fromLTRB(4.0, 0, 0, 4),
+                    child: Dash(
+                      length: MediaQuery.of(context).size.width - 32,
+                      dashColor: Colors.grey,
+                      dashThickness: 2,
+                      dashLength: 2,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 12.0, bottom: 8),
+                    child: Text(
+                      'Search',
+                      style: TextStyle(
+                          color: Colors.grey,
+                          fontFamily: 'Source',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 18),
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(16.0, 0, 0, 8),
+                        child: Text(
+                          'Searching by $searchByStringValue',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                      Switch(
+                        value: searchBy,
+                        onChanged: (bool value) {
+                          context.bloc<BottomSheetBloc>().add(
+                              BottomSheetChangeValue(categoryRadioTile,
+                                  priceRadioTile, !searchBy));
+                        },
+                        activeTrackColor: Colors.orangeAccent[100],
+                        activeColor: Colors.orange,
+                      )
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(4.0, 0, 0, 4),
                     child: Dash(
                       length: MediaQuery.of(context).size.width - 32,
                       dashColor: Colors.grey,
@@ -99,42 +152,42 @@ class _BottomSheetSwitch extends State<BottomSheetSwitch> {
                   ),
                   RadioListTile(
                     value: 1,
-                    groupValue: selectedRadioTile,
+                    groupValue: categoryRadioTile,
                     title: Text("Standard"),
                     onChanged: (val) {
                       print("Radio Tile pressed $val");
 
-                      context
-                          .bloc<BottomSheetBloc>()
-                          .add(BottomSheetChangeValue(val, priceRadioTile));
+                      context.bloc<BottomSheetBloc>().add(
+                          BottomSheetChangeValue(
+                              val, priceRadioTile, searchBy));
                     },
-                    activeColor: Colors.indigo,
+                    activeColor: Colors.orange,
                     selected: false,
                   ),
                   RadioListTile(
                     value: 2,
-                    groupValue: selectedRadioTile,
+                    groupValue: categoryRadioTile,
                     title: Text("DRG"),
                     onChanged: (val) {
-                      context
-                          .bloc<BottomSheetBloc>()
-                          .add(BottomSheetChangeValue(val, priceRadioTile));
+                      context.bloc<BottomSheetBloc>().add(
+                          BottomSheetChangeValue(
+                              val, priceRadioTile, searchBy));
                     },
-                    activeColor: Colors.indigo,
+                    activeColor: Colors.orange,
                     selected: false,
                   ),
                   RadioListTile(
                     value: 3,
-                    groupValue: selectedRadioTile,
+                    groupValue: categoryRadioTile,
                     title: Text("Pharmacy"),
                     onChanged: (val) {
                       print("Radio Tile pressed $val");
 
-                      context
-                          .bloc<BottomSheetBloc>()
-                          .add(BottomSheetChangeValue(val, priceRadioTile));
+                      context.bloc<BottomSheetBloc>().add(
+                          BottomSheetChangeValue(
+                              val, priceRadioTile, searchBy));
                     },
-                    activeColor: Colors.indigo,
+                    activeColor: Colors.orange,
                     selected: false,
                   ),
                   Padding(
@@ -166,11 +219,11 @@ class _BottomSheetSwitch extends State<BottomSheetSwitch> {
                     groupValue: priceRadioTile,
                     title: Text("Ascending"),
                     onChanged: (val) {
-                      context
-                          .bloc<BottomSheetBloc>()
-                          .add(BottomSheetChangeValue(selectedRadioTile, val));
+                      context.bloc<BottomSheetBloc>().add(
+                          BottomSheetChangeValue(
+                              categoryRadioTile, val, searchBy));
                     },
-                    activeColor: Colors.indigo,
+                    activeColor: Colors.orange,
                     selected: false,
                   ),
                   RadioListTile(
@@ -178,11 +231,11 @@ class _BottomSheetSwitch extends State<BottomSheetSwitch> {
                     groupValue: priceRadioTile,
                     title: Text("Descending"),
                     onChanged: (val) {
-                      context
-                          .bloc<BottomSheetBloc>()
-                          .add(BottomSheetChangeValue(selectedRadioTile, val));
+                      context.bloc<BottomSheetBloc>().add(
+                          BottomSheetChangeValue(
+                              categoryRadioTile, val, searchBy));
                     },
-                    activeColor: Colors.indigo,
+                    activeColor: Colors.orange,
                     selected: false,
                   ),
                   Row(
@@ -191,21 +244,21 @@ class _BottomSheetSwitch extends State<BottomSheetSwitch> {
                       Expanded(
                         child: RaisedButton(
                           shape: RoundedRectangleBorder(
-                            side: BorderSide(color: Colors.indigo),
+                            side: BorderSide(color: Colors.orange),
                             borderRadius:
                                 BorderRadius.all(Radius.circular(4.0)),
                           ),
                           color: Colors.white,
                           onPressed: () {
-                            context
+                            context // Setting Default Value when clear all is pressed
                                 .bloc<BottomSheetBloc>()
-                                .add(BottomSheetApply(0, 0));
+                                .add(BottomSheetApply(0, 0, false));
                           },
                           padding: EdgeInsets.all(8),
                           child: Text(
                             'Clear All',
                             style: TextStyle(
-                                color: Colors.indigo,
+                                color: Colors.orange,
                                 fontFamily: 'Source',
                                 fontWeight: FontWeight.w600,
                                 fontSize: 20),
@@ -220,11 +273,12 @@ class _BottomSheetSwitch extends State<BottomSheetSwitch> {
                           shape: RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(4.0))),
-                          color: Colors.indigo,
+                          color: Colors.orange,
                           onPressed: () {
+                            //Apply on pressed
                             context.bloc<BottomSheetBloc>().add(
-                                BottomSheetApply(
-                                    selectedRadioTile, priceRadioTile));
+                                BottomSheetApply(categoryRadioTile,
+                                    priceRadioTile, searchBy));
                             Navigator.pop(context);
                           },
                           padding: EdgeInsets.all(8),
@@ -247,6 +301,8 @@ class _BottomSheetSwitch extends State<BottomSheetSwitch> {
               )),
         );
       }
+
+      return Container();
     });
   }
 }

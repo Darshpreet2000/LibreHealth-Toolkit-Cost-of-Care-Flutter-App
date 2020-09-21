@@ -1,12 +1,10 @@
-import 'package:curativecare/bloc/search_screen_bloc/search_procedures/search_screen_bloc.dart';
-import 'package:curativecare/bloc/view_cdm_screen_bloc/view_cdm_screen_bloc.dart';
-import 'package:curativecare/screens/search/search_screen.dart';
+import 'package:cost_of_care/screens/search/search_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'components/body.dart';
 
 class ViewCDM extends StatefulWidget {
-  String name;
+  final String name;
 
   ViewCDM(this.name);
 
@@ -19,11 +17,9 @@ class _ViewCDMState extends State<ViewCDM> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Colors.indigo,
+          backgroundColor: Colors.orange,
           centerTitle: true,
-          iconTheme: IconThemeData(
-            color: Colors.white, //change your color here
-          ),
+          leading: BackButton(color: Colors.white),
           title: Text(
             widget.name,
             style: TextStyle(

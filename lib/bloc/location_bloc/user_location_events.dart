@@ -24,15 +24,12 @@ class RefreshLocation extends LocationEvent {
   String toString() => 'UpdateTodo { updatedTodo: }';
 
   @override
-  // TODO: implement props
   List<Object> get props => [];
 }
 
-class ChangeLocation extends LocationEvent {
-  String latitude, longitude, address, state;
-
+class ChangeLocationAndSettings extends LocationEvent {
   @override
-  List<Object> get props => [latitude, longitude, address, state];
+  List<Object> get props => [];
 
-  ChangeLocation(this.latitude, this.longitude, this.address, this.state);
+  ChangeLocationAndSettings();
 }

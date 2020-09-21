@@ -11,8 +11,8 @@ class InitialDownloadFileButtonState extends DownloadFileButtonState {
 }
 
 class DownloadButtonLoadingProgressIndicator extends DownloadFileButtonState {
-  double progress;
-  int index;
+  final double progress;
+  final int index;
 
   DownloadButtonLoadingProgressIndicator(this.progress, this.index);
 
@@ -21,7 +21,7 @@ class DownloadButtonLoadingProgressIndicator extends DownloadFileButtonState {
 }
 
 class DownloadButtonLoadingCircular extends DownloadFileButtonState {
-  int index;
+  final int index;
 
   DownloadButtonLoadingCircular(this.index);
 
@@ -30,7 +30,7 @@ class DownloadButtonLoadingCircular extends DownloadFileButtonState {
 }
 
 class DownloadButtonLoaded extends DownloadFileButtonState {
-  int index;
+  final int index;
 
   DownloadButtonLoaded(this.index);
 
@@ -39,7 +39,7 @@ class DownloadButtonLoaded extends DownloadFileButtonState {
 }
 
 class DownloadButtonErrorState extends DownloadFileButtonState {
-  String message;
+  final String message;
 
   DownloadButtonErrorState(this.message);
 
@@ -48,9 +48,9 @@ class DownloadButtonErrorState extends DownloadFileButtonState {
 }
 
 class DownloadButtonStream extends DownloadFileButtonState {
-  Stream<FileResponse> fileStream;
-  int index;
-  double fileSize;
+  final Stream<FileResponse> fileStream;
+  final int index;
+  final double fileSize;
 
   @override
   List<Object> get props => [fileStream, index, fileSize];

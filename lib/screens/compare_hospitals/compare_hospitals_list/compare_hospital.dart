@@ -1,8 +1,9 @@
-import 'package:curativecare/bloc/compare_screen_bloc/compare_screen_list/bloc.dart';
-import 'package:curativecare/models/compare_hospital_model.dart';
-import 'package:curativecare/screens/compare_hospitals/compare_hospital_screen/compare_hospitals_screen.dart';
+import 'package:cost_of_care/bloc/compare_screen_bloc/compare_screen_list/bloc.dart';
+import 'package:cost_of_care/models/compare_hospital_model.dart';
+import 'package:cost_of_care/screens/compare_hospitals/compare_hospital_screen/compare_hospitals_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'components/body.dart';
 
 class CompareHospitals extends StatefulWidget {
@@ -17,7 +18,8 @@ class _CompareHospitalsState extends State<CompareHospitals> {
       appBar: AppBar(
         title: Text('Available Hospitals To Compare'),
         centerTitle: true,
-        backgroundColor: Colors.indigo,
+        backgroundColor: Colors.orange,
+        leading: BackButton(color: Colors.white),
       ),
       body: Body(),
       floatingActionButton: Container(
@@ -25,7 +27,7 @@ class _CompareHospitalsState extends State<CompareHospitals> {
         child: Align(
           alignment: Alignment.bottomCenter,
           child: FloatingActionButton.extended(
-            backgroundColor: Colors.indigo,
+            backgroundColor: Colors.orange,
             onPressed: () {
               CompareScreenListLoadedState state = context
                   .bloc<CompareScreenListBloc>()
@@ -47,7 +49,10 @@ class _CompareHospitalsState extends State<CompareHospitals> {
                         "Add two Hospitals to compare"));
               }
             },
-            icon: Icon(Icons.compare),
+            icon: Icon(
+              Icons.compare,
+              color: Colors.white,
+            ),
             label: Text(
               "Compare Hospitals",
               style: TextStyle(

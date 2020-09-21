@@ -1,28 +1,29 @@
-import 'dart:io';
-
-import 'package:curativecare/bloc/download_cdm_bloc/download_cdm_progress/download_file_button_event.dart';
-import 'package:curativecare/models/download_cdm_model.dart';
-import 'package:curativecare/models/search_model.dart';
-import 'package:curativecare/network/gitlab_api_client.dart';
-import 'package:curativecare/repository/abstract/download_cdm_repository.dart';
-import 'package:file_utils/file_utils.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:cost_of_care/bloc/download_cdm_bloc/download_cdm_progress/download_file_button_event.dart';
+import 'package:cost_of_care/models/download_cdm_model.dart';
+import 'package:cost_of_care/models/search_model.dart';
+import 'package:cost_of_care/network/gitlab_api_client.dart';
+import 'package:cost_of_care/repository/abstract/download_cdm_repository.dart';
+import 'package:dio/dio.dart';
 
 import '../main.dart';
 import 'database_repository_impl.dart';
 
 class DownloadCDMRepositoryImpl extends DownloadCDMRepository {
+//need to be done
+  BaseOptions options = new BaseOptions(
+      connectTimeout: 15 * 1000, // 60 seconds
+      receiveTimeout: 15 * 1000 // 60 seconds
+      );
+
   @override
   Future fetchData(String stateName) async {
-    GitLabApiClient gitLabApiClient = new GitLabApiClient();
+    GitLabApiClient gitLabApiClient = new GitLabApiClient(Dio(options));
     Future responseBody = gitLabApiClient.getAvailableCdm(stateName);
     return responseBody;
   }
 
   Future parseData(List<dynamic> responseBody) async {
-    GitLabApiClient gitLabApiClient = new GitLabApiClient();
+    GitLabApiClient gitLabApiClient = new GitLabApiClient(Dio(options));
     List<DownloadCdmModel> hospitalsName =
         await gitLabApiClient.parseAvailableCdm(responseBody);
     return hospitalsName;
@@ -45,25 +46,14 @@ class DownloadCDMRepositoryImpl extends DownloadCDMRepository {
   }
 
   Future downloadCDM(DownloadFileButtonClick event) async {
-    GitLabApiClient gitLabApiClient = new GitLabApiClient();
-    try {
-      return await gitLabApiClient.downloadCSVFile(event);
-    } catch (e) {
-      event.downloadFileButtonBloc.add(DownloadFileButtonError(e.message));
-      return;
-    }
+    GitLabApiClient gitLabApiClient = new GitLabApiClient(Dio(options));
+    return await gitLabApiClient.downloadCSVFile(event);
   }
 
   Future getFileSize(DownloadFileButtonClick event) async {
     double fileSize;
-    GitLabApiClient gitLabApiClient = new GitLabApiClient();
-
-    try {
-      fileSize = await gitLabApiClient.getCSVFileSize(event);
-    } catch (e) {
-      event.downloadFileButtonBloc.add(DownloadFileButtonError(e.message));
-      return;
-    }
+    GitLabApiClient gitLabApiClient = new GitLabApiClient(Dio(options));
+    fileSize = await gitLabApiClient.getCSVFileSize(event);
     return fileSize;
   }
 
@@ -71,6 +61,7 @@ class DownloadCDMRepositoryImpl extends DownloadCDMRepository {
     DatabaseRepositoryImpl databaseRepositoryImpl =
         new DatabaseRepositoryImpl();
 
+    // Saving URL of hospital for refreshing CDM
     List<SearchModel> myList = new List();
     List<String> lines = event.fileInfo.file.readAsLinesSync();
     lines.removeAt(0);

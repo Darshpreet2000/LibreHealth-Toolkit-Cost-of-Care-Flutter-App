@@ -1,6 +1,8 @@
-import 'package:curativecare/main.dart';
-import 'package:curativecare/models/compare_hospital_model.dart';
-import 'package:curativecare/network/compare_hospital_api_client.dart';
+import 'package:cost_of_care/main.dart';
+import 'package:cost_of_care/models/compare_hospital_model.dart';
+import 'package:cost_of_care/network/compare_hospital_api_client.dart';
+import 'package:dio/dio.dart';
+
 import 'abstract/compare_screen_repository.dart';
 
 class CompareScreenRepositoryImpl extends CompareScreenRepository {
@@ -24,30 +26,56 @@ class CompareScreenRepositoryImpl extends CompareScreenRepository {
 
   @override
   Future getListOfHospitals() async {
-    String stateName = await box.get("state");
+    String stateName;
+    //Check if location is saved in App
+    if (box.containsKey("state"))
+      stateName = await box.get("state");
+    else
+      throw Exception("Location Not Found");
+    BaseOptions options = new BaseOptions(
+        connectTimeout: 15 * 1000, // 60 seconds
+        receiveTimeout: 15 * 1000 // 60 seconds
+        );
+    Dio dio = new Dio(options);
+
     CompareHospitalAPIClient compareHospitalAPIClient =
-        new CompareHospitalAPIClient();
+        new CompareHospitalAPIClient(dio);
     return compareHospitalAPIClient.fetchHospitalsName(stateName);
   }
 
   Future fetchImages(String name) {
+    BaseOptions options = new BaseOptions(
+        connectTimeout: 15 * 1000, // 60 seconds
+        receiveTimeout: 15 * 1000 // 60 seconds
+        );
+    Dio dio = new Dio(options);
     CompareHospitalAPIClient compareHospitalAPIClient =
-        new CompareHospitalAPIClient();
+        new CompareHospitalAPIClient(dio);
     return compareHospitalAPIClient.fetchImages(name);
   }
 
   Future fetchGeneralInformation(String hospitalName) async {
     String stateName = await box.get('state');
+    BaseOptions options = new BaseOptions(
+        connectTimeout: 15 * 1000, // 60 seconds
+        receiveTimeout: 15 * 1000 // 60 seconds
+        );
+    Dio dio = new Dio(options);
     CompareHospitalAPIClient compareHospitalAPIClient =
-        new CompareHospitalAPIClient();
+        new CompareHospitalAPIClient(dio);
     return compareHospitalAPIClient.fetchGeneralInformation(
         hospitalName, stateName);
   }
 
   Future fetchPatientExperience(String hospitalName) async {
     String stateName = await box.get('state');
+    BaseOptions options = new BaseOptions(
+        connectTimeout: 15 * 1000, // 60 seconds
+        receiveTimeout: 15 * 1000 // 60 seconds
+        );
+    Dio dio = new Dio(options);
     CompareHospitalAPIClient compareHospitalAPIClient =
-        new CompareHospitalAPIClient();
+        new CompareHospitalAPIClient(dio);
     return compareHospitalAPIClient.fetchPatientExperience(
         hospitalName, stateName);
   }

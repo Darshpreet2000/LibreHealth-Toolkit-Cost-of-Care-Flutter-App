@@ -1,7 +1,9 @@
 import 'dart:async';
+
 import 'package:bloc/bloc.dart';
-import 'package:curativecare/repository/download_cdm_repository_impl.dart';
+import 'package:cost_of_care/repository/download_cdm_repository_impl.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+
 import './bloc.dart';
 
 class DownloadFileButtonBloc
@@ -11,6 +13,8 @@ class DownloadFileButtonBloc
   DownloadFileButtonBloc(this.downloadCDMRepositoryImpl)
       : super(InitialDownloadFileButtonState());
 
+  DownloadFileButtonState get initialState => InitialDownloadFileButtonState();
+
   @override
   Stream<DownloadFileButtonState> mapEventToState(
     DownloadFileButtonEvent event,
@@ -18,13 +22,18 @@ class DownloadFileButtonBloc
     if (event is DownloadFileButtonClick) {
       //Show circular progress initially
       yield DownloadButtonLoadingCircular(event.index);
-      double fileSize = await downloadCDMRepositoryImpl.getFileSize(event);
-      Stream<FileResponse> fileStream =
-          await downloadCDMRepositoryImpl.downloadCDM(event);
-      yield DownloadButtonStream(fileStream, event.index, fileSize);
+      try {
+        double fileSize = await downloadCDMRepositoryImpl.getFileSize(event);
+        Stream<FileResponse> fileStream =
+            await downloadCDMRepositoryImpl.downloadCDM(event);
+        yield DownloadButtonStream(fileStream, event.index, fileSize);
+      } catch (e) {
+        event.downloadFileButtonBloc.add(DownloadFileButtonError(e.message));
+        yield DownloadButtonErrorState(e.message);
+      }
     } else if (event is DownloadFileButtonProgress) {
       yield DownloadButtonLoadingProgressIndicator(event.progress, event.index);
-      if (event.progress * 100 > 99) {
+      if (event.progress * 100 == 100) {
         yield DownloadButtonLoaded(event.index);
       }
     } else if (event is InsertInDatabase) {

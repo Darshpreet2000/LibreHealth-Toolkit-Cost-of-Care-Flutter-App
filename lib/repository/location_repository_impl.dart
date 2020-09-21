@@ -1,7 +1,9 @@
 import 'dart:async';
 
-import 'package:curativecare/network/location_client.dart';
-import 'package:curativecare/repository/abstract/location_repository.dart';
+import 'package:cost_of_care/models/user_location_data.dart';
+import 'package:cost_of_care/network/location_client.dart';
+import 'package:cost_of_care/repository/abstract/location_repository.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:location/location.dart';
 
 import '../main.dart';
@@ -13,36 +15,45 @@ class LocationRepoImpl implements LocationRepository {
   LocationData position;
 
   @override
-  Future<String> getLocationPermission() async {
-    //Ask for Location permissions & Location Services
+  Future<String> getLocation() async {
     _serviceEnabled = await location.serviceEnabled();
     if (!_serviceEnabled) {
       _serviceEnabled = await location.requestService();
       if (!_serviceEnabled) {
-        return 'Location Not Found';
+        throw Exception("Location not found");
       }
     }
 
     _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
+    if (_permissionGranted != PermissionStatus.granted) {
       _permissionGranted = await location.requestPermission();
+      if (_permissionGranted == PermissionStatus.deniedForever) {
+        throw Exception("Permission Denied, Enable from Settings");
+      }
       if (_permissionGranted != PermissionStatus.granted) {
-        return 'Location Not Found';
+        throw Exception("Location Permission Denied");
       }
     }
-    return getLocation();
+
+    LocationClient locationClient =
+        new LocationClient(Geolocator(), Location());
+    UserLocationData data = await locationClient.getCurrentLocation();
+    saveData(data);
+    return data.address;
   }
 
-  @override
-  Future<String> getLocation() async {
-    LocationClient locationClient = new LocationClient();
-    Future<String> address = locationClient.getCurrentLocation();
-    return address;
+  void saveData(UserLocationData userLocationData) {
+    box.put('latitude', userLocationData.latitude);
+    box.put('longitude', userLocationData.longitude);
+    box.put('address', userLocationData.address);
+    box.put('state', userLocationData.state);
+    return;
   }
 
   @override
   Future<bool> checkSaved() async {
-    if (box.containsKey('latitude') &&
+    if (box != null &&
+        box.containsKey('latitude') &&
         box.containsKey('longitude') &&
         box.containsKey('address')) {
       return true;
@@ -53,7 +64,7 @@ class LocationRepoImpl implements LocationRepository {
 
   @override
   Future<String> getSaved() async {
-    String addr = await box.get('address');
-    return addr;
+    String address = await box.get('address');
+    return address;
   }
 }

@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:curativecare/models/hospitals.dart';
-import 'package:curativecare/network/hospital_image_client.dart';
-import 'package:curativecare/network/overpass_api_client.dart';
-import 'package:curativecare/repository/abstract/nearby_hospitals_repository.dart';
+import 'package:cost_of_care/models/hospitals.dart';
+import 'package:cost_of_care/network/hospital_image_client.dart';
+import 'package:cost_of_care/network/overpass_api_client.dart';
+import 'package:cost_of_care/repository/abstract/nearby_hospitals_repository.dart';
 
 import '../main.dart';
 
@@ -50,7 +50,7 @@ class NearbyHospitalsRepoImpl implements NearbyHospitalsRepository {
 
   Future fetchHospitals() async {
     OverpassAPIClient overpassAPIClient = new OverpassAPIClient();
-    var response = await overpassAPIClient.fetch_nearby_hospitals();
+    var response = await overpassAPIClient.fetchNearbyHospitals();
     return response;
   }
 
@@ -58,15 +58,18 @@ class NearbyHospitalsRepoImpl implements NearbyHospitalsRepository {
   Future<List<Hospitals>> parseJson(Map<String, dynamic> responseBody) async {
     OverpassAPIClient overpassAPIClient = new OverpassAPIClient();
     //Store List in Hive
-    return overpassAPIClient.parse_hospital_json_data(responseBody);
+    return overpassAPIClient.parseHospitalJsonData(responseBody);
   }
 
   @override
-  Future<String> fetchImages(String name) async {
+  Future<dynamic> fetchImages(String name) async {
     FetchHospitalImages fetchHospitalImages = new FetchHospitalImages();
     try {
-      Future<String> response = fetchHospitalImages.fetchImagesFromGoogle(name);
+      Future<dynamic> response =
+          fetchHospitalImages.fetchImagesFromGoogle(name);
       return response;
-    } catch (e) {}
+    } catch (e) {
+      throw Exception("Network Error");
+    }
   }
 }

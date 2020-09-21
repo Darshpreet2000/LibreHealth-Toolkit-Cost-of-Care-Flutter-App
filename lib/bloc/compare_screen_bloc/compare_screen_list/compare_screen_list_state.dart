@@ -1,4 +1,4 @@
-import 'package:curativecare/models/compare_hospital_model.dart';
+import 'package:cost_of_care/models/compare_hospital_model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class CompareScreenListState extends Equatable {
@@ -11,7 +11,7 @@ class CompareScreenListLoadingState extends CompareScreenListState {
 }
 
 class CompareScreenListLoadedState extends CompareScreenListState {
-  List<CompareHospitalModel> hospitalName;
+  final List<CompareHospitalModel> hospitalName;
 
   CompareScreenListLoadedState(this.hospitalName);
 
@@ -20,7 +20,8 @@ class CompareScreenListLoadedState extends CompareScreenListState {
 }
 
 class CompareScreenListErrorState extends CompareScreenListState {
-  String message;
+  final String message;
+
   CompareScreenListErrorState(this.message);
 
   @override

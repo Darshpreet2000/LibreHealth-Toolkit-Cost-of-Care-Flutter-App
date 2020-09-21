@@ -1,4 +1,4 @@
-import 'package:curativecare/models/hospitals.dart';
+import 'package:cost_of_care/models/hospitals.dart';
 
 // To find Nearby Hospitals using coordinates
 abstract class NearbyHospitalsRepository {
@@ -8,5 +8,5 @@ abstract class NearbyHospitalsRepository {
       Map<String, dynamic>
           responseBody); //To Parse Json Data & convert it to List
 //Future<String> fetchImages(String name);
-  Future<String> fetchImages(String name);
+  Future fetchImages(String name);
 }

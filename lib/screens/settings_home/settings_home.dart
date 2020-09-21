@@ -1,4 +1,5 @@
-import 'package:curativecare/bloc/home_settings_bloc/bloc.dart';
+import 'package:cost_of_care/bloc/home_settings_bloc/bloc.dart';
+import 'package:cost_of_care/widgets/user_location.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,6 +17,7 @@ class _SettingsHomeState extends State<SettingsHome> {
 
   @override
   void initState() {
+    super.initState();
     context.bloc<HomeSettingsBloc>().add(GetInitialSettings());
   }
 
@@ -23,13 +25,23 @@ class _SettingsHomeState extends State<SettingsHome> {
   Widget build(BuildContext context) {
     return BlocListener<HomeSettingsBloc, HomeSettingsState>(
         listener: (BuildContext context, HomeSettingsState state) {
-      if (state is LoadingState) {}
+      if (state is HomeSettingsLoadingState) {}
     }, child: BlocBuilder<HomeSettingsBloc, HomeSettingsState>(
             builder: (BuildContext context, HomeSettingsState state) {
-      return Scaffold(
-          backgroundColor: appBackgroundColor,
-          appBar: settingsAppBar(context, state),
-          body: Body(state));
+      if (state is HomeSettingsLoadedState) {
+        final UserLocation userLocationWidget =
+            ModalRoute.of(context).settings.arguments;
+
+        return Scaffold(
+            backgroundColor: appBackgroundColor,
+            appBar: settingsAppBar(context, state),
+            body: Body(state, userLocationWidget));
+      }
+      return Container(
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
     }));
   }
 }

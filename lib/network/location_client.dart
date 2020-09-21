@@ -1,44 +1,49 @@
 import 'dart:async';
 
-import 'package:flutter/services.dart';
+import 'package:cost_of_care/models/user_location_data.dart';
+import 'package:cost_of_care/util/states_abbreviation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:location/location.dart';
 
-import '../main.dart';
-
 class LocationClient {
-  Location location = new Location();
   LocationData position;
+  String state;
+  String address;
+  Geolocator geoLocator;
+  Location location;
 
-  Future<String> getCurrentLocation() async {
+  LocationClient(this.geoLocator, this.location);
+
+  Future<UserLocationData> getCurrentLocation() async {
     try {
-      position =
-          await location.getLocation().timeout(const Duration(seconds: 10));
-    } on TimeoutException catch (e) {
-      return 'Please check your internet connection and try again';
-    }
-    //Save coordinate in shared preference
-    //To use it in Overpass API
-    box.put('latitude', position.latitude.toString());
-    box.put('longitude', position.longitude.toString());
-    try {
-      List<Placemark> placemark = await Geolocator()
-          .placemarkFromCoordinates(position.latitude, position.longitude);
-      String address = placemark[0].name +
-          ", " +
-          placemark[0].subLocality +
-          ", " +
-          placemark[0].administrativeArea +
-          ", " +
-          placemark[0].country;
-      //Save address
-      //HardCoding for now State
-      //box.put('state',placemark[0].administrativeArea);
-      box.put('state', placemark[0].administrativeArea);
-      await box.put('address', address);
-      return address;
+      position = await location.getLocation();
     } catch (e) {
-      return 'Location Not Found';
+      throw Exception("Network Problem");
+    }
+    try {
+      List<Placemark> placeMark = await geoLocator.placemarkFromCoordinates(
+          position.latitude, position.longitude);
+      address = placeMark[0].name +
+          ", " +
+          placeMark[0].locality +
+          ", " +
+          placeMark[0].administrativeArea +
+          ", " +
+          placeMark[0].country;
+      //Save address
+      StatesAbbreviation statesAbbreviation = new StatesAbbreviation();
+      if (placeMark[0].administrativeArea.length == 2 &&
+          statesAbbreviation.containsState(placeMark[0].administrativeArea)) {
+        state =
+            statesAbbreviation.getStateName(placeMark[0].administrativeArea);
+      } else {
+        state = placeMark[0].administrativeArea;
+      }
+
+      return UserLocationData(
+          state, position.latitude, position.longitude, address);
+    } catch (e) {
+      throw Exception("Location Not Found");
     }
   }
 }

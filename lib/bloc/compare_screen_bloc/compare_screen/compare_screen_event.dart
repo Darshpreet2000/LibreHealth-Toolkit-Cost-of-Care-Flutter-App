@@ -1,4 +1,4 @@
-import 'package:curativecare/models/compare_hospital_model.dart';
+import 'package:cost_of_care/models/compare_hospital_model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class CompareScreenEvent extends Equatable {
@@ -6,7 +6,7 @@ abstract class CompareScreenEvent extends Equatable {
 }
 
 class CompareScreenFetchData extends CompareScreenEvent {
-  List<CompareHospitalModel> hospitalNames;
+  final List<CompareHospitalModel> hospitalNames;
 
   CompareScreenFetchData(this.hospitalNames);
 

@@ -5,7 +5,7 @@ abstract class ViewCdmScreenEvent extends Equatable {
 }
 
 class LoadCdm extends ViewCdmScreenEvent {
-  String tableName;
+  final String tableName;
 
   LoadCdm(this.tableName);
 

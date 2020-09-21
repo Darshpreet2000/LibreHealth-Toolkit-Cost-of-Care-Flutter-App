@@ -1,4 +1,4 @@
-name: curativecare
+name: cost_of_care
 description: A new Flutter application.
 publish_to: 'none'
 version: 1.0.0+1
@@ -12,7 +12,6 @@ dependencies:
   html: ^0.14.0+3
   shimmer: ^1.1.1
   geolocator: ^5.3.2+2
-  location: ^3.0.0
   bloc: ^6.0.1
   flutter_bloc: ^6.0.1
   equatable: ^1.2.0
@@ -22,16 +21,28 @@ dependencies:
   hive_flutter: ^0.3.0+2
   path_provider: ^1.6.5
   dio: ^3.0.9
-  permission_handler: ^5.0.0+hotfix.5
   flutter_cache_manager: ^1.4.1
+  share: ^0.6.4+3
+  url_launcher: ^5.5.0
+  bloc_test: ^7.0.0
+  location: ^3.0.0
+  intro_slider: ^2.3.1
+  permission_handler: ^5.0.1+1
+  package_info: ^0.4.3
 
-dependency_overrides:
-  dartx: ^0.3.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
   hive_generator: ^0.7.0+2
   build_runner: ^1.10.0
+  mockito: ^4.1.1
+  flutter_launcher_icons: ^0.7.5
+  change_app_package_name: ^0.1.2
+flutter_icons:
+  ios: true
+  android: true
+  image_path_ios: "assets/app_icon.png"
+  image_path_android: "assets/app_icon.png"
 
 flutter:
   uses-material-design: true

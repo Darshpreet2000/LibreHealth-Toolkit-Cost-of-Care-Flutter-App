@@ -1,4 +1,4 @@
-import 'package:curativecare/models/search_model.dart';
+import 'package:cost_of_care/models/search_model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class ViewCdmScreenState extends Equatable {
@@ -17,4 +17,13 @@ class LoadedViewCdmScreenState extends ViewCdmScreenState {
 class LoadingViewCdmScreenState extends ViewCdmScreenState {
   @override
   List<Object> get props => [];
+}
+
+class ErrorViewCdmScreenState extends ViewCdmScreenState {
+  final String message;
+
+  ErrorViewCdmScreenState(this.message);
+
+  @override
+  List<Object> get props => [message];
 }

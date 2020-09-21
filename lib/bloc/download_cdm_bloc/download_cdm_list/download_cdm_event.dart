@@ -5,7 +5,7 @@ abstract class DownloadCdmEvent extends Equatable {
 }
 
 class DownloadCDMFetchData extends DownloadCdmEvent {
-  String stateName;
+  final String stateName;
 
   DownloadCDMFetchData(this.stateName);
 
@@ -14,7 +14,7 @@ class DownloadCDMFetchData extends DownloadCdmEvent {
 }
 
 class DownloadCDMSaveList extends DownloadCdmEvent {
-  int index;
+  final int index;
 
   DownloadCDMSaveList(this.index);
 
@@ -23,8 +23,8 @@ class DownloadCDMSaveList extends DownloadCdmEvent {
 }
 
 class DownloadCDMRefreshList extends DownloadCdmEvent {
-  int index;
-  String stateName;
+  final int index;
+  final String stateName;
 
   DownloadCDMRefreshList(this.index, this.stateName);
 
@@ -33,6 +33,10 @@ class DownloadCDMRefreshList extends DownloadCdmEvent {
 }
 
 class DownloadCDMError extends DownloadCdmEvent {
+  final String message;
+
+  DownloadCDMError(this.message);
+
   @override
-  List<Object> get props => [];
+  List<Object> get props => [message];
 }

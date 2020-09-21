@@ -1,3 +1,4 @@
+import 'package:cost_of_care/models/download_cdm_model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class SavedScreenState extends Equatable {
@@ -10,7 +11,7 @@ class SavedScreenLoadingState extends SavedScreenState {
 }
 
 class SavedScreenLoadedState extends SavedScreenState {
-  List<String> savedHospitals;
+  final List<DownloadCdmModel> savedHospitals;
 
   SavedScreenLoadedState(this.savedHospitals);
 
@@ -19,7 +20,7 @@ class SavedScreenLoadedState extends SavedScreenState {
 }
 
 class SavedScreenErrorState extends SavedScreenState {
-  String message;
+  final String message;
 
   SavedScreenErrorState(this.message);
 

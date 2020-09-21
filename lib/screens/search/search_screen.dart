@@ -1,15 +1,14 @@
-import 'package:curativecare/bloc/search_screen_bloc/search_procedures/search_screen_bloc.dart';
-import 'package:curativecare/bloc/search_screen_bloc/search_procedures/search_screen_event.dart';
-import 'package:curativecare/repository/search_screen_repository_impl.dart';
-import 'package:curativecare/screens/search/components/body.dart';
-import 'package:curativecare/screens/search/components/floating_action_button.dart';
+import 'package:cost_of_care/bloc/search_screen_bloc/search_procedures/search_screen_bloc.dart';
+import 'package:cost_of_care/bloc/search_screen_bloc/search_procedures/search_screen_event.dart';
+import 'package:cost_of_care/screens/search/components/body.dart';
+import 'package:cost_of_care/screens/search/components/floating_action_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SearchProcedure extends StatefulWidget {
-  String hospitalName;
+  final String hospitalName;
 
   SearchProcedure([this.hospitalName]);
 
@@ -19,11 +18,6 @@ class SearchProcedure extends StatefulWidget {
 
 class _SearchProcedureState extends State<SearchProcedure> {
   final TextEditingController _searchQuery = TextEditingController();
-  SearchScreenBloc searchScreenBloc;
-  @override
-  void initState() {
-    searchScreenBloc = new SearchScreenBloc(SearchScreenRepositoryImpl());
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +31,16 @@ class _SearchProcedureState extends State<SearchProcedure> {
           autofocus: true,
           controller: _searchQuery,
           textInputAction: TextInputAction.search,
-          onSubmitted: (value) {
-            if (widget.hospitalName != null)
-              searchScreenBloc.add(SearchInDatabaseFromViewCDMScreen(
-                  value, widget.hospitalName));
-            else
-              searchScreenBloc.add(SearchInDatabase(value));
+          onChanged: (value) {
+            if (value.length != 0) {
+              if (widget.hospitalName != null)
+                BlocProvider.of<SearchScreenBloc>(context).add(
+                    SearchInDatabaseFromViewCDMScreen(
+                        value, widget.hospitalName));
+              else //General Search from search screen
+                BlocProvider.of<SearchScreenBloc>(context)
+                    .add(SearchInDatabase(value));
+            }
           },
           decoration: InputDecoration(
               focusedBorder: InputBorder.none,
@@ -55,8 +53,15 @@ class _SearchProcedureState extends State<SearchProcedure> {
               hintStyle: TextStyle(color: Colors.grey)),
         ),
       ),
-      body: Body(_searchQuery, searchScreenBloc),
+      body: Body(_searchQuery),
       floatingActionButton: FloatingAction(),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<SearchScreenBloc>(context)
+        .add(SearchScreenInitialStateEvent());
   }
 }

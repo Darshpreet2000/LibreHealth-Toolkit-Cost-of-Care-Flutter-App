@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:curativecare/models/download_cdm_model.dart';
-import 'package:curativecare/repository/download_cdm_repository_impl.dart';
+import 'package:cost_of_care/models/download_cdm_model.dart';
+import 'package:cost_of_care/repository/download_cdm_repository_impl.dart';
 
 import 'bloc.dart';
 
@@ -12,6 +12,8 @@ class DownloadCdmBloc extends Bloc<DownloadCdmEvent, DownloadCdmState> {
   DownloadCdmBloc(this.downloadCDMRepositoryImpl) : super(LoadingState());
 
   List<DownloadCdmModel> hospitals = new List();
+
+  DownloadCdmState get initialState => LoadingState();
 
   @override
   Stream<DownloadCdmState> mapEventToState(
@@ -39,7 +41,7 @@ class DownloadCdmBloc extends Bloc<DownloadCdmEvent, DownloadCdmState> {
       downloadCDMRepositoryImpl.saveData(hospitals, event.stateName);
       yield RefreshedState(hospitals);
     } else if (event is DownloadCDMError) {
-      yield ErrorState("Network Problem! Try Again");
+      yield ErrorState(event.message);
     }
   }
 }

@@ -1,4 +1,4 @@
-import 'package:curativecare/models/search_model.dart';
+import 'package:cost_of_care/models/search_model.dart';
 import 'package:flutter/material.dart';
 
 Card makeCard(SearchModel cdm) {
@@ -17,7 +17,7 @@ ListTile makeListTile(SearchModel cdm) {
       cdm.charge == 0.0 ? "N/A" : '\$ ' + cdm.charge.toStringAsFixed(2);
   var color;
   if (cdm.category == "Standard")
-    color = Colors.indigo;
+    color = Colors.orange;
   else if (cdm.category == "DRG")
     color = Colors.red;
   else

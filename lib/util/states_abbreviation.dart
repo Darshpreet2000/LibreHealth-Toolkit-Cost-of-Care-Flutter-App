@@ -6,6 +6,14 @@ class StatesAbbreviation {
         orElse: () => "");
   }
 
+  String getStateName(String abbreviation) {
+    return states[abbreviation];
+  }
+
+  bool containsState(String abbreviation) {
+    return states.containsKey(abbreviation);
+  }
+
   final states = {
     "AK": "Alaska",
     "AL": "Alabama",

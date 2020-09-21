@@ -1,8 +1,13 @@
-import 'package:curativecare/screens/download_cdm/download_cdm_screen.dart';
-import 'package:curativecare/screens/home/home_screen.dart';
-import 'package:curativecare/screens/saved/saved_screen.dart';
+import 'package:cost_of_care/bloc/report_a_bug_bloc/report_a_bug_bloc.dart';
+import 'package:cost_of_care/screens/download_cdm/download_cdm_screen.dart';
+import 'package:cost_of_care/screens/home/home_screen.dart';
+import 'package:cost_of_care/screens/report_an_issue/report_an_issue.dart';
+import 'package:cost_of_care/screens/saved/saved_screen.dart';
+import 'package:cost_of_care/screens/share_app/share_app.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:package_info/package_info.dart';
 
 class BaseClass extends StatefulWidget {
   @override
@@ -40,7 +45,7 @@ class _BaseClassState extends State<BaseClass> {
               icon: Icon(Icons.bookmark), title: Text('Saved')),
         ],
         currentIndex: selectedIndex,
-        fixedColor: Colors.indigo,
+        fixedColor: Colors.orange,
         onTap: onItemTapped,
       ),
     );
@@ -80,10 +85,7 @@ class AppDrawer extends StatelessWidget {
           _createDrawerItem(
               icon: Icons.share,
               text: 'Share App',
-              onTap: () => {
-                    Navigator.pop(context),
-                    Navigator.pushNamed(context, '/Share')
-                  }),
+              onTap: () => {Navigator.pop(context), shareApp()}),
           Divider(),
           _createDrawerItem(
               icon: Icons.book,
@@ -95,13 +97,27 @@ class AppDrawer extends StatelessWidget {
           Divider(),
           _createDrawerItem(
               icon: Icons.bug_report,
-              text: 'Report a bug',
-              onTap: () => {
-                    Navigator.pop(context),
-                    Navigator.pushNamed(context, '/ReportIssue')
-                  }),
+              text: 'Report A Bug',
+              onTap: () async {
+                try {
+                  await reportABug();
+                } catch (e) {
+                  BlocProvider.of<ReportABugBloc>(context)
+                      .add(ShowErrorSnackBarEvent(e.message));
+                }
+
+                Navigator.pop(context);
+              }),
           ListTile(
-            title: Text('0.0.1'),
+            title: FutureBuilder(
+              future: getAppInfo(),
+              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                if (snapshot.hasData) {
+                  return Text(snapshot.data);
+                }
+                return Text("1.0.0");
+              },
+            ),
             onTap: () {},
           ),
         ],
@@ -109,12 +125,22 @@ class AppDrawer extends StatelessWidget {
     );
   }
 
+  Future getAppInfo() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+    String version = packageInfo.version;
+    return version;
+  }
+
   Widget _createDrawerItem(
       {IconData icon, String text, GestureTapCallback onTap}) {
     return ListTile(
       title: Row(
         children: <Widget>[
-          Icon(icon),
+          Icon(
+            icon,
+            color: Colors.black,
+          ),
           Padding(
             padding: EdgeInsets.only(left: 8.0),
             child: Text(text),
@@ -142,13 +168,9 @@ class AppDrawer extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Image.asset(
-                    'assets/logowhite.png',
-                    height: 50,
-                    width: 50,
-                  ),
-                  Text(
-                    'LibreHealth',
-                    style: TextStyle(color: Colors.white, fontSize: 25),
+                    'assets/libre_white.png',
+                    height: 200,
+                    width: 200,
                   ),
                 ],
               ),

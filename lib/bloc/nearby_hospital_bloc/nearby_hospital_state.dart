@@ -1,4 +1,4 @@
-import 'package:curativecare/models/hospitals.dart';
+import 'package:cost_of_care/models/hospitals.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class NearbyHospitalState extends Equatable {
@@ -11,16 +11,16 @@ class NearbyHospitalsLoadingState extends NearbyHospitalState {
 }
 
 class NearbyHospitalsLoadedState extends NearbyHospitalState {
-  List<Hospitals> nearby_hospital;
+  final List<Hospitals> nearbyHospital;
 
-  NearbyHospitalsLoadedState(this.nearby_hospital);
+  NearbyHospitalsLoadedState(this.nearbyHospital);
 
   @override
-  List<Object> get props => [nearby_hospital];
+  List<Object> get props => [nearbyHospital];
 }
 
 class NearbyHospitalsErrorState extends NearbyHospitalState {
-  String message;
+  final String message;
 
   NearbyHospitalsErrorState(this.message);
 

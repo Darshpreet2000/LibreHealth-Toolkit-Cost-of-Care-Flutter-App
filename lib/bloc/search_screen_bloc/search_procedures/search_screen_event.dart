@@ -4,8 +4,13 @@ abstract class SearchScreenEvent extends Equatable {
   const SearchScreenEvent();
 }
 
+class SearchScreenInitialStateEvent extends SearchScreenEvent {
+  @override
+  List<Object> get props => [];
+}
+
 class SearchInDatabase extends SearchScreenEvent {
-  String searchString;
+  final String searchString;
 
   SearchInDatabase(this.searchString);
 
@@ -14,8 +19,8 @@ class SearchInDatabase extends SearchScreenEvent {
 }
 
 class SearchInDatabaseFromViewCDMScreen extends SearchScreenEvent {
-  String searchString;
-  String hospitalName;
+  final String searchString;
+  final String hospitalName;
 
   SearchInDatabaseFromViewCDMScreen(this.searchString, this.hospitalName);
 
