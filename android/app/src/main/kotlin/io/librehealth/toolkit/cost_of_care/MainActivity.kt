@@ -1,4 +1,4 @@
-package com.LibreHealth.cost_of_care
+package io.librehealth.toolkit.cost_of_care
 
 import io.flutter.embedding.android.FlutterActivity
 
