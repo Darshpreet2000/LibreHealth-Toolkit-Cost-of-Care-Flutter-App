@@ -251,7 +251,7 @@ echo "SUCCESS" &gt; "${SCRIPT_OUTPUT_FILE_0}"
 					<string>$(PROJECT_DIR)/Flutter</string>
 				</array>
 				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
-				<string>com.LibreHealth.costOfCare</string>
+				<string>io.librehealth.toolkit.costOfCare</string>
 				<key>PRODUCT_NAME</key>
 				<string>$(TARGET_NAME)</string>
 				<key>SWIFT_OBJC_BRIDGING_HEADER</key>
@@ -1019,7 +1019,7 @@ echo "SUCCESS" &gt; "${SCRIPT_OUTPUT_FILE_0}"
 					<string>$(PROJECT_DIR)/Flutter</string>
 				</array>
 				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
-				<string>com.LibreHealth.cost_of_care</string>
+				<string>io.librehealth.toolkit.cost_of_care</string>
 				<key>PRODUCT_NAME</key>
 				<string>$(TARGET_NAME)</string>
 				<key>SWIFT_OBJC_BRIDGING_HEADER</key>
@@ -1065,7 +1065,7 @@ echo "SUCCESS" &gt; "${SCRIPT_OUTPUT_FILE_0}"
 					<string>$(PROJECT_DIR)/Flutter</string>
 				</array>
 				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
-				<string>com.LibreHealth.cost_of_care</string>
+				<string>io.librehealth.toolkit.cost_of_care</string>
 				<key>PRODUCT_NAME</key>
 				<string>$(TARGET_NAME)</string>
 				<key>SWIFT_OBJC_BRIDGING_HEADER</key>
