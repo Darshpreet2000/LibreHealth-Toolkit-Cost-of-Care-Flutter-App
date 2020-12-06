@@ -5,8 +5,8 @@
 Recent changes in Medicare’s payment policies under the inpatient prospective payment system (PPS) and the long-term care hospital PPS required that the CDM be made available in a machine-readable format by January 1, 2019 . These formats are in XML or CSV and while machine readable do not make sense for a patient who is comparing the prices
 
 The Goal of this Cost Of Care Project is to provide patient friendly costs of care, to help patients get better cost estimates for medical procedures of US Hospitals. User can view the chargemaster, search for a particular procedure in multiple hospitals chargemasters & can sort data by Category or sort by price in ascending or descending order. App downloads hospitals chargemaster from GitLab Repository and save it to local storage of phone in SQL database. Users can also compare hospitals based on ratings & patients experience to get idea about hospital services. This App can work offline and updates data once in a month.
- 
-              
+
+
 ## Communication
 
 The Cost Of Care chat channel is on [Librehealth Forums.](https://forums.librehealth.io/t/project-develop-an-android-mobile-application-to-show-patient-friendly-costs-of-care/3685/103)
@@ -23,8 +23,8 @@ The Cost Of Care chat channel is on [Librehealth Forums.](https://forums.librehe
 |  Choose any two hospitals to compare them |  Compare screen - Comparing general information |  Compare screen - Comparing patient experience |
 | <img src="/screenshots/download_cdm.png" align="top">| <img src="/screenshots/view_cdm.png" align="top"> |  <img src="/screenshots/view_cdm_statewise.png" align="top"> |
 | Download CDM - Download ChargeMaster of your nearby hospitals |   View CDM - Viewing individual CDM with search functionality. |     View CDM Statewise - View CDM of other states of US. |
-| <img src="/screenshots/saved_cdm.png" align="top">| <img src="/screenshots/about.png" align="top"> |  
-|  Saved ChargeMasters - CDMs Saved in SQL database of app |  About us page of the project in the app.  | 
+| <img src="/screenshots/saved_cdm.png" align="top">| <img src="/screenshots/about.png" align="top"> |
+|  Saved ChargeMasters - CDMs Saved in SQL database of app |  About us page of the project in the app.  |
 
 
 ## Dependencies
@@ -60,7 +60,7 @@ We have the following branches
 
 ## Maintainers and Developers
 
-* [**Mua N. Laurent**](https://gitlab.com/muarachmann) 
+* [**Mua N. Laurent**](https://gitlab.com/muarachmann)
 
 * [**Darshpreet Singh**](https://gitlab.com/Darshpreet2000)
 
@@ -86,5 +86,4 @@ Please help us follow the best practice to make it easy for the reviewer as well
 
 ## License
 
-This project is licensed under the GNU General Public License v3.0. A copy of LICENSE is to be present along with the source code. To obtain the software under a different license, please contact Librehealth
-
+This project is licensed under the Mozilla Public License 2.0 with Healthcare Disclaimer. a copy of this license can be found in `LICENSE`.
