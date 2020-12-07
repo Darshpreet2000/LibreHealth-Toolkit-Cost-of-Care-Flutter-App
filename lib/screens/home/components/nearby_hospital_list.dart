@@ -1,5 +1,3 @@
-import 'package:cost_of_care/bloc/compare_screen_bloc/compare_screen_list/compare_screen_list_bloc.dart';
-import 'package:cost_of_care/bloc/compare_screen_bloc/compare_screen_list/compare_screen_list_event.dart';
 import 'package:cost_of_care/bloc/location_bloc/location_bloc.dart';
 import 'package:cost_of_care/bloc/location_bloc/user_location_state.dart';
 import 'package:cost_of_care/bloc/nearby_hospital_bloc/bloc.dart';
@@ -20,9 +18,7 @@ class NearbyHospitalList extends StatelessWidget {
           String state = box.get('state');
           context.bloc<NearbyHospitalBloc>().add(FetchHospitals(state));
           //Compare hospital bloc
-          context
-              .bloc<CompareScreenListBloc>()
-              .add(CompareScreenListFetchHospitalName());
+
         } else if (state is LocationError) {
           context
               .bloc<NearbyHospitalBloc>()

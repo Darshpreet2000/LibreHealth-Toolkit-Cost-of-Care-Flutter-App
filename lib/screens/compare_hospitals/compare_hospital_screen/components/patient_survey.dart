@@ -1,8 +1,8 @@
-import 'package:cost_of_care/models/patient_experience.dart';
+
 import 'package:flutter/material.dart';
 
 class PatientSurveyWidget extends StatelessWidget {
-  final List<PatientExperience> patientExperienceList;
+  final List<List<dynamic>> patientExperienceList;
 
   PatientSurveyWidget(this.patientExperienceList);
 
@@ -20,7 +20,7 @@ class PatientSurveyWidget extends StatelessWidget {
         ),
         children: <Widget>[
           Text(
-            "Patients who reported that their nurses Always communicated well",
+            "Mortality national comparison",
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           SizedBox(
@@ -29,12 +29,12 @@ class PatientSurveyWidget extends StatelessWidget {
           IntrinsicHeight(
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: getNurseCommunication())),
+                  children: mortaityCompare())),
           SizedBox(
             height: 5,
           ),
           Text(
-            "Patients who reported that their doctors Always communicated well",
+            "Safety of care national comparison",
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           SizedBox(
@@ -43,12 +43,12 @@ class PatientSurveyWidget extends StatelessWidget {
           IntrinsicHeight(
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: getDoctorCommunication())),
+                  children: safetyCompare())),
           SizedBox(
             height: 5,
           ),
           Text(
-            "Patients who reported that staff Always explained about medicines before giving it to them",
+            "Readmission national comparison",
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           SizedBox(
@@ -57,12 +57,12 @@ class PatientSurveyWidget extends StatelessWidget {
           IntrinsicHeight(
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: getStaffMedicineExplain())),
+                  children: readmissionCompare())),
           SizedBox(
             height: 5,
           ),
           Text(
-            "Patients who reported that the area around their room was Always quiet at night",
+            "Patient experience national comparison",
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           SizedBox(
@@ -71,12 +71,12 @@ class PatientSurveyWidget extends StatelessWidget {
           IntrinsicHeight(
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: getCleanQuiet())),
+                  children: patientExperienceCompare())),
           SizedBox(
             height: 5,
           ),
           Text(
-            "Patients who \"Strongly Agree\" they understood their care when they left the hospital",
+            "Effectiveness of care national comparison",
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           SizedBox(
@@ -85,20 +85,22 @@ class PatientSurveyWidget extends StatelessWidget {
           IntrinsicHeight(
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: getAgreeCare()))
+                  children: effectiveCareCompare()))
         ]);
   }
 
-  List<Widget> getNurseCommunication() {
+  List<Widget> mortaityCompare() {
     List listings = List<Widget>();
     for (int i = 0; i < patientExperienceList.length; i++) {
       listings.add(Expanded(
         child: Text(
-          patientExperienceList[i].communicationWithNursesPerformanceRate,
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          patientExperienceList[i][8],
+          style: TextStyle(
+            fontSize: 18,
+          ),
           textAlign: TextAlign.center,
           overflow: TextOverflow.ellipsis,
-          maxLines: 5,
+          maxLines: 4,
         ),
       ));
 
@@ -112,16 +114,18 @@ class PatientSurveyWidget extends StatelessWidget {
     return listings;
   }
 
-  List<Widget> getDoctorCommunication() {
+  List<Widget> safetyCompare() {
     List listings = List<Widget>();
     for (int i = 0; i < patientExperienceList.length; i++) {
       listings.add(Expanded(
         child: Text(
-          patientExperienceList[i].communicationWithDoctorsPerformanceRate,
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          patientExperienceList[i][9],
+          style: TextStyle(
+            fontSize: 18,
+          ),
           textAlign: TextAlign.center,
           overflow: TextOverflow.ellipsis,
-          maxLines: 5,
+          maxLines: 4,
         ),
       ));
 
@@ -135,16 +139,18 @@ class PatientSurveyWidget extends StatelessWidget {
     return listings;
   }
 
-  List<Widget> getStaffMedicineExplain() {
+  List<Widget> readmissionCompare() {
     List listings = List<Widget>();
     for (int i = 0; i < patientExperienceList.length; i++) {
       listings.add(Expanded(
         child: Text(
-          patientExperienceList[i].responsivenessOfHospitalStaffPerformanceRate,
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          patientExperienceList[i][10],
+          style: TextStyle(
+            fontSize: 18,
+          ),
           textAlign: TextAlign.center,
           overflow: TextOverflow.ellipsis,
-          maxLines: 5,
+          maxLines: 4,
         ),
       ));
 
@@ -158,17 +164,18 @@ class PatientSurveyWidget extends StatelessWidget {
     return listings;
   }
 
-  List<Widget> getCleanQuiet() {
+  List<Widget> patientExperienceCompare() {
     List listings = List<Widget>();
     for (int i = 0; i < patientExperienceList.length; i++) {
       listings.add(Expanded(
         child: Text(
-          patientExperienceList[i]
-              .cleanlinessAndQuietnessOfHospitalEnvironmentPerformanceRate,
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          patientExperienceList[i][11],
+          style: TextStyle(
+            fontSize: 18,
+          ),
           textAlign: TextAlign.center,
           overflow: TextOverflow.ellipsis,
-          maxLines: 5,
+          maxLines: 4,
         ),
       ));
 
@@ -182,16 +189,19 @@ class PatientSurveyWidget extends StatelessWidget {
     return listings;
   }
 
-  List<Widget> getAgreeCare() {
+  List<Widget> effectiveCareCompare() {
     List listings = List<Widget>();
     for (int i = 0; i < patientExperienceList.length; i++) {
       listings.add(Expanded(
         child: Text(
-          patientExperienceList[i].careTransitionPerformanceRate,
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          patientExperienceList[i][12],
+
+          style: TextStyle(
+            fontSize: 18,
+          ),
           textAlign: TextAlign.center,
           overflow: TextOverflow.ellipsis,
-          maxLines: 5,
+          maxLines: 4,
         ),
       ));
 

@@ -34,15 +34,15 @@ class _BaseClassState extends State<BaseClass> {
       drawer: AppDrawer(),
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Home')),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(
               icon: Icon(
                 Icons.cloud_download,
                 size: 25,
               ),
-              title: Text('Download CDM')),
+              label: 'Download CDM'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.bookmark), title: Text('Saved')),
+              icon: Icon(Icons.bookmark), label: 'Saved'),
         ],
         currentIndex: selectedIndex,
         fixedColor: Colors.orange,

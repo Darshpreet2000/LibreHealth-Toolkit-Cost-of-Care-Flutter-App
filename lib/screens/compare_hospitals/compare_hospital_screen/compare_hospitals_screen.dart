@@ -1,11 +1,9 @@
-import 'package:cost_of_care/models/compare_hospital_model.dart';
+
 import 'package:cost_of_care/screens/compare_hospitals/compare_hospital_screen/components/body.dart';
 import 'package:flutter/material.dart';
 
 class CompareHospitalsScreen extends StatelessWidget {
-  final List<CompareHospitalModel> hospitalNamesForCompare;
 
-  CompareHospitalsScreen(this.hospitalNamesForCompare);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +14,7 @@ class CompareHospitalsScreen extends StatelessWidget {
         backgroundColor: Colors.orange,
         leading: BackButton(color: Colors.white),
       ),
-      body: Body(hospitalNamesForCompare),
+      body: Body(),
     );
   }
 }

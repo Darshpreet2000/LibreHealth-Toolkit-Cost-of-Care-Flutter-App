@@ -1,4 +1,3 @@
-import 'package:cost_of_care/bloc/compare_screen_bloc/compare_screen_list/bloc.dart';
 import 'package:cost_of_care/bloc/home_settings_bloc/bloc.dart';
 import 'package:cost_of_care/bloc/location_bloc/location_bloc.dart';
 import 'package:cost_of_care/bloc/nearby_hospital_bloc/bloc.dart';
@@ -19,6 +18,7 @@ import 'package:cost_of_care/repository/view_cdm_screen_repository_impl.dart';
 import 'package:cost_of_care/repository/view_cdm_statewise_repository_impl.dart';
 import 'package:cost_of_care/screens/about/about.dart';
 import 'package:cost_of_care/screens/base/base_class.dart';
+import 'package:cost_of_care/screens/compare_hospitals/compare_hospital_screen/compare_hospitals_screen.dart';
 import 'package:cost_of_care/screens/compare_hospitals/compare_hospitals_list/compare_hospital.dart';
 import 'package:cost_of_care/screens/intro/intro_screen.dart';
 import 'package:cost_of_care/screens/search/search_screen.dart';
@@ -29,7 +29,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 
-import 'bloc/compare_screen_bloc/compare_screen/compare_screen_bloc.dart';
+import 'bloc/compare_hospital_bloc/compare_hospital_screen/compare_hospital_screen_bloc.dart';
 import 'bloc/download_cdm_bloc/download_cdm_list/download_cdm_bloc.dart';
 import 'bloc/download_cdm_bloc/download_cdm_progress/download_file_button_bloc.dart';
 import 'bloc/report_a_bug_bloc/report_a_bug_bloc.dart';
@@ -118,19 +118,16 @@ class _MyAppState extends State<MyApp> {
           create: (BuildContext context) =>
               ViewCdmStatewiseBloc(ViewCDMStatewiseRepositoryImpl()),
         ),
-        BlocProvider<CompareScreenListBloc>(
-          create: (BuildContext context) =>
-              CompareScreenListBloc(CompareScreenRepositoryImpl()),
-        ),
-        BlocProvider<CompareScreenBloc>(
-          create: (BuildContext context) =>
-              CompareScreenBloc(CompareScreenRepositoryImpl()),
-        ),
+
         BlocProvider<RefreshSavedCdmBloc>(
           create: (BuildContext context) => RefreshSavedCdmBloc(),
         ),
         BlocProvider<ReportABugBloc>(
           create: (BuildContext context) => ReportABugBloc(),
+        ),
+
+        BlocProvider<CompareHospitalScreenBloc>(
+          create: (BuildContext context) => CompareHospitalScreenBloc(CompareScreenRepositoryImpl()),
         ),
       ],
       child: MaterialApp(
@@ -154,6 +151,7 @@ class _MyAppState extends State<MyApp> {
           '/ViewCDMStatewise': (context) => ViewCDMStatewise(),
           '/CompareHospitals': (context) => CompareHospitals(),
           '/About': (context) => About(),
+          '/CompareHospitalsScreen': (context) => CompareHospitalsScreen(),
         },
         initialRoute: initialAppRoute,
       ),
