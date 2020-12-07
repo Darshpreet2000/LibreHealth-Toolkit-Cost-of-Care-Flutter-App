@@ -1,20 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cost_of_care/bloc/compare_screen_bloc/compare_screen/bloc.dart';
-import 'package:cost_of_care/bloc/compare_screen_bloc/compare_screen/compare_screen_bloc.dart';
-import 'package:cost_of_care/bloc/compare_screen_bloc/compare_screen/compare_screen_state.dart';
-import 'package:cost_of_care/models/compare_hospital_model.dart';
+import 'package:cost_of_care/bloc/compare_hospital_bloc/compare_hospital_screen/compare_hospital_screen_bloc.dart';
 import 'package:cost_of_care/repository/compare_screen_repository_impl.dart';
-import 'package:cost_of_care/screens/compare_hospitals/compare_hospital_screen/components/general_information.dart';
 import 'package:cost_of_care/screens/compare_hospitals/compare_hospital_screen/components/patient_survey.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 
-class Body extends StatefulWidget {
-  final List<CompareHospitalModel> hospitalNamesForCompare;
+import 'general_information.dart';
 
-  Body(this.hospitalNamesForCompare);
+class Body extends StatefulWidget {
+
 
   @override
   _BodyState createState() => _BodyState();
@@ -25,73 +21,45 @@ class _BodyState extends State<Body> {
       new CompareScreenRepositoryImpl();
 
   @override
-  void initState() {
-    super.initState();
-    context
-        .bloc<CompareScreenBloc>()
-        .add(CompareScreenFetchData(widget.hospitalNamesForCompare));
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-          padding: EdgeInsets.all(8),
-          child: Column(children: <Widget>[
-            Row(children: getListOfWidgets()),
-            SizedBox(
-              height: 8,
-            ),
-            IntrinsicHeight(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: getHospitalImages(),
-              ),
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            BlocBuilder<CompareScreenBloc, CompareScreenState>(
-                builder: (BuildContext context, CompareScreenState state) {
-              if (state is CompareScreenLoadedState) {
-                return Column(
-                  children: <Widget>[
-                    GeneralInformationWidget(state.generalInformation),
-                    PatientSurveyWidget(state.patientExperience)
-                  ],
-                );
-              } else if (state is CompareScreenLoadingState) {
-                return Container(
-                  padding: EdgeInsets.all(8),
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                );
-              } else if (state is CompareScreenErrorState) {
-                return Container(
-                  padding: EdgeInsets.all(8),
-                  child: Center(
-                    child: Text(
-                      state.message,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  ),
-                );
-              }
+    return BlocBuilder<CompareHospitalScreenBloc, CompareHospitalScreenState>(
+        builder: (BuildContext context, CompareHospitalScreenState state) {
+            if(state is LoadedState){
+              return SingleChildScrollView(
+                child: Container(
+                    padding: EdgeInsets.all(8),
+                    child: Column(children: <Widget>[
+                      Row(children: getListOfWidgets(state.hospitalsData)),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      IntrinsicHeight(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: getHospitalImages(state.hospitalsData),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      GeneralInformationWidget(state.hospitalsData),
 
-              return Container();
-            })
-          ])),
-    );
+                      PatientSurveyWidget(state.hospitalsData),
+                    ])),
+              );
+
+            }
+            return Center(child: Container(child: CircularProgressIndicator(),));
+        });
+
   }
 
-  List<Widget> getListOfWidgets() {
-    List listings = List<Widget>();
-    for (int i = 0; i < widget.hospitalNamesForCompare.length; i++) {
+  List<Widget> getListOfWidgets(List<List<dynamic>> hospitalsName) {
+     List<Widget> listings =new List();
+    for (int i = 0; i < 2; i++) {
       listings.add(Expanded(
         child: Text(
-          widget.hospitalNamesForCompare[i].hospitalName,
+          hospitalsName[i][0],
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           textAlign: TextAlign.center,
           overflow: TextOverflow.ellipsis,
@@ -108,14 +76,14 @@ class _BodyState extends State<Body> {
     return listings;
   }
 
-  List<Widget> getHospitalImages() {
+  List<Widget> getHospitalImages(List<List<dynamic>> hospitalsName) {
     List listings = List<Widget>();
-    for (int i = 0; i < widget.hospitalNamesForCompare.length; i++) {
+    for (int i = 0; i <2; i++) {
       listings.add(
         Expanded(
           child: FutureBuilder(
             future: compareScreenRepositoryImpl
-                .fetchImages(widget.hospitalNamesForCompare[i].hospitalName),
+                .fetchImages(hospitalsName[i][0]),
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
               if (snapshot.hasError) {
                 return Container(
@@ -170,7 +138,7 @@ class _BodyState extends State<Body> {
           ),
         ),
       );
-      if (i != widget.hospitalNamesForCompare.length - 1)
+      if (i != hospitalsName.length - 1)
         listings.add(VerticalDivider(
           thickness: 2,
           width: 20,

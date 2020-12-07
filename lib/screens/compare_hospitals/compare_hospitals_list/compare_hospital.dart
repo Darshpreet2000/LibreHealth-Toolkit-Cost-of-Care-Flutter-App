@@ -1,6 +1,7 @@
-import 'package:cost_of_care/bloc/compare_screen_bloc/compare_screen_list/bloc.dart';
-import 'package:cost_of_care/models/compare_hospital_model.dart';
-import 'package:cost_of_care/screens/compare_hospitals/compare_hospital_screen/compare_hospitals_screen.dart';
+
+import 'package:cost_of_care/bloc/compare_hospital_bloc/compare_hospital_list/compare_hospital_list_bloc.dart';
+import 'package:cost_of_care/bloc/compare_hospital_bloc/compare_hospital_screen/compare_hospital_screen_bloc.dart';
+import 'package:cost_of_care/repository/compare_screen_repository_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -12,6 +13,8 @@ class CompareHospitals extends StatefulWidget {
 }
 
 class _CompareHospitalsState extends State<CompareHospitals> {
+  CompareHospitalListBloc compareHospitalListBloc;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +24,7 @@ class _CompareHospitalsState extends State<CompareHospitals> {
         backgroundColor: Colors.orange,
         leading: BackButton(color: Colors.white),
       ),
-      body: Body(),
+      body: Body(compareHospitalListBloc),
       floatingActionButton: Container(
         padding: EdgeInsets.only(bottom: 10.0),
         child: Align(
@@ -29,25 +32,9 @@ class _CompareHospitalsState extends State<CompareHospitals> {
           child: FloatingActionButton.extended(
             backgroundColor: Colors.orange,
             onPressed: () {
-              CompareScreenListLoadedState state = context
-                  .bloc<CompareScreenListBloc>()
-                  .state as CompareScreenListLoadedState;
-              List<CompareHospitalModel> hospitals = state.hospitalName;
-              List<CompareHospitalModel> hospitalNamesForCompare = hospitals
-                  .where((element) => element.isAddedToCompare == true)
-                  .toList();
-              if (hospitalNamesForCompare.length == 2) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          CompareHospitalsScreen(hospitalNamesForCompare)),
-                );
-              } else {
-                context.bloc<CompareScreenListBloc>().add(
-                    CompareScreenListCompareButtonError(
-                        "Add two Hospitals to compare"));
-              }
+              compareHospitalListBloc.add(FloatingCompareHospitalButtonPress(BlocProvider.of<CompareHospitalScreenBloc>(context)));
+               if(compareHospitalListBloc.hospitalsAddedToCompare==2)
+                   Navigator.pushNamed(context, '/CompareHospitalsScreen');
             },
             icon: Icon(
               Icons.compare,
@@ -72,8 +59,12 @@ class _CompareHospitalsState extends State<CompareHospitals> {
   @override
   void initState() {
     super.initState();
-    context
-        .bloc<CompareScreenListBloc>()
-        .add(CompareScreenListFetchHospitalName());
+   compareHospitalListBloc= new CompareHospitalListBloc(CompareScreenRepositoryImpl());
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    compareHospitalListBloc.close();
   }
 }

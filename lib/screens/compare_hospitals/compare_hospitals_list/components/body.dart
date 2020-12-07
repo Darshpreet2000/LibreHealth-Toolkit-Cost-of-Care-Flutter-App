@@ -1,13 +1,12 @@
-import 'package:cost_of_care/bloc/compare_screen_bloc/compare_screen_list/bloc.dart';
-import 'package:cost_of_care/bloc/compare_screen_bloc/compare_screen_list/compare_screen_list_bloc.dart';
-import 'package:cost_of_care/bloc/compare_screen_bloc/compare_screen_list/compare_screen_list_state.dart';
-import 'package:cost_of_care/models/compare_hospital_model.dart';
+import 'package:cost_of_care/bloc/compare_hospital_bloc/compare_hospital_list/compare_hospital_list_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'list_tile.dart';
-
 class Body extends StatefulWidget {
+  final CompareHospitalListBloc compareHospitalListBloc;
+
+  Body(this.compareHospitalListBloc);
+
   @override
   _BodyState createState() => _BodyState();
 }
@@ -15,46 +14,55 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
-    return BlocListener<CompareScreenListBloc, CompareScreenListState>(
-      listener: (BuildContext context, state) async {
-        if (state is CompareScreenListErrorState) {
-          Scaffold.of(context).showSnackBar(SnackBar(
-            content: Text(
-              state.message,
-              style: TextStyle(color: Colors.white),
-            ),
-            backgroundColor: Colors.deepOrangeAccent,
-          ));
-        }
-      },
-      child: BlocBuilder<CompareScreenListBloc, CompareScreenListState>(
-          builder: (BuildContext context, CompareScreenListState state) {
-        if (state is CompareScreenListLoadingState) {
-          return Container(
-            child: Center(
-              child: CircularProgressIndicator(),
-            ),
-          );
-        } else if (state is CompareScreenListLoadedState) {
-          return showList(state.hospitalName);
-        } else if (state is CompareScreenListErrorState) {
-          return Container(
-            padding: EdgeInsets.all(8.0),
-            child: Center(
-                child: Text(
-              state.message,
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 18),
-            )),
-          );
-        }
-        return Container();
-      }),
-    );
+     return BlocListener(
+       cubit: widget.compareHospitalListBloc,
+         listener: (BuildContext context, state) {
+               if(state is ShowSnackBar){
+                 Scaffold.of(context).showSnackBar(SnackBar(
+                   content: Text(
+                     state.message,
+                     style: TextStyle(color: Colors.white),
+                   ),
+                   backgroundColor: Colors.red,
+                 ));
+               }
+         },
+       child: BlocBuilder(
+           cubit: widget.compareHospitalListBloc,
+           builder: (BuildContext context, CompareHospitalListState state) {
+                if(state is LoadingState){
+                  return Center(child: CircularProgressIndicator());
+                }
+                else if( state is LoadedState){
+                  return showList(state.hospitalCompareData,widget.compareHospitalListBloc);
+                }
+
+                else if (state is ErrorState){
+                  return Center(
+                    child: Container(
+                      padding: EdgeInsets.all(8),
+                      child: Center(child: Text(state.message , style: TextStyle(
+                        fontSize: 18,
+                      ),
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 5,)),
+                    ),
+                  );
+                }
+                return CircularProgressIndicator();
+           }),
+     );
+  }
+
+   @override
+  void initState() {
+     super.initState();
+     widget.compareHospitalListBloc.add(GetCompareData());
   }
 }
 
-Widget showList(List<CompareHospitalModel> hospitalsName) {
+Widget showList(List<List<dynamic>> hospitalsName,  CompareHospitalListBloc compareHospitalListBloc) {
   return Scrollbar(
     child: ListView.builder(
       itemCount: hospitalsName.length,
@@ -65,7 +73,7 @@ Widget showList(List<CompareHospitalModel> hospitalsName) {
           margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
           child: Container(
             decoration: BoxDecoration(color: Colors.grey[50]),
-            child: makeListTile(context, hospitalsName[index], index),
+            child: makeListTile(context, hospitalsName[index][0],hospitalsName[index][13], index,compareHospitalListBloc),
           ),
         );
       },

@@ -1,14 +1,14 @@
-import 'package:cost_of_care/bloc/compare_screen_bloc/compare_screen_list/bloc.dart';
-import 'package:cost_of_care/models/compare_hospital_model.dart';
+
+import 'package:cost_of_care/bloc/compare_hospital_bloc/compare_hospital_list/compare_hospital_list_bloc.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 ListTile makeListTile(
-    BuildContext context, CompareHospitalModel hospitalName, int index) {
+    BuildContext context, String hospitalName,int isHospitalAddedToCompare ,int index,CompareHospitalListBloc compareHospitalListBloc) {
   return ListTile(
     title: Text(
-      hospitalName.hospitalName,
+      hospitalName,
       maxLines: 3,
       overflow: TextOverflow.ellipsis,
       style: TextStyle(
@@ -19,16 +19,14 @@ ListTile makeListTile(
       ),
     ),
     trailing: RaisedButton(
-      color: hospitalName.isAddedToCompare ? Colors.green : Colors.orange,
+      color: isHospitalAddedToCompare==1 ? Colors.green : Colors.orange,
       child: Text(
-        hospitalName.isAddedToCompare ? "Comparing" : "Compare",
+        isHospitalAddedToCompare==1 ? "Comparing" : "Compare",
         style: TextStyle(color: Colors.white),
       ),
       onPressed: () {
-        context.bloc<CompareScreenListBloc>().add(
-            CompareScreenListCompareButtonEvent(
-                !hospitalName.isAddedToCompare, index));
-      },
+        compareHospitalListBloc.add(UpdateHospitalToCompare(index));
+        },
     ),
   );
 }
