@@ -1,13 +1,12 @@
 🎉 Welcome to LibreHealth Cost Of Care Explorer
-
-The Goal of this Cost Of Care Project is to provide patient friendly costs of care, to help patients get better cost estimates for medical procedures of US Hospitals.
+The Goal of this Cost Of Care Project is to provide patient-friendly costs of care, to help patients get better cost estimates for medical procedures of US Hospitals.
 
 Features
 
 - User can view the chargemaster
-- Search for a particular procedure in multiple hospitals chargemasters 
+- Search for a particular procedure in multiple hospitals chargemasters
 - Sort data by Category or sort by price in ascending or descending order.
-- Users can also compare hospitals based on ratings & patients experience to get idea about hospital services.   
-- This App can work offline and updates data once in a month.
+- Users can also compare hospitals based on ratings & patients' experience to get idea about hospital services.
+- This App can work offline and updates data once a month.
 
-Download the Android App & explore
+Download the Android application now and check it out!
