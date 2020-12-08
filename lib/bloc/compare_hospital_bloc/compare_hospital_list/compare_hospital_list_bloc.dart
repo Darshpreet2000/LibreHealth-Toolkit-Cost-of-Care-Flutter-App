@@ -4,6 +4,7 @@ import 'package:cost_of_care/bloc/compare_hospital_bloc/compare_hospital_screen/
 import 'package:cost_of_care/repository/compare_screen_repository_impl.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logger/logger.dart';
 part 'compare_hospital_list_event.dart';
 part 'compare_hospital_list_state.dart';
 
@@ -19,9 +20,14 @@ class CompareHospitalListBloc extends Bloc<CompareHospitalListEvent, CompareHosp
   ) async* {
        if(event is GetCompareData){
            yield LoadingState();
+           var logger = Logger();
+           logger.d("Loading state passed");
            hospitalsAddedToCompare=0;
            try{
                hospitalCompareData=await compareScreenRepositoryImpl.getListOfHospitals();
+               var logger = Logger();
+               logger.d("printing hospital data ");
+               logger.d(hospitalCompareData);
                yield LoadedState(hospitalCompareData);
 
            }
