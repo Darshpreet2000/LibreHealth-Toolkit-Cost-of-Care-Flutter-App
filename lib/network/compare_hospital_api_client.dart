@@ -18,6 +18,10 @@ class CompareHospitalAPIClient {
   Future fetchDataFromAssets(String stateName) async{
     final myData = await rootBundle.loadString("assets/compare_data.csv");
 
+    FLog.info(
+        className: "Real Data is ",
+        methodName: "_buildRow1",
+        text: myData);
     List<List<dynamic>> rowsAsListOfValues = const CsvToListConverter().convert(myData);
     // filter by state and the show list
 
