@@ -21,8 +21,9 @@ class CompareHospitalListBloc extends Bloc<CompareHospitalListEvent, CompareHosp
            yield LoadingState();
            hospitalsAddedToCompare=0;
            try{
-             hospitalCompareData=await compareScreenRepositoryImpl.getListOfHospitals();
-             yield LoadedState(hospitalCompareData);
+               hospitalCompareData=await compareScreenRepositoryImpl.getListOfHospitals();
+               yield LoadedState(hospitalCompareData);
+
            }
            catch(e){
 
