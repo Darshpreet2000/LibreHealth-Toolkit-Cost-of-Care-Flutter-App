@@ -28,6 +28,9 @@ class CompareHospitalAPIClient {
         rowsAsListOfValues.add(values);
       }
     });
+    rowsAsListOfValues.sort((a, b) {
+      return a[0].toLowerCase().compareTo(b[0].toLowerCase());
+    });
 
     // filter by state and the show list
     return rowsAsListOfValues;
