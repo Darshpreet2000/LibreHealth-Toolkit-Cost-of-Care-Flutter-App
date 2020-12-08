@@ -7,15 +7,17 @@ import 'package:equatable/equatable.dart';
 part 'compare_hospital_screen_event.dart';
 part 'compare_hospital_screen_state.dart';
 
-class CompareHospitalScreenBloc extends Bloc<CompareHospitalScreenEvent, CompareHospitalScreenState> {
-  CompareHospitalScreenBloc(this.compareScreenRepositoryImpl) : super(CompareHospitalScreenInitial());
+class CompareHospitalScreenBloc
+    extends Bloc<CompareHospitalScreenEvent, CompareHospitalScreenState> {
+  CompareHospitalScreenBloc(this.compareScreenRepositoryImpl)
+      : super(CompareHospitalScreenInitial());
   CompareScreenRepositoryImpl compareScreenRepositoryImpl;
   @override
   Stream<CompareHospitalScreenState> mapEventToState(
     CompareHospitalScreenEvent event,
   ) async* {
-       if(event is AddHospitals){
-            yield LoadedState(event.hospitalToCompare);
-       }
+    if (event is AddHospitals) {
+      yield LoadedState(event.hospitalToCompare);
+    }
   }
 }

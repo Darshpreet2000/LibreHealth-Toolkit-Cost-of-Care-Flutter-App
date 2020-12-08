@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class PatientSurveyWidget extends StatelessWidget {
@@ -195,7 +194,6 @@ class PatientSurveyWidget extends StatelessWidget {
       listings.add(Expanded(
         child: Text(
           patientExperienceList[i][12],
-
           style: TextStyle(
             fontSize: 18,
           ),
