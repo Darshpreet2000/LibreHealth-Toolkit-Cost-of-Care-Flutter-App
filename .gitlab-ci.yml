@@ -36,7 +36,7 @@ build:
     - tar -xf flutter-sdk.tar.xz
     - export PATH=$PATH:$PWD/flutter/bin
     - echo flutter.sdk=$PWD/flutter > android/local.properties
-    - chmod +x ./android/gradlew
+   # - chmod +x ./android/gradlew
 
 
   script:
