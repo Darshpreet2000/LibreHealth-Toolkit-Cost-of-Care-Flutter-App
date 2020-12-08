@@ -3,8 +3,8 @@ import 'package:bloc/bloc.dart';
 import 'package:cost_of_care/bloc/compare_hospital_bloc/compare_hospital_screen/compare_hospital_screen_bloc.dart';
 import 'package:cost_of_care/repository/compare_screen_repository_impl.dart';
 import 'package:equatable/equatable.dart';
+import 'package:f_logs/model/flog/flog.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:logger/logger.dart';
 part 'compare_hospital_list_event.dart';
 part 'compare_hospital_list_state.dart';
 
@@ -20,15 +20,26 @@ class CompareHospitalListBloc extends Bloc<CompareHospitalListEvent, CompareHosp
   ) async* {
        if(event is GetCompareData){
            yield LoadingState();
-           var logger = Logger();
-           logger.d("Loading state passed");
            hospitalsAddedToCompare=0;
+
+           FLog.info(
+               className: "passed loading ",
+               methodName: "_buildRow1",
+               text: " passed loading");
            try{
                hospitalCompareData=await compareScreenRepositoryImpl.getListOfHospitals();
-               var logger = Logger();
-               logger.d("printing hospital data ");
-               logger.d(hospitalCompareData);
-               yield LoadedState(hospitalCompareData);
+
+               FLog.info(
+                   className: "currentl loading  ",
+                   methodName: "_buildRow1",
+                   text: " size is "+ hospitalCompareData.length.toString());
+                yield LoadedState(hospitalCompareData);
+
+               FLog.info(
+                   className: " loaded State  ",
+                   methodName: "_buildRow1",
+                   text: " Loaded State Now ");
+               FLog.exportLogs();
 
            }
            catch(e){

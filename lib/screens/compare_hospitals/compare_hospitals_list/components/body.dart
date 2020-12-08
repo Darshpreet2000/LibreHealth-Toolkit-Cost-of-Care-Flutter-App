@@ -1,4 +1,5 @@
 import 'package:cost_of_care/bloc/compare_hospital_bloc/compare_hospital_list/compare_hospital_list_bloc.dart';
+import 'package:f_logs/model/flog/flog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'list_tile.dart';
@@ -34,6 +35,7 @@ class _BodyState extends State<Body> {
                   return Center(child: CircularProgressIndicator());
                 }
                 else if( state is LoadedState){
+                  FLog.exportLogs();
                   return showList(state.hospitalCompareData,widget.compareHospitalListBloc);
                 }
 

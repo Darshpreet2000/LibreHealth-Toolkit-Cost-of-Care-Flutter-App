@@ -25,6 +25,9 @@ import 'package:cost_of_care/screens/intro/intro_screen.dart';
 import 'package:cost_of_care/screens/search/search_screen.dart';
 import 'package:cost_of_care/screens/settings_home/settings_home.dart';
 import 'package:cost_of_care/screens/view_cdm_statewise/view_cdm_statewise.dart';
+import 'package:f_logs/model/flog/flog.dart';
+import 'package:f_logs/model/flog/flog_config.dart';
+import 'package:f_logs/utils/timestamp/timestamp_format.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
@@ -73,6 +76,11 @@ class _MyAppState extends State<MyApp> {
     if (!box.containsKey('introDisplayed')) {
       initialAppRoute = '/IntroScreen';
     }
+    LogsConfig config = FLog.getDefaultConfigurations()
+      ..isLogsEnabled = true
+      ..timestampFormat = TimestampFormat.TIME_FORMAT_FULL_2;
+
+    FLog.applyConfigurations(config);
   }
 
   @override
