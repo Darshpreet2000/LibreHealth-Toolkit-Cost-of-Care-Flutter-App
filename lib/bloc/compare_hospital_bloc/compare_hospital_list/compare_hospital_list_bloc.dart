@@ -38,7 +38,7 @@ class CompareHospitalListBloc extends Bloc<CompareHospitalListEvent, CompareHosp
 
        }
        else if(event is UpdateHospitalToCompare){
-               if(hospitalsAddedToCompare==2&&hospitalCompareData[event.index][13]==0){
+               if(hospitalsAddedToCompare==2&&hospitalCompareData[event.index][13]=="0"){
                    yield ShowSnackBar("Cannot compare more than 2 Hospitals");
                    yield LoadedState(hospitalCompareData);
                }
