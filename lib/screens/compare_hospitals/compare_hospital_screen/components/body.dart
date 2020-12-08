@@ -10,8 +10,6 @@ import 'package:shimmer/shimmer.dart';
 import 'general_information.dart';
 
 class Body extends StatefulWidget {
-
-
   @override
   _BodyState createState() => _BodyState();
 }
@@ -24,38 +22,38 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     return BlocBuilder<CompareHospitalScreenBloc, CompareHospitalScreenState>(
         builder: (BuildContext context, CompareHospitalScreenState state) {
-            if(state is LoadedState){
-              return SingleChildScrollView(
-                child: Container(
-                    padding: EdgeInsets.all(8),
-                    child: Column(children: <Widget>[
-                      Row(children: getListOfWidgets(state.hospitalsData)),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      IntrinsicHeight(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: getHospitalImages(state.hospitalsData),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      GeneralInformationWidget(state.hospitalsData),
-
-                      PatientSurveyWidget(state.hospitalsData),
-                    ])),
-              );
-
-            }
-            return Center(child: Container(child: CircularProgressIndicator(),));
-        });
-
+      if (state is LoadedState) {
+        return SingleChildScrollView(
+          child: Container(
+              padding: EdgeInsets.all(8),
+              child: Column(children: <Widget>[
+                Row(children: getListOfWidgets(state.hospitalsData)),
+                SizedBox(
+                  height: 8,
+                ),
+                IntrinsicHeight(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: getHospitalImages(state.hospitalsData),
+                  ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                GeneralInformationWidget(state.hospitalsData),
+                PatientSurveyWidget(state.hospitalsData),
+              ])),
+        );
+      }
+      return Center(
+          child: Container(
+        child: CircularProgressIndicator(),
+      ));
+    });
   }
 
   List<Widget> getListOfWidgets(List<List<dynamic>> hospitalsName) {
-     List<Widget> listings =new List();
+    List<Widget> listings = new List();
     for (int i = 0; i < 2; i++) {
       listings.add(Expanded(
         child: Text(
@@ -78,12 +76,12 @@ class _BodyState extends State<Body> {
 
   List<Widget> getHospitalImages(List<List<dynamic>> hospitalsName) {
     List listings = List<Widget>();
-    for (int i = 0; i <2; i++) {
+    for (int i = 0; i < 2; i++) {
       listings.add(
         Expanded(
           child: FutureBuilder(
-            future: compareScreenRepositoryImpl
-                .fetchImages(hospitalsName[i][0]),
+            future:
+                compareScreenRepositoryImpl.fetchImages(hospitalsName[i][0]),
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
               if (snapshot.hasError) {
                 return Container(

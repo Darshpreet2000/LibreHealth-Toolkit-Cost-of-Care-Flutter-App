@@ -5,7 +5,6 @@ import 'package:dio/dio.dart';
 import 'abstract/compare_screen_repository.dart';
 
 class CompareScreenRepositoryImpl extends CompareScreenRepository {
-
   @override
   Future getListOfHospitals() async {
     String stateName;
@@ -17,14 +16,14 @@ class CompareScreenRepositoryImpl extends CompareScreenRepository {
     BaseOptions options = new BaseOptions(
         connectTimeout: 15 * 1000, // 60 seconds
         receiveTimeout: 15 * 1000 // 60 seconds
-    );
-    StatesAbbreviation statesAbbreviation=new StatesAbbreviation();
-    stateName=statesAbbreviation.getAbbreviation(stateName);
-    if(stateName=="")
+        );
+    StatesAbbreviation statesAbbreviation = new StatesAbbreviation();
+    stateName = statesAbbreviation.getAbbreviation(stateName);
+    if (stateName == "")
       throw Exception("No hospitals available to compare for your location");
     Dio dio = new Dio(options);
     CompareHospitalAPIClient compareHospitalAPIClient =
-    new CompareHospitalAPIClient(dio);
+        new CompareHospitalAPIClient(dio);
     return compareHospitalAPIClient.fetchDataFromAssets(stateName);
   }
 
@@ -38,6 +37,4 @@ class CompareScreenRepositoryImpl extends CompareScreenRepository {
         new CompareHospitalAPIClient(dio);
     return compareHospitalAPIClient.fetchImages(name);
   }
-
-
 }

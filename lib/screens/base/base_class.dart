@@ -41,8 +41,7 @@ class _BaseClassState extends State<BaseClass> {
                 size: 25,
               ),
               label: 'Download CDM'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.bookmark), label: 'Saved'),
+          BottomNavigationBarItem(icon: Icon(Icons.bookmark), label: 'Saved'),
         ],
         currentIndex: selectedIndex,
         fixedColor: Colors.orange,

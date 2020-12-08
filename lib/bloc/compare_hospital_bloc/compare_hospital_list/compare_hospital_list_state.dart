@@ -1,15 +1,13 @@
 part of 'compare_hospital_list_bloc.dart';
 
-abstract class CompareHospitalListState  extends Equatable{
+abstract class CompareHospitalListState extends Equatable {
   const CompareHospitalListState();
-
 }
 
 class LoadingState extends CompareHospitalListState {
   @override
   // TODO: implement props
   List<Object> get props => [];
-
 }
 
 class ErrorState extends CompareHospitalListState {
@@ -27,10 +25,9 @@ class ShowSnackBar extends CompareHospitalListState {
   @override
   // TODO: implement props
   List<Object> get props => [];
-
 }
 
- class LoadedState extends CompareHospitalListState {
+class LoadedState extends CompareHospitalListState {
   final List<List<dynamic>> hospitalCompareData;
 
   LoadedState(this.hospitalCompareData);
