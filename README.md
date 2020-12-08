@@ -1,4 +1,4 @@
-# Cost of Care
+# LibreHealth Cost Of Care Explorer
 
 ## Goal
 
