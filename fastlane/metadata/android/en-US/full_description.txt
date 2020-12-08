@@ -1,5 +1,5 @@
 🎉 Welcome to LibreHealth Cost Of Care Explorer
-The Goal of this Cost Of Care Project is to provide patient-friendly costs of care, to help patients get better cost estimates for medical procedures of US Hospitals.
+The Goal of this LibreHealth Cost Of Care Explorer project is to provide patient-friendly costs of care, to help patients get better cost estimates for medical procedures of US Hospitals.
 
 Features
 
