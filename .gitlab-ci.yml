@@ -1,25 +1,26 @@
 image: cirrusci/flutter:stable
 
-    
+
 stages:
   - test
   - build
-  
+
 test:
 
   only:
       - master
-      
+
   stage: test
   script:
     - flutter pub get
     - flutter clean
     - flutter test
-  
+
 build:
 
   only:
       - master
+      - tags
 
   stage: build
 
@@ -29,17 +30,14 @@ build:
     - echo "storePassword=$KEYSTORE_PASSWORD" >> android/key.properties
     - echo "keyAlias=$ALIAS" >> android/key.properties
     - echo "keyPassword=$KEY_PASSWORD" >> android/key.properties
-  
+
   script:
     - flutter pub get
     - flutter clean
     - flutter build appbundle
     - flutter build apk
-  
+
   artifacts:
     paths:
     - build/app/outputs/bundle/release/app-release.aab
     - build/app/outputs/flutter-apk/app-release.apk
-
-
-
