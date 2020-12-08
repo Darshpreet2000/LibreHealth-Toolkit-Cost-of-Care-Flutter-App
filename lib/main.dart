@@ -1,3 +1,4 @@
+import 'package:cost_of_care/bloc/compare_hospital_bloc/compare_hospital_list/compare_hospital_list_bloc.dart';
 import 'package:cost_of_care/bloc/home_settings_bloc/bloc.dart';
 import 'package:cost_of_care/bloc/location_bloc/location_bloc.dart';
 import 'package:cost_of_care/bloc/nearby_hospital_bloc/bloc.dart';
@@ -128,6 +129,9 @@ class _MyAppState extends State<MyApp> {
 
         BlocProvider<CompareHospitalScreenBloc>(
           create: (BuildContext context) => CompareHospitalScreenBloc(CompareScreenRepositoryImpl()),
+        ),
+        BlocProvider<CompareHospitalListBloc>(
+          create: (BuildContext context) => CompareHospitalListBloc(CompareScreenRepositoryImpl()),
         ),
       ],
       child: MaterialApp(

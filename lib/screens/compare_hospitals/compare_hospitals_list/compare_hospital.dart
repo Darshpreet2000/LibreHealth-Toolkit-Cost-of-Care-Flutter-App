@@ -13,8 +13,7 @@ class CompareHospitals extends StatefulWidget {
 }
 
 class _CompareHospitalsState extends State<CompareHospitals> {
-  CompareHospitalListBloc compareHospitalListBloc;
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +23,8 @@ class _CompareHospitalsState extends State<CompareHospitals> {
         backgroundColor: Colors.orange,
         leading: BackButton(color: Colors.white),
       ),
-      body: Body(compareHospitalListBloc),
+      body: Body(BlocProvider.of<CompareHospitalListBloc>(context)),
+
       floatingActionButton: Container(
         padding: EdgeInsets.only(bottom: 10.0),
         child: Align(
@@ -32,8 +32,8 @@ class _CompareHospitalsState extends State<CompareHospitals> {
           child: FloatingActionButton.extended(
             backgroundColor: Colors.orange,
             onPressed: () {
-              compareHospitalListBloc.add(FloatingCompareHospitalButtonPress(BlocProvider.of<CompareHospitalScreenBloc>(context)));
-               if(compareHospitalListBloc.hospitalsAddedToCompare==2)
+              BlocProvider.of<CompareHospitalListBloc>(context).add(FloatingCompareHospitalButtonPress(BlocProvider.of<CompareHospitalScreenBloc>(context)));
+               if(BlocProvider.of<CompareHospitalListBloc>(context).hospitalsAddedToCompare==2)
                    Navigator.pushNamed(context, '/CompareHospitalsScreen');
             },
             icon: Icon(
@@ -59,12 +59,6 @@ class _CompareHospitalsState extends State<CompareHospitals> {
   @override
   void initState() {
     super.initState();
-   compareHospitalListBloc= new CompareHospitalListBloc(CompareScreenRepositoryImpl());
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    compareHospitalListBloc.close();
+     BlocProvider.of<CompareHospitalListBloc>(context).add(GetCompareData());
   }
 }
