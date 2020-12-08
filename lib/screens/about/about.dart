@@ -31,7 +31,7 @@ class About extends StatelessWidget {
                   height: 8,
                 ),
                 Text(
-                  "The Goal of this Cost Of Care Project is to provide patient friendly costs of care, to help patients get better cost estimates for medical procedures of US Hospitals." +
+                  "The Goal of the LibreHealth Cost Of Care Explorer Project is to provide patient friendly costs of care, to help patients get better cost estimates for medical procedures of US Hospitals." +
                       " User can view the chargemaster, search for a particular procedure in multiple hospitals chargemasters & can sort data by Category or sort by price in ascending or descending order." +
                       " App downloads hospitals chargemaster from GitLab Repository and save it to local storage of phone in SQL database." +
                       " This App can work offline and can update downloaded data." +

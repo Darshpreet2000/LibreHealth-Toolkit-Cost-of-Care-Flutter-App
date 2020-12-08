@@ -19,7 +19,7 @@ class IntroScreenState extends State<IntroScreen> {
 
     slides.add(
       new Slide(
-        title: "Cost Of Care \n By",
+        title: "LibreHealth Cost Of Care Explorer \n By",
         maxLineTitle: 2,
         styleTitle: TextStyle(
           color: Colors.white,

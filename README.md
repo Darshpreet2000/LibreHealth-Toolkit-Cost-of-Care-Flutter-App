@@ -4,12 +4,12 @@
 
 Recent changes in Medicare’s payment policies under the inpatient prospective payment system (PPS) and the long-term care hospital PPS required that the CDM be made available in a machine-readable format by January 1, 2019 . These formats are in XML or CSV and while machine readable do not make sense for a patient who is comparing the prices
 
-The Goal of this Cost Of Care Project is to provide patient friendly costs of care, to help patients get better cost estimates for medical procedures of US Hospitals. User can view the chargemaster, search for a particular procedure in multiple hospitals chargemasters & can sort data by Category or sort by price in ascending or descending order. App downloads hospitals chargemaster from GitLab Repository and save it to local storage of phone in SQL database. Users can also compare hospitals based on ratings & patients experience to get idea about hospital services. This App can work offline and updates data once in a month.
+The Goal of this LibreHealth Cost Of Care Explorer Project is to provide patient friendly costs of care, to help patients get better cost estimates for medical procedures of US Hospitals. User can view the chargemaster, search for a particular procedure in multiple hospitals chargemasters & can sort data by Category or sort by price in ascending or descending order. App downloads hospitals chargemaster from GitLab Repository and save it to local storage of phone in SQL database. Users can also compare hospitals based on ratings & patients experience to get idea about hospital services. This App can work offline and updates data once in a month.
 
 
 ## Communication
 
-The Cost Of Care chat channel is on [Librehealth Forums.](https://forums.librehealth.io/t/project-develop-an-android-mobile-application-to-show-patient-friendly-costs-of-care/3685/103)
+The LibreHealth Cost Of Care Explorer chat channel is on [Librehealth Forums.](https://forums.librehealth.io/t/project-develop-an-android-mobile-application-to-show-patient-friendly-costs-of-care/3685/103)
 
 ## Screenshots
 
