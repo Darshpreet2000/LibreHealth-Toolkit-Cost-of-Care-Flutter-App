@@ -22,24 +22,12 @@ class CompareHospitalListBloc extends Bloc<CompareHospitalListEvent, CompareHosp
            yield LoadingState();
            hospitalsAddedToCompare=0;
 
-           FLog.info(
-               className: "passed loading ",
-               methodName: "_buildRow1",
-               text: " passed loading");
+
            try{
                hospitalCompareData=await compareScreenRepositoryImpl.getListOfHospitals();
 
-               FLog.info(
-                   className: "currentl loading  ",
-                   methodName: "_buildRow1",
-                   text: " size is "+ hospitalCompareData.length.toString());
                 yield LoadedState(hospitalCompareData);
 
-               FLog.info(
-                   className: " loaded State  ",
-                   methodName: "_buildRow1",
-                   text: " Loaded State Now ");
-               FLog.exportLogs();
 
            }
            catch(e){
@@ -56,11 +44,11 @@ class CompareHospitalListBloc extends Bloc<CompareHospitalListEvent, CompareHosp
                }
               else {
                  yield LoadingState();
-                 if(hospitalCompareData[event.index][13]==0)
+                 if(hospitalCompareData[event.index][13]=="0")
                    hospitalsAddedToCompare++;
                  else
                    hospitalsAddedToCompare--;
-                  hospitalCompareData[event.index][13] = (hospitalCompareData[event.index][13]) == 0 ? 1 : 0;
+                  hospitalCompareData[event.index][13] = (hospitalCompareData[event.index][13]) == "0" ? "1" : "0";
                  yield LoadedState(hospitalCompareData);
                }
       }
@@ -68,7 +56,7 @@ class CompareHospitalListBloc extends Bloc<CompareHospitalListEvent, CompareHosp
          if(hospitalsAddedToCompare==2) {
            List<List<dynamic>> addHospitals=new List();
            hospitalCompareData.forEach((element) {
-             if (element[13] == 1) {
+             if (element[13] == "1") {
                addHospitals.add(element);
              }
            });

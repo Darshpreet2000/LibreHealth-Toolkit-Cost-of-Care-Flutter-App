@@ -56,9 +56,4 @@ class _CompareHospitalsState extends State<CompareHospitals> {
     );
   }
 
-  @override
-  void initState() {
-    super.initState();
-     BlocProvider.of<CompareHospitalListBloc>(context).add(GetCompareData());
-  }
 }

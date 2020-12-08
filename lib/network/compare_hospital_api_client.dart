@@ -17,28 +17,24 @@ class CompareHospitalAPIClient {
   
   Future fetchDataFromAssets(String stateName) async{
     final myData = await rootBundle.loadString("assets/data.csv");
-
-    List<List<dynamic>> rowsAsListOfValues = const CsvToListConverter().convert(myData);
-    // filter by state and the show list
-    rowsAsListOfValues.forEach((element) {
-      FLog.info(
-          className: element[0],
-          methodName: "_buildRow1",
-          text: element[1]);
+    List<dynamic> myDataList=myData.split("\n");
+    List<List<dynamic>> rowsAsListOfValues=new List();
+    myDataList.forEach((element) {
+      List<dynamic> values=element.split(",");
+      rowsAsListOfValues.add(values);
     });
-    FLog.info(
-        className: "Size ",
-        methodName: "_buildRow1",
-        text: " Size is "+ rowsAsListOfValues.length.toString());
-    var filteredByState = rowsAsListOfValues.where((i) => i[2]== stateName).toList();
+
+    // filter by state and the show list
+
+     var filteredByState = rowsAsListOfValues.where((i) {
+      if(i.length>2)
+     return  i[2]== stateName;
+    return false;
+    }).toList();
 
     filteredByState.forEach((element) {
-      element.add(0);
+      element.add("0");
     });
-    FLog.info(
-        className: "Filter ",
-        methodName: "_buildRow1",
-        text: " Size is "+ filteredByState.length.toString());
 
     return filteredByState;
   }

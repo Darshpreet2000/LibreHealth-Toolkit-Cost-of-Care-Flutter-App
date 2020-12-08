@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 ListTile makeListTile(
-    BuildContext context, String hospitalName,int isHospitalAddedToCompare ,int index,CompareHospitalListBloc compareHospitalListBloc) {
+    BuildContext context, String hospitalName,String isHospitalAddedToCompare ,int index,CompareHospitalListBloc compareHospitalListBloc) {
   return ListTile(
     title: Text(
       hospitalName,
@@ -19,9 +19,9 @@ ListTile makeListTile(
       ),
     ),
     trailing: RaisedButton(
-      color: isHospitalAddedToCompare==1 ? Colors.green : Colors.orange,
+      color: isHospitalAddedToCompare=="1" ? Colors.green : Colors.orange,
       child: Text(
-        isHospitalAddedToCompare==1 ? "Comparing" : "Compare",
+        isHospitalAddedToCompare=="1" ? "Comparing" : "Compare",
         style: TextStyle(color: Colors.white),
       ),
       onPressed: () {
