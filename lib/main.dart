@@ -118,16 +118,15 @@ class _MyAppState extends State<MyApp> {
           create: (BuildContext context) =>
               ViewCdmStatewiseBloc(ViewCDMStatewiseRepositoryImpl()),
         ),
-
         BlocProvider<RefreshSavedCdmBloc>(
           create: (BuildContext context) => RefreshSavedCdmBloc(),
         ),
         BlocProvider<ReportABugBloc>(
           create: (BuildContext context) => ReportABugBloc(),
         ),
-
         BlocProvider<CompareHospitalScreenBloc>(
-          create: (BuildContext context) => CompareHospitalScreenBloc(CompareScreenRepositoryImpl()),
+          create: (BuildContext context) =>
+              CompareHospitalScreenBloc(CompareScreenRepositoryImpl()),
         ),
       ],
       child: MaterialApp(

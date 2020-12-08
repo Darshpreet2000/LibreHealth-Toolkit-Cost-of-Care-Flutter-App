@@ -1,4 +1,3 @@
-
 import 'package:cost_of_care/bloc/compare_hospital_bloc/compare_hospital_list/compare_hospital_list_bloc.dart';
 import 'package:cost_of_care/bloc/compare_hospital_bloc/compare_hospital_screen/compare_hospital_screen_bloc.dart';
 import 'package:cost_of_care/repository/compare_screen_repository_impl.dart';
@@ -32,9 +31,10 @@ class _CompareHospitalsState extends State<CompareHospitals> {
           child: FloatingActionButton.extended(
             backgroundColor: Colors.orange,
             onPressed: () {
-              compareHospitalListBloc.add(FloatingCompareHospitalButtonPress(BlocProvider.of<CompareHospitalScreenBloc>(context)));
-               if(compareHospitalListBloc.hospitalsAddedToCompare==2)
-                   Navigator.pushNamed(context, '/CompareHospitalsScreen');
+              compareHospitalListBloc.add(FloatingCompareHospitalButtonPress(
+                  BlocProvider.of<CompareHospitalScreenBloc>(context)));
+              if (compareHospitalListBloc.hospitalsAddedToCompare == 2)
+                Navigator.pushNamed(context, '/CompareHospitalsScreen');
             },
             icon: Icon(
               Icons.compare,
@@ -59,7 +59,8 @@ class _CompareHospitalsState extends State<CompareHospitals> {
   @override
   void initState() {
     super.initState();
-   compareHospitalListBloc= new CompareHospitalListBloc(CompareScreenRepositoryImpl());
+    compareHospitalListBloc =
+        new CompareHospitalListBloc(CompareScreenRepositoryImpl());
   }
 
   @override

@@ -9,7 +9,7 @@ class CompareHospitalScreenInitial extends CompareHospitalScreenState {
   List<Object> get props => [];
 }
 
-class LoadedState extends CompareHospitalScreenInitial{
+class LoadedState extends CompareHospitalScreenInitial {
   final List<List<dynamic>> hospitalsData;
   LoadedState(this.hospitalsData);
   @override
