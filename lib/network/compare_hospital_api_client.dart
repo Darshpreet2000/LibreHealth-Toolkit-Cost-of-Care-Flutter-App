@@ -1,4 +1,3 @@
-import 'package:csv/csv.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
 
@@ -13,17 +12,26 @@ class CompareHospitalAPIClient {
     FetchHospitalImages fetchHospitalImages = new FetchHospitalImages();
     return await fetchHospitalImages.fetchImagesFromGoogle(name);
   }
-  
-  Future fetchDataFromAssets(String stateName) async{
-    final myData = await rootBundle.loadString("assets/compare_data.csv");
-    List<List<dynamic>> rowsAsListOfValues = const CsvToListConverter().convert(myData);
-    // filter by state and the show list
 
-    var filteredByState = rowsAsListOfValues.where((i) => i[2]== stateName).toList();
-    filteredByState.forEach((element) {
-      element.add(0);
+  Future fetchDataFromAssets(String stateName) async {
+    final myData = await rootBundle.loadString("assets/compare_data.csv");
+    List<dynamic> myDataList = myData.split("\n");
+    List<List<dynamic>> rowsAsListOfValues = new List();
+    myDataList.forEach((element) {
+      List<dynamic> values = new List();
+      element.split(",").forEach((elementValue) {
+        values.add(elementValue);
+      });
+
+      if (values.length > 2 && values[2] == stateName) {
+        values.add(0);
+        rowsAsListOfValues.add(values);
+      }
     });
-    return filteredByState; 
+    rowsAsListOfValues.sort((a, b) {
+      return a[0].toLowerCase().compareTo(b[0].toLowerCase());
+    });
+    // filter by state and the show list
+    return rowsAsListOfValues;
   }
-  
 }
