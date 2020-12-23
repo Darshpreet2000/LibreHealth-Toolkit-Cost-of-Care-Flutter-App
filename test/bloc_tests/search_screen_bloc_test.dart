@@ -24,7 +24,7 @@ void main() {
     expect(searchScreenBloc.initialState, InitialSearchScreenState());
   });
   group('SearchScreenBloc test', () {
-    List<SearchModel> searchResults = new List(1);
+    List<SearchModel> searchResults =[SearchModel("",123,"","")];
     blocTest(
       'emits [SearchScreenLoadingState(), SearchScreenLoadedState()] when SearchInDatabase is added',
       build: () {

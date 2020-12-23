@@ -23,7 +23,7 @@ void main() {
     expect(savedScreenBloc.initialState, SavedScreenLoadingState());
   });
   group('SavedScreenBloc test', () {
-    List<DownloadCdmModel> tableNames = new List();
+    List<DownloadCdmModel> tableNames = [];
     tableNames.add(DownloadCdmModel("Alaska Regional Hospital", 1));
     blocTest(
       'emits [SavedScreenLoadingState(), SavedScreenLoadedState()] when LoadSavedData is added',
@@ -38,7 +38,7 @@ void main() {
     blocTest(
       'emits [SavedScreenLoadingState(), SavedScreenErrorState] when LoadSavedData is added',
       build: () {
-        List<DownloadCdmModel> tableNames = new List();
+        List<DownloadCdmModel> tableNames = [];
         when(savedScreenRepoImpl.getAllTables())
             .thenAnswer((realInvocation) => Future.value(tableNames));
         return savedScreenBloc;
@@ -52,7 +52,7 @@ void main() {
     blocTest(
       'emits [SavedScreenErrorState] when LoadSavedData is added',
       build: () {
-        List<DownloadCdmModel> tableNames = new List();
+        List<DownloadCdmModel> tableNames = [];
         when(savedScreenRepoImpl.getAllTables())
             .thenAnswer((realInvocation) => Future.value(tableNames));
         return savedScreenBloc;

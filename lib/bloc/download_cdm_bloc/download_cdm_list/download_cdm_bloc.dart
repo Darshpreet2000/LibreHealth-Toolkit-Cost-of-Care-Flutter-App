@@ -11,7 +11,7 @@ class DownloadCdmBloc extends Bloc<DownloadCdmEvent, DownloadCdmState> {
 
   DownloadCdmBloc(this.downloadCDMRepositoryImpl) : super(LoadingState());
 
-  List<DownloadCdmModel> hospitals = new List();
+  List<DownloadCdmModel> hospitals = [];
 
   DownloadCdmState get initialState => LoadingState();
 

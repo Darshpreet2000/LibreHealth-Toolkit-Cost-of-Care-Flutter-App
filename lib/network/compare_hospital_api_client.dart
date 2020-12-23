@@ -16,9 +16,9 @@ class CompareHospitalAPIClient {
   Future fetchDataFromAssets(String stateName) async {
     final myData = await rootBundle.loadString("assets/compare_data.csv");
     List<dynamic> myDataList = myData.split("\n");
-    List<List<dynamic>> rowsAsListOfValues = new List();
+    List<List<dynamic>> rowsAsListOfValues =[];
     myDataList.forEach((element) {
-      List<dynamic> values = new List();
+      List<dynamic> values = [];
       element.split(",").forEach((elementValue) {
         values.add(elementValue);
       });

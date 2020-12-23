@@ -12,7 +12,7 @@ class GitLabApiClient {
   GitLabApiClient(this.dio);
 
   Future fetchStatesName() async {
-    List<String> states = new List();
+    List<String> states = [];
     ApiConfig apiConfig = new ApiConfig();
     String url = apiConfig.gitlabApiFetchList + "&per_page=100";
     var response;
@@ -115,7 +115,7 @@ class GitLabApiClient {
 
   Future<List<DownloadCdmModel>> parseAvailableCdm(
       List<dynamic> elements) async {
-    List<DownloadCdmModel> name = new List();
+    List<DownloadCdmModel> name = [];
     for (int i = 0; i < elements.length; i++) {
       Map<String, dynamic> currentHospital = elements[i];
       String hospitalName = currentHospital['name'];

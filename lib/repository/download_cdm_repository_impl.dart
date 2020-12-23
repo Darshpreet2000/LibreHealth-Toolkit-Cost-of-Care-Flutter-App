@@ -62,7 +62,7 @@ class DownloadCDMRepositoryImpl extends DownloadCDMRepository {
         new DatabaseRepositoryImpl();
 
     // Saving URL of hospital for refreshing CDM
-    List<SearchModel> myList = new List();
+    List<SearchModel> myList = [];
     List<String> lines = event.fileInfo.file.readAsLinesSync();
     lines.removeAt(0);
     for (int i = 0; i < lines.length; i++) {

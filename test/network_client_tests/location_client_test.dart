@@ -18,7 +18,7 @@ void main() {
     LocationClient locationClient =
         new LocationClient(geoLocatorClient, location);
     // Using Mock Data
-    List<Placemark> placeMark = new List();
+    List<Placemark> placeMark = [];
     placeMark.add(PlacemarkFactory.createMockPlacemark());
     test('returns location if http call Successful', () async {
       when(location.getLocation()).thenAnswer(

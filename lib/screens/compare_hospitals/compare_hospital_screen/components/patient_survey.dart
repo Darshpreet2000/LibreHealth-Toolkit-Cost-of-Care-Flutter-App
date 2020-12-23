@@ -89,7 +89,7 @@ class PatientSurveyWidget extends StatelessWidget {
   }
 
   List<Widget> mortaityCompare() {
-    List listings = List<Widget>();
+    List<Widget> listings =[];
     for (int i = 0; i < patientExperienceList.length; i++) {
       listings.add(Expanded(
         child: Text(
@@ -114,7 +114,7 @@ class PatientSurveyWidget extends StatelessWidget {
   }
 
   List<Widget> safetyCompare() {
-    List listings = List<Widget>();
+    List<Widget> listings = [];
     for (int i = 0; i < patientExperienceList.length; i++) {
       listings.add(Expanded(
         child: Text(
@@ -139,7 +139,7 @@ class PatientSurveyWidget extends StatelessWidget {
   }
 
   List<Widget> readmissionCompare() {
-    List listings = List<Widget>();
+    List<Widget> listings =[];
     for (int i = 0; i < patientExperienceList.length; i++) {
       listings.add(Expanded(
         child: Text(
@@ -164,7 +164,7 @@ class PatientSurveyWidget extends StatelessWidget {
   }
 
   List<Widget> patientExperienceCompare() {
-    List listings = List<Widget>();
+    List<Widget> listings = [];
     for (int i = 0; i < patientExperienceList.length; i++) {
       listings.add(Expanded(
         child: Text(
@@ -189,7 +189,7 @@ class PatientSurveyWidget extends StatelessWidget {
   }
 
   List<Widget> effectiveCareCompare() {
-    List listings = List<Widget>();
+    List<Widget> listings = [];
     for (int i = 0; i < patientExperienceList.length; i++) {
       listings.add(Expanded(
         child: Text(

@@ -47,7 +47,7 @@ class CompareHospitalListBloc
       }
     } else if (event is FloatingCompareHospitalButtonPress) {
       if (hospitalsAddedToCompare == 2) {
-        List<List<dynamic>> addHospitals = new List();
+        List<List<dynamic>> addHospitals = [];
         hospitalCompareData.forEach((element) {
           if (element[13] == 1) {
             addHospitals.add(element);

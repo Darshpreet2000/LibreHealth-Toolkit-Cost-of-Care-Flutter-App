@@ -51,7 +51,7 @@ class OverpassAPIClient {
 
   Future<List<Hospitals>> parseHospitalJsonData(
       Map<String, dynamic> responseBody) async {
-    List<Hospitals> hospitalList = new List();
+    List<Hospitals> hospitalList = [];
     latitude = box.get('latitude').toString();
     longitude = box.get('longitude').toString();
     Map<String, dynamic> parsedJson = (responseBody);

@@ -18,11 +18,11 @@ void main() {
     test(
       "fetch statesName Successfully",
       () async {
-        List<String> statesName = new List();
+        List<String> statesName = [];
         statesName.add("California");
         Map<String, dynamic> currentHospital = new Map();
         currentHospital['name'] = "California";
-        List<dynamic> newList = new List();
+        List<dynamic> newList = [];
         newList.add(currentHospital);
         Response response = new Response();
         response.statusCode = 200;
@@ -35,11 +35,11 @@ void main() {
     test(
       "fetch statesName Unsuccessfully",
       () async {
-        List<String> statesName = new List();
+        List<String> statesName = [];
         statesName.add("California");
         Map<String, dynamic> currentHospital = new Map();
         currentHospital['name'] = "California";
-        List<dynamic> newList = new List();
+        List<dynamic> newList = [];
         newList.add(currentHospital);
         Response response = new Response();
         response.statusCode = 200;
@@ -54,13 +54,13 @@ void main() {
     test(
       "fetch statesName Successfully",
       () async {
-        List<String> statesName = new List();
+        List<String> statesName = [];
         statesName.add("California");
         Map<String, dynamic> currentHospital = new Map();
         currentHospital['name'] = "California";
         Headers headerMap = new Headers();
         headerMap.add("x-total-pages", "1");
-        List<dynamic> newList = new List();
+        List<dynamic> newList = [];
         newList.add(currentHospital);
         Response response = new Response();
         response.headers = headerMap;
@@ -74,11 +74,11 @@ void main() {
     test(
       "fetch availableCDM Unsuccessfully",
       () async {
-        List<String> statesName = new List();
+        List<String> statesName = [];
         statesName.add("California");
         Map<String, dynamic> currentHospital = new Map();
         currentHospital['name'] = "California";
-        List<dynamic> newList = new List();
+        List<dynamic> newList = [];
         newList.add(currentHospital);
         Response response = new Response();
         response.statusCode = 200;
@@ -93,13 +93,13 @@ void main() {
     test(
       "fetch getCSVFileSize Successfully",
       () async {
-        List<String> statesName = new List();
+        List<String> statesName = [];
         statesName.add("California");
         Map<String, dynamic> currentHospital = new Map();
         currentHospital['name'] = "California";
         Headers headerMap = new Headers();
         headerMap.add("x-gitlab-size", "1");
-        List<dynamic> newList = new List();
+        List<dynamic> newList = [];
         newList.add(currentHospital);
         Response response = new Response();
         response.headers = headerMap;
@@ -119,13 +119,13 @@ void main() {
     test(
       "fetch getCSVFileSize Unsuccessfully",
       () async {
-        List<String> statesName = new List();
+        List<String> statesName = [];
         statesName.add("California");
         Map<String, dynamic> currentHospital = new Map();
         currentHospital['name'] = "California";
         Headers headerMap = new Headers();
         headerMap.add("x-gitlab-size", "1");
-        List<dynamic> newList = new List();
+        List<dynamic> newList =[];
         newList.add(currentHospital);
         Response response = new Response();
         response.headers = headerMap;

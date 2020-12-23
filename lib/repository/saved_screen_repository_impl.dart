@@ -7,7 +7,7 @@ class SavedScreenRepoImpl extends SavedScreenRepository {
   Future getAllTables() async {
     DatabaseDao databaseDao = new DatabaseDao();
     List<String> hospitals = await databaseDao.getAllTables();
-    List<DownloadCdmModel> savedCDMs = new List();
+    List<DownloadCdmModel> savedCDMs = [];
     hospitals.forEach((element) {
       savedCDMs.add(DownloadCdmModel(element, 1));
     });
