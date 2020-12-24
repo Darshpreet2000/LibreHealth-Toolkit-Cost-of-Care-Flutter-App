@@ -1,11 +1,11 @@
 import 'package:cost_of_care/models/user_location_data.dart';
 import 'package:cost_of_care/network/location_client.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:geocoding/geocoding.dart' hide Location;
 import 'package:location/location.dart';
 import 'package:mockito/mockito.dart';
 
-class MockGeoLocatorClient extends Mock implements Geolocator {}
+class MockGeoLocatorClient extends Mock implements GeocodingPlatform {}
 
 class MockLocationClient extends Mock implements Location {}
 
@@ -16,14 +16,14 @@ void main() {
     final geoLocatorClient = MockGeoLocatorClient();
     final location = MockLocationClient();
     LocationClient locationClient =
-        new LocationClient(geoLocatorClient, location);
+        new LocationClient(geoLocatorClient,location);
     // Using Mock Data
     List<Placemark> placeMark = [];
     placeMark.add(PlacemarkFactory.createMockPlacemark());
     test('returns location if http call Successful', () async {
       when(location.getLocation()).thenAnswer(
           (_) async => Future.value(PositionFactory.createMockPosition()));
-      when(geoLocatorClient.placemarkFromCoordinates(any, any))
+      when(geoLocatorClient.placemarkFromCoordinates(any, any,localeIdentifier: "en"))
           .thenAnswer((_) async => Future.value(placeMark));
       expect(
           await locationClient.getCurrentLocation(), isA<UserLocationData>());
@@ -45,7 +45,6 @@ class PlacemarkFactory {
         isoCountryCode: 'NL',
         locality: 'Enschede',
         name: 'Gronausestraat',
-        position: Position(),
         postalCode: '',
         subAdministrativeArea: 'Enschede',
         subLocality: 'Enschmarke',
