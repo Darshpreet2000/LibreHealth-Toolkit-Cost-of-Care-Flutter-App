@@ -1,18 +1,16 @@
 import 'dart:async';
-
 import 'package:cost_of_care/models/user_location_data.dart';
 import 'package:cost_of_care/util/states_abbreviation.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:geocoding/geocoding.dart' hide Location;
 import 'package:location/location.dart';
 
 class LocationClient {
   LocationData position;
   String state;
   String address;
-  Geolocator geoLocator;
   Location location;
-
-  LocationClient(this.geoLocator, this.location);
+  GeocodingPlatform geocodingPlatform;
+  LocationClient( this.geocodingPlatform,this.location);
 
   Future<UserLocationData> getCurrentLocation() async {
     try {
@@ -21,8 +19,8 @@ class LocationClient {
       throw Exception("Network Problem");
     }
     try {
-      List<Placemark> placeMark = await geoLocator.placemarkFromCoordinates(
-          position.latitude, position.longitude);
+
+      List<Placemark> placeMark = await geocodingPlatform.placemarkFromCoordinates(position.latitude, position.longitude,localeIdentifier: "en");
       address = placeMark[0].name +
           ", " +
           placeMark[0].locality +

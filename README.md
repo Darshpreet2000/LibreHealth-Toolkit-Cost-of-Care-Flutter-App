@@ -1,4 +1,11 @@
-# LibreHealth Cost Of Care Explorer
+<div align="center">
+<p align="center"><img src="assets/app_icon.png" width="150"></p> 
+<h2 align="center"><b>LibreHealth Cost Of Care Explorer</b></h2>
+<h4 align="center">Compare Costs Of Medical Procedures Of US Hospitals.</h4>
+<p align="center"><a href="https://f-droid.org/en/packages/io.librehealth.toolkit.cost_of_care/"><img src="https://f-droid.org/wiki/images/0/06/F-Droid-button_get-it-on.png"></a></p> 
+</div>
+
+
 
 ## Goal
 
@@ -9,7 +16,7 @@ The Goal of this LibreHealth Cost Of Care Explorer Project is to provide patient
 
 ## Communication
 
-The LibreHealth Cost Of Care Explorer chat channel is on [Librehealth Forums.](https://forums.librehealth.io/t/project-develop-an-android-mobile-application-to-show-patient-friendly-costs-of-care/3685/103)
+The LibreHealth Cost Of Care Explorer chat channel is on [Librehealth Forums.](https://forums.librehealth.io/)
 
 ## Screenshots
 

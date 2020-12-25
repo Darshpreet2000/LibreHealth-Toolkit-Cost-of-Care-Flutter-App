@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:cost_of_care/models/user_location_data.dart';
 import 'package:cost_of_care/network/location_client.dart';
 import 'package:cost_of_care/repository/abstract/location_repository.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:geocoding/geocoding.dart' hide Location;
+
 import 'package:location/location.dart';
 
 import '../main.dart';
@@ -36,7 +37,7 @@ class LocationRepoImpl implements LocationRepository {
     }
 
     LocationClient locationClient =
-        new LocationClient(Geolocator(), Location());
+        new LocationClient(GeocodingPlatform.instance,Location());
     UserLocationData data = await locationClient.getCurrentLocation();
     saveData(data);
     return data.address;

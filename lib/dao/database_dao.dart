@@ -21,7 +21,7 @@ class DatabaseDao {
 
   Future getAllTables() async {
     final database = await dbProvider.database;
-    List<String> tableNames = new List();
+    List<String> tableNames = [];
     await database.transaction((txn) async {
       tableNames = (await txn.query('sqlite_master',
               where:
@@ -89,7 +89,7 @@ class DatabaseDao {
 
   Future searchProcedureInAllTables(String searchQuery) async {
     final database = await dbProvider.database;
-    List<SearchModel> list = new List();
+    List<SearchModel> list = [];
     List<String> hospitalName = await getAllTables();
     bool checkCategory = await box.containsKey('category');
     String category;
@@ -147,7 +147,7 @@ class DatabaseDao {
 
     final database = await dbProvider.database;
 
-    List<SearchModel> list = new List();
+    List<SearchModel> list = [];
     String query = "Select * from ( SELECT description , charge ,category , ";
     query += "'" +
         name +
@@ -174,7 +174,7 @@ class DatabaseDao {
 
   Future searchProcedureInAllTablesByPrice(double searchQuery) async {
     final database = await dbProvider.database;
-    List<SearchModel> list = new List();
+    List<SearchModel> list = [];
     List<String> hospitalName = await getAllTables();
     bool checkCategory = await box.containsKey('category');
     String category;
@@ -228,7 +228,7 @@ class DatabaseDao {
 
     final database = await dbProvider.database;
 
-    List<SearchModel> list = new List();
+    List<SearchModel> list =[];
     String query = "Select * from ( SELECT description , charge ,category , ";
     query += "'" +
         name +

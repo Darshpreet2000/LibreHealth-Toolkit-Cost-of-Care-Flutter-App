@@ -23,7 +23,7 @@ void main() {
     expect(downloadCdmBloc.initialState, LoadingState());
   });
 
-  List<DownloadCdmModel> hospitals = new List();
+  List<DownloadCdmModel> hospitals = [];
   hospitals.add(new DownloadCdmModel("Alaska Regional Hospital", 0));
 
   blocTest(
@@ -31,7 +31,7 @@ void main() {
     build: () {
       when(mockDownloadCDMRepoImpl.checkDataSaved(any))
           .thenAnswer((realInvocation) => Future.value(false));
-      List<dynamic> response = new List();
+      List<dynamic> response = [];
       Map<String, dynamic> currentHospital = new Map();
       currentHospital['name'] = "Alaska Regional Hospital";
       response.add(currentHospital);
@@ -53,7 +53,7 @@ void main() {
     build: () {
       when(mockDownloadCDMRepoImpl.checkDataSaved(any))
           .thenAnswer((realInvocation) => Future.value(false));
-      List<dynamic> response = new List();
+      List<dynamic> response = [];
       Map<String, dynamic> currentHospital = new Map();
       currentHospital['name'] = "Alaska Regional Hospital";
       response.add(currentHospital);

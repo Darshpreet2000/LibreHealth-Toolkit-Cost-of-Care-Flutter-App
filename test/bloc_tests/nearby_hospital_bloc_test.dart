@@ -25,7 +25,7 @@ void main() {
     expect(nearbyHospitalBloc.initialState, NearbyHospitalsLoadingState());
   });
   group('NearbyHospitalBloc test', () {
-    List<Hospitals> list = new List();
+    List<Hospitals> list = [];
     list.add(Hospitals(
         "Adventist Health Ukiah Valley", Future.value(""), "distance", "78"));
     blocTest(

@@ -23,7 +23,7 @@ void main() {
     expect(viewCDMStatewiseBloc.initialState, ViewCDMStatewiseLoadingState());
   });
   group('ViewCdmStatewiseBloc test', () {
-    List<String> states = new List(1);
+    List<String> states = [];
 
     blocTest(
       'emits [ViewCDMStatewiseLoadingState(),ViewCDMStatewiseLoadedState(states)] when ViewCDMStatewiseFetchStates is added',

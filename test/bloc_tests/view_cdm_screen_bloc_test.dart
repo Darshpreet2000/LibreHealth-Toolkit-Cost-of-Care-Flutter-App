@@ -23,7 +23,7 @@ void main() {
     expect(viewCDMScreenBloc.initialState, LoadingViewCdmScreenState());
   });
   group('Bloc test', () {
-    List<SearchModel> cdmList = new List();
+    List<SearchModel> cdmList =[];
 
     blocTest(
       'emits [LoadingViewCdmScreenState(), LoadedViewCdmScreenState] when LoadCdm is added',

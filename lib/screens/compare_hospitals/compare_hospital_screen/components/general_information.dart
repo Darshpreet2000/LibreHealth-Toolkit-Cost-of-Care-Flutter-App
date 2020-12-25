@@ -99,7 +99,7 @@ class GeneralInformationWidget extends StatelessWidget {
   }
 
   List<Widget> getOverAllRating() {
-    List listings = List<Widget>();
+    List<Widget> listings = [];
     for (int i = 0; i < generalInformationList.length; i++) {
       listings.add(Expanded(
         child: Center(
@@ -124,7 +124,7 @@ class GeneralInformationWidget extends StatelessWidget {
   }
 
   List<Widget> getHospitalType() {
-    List listings = List<Widget>();
+    List<Widget> listings = [];
     for (int i = 0; i < generalInformationList.length; i++) {
       listings.add(Expanded(
         child: Text(
@@ -149,7 +149,7 @@ class GeneralInformationWidget extends StatelessWidget {
   }
 
   List<Widget> getProvidesEmergency() {
-    List listings = List<Widget>();
+    List<Widget> listings = [];
     for (int i = 0; i < generalInformationList.length; i++) {
       listings.add(Expanded(
         child: Text(
@@ -174,7 +174,7 @@ class GeneralInformationWidget extends StatelessWidget {
   }
 
   List<Widget> getPhoneNumber() {
-    List listings = List<Widget>();
+    List<Widget> listings = [];
     for (int i = 0; i < generalInformationList.length; i++) {
       listings.add(Expanded(
         child: Text(
@@ -199,7 +199,7 @@ class GeneralInformationWidget extends StatelessWidget {
   }
 
   List<Widget> getOwnership() {
-    List listings = List<Widget>();
+    List<Widget> listings = [];
     for (int i = 0; i < generalInformationList.length; i++) {
       listings.add(Expanded(
         child: Text(

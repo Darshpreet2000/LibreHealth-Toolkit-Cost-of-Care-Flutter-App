@@ -53,7 +53,7 @@ class _BodyState extends State<Body> {
   }
 
   List<Widget> getListOfWidgets(List<List<dynamic>> hospitalsName) {
-    List<Widget> listings = new List();
+    List<Widget> listings = [];
     for (int i = 0; i < 2; i++) {
       listings.add(Expanded(
         child: Text(
@@ -75,7 +75,7 @@ class _BodyState extends State<Body> {
   }
 
   List<Widget> getHospitalImages(List<List<dynamic>> hospitalsName) {
-    List listings = List<Widget>();
+    List<Widget> listings = [];
     for (int i = 0; i < 2; i++) {
       listings.add(
         Expanded(
