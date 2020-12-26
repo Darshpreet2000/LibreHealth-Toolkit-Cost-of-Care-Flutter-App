@@ -68,8 +68,8 @@ class OverpassAPIClient {
         lat = currentHospital['lat'].toString();
         lon = currentHospital['lon'].toString();
       }
-      distance = distanceInKM(double.parse(latitude),
-              double.parse(longitude), double.parse(lat), double.parse(lon));
+      distance = distanceInKM(double.parse(latitude), double.parse(longitude),
+          double.parse(lat), double.parse(lon));
       distance = num.parse(distance.toStringAsFixed(2));
       Map<String, dynamic> tags = currentHospital['tags'];
       name = tags['name'];
@@ -89,24 +89,22 @@ class OverpassAPIClient {
     }
     return hospitalList;
   }
-   double distanceInKM(double lat1, double lon1, double lat2, double lon2) {
+
+  double distanceInKM(double lat1, double lon1, double lat2, double lon2) {
     double theta = lon1 - lon2;
-    double dist = sin(deg2rad(lat1))
-        * sin(deg2rad(lat2))
-        + cos(deg2rad(lat1))
-            * cos(deg2rad(lat2))
-            * cos(deg2rad(theta));
+    double dist = sin(deg2rad(lat1)) * sin(deg2rad(lat2)) +
+        cos(deg2rad(lat1)) * cos(deg2rad(lat2)) * cos(deg2rad(theta));
     dist = acos(dist);
     dist = rad2deg(dist);
     dist = dist * 60 * 1.1515;
     return (dist);
   }
 
-   double deg2rad(double deg) {
+  double deg2rad(double deg) {
     return (deg * pi / 180.0);
   }
 
-   double rad2deg(double rad) {
+  double rad2deg(double rad) {
     return (rad * 180.0 / pi);
   }
 }
