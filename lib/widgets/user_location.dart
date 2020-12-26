@@ -143,14 +143,14 @@ Future showCustomLocationServiceDialog(BuildContext context) {
                   'Location Service/GPS is needed to fetch nearby hospital around your location, you have to manually enable it in settings of App')),
           actions: [
             FlatButton(
-              child: Text("Enable Location Service/GPS in Settings"),
+              child: Text("Enable Location Service/GPS in Settings",style: TextStyle(fontSize: 16),),
               onPressed: () {
                 AppSettings.openLocationSettings();
                 Navigator.of(context).pop();
               },
             ),
             FlatButton(
-              child: Text("Deny"),
+              child: Text("Deny",style: TextStyle(fontSize: 16)),
               onPressed: () {
                 Navigator.of(context, rootNavigator: true).pop('dialog');
               },
