@@ -7,8 +7,6 @@ stages:
 
 test:
 
-  only:
-      - master
 
   stage: test
   script:
@@ -19,7 +17,6 @@ test:
 build:
 
   only:
-      - master
       - tags
 
   stage: build
