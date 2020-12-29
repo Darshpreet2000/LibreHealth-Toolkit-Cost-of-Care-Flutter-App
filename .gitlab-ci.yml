@@ -2,7 +2,6 @@ image: cirrusci/flutter:stable
 
 
 stages:
-  - test
   - build
 
 test:
@@ -17,7 +16,7 @@ test:
 build:
 
   only:
-      - testing-app-signing
+      - test-app-signing
       - tags
 
   stage: build
