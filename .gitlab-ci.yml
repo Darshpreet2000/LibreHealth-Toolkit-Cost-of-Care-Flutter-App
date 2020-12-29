@@ -17,6 +17,7 @@ test:
 build:
 
   only:
+      - testing-app-signing
       - tags
 
   stage: build
