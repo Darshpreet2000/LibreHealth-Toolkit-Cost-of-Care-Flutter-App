@@ -89,7 +89,7 @@ class PatientSurveyWidget extends StatelessWidget {
   }
 
   List<Widget> mortaityCompare() {
-    List<Widget> listings =[];
+    List<Widget> listings = [];
     for (int i = 0; i < patientExperienceList.length; i++) {
       listings.add(Expanded(
         child: Text(
@@ -139,7 +139,7 @@ class PatientSurveyWidget extends StatelessWidget {
   }
 
   List<Widget> readmissionCompare() {
-    List<Widget> listings =[];
+    List<Widget> listings = [];
     for (int i = 0; i < patientExperienceList.length; i++) {
       listings.add(Expanded(
         child: Text(

@@ -228,7 +228,7 @@ class DatabaseDao {
 
     final database = await dbProvider.database;
 
-    List<SearchModel> list =[];
+    List<SearchModel> list = [];
     String query = "Select * from ( SELECT description , charge ,category , ";
     query += "'" +
         name +

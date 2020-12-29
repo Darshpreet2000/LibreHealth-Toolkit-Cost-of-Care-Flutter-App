@@ -24,6 +24,9 @@ class _BodyState extends State<Body> {
             if (state.message == "Permission Denied, Enable from Settings") {
               showCustomPermissionDialog(context);
             }
+            if (state.message == "You need to Enable GPS/Location Service") {
+              showCustomLocationServiceDialog(context);
+            }
           }
         },
         child: BlocListener<ReportABugBloc, ReportABugState>(

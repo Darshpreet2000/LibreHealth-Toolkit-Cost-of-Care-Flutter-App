@@ -1,3 +1,4 @@
+import 'package:app_settings/app_settings.dart';
 import 'package:cost_of_care/bloc/location_bloc/location_bloc.dart';
 import 'package:cost_of_care/bloc/location_bloc/user_location_events.dart';
 import 'package:cost_of_care/bloc/location_bloc/user_location_state.dart';
@@ -119,6 +120,37 @@ Future showCustomPermissionDialog(BuildContext context) {
             ),
             FlatButton(
               child: Text("Deny"),
+              onPressed: () {
+                Navigator.of(context, rootNavigator: true).pop('dialog');
+              },
+            ),
+          ],
+        );
+      });
+}
+
+Future showCustomLocationServiceDialog(BuildContext context) {
+  return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'Location Service Needed',
+          ),
+          content: Container(
+              width: double.maxFinite,
+              child: Text(
+                  'Location Service/GPS is needed to fetch nearby hospital around your location, you have to manually enable it in settings of App')),
+          actions: [
+            FlatButton(
+              child: Text("Enable Location Service/GPS in Settings",style: TextStyle(fontSize: 16),),
+              onPressed: () {
+                AppSettings.openLocationSettings();
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text("Deny",style: TextStyle(fontSize: 16)),
               onPressed: () {
                 Navigator.of(context, rootNavigator: true).pop('dialog');
               },
