@@ -2,6 +2,7 @@ image: cirrusci/flutter:stable
 
 
 stages:
+  - test
   - build
 
 test:
